@@ -2,11 +2,12 @@ from PING import *
 
 if __name__ == "__main__":
 
-    ringPING = PING(
+    gridPING = PING(
         simulation_time=8,
         dt=1,
-        nr_excit=4,
-        nr_inhibit=2,
+        nr_excit=8,
+        nr_inhibit=4,
+        nr_oscillators=4
     )
-    ringPING.run()
+    # gridPING.run()
 

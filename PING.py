@@ -1,6 +1,6 @@
 from GaussianInput import *
 from SynapticConstants import *
-from ConnectivityMatrixRing import *
+from ConnectivityMatrixGrid import *
 from misc import *
 
 from tqdm import tqdm
@@ -50,11 +50,10 @@ class PING:
         )
 
         # connectivity matrix
-
-        self.connect_matrix = ConnectivityMatrixRing(
-            nr_neurons=self.nr_neurons,
+        self.connect_matrix = ConnectivityMatrixGrid(
             nr_excit=self.nr_excit,
-            nr_inhibit=self.nr_inhibit
+            nr_inhibit=self.nr_inhibit,
+            nr_oscillators=nr_oscillators
         )
 
     def run(self):

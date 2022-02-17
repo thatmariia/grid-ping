@@ -1,2 +1,5 @@
 numpy
 tqdm
+sphinx
+sphinx-autoapi
+furo

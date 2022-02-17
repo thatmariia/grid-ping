@@ -1,0 +1,38 @@
+:py:mod:`NeuronTypes`
+=====================
+
+.. py:module:: NeuronTypes
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   NeuronTypes.NeuronTypes
+
+
+
+
+.. py:class:: NeuronTypes
+
+   Bases: :py:obj:`enum.Enum`
+
+   Generic enumeration.
+
+   Derive from this class to define new enumerations.
+
+   .. py:attribute:: E
+      :annotation: = excitatory
+
+      
+
+   .. py:attribute:: I
+      :annotation: = inhibitory
+
+      
+
+

@@ -1,0 +1,22 @@
+:py:mod:`Oscillator`
+====================
+
+.. py:module:: Oscillator
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   Oscillator.Oscillator
+
+
+
+
+.. py:class:: Oscillator(location, excit_ids, inhibit_ids)
+
+

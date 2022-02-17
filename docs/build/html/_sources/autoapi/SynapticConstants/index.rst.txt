@@ -1,0 +1,22 @@
+:py:mod:`SynapticConstants`
+===========================
+
+.. py:module:: SynapticConstants
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   SynapticConstants.SynapticConstants
+
+
+
+
+.. py:class:: SynapticConstants(nr_excit, nr_inhibit)
+
+

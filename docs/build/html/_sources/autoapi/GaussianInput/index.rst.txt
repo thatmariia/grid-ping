@@ -1,0 +1,22 @@
+:py:mod:`GaussianInput`
+=======================
+
+.. py:module:: GaussianInput
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   GaussianInput.GaussianInput
+
+
+
+
+.. py:class:: GaussianInput(excit_input, inhibit_input)
+
+

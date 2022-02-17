@@ -1,7 +1,6 @@
 from PING import *
 
 if __name__ == "__main__":
-
     gridPING = PING(
         simulation_time=8,
         dt=1,

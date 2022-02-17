@@ -1,0 +1,45 @@
+:py:mod:`ConnectivityMatrixGrid`
+================================
+
+.. py:module:: ConnectivityMatrixGrid
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   ConnectivityMatrixGrid.ConnectivityMatrixGrid
+
+
+
+
+.. py:class:: ConnectivityMatrixGrid(nr_excit, nr_inhibit, nr_oscillators)
+
+   .. py:method:: get_KXXs(self, nr_excit, nr_inhibit)
+
+
+   .. py:method:: _compute_KXX(self, dist, XX, sXX)
+
+
+   .. py:method:: _get_neurons_dist(self, X1, X2, nr1, nr2)
+
+      Computes the matrix of Euclidian distances between each pair of neurons of given types.
+
+      :param X1: neurons type 1
+      :param X2: neurons type 2
+      :param nr1: number of neurons of type 1
+      :param nr2: number of neurons of type 2
+      :return: dist: R^(nr1, nr2)
+
+
+   .. py:method:: assign_oscillators(self)
+
+      Creates oscillators and assigns grid locations and the same number of each type of neurons to them.
+      See Oscillator.py
+
+
+

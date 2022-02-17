@@ -1,4 +1,3 @@
 # The Izhikevich-type PING network
 
-Grid PING network.
-From https://github.com/thatmariia/ring-ping
+Documentation: https://thesis.mariia.me/grid-ping/docs/build/html 

@@ -3,3 +3,4 @@ tqdm
 sphinx
 sphinx-autoapi
 furo
+pytest

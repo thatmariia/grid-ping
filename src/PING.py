@@ -1,7 +1,7 @@
-from GaussianInput import *
-from SynapticConstants import *
-from ConnectivityMatrixGrid import *
-from misc import *
+from src.GaussianInput import *
+from src.SynapticConstants import *
+from src.ConnectivityMatrixGrid import *
+from src.misc import *
 
 from tqdm import tqdm
 import numpy as np

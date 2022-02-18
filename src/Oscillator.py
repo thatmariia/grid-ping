@@ -1,4 +1,4 @@
-from NeuronTypes import *
+from src.NeuronTypes import *
 
 class Oscillator:
 

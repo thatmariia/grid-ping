@@ -1,8 +1,8 @@
-from Oscillator import *
-from NeuronTypes import *
+from src.Oscillator import *
+from src.NeuronTypes import *
 
 import numpy as np
-from misc import *
+from .misc import *
 
 
 class ConnectivityMatrixGrid():
@@ -151,6 +151,9 @@ class ConnectivityMatrixGrid():
                 inhibit_ids=inhibit_ids
             )
             self.oscillators.append(oscillator)
+
+    def foo(self, a, b):
+        return a + b
 
 
 

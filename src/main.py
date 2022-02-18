@@ -1,4 +1,4 @@
-from PING import *
+from src.PING import *
 
 if __name__ == "__main__":
     gridPING = PING(

@@ -7,20 +7,8 @@
 Module Contents
 ---------------
 
+.. py:data:: gridPING
+   
 
-Functions
-~~~~~~~~~
-
-.. autoapisummary::
-
-   main.blah
-
-
-
-.. py:function:: blah(k)
-
-   BLAH
-   :param k: parameterrrrr
-   :return: nothingggg
-
+   
 

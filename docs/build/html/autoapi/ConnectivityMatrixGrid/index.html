@@ -163,6 +163,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../main/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../GaussianInput/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaussianInput</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../PING/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PING</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ConnectivityMatrixGrid_supp/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ConnectivityMatrixGrid_supp</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -204,21 +205,65 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#ConnectivityMatrixGrid.ConnectivityMatrixGrid" title="ConnectivityMatrixGrid.ConnectivityMatrixGrid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ConnectivityMatrixGrid</span></code></a></p></td>
-<td><p></p></td>
+<td><p>This class constructs the connectivity matrix for the oscillatory network.</p></td>
 </tr>
 </tbody>
 </table></div>
 <dl class="py class">
 <dt class="sig sig-object py" id="ConnectivityMatrixGrid.ConnectivityMatrixGrid">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ConnectivityMatrixGrid.</span></span><span class="sig-name descname"><span class="pre">ConnectivityMatrixGrid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nr_excit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_inhibit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_oscillators</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ConnectivityMatrixGrid.ConnectivityMatrixGrid" title="Permalink to this definition">#</a></dt>
-<dd><dl class="py method">
+<dd><p>This class constructs the connectivity matrix for the oscillatory network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nr_excit</strong> (<em>int</em>) – number of excitatory neurons in the network.</p></li>
+<li><p><strong>nr_inhibit</strong> (<em>int</em>) – number of inhibitory neurons in the network.</p></li>
+<li><p><strong>nr_oscillators</strong> (<em>int</em>) – number of oscillators in the network.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>AssertionError: if number of excitatory neurons doesn’t divide the number of oscillators as there should be
+an equal number of excitatory neurons in each oscillator.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>AssertionError: if number of inhibitory neurons doesn’t divide the number of oscillators as there should be
+an equal number of inhibitory neurons in each oscillator.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>AssertionError: if the number of oscillators is not a square as oscillators should be arranged in a square grid.</p>
+</dd>
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nr_excit</strong> – number of excitatory neurons in the network.</p></li>
+<li><p><strong>nr_inhibit</strong> – number of inhibitory neurons in the network.</p></li>
+<li><p><strong>nr_oscillators</strong> – number of oscillators in the network.</p></li>
+<li><p><strong>nr_oscillators</strong> – list of oscillators in the network</p></li>
+<li><p><strong>nr_excit_per_oscillator</strong> – number of excitatory neurons in each oscillator.</p></li>
+<li><p><strong>nr_inhibit_per_oscillator</strong> – number of inhibitory neurons in each oscillator.</p></li>
+<li><p><strong>neuron_oscillator_map</strong> – A dictionary mapping a neuron to the oscillator it belongs to.</p></li>
+<li><p><strong>grid_size</strong> – The size of a side of the network grid.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
 <dt class="sig sig-object py" id="ConnectivityMatrixGrid.ConnectivityMatrixGrid.get_KXXs">
 <span class="sig-name descname"><span class="pre">get_KXXs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_excit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_inhibit</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ConnectivityMatrixGrid.ConnectivityMatrixGrid.get_KXXs" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="ConnectivityMatrixGrid.ConnectivityMatrixGrid._compute_KXX">
-<span class="sig-name descname"><span class="pre">_compute_KXX</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">XX</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sXX</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ConnectivityMatrixGrid.ConnectivityMatrixGrid._compute_KXX" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Computes the coupling weights between neurons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nr_excit</strong> – number of excitatory neurons</p></li>
+<li><p><strong>nr_inhibit</strong> – number of inhibitory neurons</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>coupling strengths for EE, II, EI, IE connections</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple[list[list[int]]]</p>
+</dd>
+</dl>
+</dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ConnectivityMatrixGrid.ConnectivityMatrixGrid._get_neurons_dist">
 <span class="sig-name descname"><span class="pre">_get_neurons_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ConnectivityMatrixGrid.ConnectivityMatrixGrid._get_neurons_dist" title="Permalink to this definition">#</a></dt>
@@ -226,22 +271,24 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>X1</strong> – neurons type 1</p></li>
-<li><p><strong>X2</strong> – neurons type 2</p></li>
-<li><p><strong>nr1</strong> – number of neurons of type 1</p></li>
-<li><p><strong>nr2</strong> – number of neurons of type 2</p></li>
+<li><p><strong>X1</strong> (<a class="reference internal" href="../NeuronTypes/index.html#NeuronTypes.NeuronTypes" title="NeuronTypes.NeuronTypes"><em>NeuronTypes</em></a>) – neurons type 1</p></li>
+<li><p><strong>X2</strong> (<a class="reference internal" href="../NeuronTypes/index.html#NeuronTypes.NeuronTypes" title="NeuronTypes.NeuronTypes"><em>NeuronTypes</em></a>) – neurons type 2</p></li>
+<li><p><strong>nr1</strong> (<em>int</em>) – number of neurons of type 1</p></li>
+<li><p><strong>nr2</strong> (<em>int</em>) – number of neurons of type 2</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>dist: R^(nr1, nr2)</p>
+<dd class="field-even"><p>dist: The matrix nr1 x nr2 of pairwise distances between neurons.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[list[float]]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="ConnectivityMatrixGrid.ConnectivityMatrixGrid.assign_oscillators">
 <span class="sig-name descname"><span class="pre">assign_oscillators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ConnectivityMatrixGrid.ConnectivityMatrixGrid.assign_oscillators" title="Permalink to this definition">#</a></dt>
-<dd><p>Creates oscillators and assigns grid locations and the same number of each type of neurons to them.
-See Oscillator.py</p>
+<dd><p>Creates oscillators, assigns grid locations to them, and adds the same number of neurons of each type to them.</p>
 </dd></dl>
 </dd></dl>
 </section>
@@ -292,7 +339,6 @@ See Oscillator.py</p>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
 <li><a class="reference internal" href="#ConnectivityMatrixGrid.ConnectivityMatrixGrid">ConnectivityMatrixGrid</a><ul>
 <li><a class="reference internal" href="#ConnectivityMatrixGrid.ConnectivityMatrixGrid.get_KXXs">get_KXXs</a></li>
-<li><a class="reference internal" href="#ConnectivityMatrixGrid.ConnectivityMatrixGrid._compute_KXX">_compute_KXX</a></li>
 <li><a class="reference internal" href="#ConnectivityMatrixGrid.ConnectivityMatrixGrid._get_neurons_dist">_get_neurons_dist</a></li>
 <li><a class="reference internal" href="#ConnectivityMatrixGrid.ConnectivityMatrixGrid.assign_oscillators">assign_oscillators</a></li>
 </ul>

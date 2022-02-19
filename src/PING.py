@@ -14,16 +14,16 @@ class PING:
         self.nr_inhibit = nr_inhibit
         self.nr_neurons = self.nr_excit + self.nr_inhibit
 
-        # timescale of recover variable u
+        # timescale of recovery variable u
         self.a = np.array([0.02 for _ in range(self.nr_excit)] + [0.1 for _ in range(self.nr_inhibit)])
-        # sensitivity of  u to sub-threshold oscillations
+        # sensitivity of u to sub-threshold oscillations of v
         self.b = np.array([0.2 for _ in range(self.nr_excit)] + [0.2 for _ in range(self.nr_inhibit)])
-        # membrane voltage after spike (reset)
+        # membrane voltage after spike (after-spike reset of v)
         self.c = np.array([-65 for _ in range(self.nr_excit)] + [-65 for _ in range(self.nr_inhibit)])
-        # spike reset of recover variable u
+        # after-spike reset of recovery variable u
         self.d = np.array([8 for _ in range(self.nr_excit)] + [2 for _ in range(self.nr_inhibit)])
 
-        # initial values of v = voltage
+        # initial values of v = voltage (membrane potential)
         self.v = np.array([-65 for _ in range(self.nr_excit + self.nr_inhibit)])
         # initial values of u = membrane recovery variable
         self.u = np.multiply(self.b, self.v)

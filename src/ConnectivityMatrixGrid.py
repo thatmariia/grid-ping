@@ -4,7 +4,7 @@ from src.misc import *
 from src.constants import *
 
 
-class ConnectivityMatrixGrid():
+class ConnectivityMatrixGrid:
     """
     This class constructs the connectivity matrix for the oscillatory network.
 
@@ -49,6 +49,9 @@ class ConnectivityMatrixGrid():
 
     :ivar grid_size: The size of a side of the network grid.
     :type nr_oscillators: int
+
+    :ivar coupling_weights: The size of a side of the network grid.
+    :type nr_oscillators: tuple[list[list[float]]]
     """
 
     def __init__(self, nr_excit, nr_inhibit, nr_oscillators):
@@ -74,7 +77,7 @@ class ConnectivityMatrixGrid():
 
         self.assign_oscillators()
 
-        self.KEE, self.KII, self.KEI, self.KIE = self.get_KXXs(nr_excit=nr_excit, nr_inhibit=nr_inhibit)
+        self.coupling_weights = self.get_KXXs(nr_excit=nr_excit, nr_inhibit=nr_inhibit)
 
         # TODO:: compute self.S
         # self.S = self.get_S(

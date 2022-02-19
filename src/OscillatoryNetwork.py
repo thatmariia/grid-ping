@@ -53,31 +53,29 @@ class OscillatoryNetwork:
     """
 
     def __init__(self, nr_excit, nr_inhibit, nr_oscillators=1):
+
         self.nr_excit = nr_excit
         self.nr_inhibit = nr_inhibit
         self.nr_neurons = self.nr_excit + self.nr_inhibit
         self.nr_oscillators = nr_oscillators
 
-        # timescale of recovery variable u
         self.a = np.array([a_EXCIT for _ in range(self.nr_excit)] + [a_INHIBIT for _ in range(self.nr_inhibit)])
-        # sensitivity of u to sub-threshold oscillations of v
         self.b = np.array([b_EXCIT for _ in range(self.nr_excit)] + [b_INHIBIT for _ in range(self.nr_inhibit)])
-        # membrane voltage after spike (after-spike reset of v)
         self.c = np.array([c_EXCIT for _ in range(self.nr_excit)] + [c_INHIBIT for _ in range(self.nr_inhibit)])
-        # after-spike reset of recovery variable u
         self.d = np.array([d_EXCIT for _ in range(self.nr_excit)] + [d_INHIBIT for _ in range(self.nr_inhibit)])
 
-        # initial values of v = voltage (membrane potential)
         self.v = np.array([v_INIT for _ in range(self.nr_excit + self.nr_inhibit)])
-        # initial values of u = membrane recovery variable
         self.u = np.multiply(self.b, self.v)
 
     def run_simulation(self, simulation_time, dt):
-        print("Simulation started")
+        """
+        Runs the simulation.
 
-        # spike times
-        # self.simulation_time = simulation_time
-        # self.dt = dt
+        :param simulation_time: number of epochs to run the simulation.
+        :param dt: TODO
+
+        :rtype: None
+        """
 
         # spike timings
         firing_times = []
@@ -93,81 +91,123 @@ class OscillatoryNetwork:
             nr_oscillators=self.nr_oscillators
         )
 
+        print("Simulation started")
+
         for t in tqdm(range(simulation_time)):
 
-            # indices of spikes
-            fired = np.argwhere(self.v > 30).flatten()
+            fired = np.argwhere(self.v > 30).flatten()  # indices of spikes
+            # TODO:: why do we need firing_times?
             firing_times = [firing_times, [t for _ in range(len(fired))] + fired]
             for f in fired:
                 self.v[f] = self.c[f]
                 self.u[f] += self.d[f]
 
             # thalamic input
-            I = self._get_new_thalamic_input(stim_input=stim_input)
+            I = np.add(stim_input, self._change_thalamic_input())
 
             # synaptic potentials
-            ampa = self._get_new_ampa(ampa=ampa, dt=dt)
-            gaba = self._get_new_gaba(gaba=gaba, dt=dt)
+            ampa = np.add(ampa, self._change_ampa(ampa=ampa, dt=dt))
+            gaba = np.add(gaba, self._change_gaba(gaba=gaba, dt=dt))
             gsyn = np.append(ampa, gaba)
 
             # defining input to eah neuron as the summation of all synaptic input
             # form all connected neurons
             I = np.add(I, np.matmul(connectivity.S, gsyn))
 
-            self.v = np.add(self.v, self._addon_to_v(I=I))
-            self.v = np.add(self.v, self._addon_to_v(I=I))
-            self.u = np.add(self.u, self._addon_to_u())
+            self.v = np.add(self.v, self._change_v(I=I))
+            self.v = np.add(self.v, self._change_v(I=I))
+            self.u = np.add(self.u, self._change_u())
 
         print("Simulation ended")
 
-    def _addon_to_u(self):
+    def _change_u(self):
+        """
+        Computes the change in membrane recovery.
+
+        :return: change in membrane recovery.
+        :rtype: ndarray[float]
+        """
+
         return np.multiply(
             self.a,
             np.multiply(self.b, self.v) - self.u
         )
 
-    def _addon_to_v(self, I):
+    def _change_v(self, I):
+        """
+        Computes the change in membrane potential.
+
+        :param I: current.
+
+        :return: change in membrane potential.
+        :rtype: ndarray[float]
+        """
+
+        # TODO:: why do we multiply the equation for dv/dt with 0.5 and then call this function twice in run_simulation?
         return 0.5 * (0.04 * self.v ** 2 + 5 * self.v + 140 - self.u + I)
 
-    def _get_new_gaba(self, gaba, dt):
+    def _change_gaba(self, gaba, dt):
+        """
+        Computes the change in synaptic gates for excitatory postsynaptic neurons.
+
+        :param ampa:
+        :param dt: TODO
+
+        :return: change in synaptic gates for excitatory postsynaptic neurons.
+        :rtype: ndarray[float]
+        """
+
+        # TODO:: in the paper, this computation is different
         alpha = self.v[self.nr_excit:] / 10.0 + 2
         z = np.tanh(alpha)
         comp1 = (z + 1) / 2.0
         comp2 = (1 - gaba) / RISE_GABA
         comp3 = gaba / DECAY_GABA
-        new_comp = dt * 0.3 * (np.multiply(comp1, comp2) - comp3)
-        return np.add(
-            gaba,
-            new_comp
-        )
+        return dt * 0.3 * (np.multiply(comp1, comp2) - comp3)
 
-    def _get_new_ampa(self, ampa, dt):
+    def _change_ampa(self, ampa, dt):
+        """
+        Computes the change in synaptic gates for inhibitory postsynaptic neurons.
+
+        :param gaba: current state of inhibitory synaptic gates.
+        :param dt: TODO
+
+        :return: change in synaptic gates for inhibitory postsynaptic neurons.
+        :rtype: ndarray[float]
+        """
+
         alpha = self.v[:self.nr_excit] / 10.0 + 2
         z = np.tanh(alpha)
         comp1 = (z + 1) / 2.0
         comp2 = (1 - ampa) / RISE_AMPA
         comp3 = ampa / DECAY_AMPA
-        new_comp = dt * 0.3 * (np.multiply(comp1, comp2) - comp3)
-        return np.add(
-            ampa,
-            new_comp
-        )
+        return dt * 0.3 * (np.multiply(comp1, comp2) - comp3)
 
-    def _get_new_thalamic_input(self, stim_input):
-        return np.add(
-            stim_input,
-            np.append(
-                GAUSSIAN_EXCIT_INPUT * np.random.randn(self.nr_excit),
-                GAUSSIAN_INHIBIT_INPUT * np.random.randn(self.nr_inhibit)
-            )
+    def _change_thalamic_input(self):
+        """
+        Computes the change in thalamic input.
+
+        :return: change in thalamic input.
+        :rtype: ndarray[float]
+        """
+
+        return np.append(
+            GAUSSIAN_EXCIT_INPUT * np.random.randn(self.nr_excit),
+            GAUSSIAN_INHIBIT_INPUT * np.random.randn(self.nr_inhibit)
         )
 
     def _create_main_input_stimulus(self):
+        """
+        Creates main (external) input stimulus.
+
+        :return: input stimulus.
+        :rtype: ndarray[float]
+        """
+
         # sinusoidal spatial modulation of input strength
         amplitude = 1
         # mean input level to RS cells
         mean_input_lvl_RS = 7
-
         step = 2 * pi / (self.nr_excit - 1)
         stim_input = mean_input_lvl_RS + amplitude * np.sin(
             crange(-pi, pi, step)

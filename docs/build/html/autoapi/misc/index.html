@@ -202,8 +202,8 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#misc.euclidian_dist_R2" title="misc.euclidian_dist_R2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">euclidian_dist_R2</span></code></a>(x, y)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#misc.euclidian_dist_R2" title="misc.euclidian_dist_R2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">euclidian_dist_R2</span></code></a>(p1, p2)</p></td>
+<td><p>Calculates the Eaclidian distance between two 2D points.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#misc.cust_range" title="misc.cust_range"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cust_range</span></code></a>(*args, rtol=1e-05, atol=1e-08, include=[True, False])</p></td>
 <td><p>Combines numpy.arange and numpy.isclose to mimic</p></td>
@@ -218,8 +218,23 @@
 </table></div>
 <dl class="py function">
 <dt class="sig sig-object py" id="misc.euclidian_dist_R2">
-<span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">euclidian_dist_R2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#misc.euclidian_dist_R2" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">euclidian_dist_R2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#misc.euclidian_dist_R2" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates the Eaclidian distance between two 2D points.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> (<em>tuple</em><em>[</em><em>float</em><em>]</em>) – coordinates of point 1.</p></li>
+<li><p><strong>p2</strong> (<em>tuple</em><em>[</em><em>float</em><em>]</em>) – coordinates of point 2.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the Eaclidian distance between two 2D points.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="misc.cust_range">
 <span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">cust_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rtol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[True,</span> <span class="pre">False]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#misc.cust_range" title="Permalink to this definition">#</a></dt>

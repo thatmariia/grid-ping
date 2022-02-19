@@ -234,8 +234,8 @@ class GridConnectivity:
                 # (which = the distance between neurons in those oscillators)
                 # FIXME:: assuming unit distance for now
                 dist[id1][id2] = euclidian_dist_R2(
-                    x=oscillator1.location[0] - oscillator2.location[0],
-                    y=oscillator1.location[1] - oscillator2.location[1]
+                    p1=(oscillator1.location[0], oscillator2.location[0]),
+                    p2=(oscillator1.location[1], oscillator2.location[1])
                 )
         return dist
 

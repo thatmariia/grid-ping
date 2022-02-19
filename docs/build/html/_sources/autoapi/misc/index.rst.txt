@@ -20,7 +20,18 @@ Functions
 
 
 
-.. py:function:: euclidian_dist_R2(x, y)
+.. py:function:: euclidian_dist_R2(p1, p2)
+
+   Calculates the Eaclidian distance between two 2D points.
+
+   :param p1: coordinates of point 1.
+   :type p1: tuple[float]
+
+   :param p2: coordinates of point 2.
+   :type p2: tuple[float]
+
+   :return: the Eaclidian distance between two 2D points.
+   :rtype: float
 
 
 .. py:function:: cust_range(*args, rtol=1e-05, atol=1e-08, include=[True, False])

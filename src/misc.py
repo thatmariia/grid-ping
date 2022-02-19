@@ -1,9 +1,22 @@
 import numpy as np
 import math
 
-def euclidian_dist_R2(x, y):
+def euclidian_dist_R2(p1, p2):
+    """
+    Calculates the Eaclidian distance between two 2D points.
+
+    :param p1: coordinates of point 1.
+    :type p1: tuple[float]
+
+    :param p2: coordinates of point 2.
+    :type p2: tuple[float]
+
+    :return: the Eaclidian distance between two 2D points.
+    :rtype: float
+    """
+
     return math.sqrt(
-        pow(x, 2) + pow(y, 2)
+        pow(p1[0] - p2[0], 2) + pow(p1[1] - p2[1], 2)
     )
 
 def cust_range(*args, rtol=1e-05, atol=1e-08, include=[True, False]):

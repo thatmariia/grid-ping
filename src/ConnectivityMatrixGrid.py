@@ -1,7 +1,7 @@
 from src.Oscillator import *
 from src.NeuronTypes import *
-
 from src.misc import *
+from src.constants import *
 
 
 class ConnectivityMatrixGrid():
@@ -74,22 +74,6 @@ class ConnectivityMatrixGrid():
 
         self.assign_oscillators()
 
-        # excitatory  to excitatory
-        self.EE = 0.004
-        self.sEE = 0.4
-
-        # excitatory  to inhibitory
-        self.EI = 0.07
-        self.sEI = 0.3
-
-        # inhibitory to excitatory
-        self.IE = -0.04
-        self.sIE = 0.3
-
-        # inhibitory to inhibitory
-        self.II = -0.015
-        self.sII = 0.3
-
         self.KEE, self.KII, self.KEI, self.KIE = self.get_KXXs(nr_excit=nr_excit, nr_inhibit=nr_inhibit)
 
         # TODO:: compute self.S
@@ -161,12 +145,12 @@ class ConnectivityMatrixGrid():
             nr2=nr_excit
         )
 
-        return self._compute_KXX(dist=dist_EE, XX=self.EE, sXX=self.sEE), \
-               self._compute_KXX(dist=dist_II, XX=self.II, sXX=self.sII), \
-               self._compute_KXX(dist=dist_EI, XX=self.EI, sXX=self.sEI), \
-               self._compute_KXX(dist=dist_IE, XX=self.IE, sXX=self.sIE)
+        return self._compute_KXX(dist=dist_EE, XX=EE, sXX=sEE), \
+               self._compute_KXX(dist=dist_II, XX=II, sXX=sII), \
+               self._compute_KXX(dist=dist_EI, XX=EI, sXX=sEI), \
+               self._compute_KXX(dist=dist_IE, XX=IE, sXX=sIE)
 
-    def _compute_KXX(dist, XX, sXX):
+    def _compute_KXX(self, dist, XX, sXX):
         """
         Computes the coupling weights for connections between two types of neurons.
 

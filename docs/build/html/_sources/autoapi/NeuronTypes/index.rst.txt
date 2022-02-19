@@ -21,9 +21,7 @@ Classes
 
    Bases: :py:obj:`enum.Enum`
 
-   Generic enumeration.
-
-   Derive from this class to define new enumerations.
+   Enum class containing neuron types: excitatory and inhibitory.
 
    .. py:attribute:: E
       :annotation: = excitatory

@@ -55,22 +55,22 @@ class GridConnectivity:
         self.nr_inhibit = nr_inhibit
         self.nr_oscillators = nr_oscillators
 
-        oscillators, neuron_oscillator_map = self.assign_oscillators()
+        oscillators, neuron_oscillator_map = self._assign_oscillators()
 
         # coupling weights
-        KEE, KII, KEI, KIE = self.get_KXXs(
+        KEE, KII, KEI, KIE = self._get_KXXs(
             oscillators=oscillators,
             neuron_oscillator_map=neuron_oscillator_map
         )
 
-        self.K = self.get_K(
+        self.K = self._get_K(
             KEE=KEE,
             KII=KII,
             KEI=KEI,
             KIE=KIE
         )
 
-    def assign_oscillators(self):
+    def _assign_oscillators(self):
         """
         Creates oscillators, assigns grid locations to them, and adds the same number of neurons of each type to them.
 
@@ -115,7 +115,7 @@ class GridConnectivity:
 
         return oscillators, neuron_oscillator_map
 
-    def get_KXXs(self, oscillators, neuron_oscillator_map):
+    def _get_KXXs(self, oscillators, neuron_oscillator_map):
         """
         Computes the coupling weights between all neurons.
 
@@ -170,27 +170,6 @@ class GridConnectivity:
                self._compute_KXX(dist=dist_EI, XX=EI, sXX=sEI), \
                self._compute_KXX(dist=dist_IE, XX=IE, sXX=sIE)
 
-    def _compute_KXX(self, dist, XX, sXX):
-        """
-        Computes the coupling weights for connections between two types of neurons.
-
-        :param dist: distance matrix with pairwise distances between neurons.
-        :type dist: list[list[float]]
-
-        :param XX: max connection strength between neuron types.
-        :type XX: float
-
-        :param sXX: spatial constant for the neuron types.
-        :type sXX: float
-
-        :return: the matrix of coupling weights of size nr1 x nr2, where n1 and nr2 - number of neurons of
-        each type in the coupling of ineterest.
-        :rtype: list[list[float]]
-        """
-
-        KXX = XX * np.exp(np.true_divide(-np.array(dist), sXX))
-        return KXX
-
     def _get_neurons_dist(self, X1, X2, nr1, nr2, oscillators, neuron_oscillator_map):
         """
         Computes the matrix of Euclidian distances between two types of neurons.
@@ -235,7 +214,28 @@ class GridConnectivity:
                 )
         return dist
 
-    def get_K(self, KEE, KII, KEI, KIE):
+    def _compute_KXX(self, dist, XX, sXX):
+        """
+        Computes the coupling weights for connections between two types of neurons.
+
+        :param dist: distance matrix with pairwise distances between neurons.
+        :type dist: list[list[float]]
+
+        :param XX: max connection strength between neuron types.
+        :type XX: float
+
+        :param sXX: spatial constant for the neuron types.
+        :type sXX: float
+
+        :return: the matrix of coupling weights of size nr1 x nr2, where n1 and nr2 - number of neurons of
+        each type in the coupling of ineterest.
+        :rtype: list[list[float]]
+        """
+
+        KXX = XX * np.exp(np.true_divide(-np.array(dist), sXX))
+        return KXX
+
+    def _get_K(self, KEE, KII, KEI, KIE):
         """
         Assigns coupling weights.
 

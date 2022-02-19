@@ -240,8 +240,8 @@ an equal number of inhibitory neurons in each oscillator.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="GridConnectivity.GridConnectivity.assign_oscillators">
-<span class="sig-name descname"><span class="pre">assign_oscillators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridConnectivity.GridConnectivity.assign_oscillators" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="GridConnectivity.GridConnectivity._assign_oscillators">
+<span class="sig-name descname"><span class="pre">_assign_oscillators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridConnectivity.GridConnectivity._assign_oscillators" title="Permalink to this definition">#</a></dt>
 <dd><p>Creates oscillators, assigns grid locations to them, and adds the same number of neurons of each type to them.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -253,8 +253,8 @@ an equal number of inhibitory neurons in each oscillator.</p>
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="GridConnectivity.GridConnectivity.get_KXXs">
-<span class="sig-name descname"><span class="pre">get_KXXs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oscillators</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neuron_oscillator_map</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridConnectivity.GridConnectivity.get_KXXs" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="GridConnectivity.GridConnectivity._get_KXXs">
+<span class="sig-name descname"><span class="pre">_get_KXXs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oscillators</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neuron_oscillator_map</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridConnectivity.GridConnectivity._get_KXXs" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the coupling weights between all neurons.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -272,25 +272,6 @@ an equal number of inhibitory neurons in each oscillator.</p>
 <dd class="field-odd"><p>tuple[list[list[int]]]</p>
 </dd>
 </dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="GridConnectivity.GridConnectivity._compute_KXX">
-<span class="sig-name descname"><span class="pre">_compute_KXX</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">XX</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sXX</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridConnectivity.GridConnectivity._compute_KXX" title="Permalink to this definition">#</a></dt>
-<dd><p>Computes the coupling weights for connections between two types of neurons.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>dist</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>float</em><em>]</em><em>]</em>) – distance matrix with pairwise distances between neurons.</p></li>
-<li><p><strong>XX</strong> (<em>float</em>) – max connection strength between neuron types.</p></li>
-<li><p><strong>sXX</strong> (<em>float</em>) – spatial constant for the neuron types.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the matrix of coupling weights of size nr1 x nr2, where n1 and nr2 - number of neurons of</p>
-</dd>
-</dl>
-<p>each type in the coupling of ineterest.
-:rtype: list[list[float]]</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="GridConnectivity.GridConnectivity._get_neurons_dist">
@@ -316,8 +297,27 @@ an equal number of inhibitory neurons in each oscillator.</p>
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="GridConnectivity.GridConnectivity.get_K">
-<span class="sig-name descname"><span class="pre">get_K</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">KEE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">KII</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">KEI</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">KIE</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridConnectivity.GridConnectivity.get_K" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="GridConnectivity.GridConnectivity._compute_KXX">
+<span class="sig-name descname"><span class="pre">_compute_KXX</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">XX</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sXX</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridConnectivity.GridConnectivity._compute_KXX" title="Permalink to this definition">#</a></dt>
+<dd><p>Computes the coupling weights for connections between two types of neurons.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dist</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>float</em><em>]</em><em>]</em>) – distance matrix with pairwise distances between neurons.</p></li>
+<li><p><strong>XX</strong> (<em>float</em>) – max connection strength between neuron types.</p></li>
+<li><p><strong>sXX</strong> (<em>float</em>) – spatial constant for the neuron types.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the matrix of coupling weights of size nr1 x nr2, where n1 and nr2 - number of neurons of</p>
+</dd>
+</dl>
+<p>each type in the coupling of ineterest.
+:rtype: list[list[float]]</p>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="GridConnectivity.GridConnectivity._get_K">
+<span class="sig-name descname"><span class="pre">_get_K</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">KEE</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">KII</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">KEI</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">KIE</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridConnectivity.GridConnectivity._get_K" title="Permalink to this definition">#</a></dt>
 <dd><p>Assigns coupling weights.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -383,11 +383,11 @@ an equal number of inhibitory neurons in each oscillator.</p>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
 <li><a class="reference internal" href="#GridConnectivity.GridConnectivity">GridConnectivity</a><ul>
-<li><a class="reference internal" href="#GridConnectivity.GridConnectivity.assign_oscillators">assign_oscillators</a></li>
-<li><a class="reference internal" href="#GridConnectivity.GridConnectivity.get_KXXs">get_KXXs</a></li>
-<li><a class="reference internal" href="#GridConnectivity.GridConnectivity._compute_KXX">_compute_KXX</a></li>
+<li><a class="reference internal" href="#GridConnectivity.GridConnectivity._assign_oscillators">_assign_oscillators</a></li>
+<li><a class="reference internal" href="#GridConnectivity.GridConnectivity._get_KXXs">_get_KXXs</a></li>
 <li><a class="reference internal" href="#GridConnectivity.GridConnectivity._get_neurons_dist">_get_neurons_dist</a></li>
-<li><a class="reference internal" href="#GridConnectivity.GridConnectivity.get_K">get_K</a></li>
+<li><a class="reference internal" href="#GridConnectivity.GridConnectivity._compute_KXX">_compute_KXX</a></li>
+<li><a class="reference internal" href="#GridConnectivity.GridConnectivity._get_K">_get_K</a></li>
 </ul>
 </li>
 </ul>

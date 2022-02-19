@@ -112,7 +112,7 @@ class OscillatoryNetwork:
 
             # defining input to eah neuron as the summation of all synaptic input
             # form all connected neurons
-            I = np.add(I, np.matmul(connectivity.S, gsyn))
+            I = np.add(I, np.matmul(connectivity.K, gsyn))
 
             self.v = np.add(self.v, self._change_v(I=I))
             self.v = np.add(self.v, self._change_v(I=I))

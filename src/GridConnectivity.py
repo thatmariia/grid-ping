@@ -35,117 +35,138 @@ class GridConnectivity:
     :ivar nr_oscillators: number of oscillators in the network.
     :type nr_oscillators: int
 
-    :ivar oscillators: list of oscillators in the network
-    :type oscillators: list[Oscillator]
-
-    :ivar nr_excit_per_oscillator: number of excitatory neurons in each oscillator.
-    :type nr_oscillators: int
-
-    :ivar nr_inhibit_per_oscillator: number of inhibitory neurons in each oscillator.
-    :type nr_oscillators: int
-
-    :ivar neuron_oscillator_map: A dictionary mapping a neuron to the oscillator it belongs to.
-    :type nr_oscillators: dict[NeuronTypes: dict[int, int]]
-
-    :ivar grid_size: The size of a side of the network grid.
-    :type nr_oscillators: int
-
-    :ivar coupling_weights: The size of a side of the network grid.
-    :type coupling_weights: tuple[list[list[float]]]
+    :ivar K: Matrix of all coupling weights.
+    :type K: ndarray[ndarray[float]]
     """
 
     def __init__(self, nr_excit, nr_inhibit, nr_oscillators):
 
-        assert nr_excit % nr_oscillators == 0, "Cannot allocated equal number of excitatory neurons to each oscillator. Make sure the number of oscillators divides the number of excitatory neurons."
-        assert nr_inhibit % nr_oscillators == 0, "Cannot allocated equal number of inhibitory neurons to each oscillator. Make sure the number of oscillators divides the number of inhibitory neurons."
-        assert int(math.sqrt(nr_oscillators)) == math.sqrt(nr_oscillators), "The oscillators should be arranged in a square grid. Make sure the number of oscillators is a perfect square."
+        assert nr_excit % nr_oscillators == 0, \
+            "Cannot allocated equal number of excitatory neurons to each oscillator. Make sure the number of " \
+            "oscillators divides the number of excitatory neurons. "
+        assert nr_inhibit % nr_oscillators == 0, \
+            "Cannot allocated equal number of inhibitory neurons to each oscillator. Make sure the number of " \
+            "oscillators divides the number of inhibitory neurons. "
+        assert int(math.sqrt(nr_oscillators)) == math.sqrt(nr_oscillators), \
+            "The oscillators should be arranged in a square grid. Make sure the number of oscillators is a perfect " \
+            "square. "
 
+        self.nr_excit = nr_excit
+        self.nr_inhibit = nr_inhibit
         self.nr_oscillators = nr_oscillators
-        self.oscillators = []
 
-        # number of neurons of each type in each oscillator
-        self.nr_excit_per_oscillator = nr_excit // nr_oscillators
-        self.nr_inhibit_per_oscillator = nr_inhibit // nr_oscillators
+        oscillators, neuron_oscillator_map = self.assign_oscillators()
 
-        # maps the neuron ID to an oscillator it belongs to
-        self.neuron_oscillator_map = {
-            NeuronTypes.E: {},
-            NeuronTypes.I: {}
-        }
+        # coupling weights
+        KEE, KII, KEI, KIE = self.get_KXXs(
+            nr_excit=nr_excit,
+            nr_inhibit=nr_inhibit,
+            oscillators=oscillators,
+            neuron_oscillator_map=neuron_oscillator_map
+        )
 
-        self.grid_size = int(math.sqrt(nr_oscillators))  # now assuming the grid is square
-
-        self.assign_oscillators()
-
-        self.coupling_weights = self.get_KXXs(nr_excit=nr_excit, nr_inhibit=nr_inhibit)
-
-        # TODO:: compute self.S
-        # self.S = self.get_S(
-        #     nr_neurons=nr_neurons,
-        #     nr_excit=nr_excit,
-        #     nr_inhibit=nr_inhibit
-        # )
+        self.K = self.get_K(
+            nr_excit=nr_excit,
+            nr_inhibit=nr_inhibit,
+            KEE=KEE,
+            KII=KII,
+            KEI=KEI,
+            KIE=KIE
+        )
 
     def assign_oscillators(self):
         """
         Creates oscillators, assigns grid locations to them, and adds the same number of neurons of each type to them.
+
+        :return: list of oscillators in the network and a dictionary mapping a neuron to the oscillator it belongs to.
+        :rtype: tuple[list[Oscillator], dict[NeuronTypes: dict[int, int]]]
         """
+
+        oscillators = []
+        neuron_oscillator_map = {
+            NeuronTypes.E: {},
+            NeuronTypes.I: {}
+        }
+
+        grid_size = int(math.sqrt(self.nr_oscillators))  # now assuming the grid is square
+
+        #  number of neurons of each type in each oscillator
+        nr_excit_per_oscillator = self.nr_excit // self.nr_oscillators
+        nr_inhibit_per_oscillator = self.nr_inhibit // self.nr_oscillators
+
         for i in range(self.nr_oscillators):
-            x = i // self.grid_size
-            y = i % self.grid_size
+            x = i // grid_size
+            y = i % grid_size
 
             excit_ids = []
 
-            for id in range(i * self.nr_excit_per_oscillator, (i + 1) * self.nr_excit_per_oscillator + 1):
+            for id in range(i * nr_excit_per_oscillator, (i + 1) * nr_excit_per_oscillator + 1):
                 excit_ids.append(id)
-                self.neuron_oscillator_map[NeuronTypes.E][id] = i
+                neuron_oscillator_map[NeuronTypes.E][id] = i
 
             inhibit_ids = []
 
-            for id in range(i * self.nr_inhibit_per_oscillator, (i + 1) * self.nr_inhibit_per_oscillator + 1):
+            for id in range(i * nr_inhibit_per_oscillator, (i + 1) * nr_inhibit_per_oscillator + 1):
                 inhibit_ids.append(id)
-                self.neuron_oscillator_map[NeuronTypes.I][id] = i
+                neuron_oscillator_map[NeuronTypes.I][id] = i
 
             oscillator = Oscillator(
                 location=(x, y),
                 excit_ids=excit_ids,
                 inhibit_ids=inhibit_ids
             )
-            self.oscillators.append(oscillator)
+            oscillators.append(oscillator)
 
-    def get_KXXs(self, nr_excit, nr_inhibit):
+            return oscillators, neuron_oscillator_map
+
+    def get_KXXs(self, nr_excit, nr_inhibit, oscillators, neuron_oscillator_map):
         """
         Computes the coupling weights between all neurons.
 
-        :param nr_excit: number of excitatory neurons
-        :param nr_inhibit: number of inhibitory neurons
+        :param nr_excit: number of excitatory neurons.
+        :param nr_inhibit: number of inhibitory neurons.
 
-        :return: coupling strengths for EE, II, EI, IE connections
+        :param oscillators: list of oscillators in the network.
+        :type oscillators: list[Oscillator]
+
+        :param neuron_oscillator_map: a dictionary mapping a neuron to the oscillator it belongs to.
+        :type neuron_oscillator_map: dict[NeuronTypes: dict[int, int]]
+
+        :return: coupling strengths for EE, II, EI, IE connections.
         :rtype: tuple[list[list[int]]]
         """
+
         dist_EE = self._get_neurons_dist(
             X1=NeuronTypes.E,
             X2=NeuronTypes.E,
             nr1=nr_excit,
-            nr2=nr_excit
+            nr2=nr_excit,
+            oscillators=oscillators,
+            neuron_oscillator_map=neuron_oscillator_map
         )
         dist_II = self._get_neurons_dist(
             X1=NeuronTypes.I,
             X2=NeuronTypes.I,
             nr1=nr_inhibit,
-            nr2=nr_inhibit
+            nr2=nr_inhibit,
+            oscillators=oscillators,
+            neuron_oscillator_map=neuron_oscillator_map
         )
         dist_EI = self._get_neurons_dist(
             X1=NeuronTypes.E,
             X2=NeuronTypes.I,
             nr1=nr_excit,
-            nr2=nr_inhibit
+            nr2=nr_inhibit,
+            oscillators=oscillators,
+            neuron_oscillator_map=neuron_oscillator_map
         )
         dist_IE = self._get_neurons_dist(
             X1=NeuronTypes.I,
             X2=NeuronTypes.E,
             nr1=nr_inhibit,
-            nr2=nr_excit
+            nr2=nr_excit,
+            oscillators=oscillators,
+            neuron_oscillator_map=neuron_oscillator_map
         )
 
         return self._compute_KXX(dist=dist_EE, XX=EE, sXX=sEE), \
@@ -170,10 +191,11 @@ class GridConnectivity:
         each type in the coupling of ineterest.
         :rtype: list[list[float]]
         """
-        KXX = XX * np.exp(np.true_divide(-dist, sXX))
+
+        KXX = XX * np.exp(np.true_divide(-np.array(dist), sXX))
         return KXX
 
-    def _get_neurons_dist(self, X1, X2, nr1, nr2):
+    def _get_neurons_dist(self, X1, X2, nr1, nr2, oscillators, neuron_oscillator_map):
         """
         Computes the matrix of Euclidian distances between two types of neurons.
 
@@ -189,17 +211,24 @@ class GridConnectivity:
         :param nr2: number of neurons of type 2
         :type nr2: int
 
-        :return: dist: The matrix nr1 x nr2 of pairwise distances between neurons.
+        :param oscillators: list of oscillators in the network.
+        :type oscillators: list[Oscillator]
+
+        :param neuron_oscillator_map: a dictionary mapping a neuron to the oscillator it belongs to.
+        :type neuron_oscillator_map: dict[NeuronTypes: dict[int, int]]
+
+        :return: The matrix nr1 x nr2 of pairwise distances between neurons.
         :rtype: list[list[float]]
         """
+
         dist = np.zeros((nr1, nr2))
 
         for id1 in range(nr1):
             for id2 in range(nr2):
 
                 # finding to which oscillators the neurons belong
-                oscillator1 = self.oscillators[self.neuron_oscillator_map[X1][id1]]
-                oscillator2 = self.oscillators[self.neuron_oscillator_map[X2][id2]]
+                oscillator1 = oscillators[neuron_oscillator_map[X1][id1]]
+                oscillator2 = oscillators[neuron_oscillator_map[X2][id2]]
 
                 # computing the distance between the found oscillators
                 # (which = the distance between neurons in those oscillators)
@@ -209,6 +238,34 @@ class GridConnectivity:
                     y=oscillator1.location[1] - oscillator2.location[1]
                 )
         return dist
+
+    def get_K(self, nr_excit, nr_inhibit, KEE, KII, KEI, KIE):
+        """
+        Assigns coupling weights.
+
+        :param nr_excit: number of excitatory neurons in the network.
+        :type nr_excit: int
+
+        :param nr_inhibit: number of inhibitory neurons in the network.
+        :type nr_inhibit: int
+
+        :param KEE, KII, KEI, KIE: coupling weights of respective connections.
+        :type KEE, KII, KEI, KIE: list[list[int]]
+
+        :return: matrix of all coupling weights.
+        :rtype: ndarray[ndarray[float]]
+        """
+
+        nr_neurons = nr_excit + nr_inhibit
+
+        S = np.zeros((nr_neurons, nr_neurons))
+
+        S[:nr_excit, :nr_excit] = KEE
+        S[nr_excit:nr_neurons, nr_excit:nr_neurons] = KII
+        S[:nr_excit, nr_excit:nr_neurons] = KIE.T
+        S[nr_excit:nr_neurons, :nr_excit] = KEI.T
+
+        return np.nan_to_num(S)
 
 
 

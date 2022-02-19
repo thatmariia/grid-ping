@@ -59,15 +59,11 @@ class GridConnectivity:
 
         # coupling weights
         KEE, KII, KEI, KIE = self.get_KXXs(
-            nr_excit=nr_excit,
-            nr_inhibit=nr_inhibit,
             oscillators=oscillators,
             neuron_oscillator_map=neuron_oscillator_map
         )
 
         self.K = self.get_K(
-            nr_excit=nr_excit,
-            nr_inhibit=nr_inhibit,
             KEE=KEE,
             KII=KII,
             KEI=KEI,
@@ -100,13 +96,13 @@ class GridConnectivity:
 
             excit_ids = []
 
-            for id in range(i * nr_excit_per_oscillator, (i + 1) * nr_excit_per_oscillator + 1):
+            for id in range(i * nr_excit_per_oscillator, (i + 1) * nr_excit_per_oscillator):
                 excit_ids.append(id)
                 neuron_oscillator_map[NeuronTypes.E][id] = i
 
             inhibit_ids = []
 
-            for id in range(i * nr_inhibit_per_oscillator, (i + 1) * nr_inhibit_per_oscillator + 1):
+            for id in range(i * nr_inhibit_per_oscillator, (i + 1) * nr_inhibit_per_oscillator):
                 inhibit_ids.append(id)
                 neuron_oscillator_map[NeuronTypes.I][id] = i
 
@@ -117,9 +113,9 @@ class GridConnectivity:
             )
             oscillators.append(oscillator)
 
-            return oscillators, neuron_oscillator_map
+        return oscillators, neuron_oscillator_map
 
-    def get_KXXs(self, nr_excit, nr_inhibit, oscillators, neuron_oscillator_map):
+    def get_KXXs(self, oscillators, neuron_oscillator_map):
         """
         Computes the coupling weights between all neurons.
 
@@ -139,32 +135,32 @@ class GridConnectivity:
         dist_EE = self._get_neurons_dist(
             X1=NeuronTypes.E,
             X2=NeuronTypes.E,
-            nr1=nr_excit,
-            nr2=nr_excit,
+            nr1=self.nr_excit,
+            nr2=self.nr_excit,
             oscillators=oscillators,
             neuron_oscillator_map=neuron_oscillator_map
         )
         dist_II = self._get_neurons_dist(
             X1=NeuronTypes.I,
             X2=NeuronTypes.I,
-            nr1=nr_inhibit,
-            nr2=nr_inhibit,
+            nr1=self.nr_inhibit,
+            nr2=self.nr_inhibit,
             oscillators=oscillators,
             neuron_oscillator_map=neuron_oscillator_map
         )
         dist_EI = self._get_neurons_dist(
             X1=NeuronTypes.E,
             X2=NeuronTypes.I,
-            nr1=nr_excit,
-            nr2=nr_inhibit,
+            nr1=self.nr_excit,
+            nr2=self.nr_inhibit,
             oscillators=oscillators,
             neuron_oscillator_map=neuron_oscillator_map
         )
         dist_IE = self._get_neurons_dist(
             X1=NeuronTypes.I,
             X2=NeuronTypes.E,
-            nr1=nr_inhibit,
-            nr2=nr_excit,
+            nr1=self.nr_inhibit,
+            nr2=self.nr_excit,
             oscillators=oscillators,
             neuron_oscillator_map=neuron_oscillator_map
         )
@@ -239,7 +235,7 @@ class GridConnectivity:
                 )
         return dist
 
-    def get_K(self, nr_excit, nr_inhibit, KEE, KII, KEI, KIE):
+    def get_K(self, KEE, KII, KEI, KIE):
         """
         Assigns coupling weights.
 
@@ -256,14 +252,14 @@ class GridConnectivity:
         :rtype: ndarray[ndarray[float]]
         """
 
-        nr_neurons = nr_excit + nr_inhibit
+        nr_neurons = self.nr_excit + self.nr_inhibit
 
         S = np.zeros((nr_neurons, nr_neurons))
 
-        S[:nr_excit, :nr_excit] = KEE
-        S[nr_excit:nr_neurons, nr_excit:nr_neurons] = KII
-        S[:nr_excit, nr_excit:nr_neurons] = KIE.T
-        S[nr_excit:nr_neurons, :nr_excit] = KEI.T
+        S[:self.nr_excit, :self.nr_excit] = KEE
+        S[self.nr_excit:nr_neurons, self.nr_excit:nr_neurons] = KII
+        S[:self.nr_excit, self.nr_excit:nr_neurons] = KIE.T
+        S[self.nr_excit:nr_neurons, :self.nr_excit] = KEI.T
 
         return np.nan_to_num(S)
 

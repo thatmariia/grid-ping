@@ -1,12 +1,13 @@
-from src.PING import *
+from src.OscillatoryNetwork import *
 
 if __name__ == "__main__":
-    gridPING = PING(
-        simulation_time=8,
-        dt=1,
+    OscillatoryNetwork = OscillatoryNetwork(
         nr_excit=8,
         nr_inhibit=4,
         nr_oscillators=4
     )
-    # gridPING.run()
+    # OscillatoryNetwork.run_simulation(
+    #     simulation_time=8,
+    #     dt=1
+    # )
 

@@ -4,9 +4,9 @@ from src.misc import *
 from src.constants import *
 
 
-class ConnectivityMatrixGrid:
+class GridConnectivity:
     """
-    This class constructs the connectivity matrix for the oscillatory network.
+    This class constructs the connectivity for the oscillatory network.
 
     :param nr_excit: number of excitatory neurons in the network.
     :type nr_excit: int
@@ -35,8 +35,8 @@ class ConnectivityMatrixGrid:
     :ivar nr_oscillators: number of oscillators in the network.
     :type nr_oscillators: int
 
-    :ivar nr_oscillators: list of oscillators in the network
-    :type nr_oscillators: list[Oscillator]
+    :ivar oscillators: list of oscillators in the network
+    :type oscillators: list[Oscillator]
 
     :ivar nr_excit_per_oscillator: number of excitatory neurons in each oscillator.
     :type nr_oscillators: int
@@ -51,7 +51,7 @@ class ConnectivityMatrixGrid:
     :type nr_oscillators: int
 
     :ivar coupling_weights: The size of a side of the network grid.
-    :type nr_oscillators: tuple[list[list[float]]]
+    :type coupling_weights: tuple[list[list[float]]]
     """
 
     def __init__(self, nr_excit, nr_inhibit, nr_oscillators):

@@ -6,14 +6,12 @@ This page contains auto-generated API reference documentation [#f1]_.
 .. toctree::
    :titlesonly:
 
-   /autoapi/SynapticConstants/index
    /autoapi/misc/index
    /autoapi/NeuronTypes/index
+   /autoapi/constants/index
    /autoapi/Oscillator/index
-   /autoapi/ConnectivityMatrixGrid/index
    /autoapi/main/index
-   /autoapi/GaussianInput/index
-   /autoapi/PING/index
-   /autoapi/ConnectivityMatrixGrid_supp/index
+   /autoapi/OscillatoryNetwork/index
+   /autoapi/GridConnectivity/index
 
 .. [#f1] Created with `sphinx-autoapi <https://github.com/readthedocs/sphinx-autoapi>`_

@@ -1,5 +1,21 @@
 Usage
 ========
 
-.. note::
-    TODO
+Run the code::
+
+    $ python -msrc.main
+
+Run the tests::
+
+    $ pytest
+
+Generate documentation::
+
+    $ sphinx-build -b html source/ build/html
+
+Clear documentation::
+
+    $ cd docs
+    $ make clean
+
+

@@ -18,6 +18,8 @@ class GridConnectivity:
     :type nr_oscillators: int
 
     :raises:
+        AssertionError: If the number of oscillators is smaller than 1.
+    :raises:
         AssertionError: if number of excitatory neurons doesn't divide the number of oscillators as there should be
         an equal number of excitatory neurons in each oscillator.
     :raises:
@@ -41,6 +43,7 @@ class GridConnectivity:
 
     def __init__(self, nr_excit, nr_inhibit, nr_oscillators):
 
+        assert nr_oscillators >= 1, "Number of oscillators cannot be smaller than 1."
         assert nr_excit % nr_oscillators == 0, \
             "Cannot allocated equal number of excitatory neurons to each oscillator. Make sure the number of " \
             "oscillators divides the number of excitatory neurons. "
@@ -209,9 +212,10 @@ class GridConnectivity:
                 # (which = the distance between neurons in those oscillators)
                 # FIXME:: assuming unit distance for now
                 dist[id1][id2] = euclidian_dist_R2(
-                    p1=(oscillator1.location[0], oscillator2.location[0]),
-                    p2=(oscillator1.location[1], oscillator2.location[1])
+                    p1=(oscillator1.location[0], oscillator1.location[1]),
+                    p2=(oscillator2.location[0], oscillator2.location[1])
                 )
+
         return dist
 
     def _compute_KXX(self, dist, XX, sXX):

@@ -21,6 +21,12 @@ class OscillatoryNetwork:
     :type nr_oscillators: int
 
 
+    :raises:
+        AssertionError: if the number of excitatory neurons is smaller than 2.
+    :raises:
+        AssertionError: if the number of inhibitory neurons is smaller than 2.
+
+
     :ivar nr_excit: number of inhibitory neurons in the network.
     :type nr_excit: int
 
@@ -53,6 +59,10 @@ class OscillatoryNetwork:
     """
 
     def __init__(self, nr_excit, nr_inhibit, nr_oscillators=1):
+
+        # FIXME:: this assertions are only there because of the stim_input
+        assert nr_excit >= 2, "Number of excitatory neurons cannot be smaller than 2."
+        assert nr_inhibit >= 2, "Number of inhibitory neurons cannot be smaller than 2."
 
         self.nr_excit = nr_excit
         self.nr_inhibit = nr_inhibit

@@ -18,7 +18,7 @@ class Oscillator:
     :type location: tuple[int]
 
     :ivar ids: A dictionary with id's of neurons of both types in this oscillator.
-    :type location: dict[NeuronTypes, list[int]]
+    :type ids: dict[NeuronTypes, list[int]]
     """
 
     def __init__(self, location, excit_ids, inhibit_ids):
@@ -27,3 +27,6 @@ class Oscillator:
             NeuronTypes.E: excit_ids,
             NeuronTypes.I: inhibit_ids
         }
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__

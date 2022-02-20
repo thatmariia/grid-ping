@@ -34,6 +34,11 @@ Classes
    :type location: tuple[int]
 
    :ivar ids: A dictionary with id's of neurons of both types in this oscillator.
-   :type location: dict[NeuronTypes, list[int]]
+   :type ids: dict[NeuronTypes, list[int]]
+
+   .. py:method:: __eq__(self, other)
+
+      Return self==value.
+
 
 

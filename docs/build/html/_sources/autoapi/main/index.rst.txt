@@ -7,7 +7,7 @@
 Module Contents
 ---------------
 
-.. py:data:: OscillatoryNetwork
+.. py:data:: oscillatory_network
    
 
    

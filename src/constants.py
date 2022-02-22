@@ -1,11 +1,11 @@
 from src.NeuronTypes import *
 
 NR_NEURONS = {
-    NeuronTypes.E: 8,
-    NeuronTypes.I: 4
+    NeuronTypes.E: 2,
+    NeuronTypes.I: 2
 }
 
-NR_OSCILLATORS = 4
+NR_OSCILLATORS = 1
 
 """Network connectivity constants"""
 

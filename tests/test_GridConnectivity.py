@@ -52,8 +52,8 @@ class TestGridConnectivity:
     def test_get_neurons_dist(self):
         oscillators1, neuron_oscillator_map1 = self.connectivity1._assign_oscillators()
         distEE1 = self.connectivity1._get_neurons_dist(
-            X1=NeuronTypes.E,
-            X2=NeuronTypes.E,
+            neuron_type1=NeuronTypes.E,
+            neuron_type2=NeuronTypes.E,
             nr1=self.connectivity1.nr_excit,
             nr2=self.connectivity1.nr_excit,
             oscillators=oscillators1,
@@ -62,8 +62,8 @@ class TestGridConnectivity:
         distEE1_expected = [[0.0, 0.0], [0.0, 0.0]]
 
         distII1 = self.connectivity1._get_neurons_dist(
-            X1=NeuronTypes.I,
-            X2=NeuronTypes.I,
+            neuron_type1=NeuronTypes.I,
+            neuron_type2=NeuronTypes.I,
             nr1=self.connectivity1.nr_inhibit,
             nr2=self.connectivity1.nr_inhibit,
             oscillators=oscillators1,
@@ -72,8 +72,8 @@ class TestGridConnectivity:
         distII1_expected = [[0.0, 0.0], [0.0, 0.0]]
 
         distEI1 = self.connectivity1._get_neurons_dist(
-            X1=NeuronTypes.E,
-            X2=NeuronTypes.I,
+            neuron_type1=NeuronTypes.E,
+            neuron_type2=NeuronTypes.I,
             nr1=self.connectivity1.nr_excit,
             nr2=self.connectivity1.nr_inhibit,
             oscillators=oscillators1,
@@ -82,8 +82,8 @@ class TestGridConnectivity:
         distEI1_expected = [[0.0, 0.0], [0.0, 0.0]]
 
         distIE1 = self.connectivity1._get_neurons_dist(
-            X1=NeuronTypes.I,
-            X2=NeuronTypes.E,
+            neuron_type1=NeuronTypes.I,
+            neuron_type2=NeuronTypes.E,
             nr1=self.connectivity1.nr_inhibit,
             nr2=self.connectivity1.nr_excit,
             oscillators=oscillators1,
@@ -100,8 +100,8 @@ class TestGridConnectivity:
 
         oscillators2, neuron_oscillator_map2 = self.connectivity2._assign_oscillators()
         distEE2 = self.connectivity2._get_neurons_dist(
-            X1=NeuronTypes.E,
-            X2=NeuronTypes.E,
+            neuron_type1=NeuronTypes.E,
+            neuron_type2=NeuronTypes.E,
             nr1=self.connectivity2.nr_excit,
             nr2=self.connectivity2.nr_excit,
             oscillators=oscillators2,
@@ -119,8 +119,8 @@ class TestGridConnectivity:
         ]
 
         distII2 = self.connectivity2._get_neurons_dist(
-            X1=NeuronTypes.I,
-            X2=NeuronTypes.I,
+            neuron_type1=NeuronTypes.I,
+            neuron_type2=NeuronTypes.I,
             nr1=self.connectivity2.nr_inhibit,
             nr2=self.connectivity2.nr_inhibit,
             oscillators=oscillators2,
@@ -134,8 +134,8 @@ class TestGridConnectivity:
         ]
 
         distEI2 = self.connectivity2._get_neurons_dist(
-            X1=NeuronTypes.E,
-            X2=NeuronTypes.I,
+            neuron_type1=NeuronTypes.E,
+            neuron_type2=NeuronTypes.I,
             nr1=self.connectivity2.nr_excit,
             nr2=self.connectivity2.nr_inhibit,
             oscillators=oscillators2,
@@ -153,8 +153,8 @@ class TestGridConnectivity:
         ]
 
         distIE2 = self.connectivity2._get_neurons_dist(
-            X1=NeuronTypes.I,
-            X2=NeuronTypes.E,
+            neuron_type1=NeuronTypes.I,
+            neuron_type2=NeuronTypes.E,
             nr1=self.connectivity2.nr_inhibit,
             nr2=self.connectivity2.nr_excit,
             oscillators=oscillators2,

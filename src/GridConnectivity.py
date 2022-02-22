@@ -3,6 +3,8 @@ from src.NeuronTypes import *
 from src.misc import *
 from src.constants import *
 
+from itertools import product
+
 
 class GridConnectivity:
     """
@@ -19,9 +21,8 @@ class GridConnectivity:
     :raises:
         AssertionError: if the number of oscillators is not a square as oscillators should be arranged in a square grid.
 
-
-    :ivar K: Matrix of all coupling weights.
-    :neuron_type K: ndarray[ndarray[float]]
+    :ivar coupling_weights: Matrix of all coupling weights.
+    :type coupling_weights: ndarray[ndarray[float]]
     """
 
     def __init__(self):
@@ -39,17 +40,9 @@ class GridConnectivity:
 
         oscillators, neuron_oscillator_map = self._assign_oscillators()
 
-        # coupling weights
-        KEE, KII, KEI, KIE = self._get_KXXs(
+        self.coupling_weights = self.compute_coupling_weights(
             oscillators=oscillators,
             neuron_oscillator_map=neuron_oscillator_map
-        )
-
-        self.K = self._get_K(
-            KEE=KEE,
-            KII=KII,
-            KEI=KEI,
-            KIE=KIE
         )
 
     def _assign_oscillators(self):
@@ -97,97 +90,66 @@ class GridConnectivity:
 
         return oscillators, neuron_oscillator_map
 
-    def _get_KXXs(self, oscillators, neuron_oscillator_map):
+    def compute_coupling_weights(self, oscillators, neuron_oscillator_map):
         """
         Computes the coupling weights between all neurons.
 
         :param oscillators: list of oscillators in the network.
-        :neuron_type oscillators: list[Oscillator]
+        :type oscillators: list[Oscillator]
 
         :param neuron_oscillator_map: a dictionary mapping a neuron to the oscillator it belongs to.
-        :neuron_type neuron_oscillator_map: dict[NeuronTypes: dict[int, int]]
+        :type neuron_oscillator_map: dict[NeuronTypes: dict[int, int]]
 
-        :return: coupling strengths for EE, II, EI, IE connections.
-        :rtype: tuple[list[list[int]]]
+        :return: matrix of all coupling weights.
+        :rtype: ndarray[ndarray[float]]
         """
 
-        dist_EE = self._get_neurons_dist(
-            X1=NeuronTypes.E,
-            X2=NeuronTypes.E,
-            nr1=NR_NEURONS[NeuronTypes.E],
-            nr2=NR_NEURONS[NeuronTypes.E],
-            oscillators=oscillators,
-            neuron_oscillator_map=neuron_oscillator_map
-        )
-        dist_II = self._get_neurons_dist(
-            X1=NeuronTypes.I,
-            X2=NeuronTypes.I,
-            nr1=NR_NEURONS[NeuronTypes.I],
-            nr2=NR_NEURONS[NeuronTypes.I],
-            oscillators=oscillators,
-            neuron_oscillator_map=neuron_oscillator_map
-        )
-        dist_EI = self._get_neurons_dist(
-            X1=NeuronTypes.E,
-            X2=NeuronTypes.I,
-            nr1=NR_NEURONS[NeuronTypes.E],
-            nr2=NR_NEURONS[NeuronTypes.I],
-            oscillators=oscillators,
-            neuron_oscillator_map=neuron_oscillator_map
-        )
-        dist_IE = self._get_neurons_dist(
-            X1=NeuronTypes.I,
-            X2=NeuronTypes.E,
-            nr1=NR_NEURONS[NeuronTypes.I],
-            nr2=NR_NEURONS[NeuronTypes.E],
-            oscillators=oscillators,
-            neuron_oscillator_map=neuron_oscillator_map
-        )
+        nr_neurons = NR_NEURONS[NeuronTypes.E] + NR_NEURONS[NeuronTypes.I]
+        all_coupling_weights = np.zeros((nr_neurons, nr_neurons))
 
-        KEE =  self._compute_KXX(
-            dist=dist_EE,
-            XX=MAX_CONNECT_STRENGTH[(NeuronTypes.E, NeuronTypes.E)],
-            sXX=SPATIAL_CONST[(NeuronTypes.E, NeuronTypes.E)]
-        )
-        KII = self._compute_KXX(
-            dist=dist_II,
-            XX=MAX_CONNECT_STRENGTH[(NeuronTypes.I, NeuronTypes.I)],
-            sXX=SPATIAL_CONST[(NeuronTypes.I, NeuronTypes.I)]
-        )
-        KEI = self._compute_KXX(
-            dist=dist_EI,
-            XX=MAX_CONNECT_STRENGTH[(NeuronTypes.E, NeuronTypes.I)],
-            sXX=SPATIAL_CONST[(NeuronTypes.E, NeuronTypes.I)]
-        )
-        KIE = self._compute_KXX(
-            dist=dist_IE,
-            XX=MAX_CONNECT_STRENGTH[(NeuronTypes.I, NeuronTypes.E)],
-            sXX=SPATIAL_CONST[(NeuronTypes.I, NeuronTypes.E)]
-        )
+        for neuron_types in list(product([NeuronTypes.E, NeuronTypes.I], repeat=2)):
+            dist = self._get_neurons_dist(
+                neuron_type1=neuron_types[0],
+                neuron_type2=neuron_types[1],
+                nr1=NR_NEURONS[neuron_types[0]],
+                nr2=NR_NEURONS[neuron_types[1]],
+                oscillators=oscillators,
+                neuron_oscillator_map=neuron_oscillator_map
+            )
+            types_coupling_weights = self._compute_type_coupling_weights(
+                dist=dist,
+                max_connect_strength=MAX_CONNECT_STRENGTH[(neuron_types[0], neuron_types[1])],
+                spatial_const=SPATIAL_CONST[(neuron_types[0], neuron_types[1])]
+            )
+            # TODO:: why is this?
+            if neuron_types[0] == neuron_types[1]:
+                all_coupling_weights[neur_slice(neuron_types[0]), neur_slice(neuron_types[1])] = types_coupling_weights
+            else:
+                all_coupling_weights[neur_slice(neuron_types[1]), neur_slice(neuron_types[0])] = types_coupling_weights.T
 
-        return KEE, KII, KEI, KIE
+        return np.nan_to_num(all_coupling_weights)
 
-    def _get_neurons_dist(self, X1, X2, nr1, nr2, oscillators, neuron_oscillator_map):
+    def _get_neurons_dist(self, neuron_type1, neuron_type2, nr1, nr2, oscillators, neuron_oscillator_map):
         """
         Computes the matrix of Euclidian distances between two types of neurons.
 
-        :param X1: neurons neuron_type 1
-        :neuron_type X1: NeuronTypes
+        :param neuron_type1: neurons neuron_type 1
+        :type neuron_type1: NeuronTypes
 
-        :param X2: neurons neuron_type 2
-        :neuron_type X2: NeuronTypes
+        :param neuron_type2: neurons neuron_type 2
+        :type neuron_type2: NeuronTypes
 
         :param nr1: number of neurons of neuron_type 1
-        :neuron_type nr1: int
+        :type nr1: int
 
         :param nr2: number of neurons of neuron_type 2
-        :neuron_type nr2: int
+        :type nr2: int
 
         :param oscillators: list of oscillators in the network.
-        :neuron_type oscillators: list[Oscillator]
+        :type oscillators: list[Oscillator]
 
         :param neuron_oscillator_map: a dictionary mapping a neuron to the oscillator it belongs to.
-        :neuron_type neuron_oscillator_map: dict[NeuronTypes: dict[int, int]]
+        :type neuron_oscillator_map: dict[NeuronTypes: dict[int, int]]
 
         :return: The matrix nr1 x nr2 of pairwise distances between neurons.
         :rtype: list[list[float]]
@@ -199,8 +161,8 @@ class GridConnectivity:
             for id2 in range(nr2):
 
                 # finding to which oscillators the neurons belong
-                oscillator1 = oscillators[neuron_oscillator_map[X1][id1]]
-                oscillator2 = oscillators[neuron_oscillator_map[X2][id2]]
+                oscillator1 = oscillators[neuron_oscillator_map[neuron_type1][id1]]
+                oscillator2 = oscillators[neuron_oscillator_map[neuron_type2][id2]]
 
                 # computing the distance between the found oscillators
                 # (which = the distance between neurons in those oscillators)
@@ -212,47 +174,27 @@ class GridConnectivity:
 
         return dist
 
-    def _compute_KXX(self, dist, XX, sXX):
+    def _compute_type_coupling_weights(self, dist, max_connect_strength, spatial_const):
         """
         Computes the coupling weights for connections between two types of neurons.
 
         :param dist: distance matrix with pairwise distances between neurons.
-        :neuron_type dist: list[list[float]]
+        :type dist: list[list[float]]
 
-        :param XX: max connection strength between neuron types.
-        :neuron_type XX: float
+        :param max_connect_strength: max connection strength between neuron types.
+        :type max_connect_strength: float
 
-        :param sXX: spatial constant for the neuron types.
-        :neuron_type sXX: float
+        :param spatial_const: spatial constant for the neuron types.
+        :type spatial_const: float
 
         :return: the matrix of coupling weights of size nr1 x nr2, where n1 and nr2 - number of neurons of
-        each neuron_type in the coupling of ineterest.
+        each neuron_type in the coupling of interest.
         :rtype: list[list[float]]
         """
 
-        KXX = XX * np.exp(np.true_divide(-np.array(dist), sXX))
-        return KXX
+        coupling_weights_type = max_connect_strength * np.exp(np.true_divide(-np.array(dist), spatial_const))
+        return coupling_weights_type
 
-    def _get_K(self, KEE, KII, KEI, KIE):
-        """
-        Assigns coupling weights.
-
-        :param KEE, KII, KEI, KIE: coupling weights of respective connections.
-        :neuron_type KEE, KII, KEI, KIE: list[list[int]]
-
-        :return: matrix of all coupling weights.
-        :rtype: ndarray[ndarray[float]]
-        """
-
-        nr_neurons = NR_NEURONS[NeuronTypes.E] + NR_NEURONS[NeuronTypes.I]
-        S = np.zeros((nr_neurons, nr_neurons))
-
-        S[neur_slice(NeuronTypes.E), neur_slice(NeuronTypes.E)] = KEE
-        S[neur_slice(NeuronTypes.I), neur_slice(NeuronTypes.I)] = KII
-        S[neur_slice(NeuronTypes.E), neur_slice(NeuronTypes.I)] = KIE.T
-        S[neur_slice(NeuronTypes.I), neur_slice(NeuronTypes.E)] = KEI.T
-
-        return np.nan_to_num(S)
 
 
 

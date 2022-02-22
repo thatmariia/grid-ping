@@ -18,22 +18,22 @@ class OscillatoryNetwork:
 
 
     :ivar potential: voltage (membrane potential).
-    :neuron_type potential: ndarray[float]
+    :type potential: ndarray[float]
 
     :ivar recovery: membrane recovery variable.
-    :neuron_type recovery: ndarray[float]
+    :type recovery: ndarray[float]
 
     :ivar izhi_alpha: timescale of recovery variable u.
-    :neuron_type izhi_alpha: ndarray[float]
+    :type izhi_alpha: ndarray[float]
 
     :ivar izhi_beta: sensitivity of u to sub-threshold oscillations of v.
-    :neuron_type izhi_beta: ndarray[float]
+    :type izhi_beta: ndarray[float]
 
     :ivar izhi_gamma: membrane voltage after spike (after-spike reset of v).
-    :neuron_type izhi_gamma: ndarray[float]
+    :type izhi_gamma: ndarray[float]
 
     :ivar izhi_zeta: after-spike reset of recovery variable u.
-    :neuron_type izhi_zeta: ndarray[float]
+    :type izhi_zeta: ndarray[float]
     """
 
     def __init__(self):
@@ -113,7 +113,7 @@ class OscillatoryNetwork:
 
             # defining input to eah neuron as the summation of all synaptic input
             # form all connected neurons
-            current = np.add(current, np.matmul(connectivity.K, gsyn))
+            current = np.add(current, np.matmul(connectivity.coupling_weights, gsyn))
 
             self.potential = np.add(self.potential, self._change_potential(current=current))
             self.potential = np.add(self.potential, self._change_potential(current=current))

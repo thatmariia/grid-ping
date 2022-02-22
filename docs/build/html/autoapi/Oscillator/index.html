@@ -214,16 +214,31 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>location</strong> (<em>tuple</em><em>[</em><em>int</em><em>]</em>) – 2D coordinates of this oscillator within the grid.</p></li>
-<li><p><strong>excit_ids</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – id’s of excitatory neurons located in this oscillator.</p></li>
-<li><p><strong>inhibit_ids</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – id’s of inhibitory neurons located in this oscillator.</p></li>
+<li><p><strong>location</strong> – 2D coordinates of this oscillator within the grid.</p></li>
+<li><p><strong>excit_ids</strong> – id’s of excitatory neurons located in this oscillator.</p></li>
+<li><p><strong>inhibit_ids</strong> – id’s of inhibitory neurons located in this oscillator.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Variables</dt>
-<dd class="field-even"><ul class="simple">
+<dt class="field-even">Neuron_type location</dt>
+<dd class="field-even"><p>tuple[int]</p>
+</dd>
+<dt class="field-odd">Neuron_type excit_ids</dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+<dt class="field-even">Neuron_type inhibit_ids</dt>
+<dd class="field-even"><p>list[int]</p>
+</dd>
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
 <li><p><strong>location</strong> – 2D coordinates of this oscillator within the grid.</p></li>
 <li><p><strong>ids</strong> – A dictionary with id’s of neurons of both types in this oscillator.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Neuron_type location</dt>
+<dd class="field-even"><p>tuple[int]</p>
+</dd>
+<dt class="field-odd">Neuron_type ids</dt>
+<dd class="field-odd"><p>dict[NeuronTypes, list[int]]</p>
 </dd>
 </dl>
 <dl class="py method">

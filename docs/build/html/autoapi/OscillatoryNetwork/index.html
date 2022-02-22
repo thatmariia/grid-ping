@@ -214,19 +214,28 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>nr_excit</strong> (<em>int</em>) – number of excitatory neurons in the network.</p></li>
-<li><p><strong>nr_inhibit</strong> (<em>int</em>) – number of inhibitory neurons in the network.</p></li>
-<li><p><strong>nr_oscillators</strong> (<em>int</em>) – number of oscillators in the network.</p></li>
+<li><p><strong>nr_excit</strong> – number of excitatory neurons in the network.</p></li>
+<li><p><strong>nr_inhibit</strong> – number of inhibitory neurons in the network.</p></li>
+<li><p><strong>nr_oscillators</strong> – number of oscillators in the network.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p>AssertionError: if the number of excitatory neurons is smaller than 2.</p>
+<dt class="field-even">Neuron_type nr_excit</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Neuron_type nr_inhibit</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Neuron_type nr_oscillators</dt>
+<dd class="field-even"><p>int</p>
 </dd>
 <dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p>AssertionError: if the number of inhibitory neurons is smaller than 2.</p>
+<dd class="field-odd"><p>AssertionError: if the number of excitatory neurons is smaller than 2.</p>
 </dd>
-<dt class="field-even">Variables</dt>
-<dd class="field-even"><ul class="simple">
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>AssertionError: if the number of inhibitory neurons is smaller than 2.</p>
+</dd>
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
 <li><p><strong>nr_excit</strong> – number of inhibitory neurons in the network.</p></li>
 <li><p><strong>nr_inhibit</strong> – number of inhibitory neurons in the network.</p></li>
 <li><p><strong>nr_neurons</strong> – total number of neurons in the network.</p></li>
@@ -238,6 +247,36 @@
 <li><p><strong>izhi_gamma</strong> – membrane voltage after spike (after-spike reset of v).</p></li>
 <li><p><strong>izhi_zeta</strong> – after-spike reset of recovery variable u.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Neuron_type nr_excit</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Neuron_type nr_inhibit</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Neuron_type nr_neurons</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">Neuron_type nr_oscillators</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Neuron_type potential</dt>
+<dd class="field-even"><p>ndarray[float]</p>
+</dd>
+<dt class="field-odd">Neuron_type recovery</dt>
+<dd class="field-odd"><p>ndarray[float]</p>
+</dd>
+<dt class="field-even">Neuron_type izhi_alpha</dt>
+<dd class="field-even"><p>ndarray[float]</p>
+</dd>
+<dt class="field-odd">Neuron_type izhi_beta</dt>
+<dd class="field-odd"><p>ndarray[float]</p>
+</dd>
+<dt class="field-even">Neuron_type izhi_gamma</dt>
+<dd class="field-even"><p>ndarray[float]</p>
+</dd>
+<dt class="field-odd">Neuron_type izhi_zeta</dt>
+<dd class="field-odd"><p>ndarray[float]</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -257,8 +296,8 @@
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_u">
-<span class="sig-name descname"><span class="pre">_change_u</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_u" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_recovery">
+<span class="sig-name descname"><span class="pre">_change_recovery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_recovery" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the change in membrane recovery.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -270,12 +309,12 @@
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_v">
-<span class="sig-name descname"><span class="pre">_change_v</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_v" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_potential">
+<span class="sig-name descname"><span class="pre">_change_potential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_potential" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the change in membrane potential.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>I</strong> – current.</p>
+<dd class="field-odd"><p><strong>current</strong> – current.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>change in membrane potential.</p>
@@ -286,37 +325,19 @@
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_gaba">
-<span class="sig-name descname"><span class="pre">_change_gaba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gaba</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_gaba" title="Permalink to this definition">#</a></dt>
-<dd><p>Computes the change in synaptic gates for excitatory postsynaptic neurons.</p>
+<dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_synaptic_potentials">
+<span class="sig-name descname"><span class="pre">_change_synaptic_potentials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neuron_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synaptic_potential</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_synaptic_potentials" title="Permalink to this definition">#</a></dt>
+<dd><p>Computes the change in synaptic gates for postsynaptic neurons.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ampa</strong> – </p></li>
+<li><p><strong>neuron_type</strong> (<a class="reference internal" href="../NeuronTypes/index.html#NeuronTypes.NeuronTypes" title="NeuronTypes.NeuronTypes"><em>NeuronTypes</em></a>) – neuron type</p></li>
+<li><p><strong>synaptic_potential</strong> (<em>ndarray</em><em>[</em><em>float</em><em>]</em>) – current synaptic potential</p></li>
 <li><p><strong>dt</strong> – TODO</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>change in synaptic gates for excitatory postsynaptic neurons.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>ndarray[float]</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_ampa">
-<span class="sig-name descname"><span class="pre">_change_ampa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ampa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_ampa" title="Permalink to this definition">#</a></dt>
-<dd><p>Computes the change in synaptic gates for inhibitory postsynaptic neurons.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>gaba</strong> – current state of inhibitory synaptic gates.</p></li>
-<li><p><strong>dt</strong> – TODO</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>change in synaptic gates for inhibitory postsynaptic neurons.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>ndarray[float]</p>
@@ -398,10 +419,9 @@
 <li><a class="reference internal" href="#classes">Classes</a><ul>
 <li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork">OscillatoryNetwork</a><ul>
 <li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork.run_simulation">run_simulation</a></li>
-<li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._change_u">_change_u</a></li>
-<li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._change_v">_change_v</a></li>
-<li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._change_gaba">_change_gaba</a></li>
-<li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._change_ampa">_change_ampa</a></li>
+<li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._change_recovery">_change_recovery</a></li>
+<li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._change_potential">_change_potential</a></li>
+<li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._change_synaptic_potentials">_change_synaptic_potentials</a></li>
 <li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._change_thalamic_input">_change_thalamic_input</a></li>
 <li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._create_main_input_stimulus">_create_main_input_stimulus</a></li>
 </ul>

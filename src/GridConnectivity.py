@@ -9,13 +9,13 @@ class GridConnectivity:
     This class constructs the connectivity for the oscillatory network.
 
     :param nr_excit: number of excitatory neurons in the network.
-    :type nr_excit: int
+    :neuron_type nr_excit: int
 
     :param nr_inhibit: number of inhibitory neurons in the network.
-    :type nr_inhibit: int
+    :neuron_type nr_inhibit: int
 
     :param nr_oscillators: number of oscillators in the network.
-    :type nr_oscillators: int
+    :neuron_type nr_oscillators: int
 
     :raises:
         AssertionError: If the number of oscillators is smaller than 1.
@@ -29,16 +29,16 @@ class GridConnectivity:
         AssertionError: if the number of oscillators is not a square as oscillators should be arranged in a square grid.
 
     :ivar nr_excit: number of excitatory neurons in the network.
-    :type nr_excit: int
+    :neuron_type nr_excit: int
 
     :ivar nr_inhibit: number of inhibitory neurons in the network.
-    :type nr_inhibit: int
+    :neuron_type nr_inhibit: int
 
     :ivar nr_oscillators: number of oscillators in the network.
-    :type nr_oscillators: int
+    :neuron_type nr_oscillators: int
 
     :ivar K: Matrix of all coupling weights.
-    :type K: ndarray[ndarray[float]]
+    :neuron_type K: ndarray[ndarray[float]]
     """
 
     def __init__(self, nr_excit, nr_inhibit, nr_oscillators):
@@ -75,7 +75,7 @@ class GridConnectivity:
 
     def _assign_oscillators(self):
         """
-        Creates oscillators, assigns grid locations to them, and adds the same number of neurons of each type to them.
+        Creates oscillators, assigns grid locations to them, and adds the same number of neurons of each neuron_type to them.
 
         :return: list of oscillators in the network and a dictionary mapping a neuron to the oscillator it belongs to.
         :rtype: tuple[list[Oscillator], dict[NeuronTypes: dict[int, int]]]
@@ -89,7 +89,7 @@ class GridConnectivity:
 
         grid_size = int(math.sqrt(self.nr_oscillators))  # now assuming the grid is square
 
-        #  number of neurons of each type in each oscillator
+        #  number of neurons of each neuron_type in each oscillator
         nr_excit_per_oscillator = self.nr_excit // self.nr_oscillators
         nr_inhibit_per_oscillator = self.nr_inhibit // self.nr_oscillators
 
@@ -126,10 +126,10 @@ class GridConnectivity:
         :param nr_inhibit: number of inhibitory neurons.
 
         :param oscillators: list of oscillators in the network.
-        :type oscillators: list[Oscillator]
+        :neuron_type oscillators: list[Oscillator]
 
         :param neuron_oscillator_map: a dictionary mapping a neuron to the oscillator it belongs to.
-        :type neuron_oscillator_map: dict[NeuronTypes: dict[int, int]]
+        :neuron_type neuron_oscillator_map: dict[NeuronTypes: dict[int, int]]
 
         :return: coupling strengths for EE, II, EI, IE connections.
         :rtype: tuple[list[list[int]]]
@@ -195,23 +195,23 @@ class GridConnectivity:
         """
         Computes the matrix of Euclidian distances between two types of neurons.
 
-        :param X1: neurons type 1
-        :type X1: NeuronTypes
+        :param X1: neurons neuron_type 1
+        :neuron_type X1: NeuronTypes
 
-        :param X2: neurons type 2
-        :type X2: NeuronTypes
+        :param X2: neurons neuron_type 2
+        :neuron_type X2: NeuronTypes
 
-        :param nr1: number of neurons of type 1
-        :type nr1: int
+        :param nr1: number of neurons of neuron_type 1
+        :neuron_type nr1: int
 
-        :param nr2: number of neurons of type 2
-        :type nr2: int
+        :param nr2: number of neurons of neuron_type 2
+        :neuron_type nr2: int
 
         :param oscillators: list of oscillators in the network.
-        :type oscillators: list[Oscillator]
+        :neuron_type oscillators: list[Oscillator]
 
         :param neuron_oscillator_map: a dictionary mapping a neuron to the oscillator it belongs to.
-        :type neuron_oscillator_map: dict[NeuronTypes: dict[int, int]]
+        :neuron_type neuron_oscillator_map: dict[NeuronTypes: dict[int, int]]
 
         :return: The matrix nr1 x nr2 of pairwise distances between neurons.
         :rtype: list[list[float]]
@@ -241,16 +241,16 @@ class GridConnectivity:
         Computes the coupling weights for connections between two types of neurons.
 
         :param dist: distance matrix with pairwise distances between neurons.
-        :type dist: list[list[float]]
+        :neuron_type dist: list[list[float]]
 
         :param XX: max connection strength between neuron types.
-        :type XX: float
+        :neuron_type XX: float
 
         :param sXX: spatial constant for the neuron types.
-        :type sXX: float
+        :neuron_type sXX: float
 
         :return: the matrix of coupling weights of size nr1 x nr2, where n1 and nr2 - number of neurons of
-        each type in the coupling of ineterest.
+        each neuron_type in the coupling of ineterest.
         :rtype: list[list[float]]
         """
 
@@ -262,13 +262,13 @@ class GridConnectivity:
         Assigns coupling weights.
 
         :param nr_excit: number of excitatory neurons in the network.
-        :type nr_excit: int
+        :neuron_type nr_excit: int
 
         :param nr_inhibit: number of inhibitory neurons in the network.
-        :type nr_inhibit: int
+        :neuron_type nr_inhibit: int
 
         :param KEE, KII, KEI, KIE: coupling weights of respective connections.
-        :type KEE, KII, KEI, KIE: list[list[int]]
+        :neuron_type KEE, KII, KEI, KIE: list[list[int]]
 
         :return: matrix of all coupling weights.
         :rtype: ndarray[ndarray[float]]

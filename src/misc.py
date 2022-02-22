@@ -1,15 +1,16 @@
 import numpy as np
 import math
 
+
 def euclidian_dist_R2(p1, p2):
     """
     Calculates the Eaclidian distance between two 2D points.
 
     :param p1: coordinates of point 1.
-    :type p1: tuple[float]
+    :neuron_type p1: tuple[float]
 
     :param p2: coordinates of point 2.
-    :type p2: tuple[float]
+    :neuron_type p2: tuple[float]
 
     :return: the Eaclidian distance between two 2D points.
     :rtype: float
@@ -18,6 +19,7 @@ def euclidian_dist_R2(p1, p2):
     return math.sqrt(
         pow(p1[0] - p2[0], 2) + pow(p1[1] - p2[1], 2)
     )
+
 
 def cust_range(*args, rtol=1e-05, atol=1e-08, include=[True, False]):
     """
@@ -47,7 +49,7 @@ def cust_range(*args, rtol=1e-05, atol=1e-08, include=[True, False]):
         start, stop, step = tuple(args)
 
     # determine number of segments
-    n = (stop-start)/step + 1
+    n = (stop - start) / step + 1
 
     # do rounding for n
     if np.isclose(n, np.round(n), rtol=rtol, atol=atol):
@@ -63,8 +65,10 @@ def cust_range(*args, rtol=1e-05, atol=1e-08, include=[True, False]):
 
     return np.linspace(start, stop, int(n))
 
+
 def crange(*args, **kwargs):
     return cust_range(*args, **kwargs, include=[True, True])
+
 
 def orange(*args, **kwargs):
     return cust_range(*args, **kwargs, include=[True, False])

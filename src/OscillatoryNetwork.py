@@ -12,13 +12,13 @@ class OscillatoryNetwork:
     This class runs the simulation of the network of OscillatoryNetwork oscillators.
 
     :param nr_excit: number of excitatory neurons in the network.
-    :type nr_excit: int
+    :neuron_type nr_excit: int
 
     :param nr_inhibit: number of inhibitory neurons in the network.
-    :type nr_inhibit: int
+    :neuron_type nr_inhibit: int
 
     :param nr_oscillators: number of oscillators in the network.
-    :type nr_oscillators: int
+    :neuron_type nr_oscillators: int
 
 
     :raises:
@@ -28,34 +28,34 @@ class OscillatoryNetwork:
 
 
     :ivar nr_excit: number of inhibitory neurons in the network.
-    :type nr_excit: int
+    :neuron_type nr_excit: int
 
     :ivar nr_inhibit: number of inhibitory neurons in the network.
-    :type nr_inhibit: int
+    :neuron_type nr_inhibit: int
 
     :ivar nr_neurons: total number of neurons in the network.
-    :type nr_neurons: int
+    :neuron_type nr_neurons: int
 
     :ivar nr_oscillators: number of oscillators in the network.
-    :type nr_oscillators: int
+    :neuron_type nr_oscillators: int
 
     :ivar potential: voltage (membrane potential).
-    :type potential: ndarray[float]
+    :neuron_type potential: ndarray[float]
 
     :ivar recovery: membrane recovery variable.
-    :type recovery: ndarray[float]
+    :neuron_type recovery: ndarray[float]
 
     :ivar izhi_alpha: timescale of recovery variable u.
-    :type izhi_alpha: ndarray[float]
+    :neuron_type izhi_alpha: ndarray[float]
 
     :ivar izhi_beta: sensitivity of u to sub-threshold oscillations of v.
-    :type izhi_beta: ndarray[float]
+    :neuron_type izhi_beta: ndarray[float]
 
     :ivar izhi_gamma: membrane voltage after spike (after-spike reset of v).
-    :type izhi_gamma: ndarray[float]
+    :neuron_type izhi_gamma: ndarray[float]
 
     :ivar izhi_zeta: after-spike reset of recovery variable u.
-    :type izhi_zeta: ndarray[float]
+    :neuron_type izhi_zeta: ndarray[float]
     """
 
     def __init__(self, nr_excit, nr_inhibit, nr_oscillators=1):
@@ -125,24 +125,32 @@ class OscillatoryNetwork:
                 self.recovery[f] += self.izhi_zeta[f]
 
             # thalamic input
-            I = np.add(stim_input, self._change_thalamic_input())
+            current = np.add(stim_input, self._change_thalamic_input())
 
             # synaptic potentials
-            ampa = np.add(ampa, self._change_ampa(ampa=ampa, dt=dt))
-            gaba = np.add(gaba, self._change_gaba(gaba=gaba, dt=dt))
+            ampa = np.add(ampa, self._change_synaptic_potentials(
+                neuron_type=NeuronTypes.E,
+                synaptic_potential=ampa,
+                dt=dt
+            ))
+            gaba = np.add(gaba, self._change_synaptic_potentials(
+                neuron_type=NeuronTypes.I,
+                synaptic_potential=gaba,
+                dt=dt
+            ))
             gsyn = np.append(ampa, gaba)
 
             # defining input to eah neuron as the summation of all synaptic input
             # form all connected neurons
-            I = np.add(I, np.matmul(connectivity.K, gsyn))
+            current = np.add(current, np.matmul(connectivity.K, gsyn))
 
-            self.potential = np.add(self.potential, self._change_v(I=I))
-            self.potential = np.add(self.potential, self._change_v(I=I))
-            self.recovery = np.add(self.recovery, self._change_u())
+            self.potential = np.add(self.potential, self._change_potential(current=current))
+            self.potential = np.add(self.potential, self._change_potential(current=current))
+            self.recovery = np.add(self.recovery, self._change_recovery())
 
         print("Simulation ended")
 
-    def _change_u(self):
+    def _change_recovery(self):
         """
         Computes the change in membrane recovery.
 
@@ -155,54 +163,42 @@ class OscillatoryNetwork:
             np.multiply(self.izhi_beta, self.potential) - self.recovery
         )
 
-    def _change_v(self, I):
+    def _change_potential(self, current):
         """
         Computes the change in membrane potential.
 
-        :param I: current.
+        :param current: current.
 
         :return: change in membrane potential.
         :rtype: ndarray[float]
         """
 
         # TODO:: why do we multiply the equation for dv/dt with 0.5 and then call this function twice in run_simulation?
-        return 0.5 * (0.04 * self.potential ** 2 + 5 * self.potential + 140 - self.recovery + I)
+        return 0.5 * (0.04 * self.potential ** 2 + 5 * self.potential + 140 - self.recovery + current)
 
-    def _change_gaba(self, gaba, dt):
+    def _change_synaptic_potentials(self, neuron_type, synaptic_potential, dt):
         """
-        Computes the change in synaptic gates for excitatory postsynaptic neurons.
+        Computes the change in synaptic gates for postsynaptic neurons.
 
-        :param ampa:
+        :param neuron_type: neuron type
+        :type neuron_type: NeuronTypes
+
+        :param synaptic_potential: current synaptic potential
+        :type synaptic_potential: ndarray[float]
+
         :param dt: TODO
 
         :return: change in synaptic gates for excitatory postsynaptic neurons.
         :rtype: ndarray[float]
         """
 
+        potentials = self.potential[self.nr_excit:] if (neuron_type == NeuronTypes.I) else self.potential[:self.nr_excit]
         # TODO:: in the paper, this computation is different
-        alpha = self.potential[self.nr_excit:] / 10.0 + 2
+        alpha = potentials / 10.0 + 2
         z = np.tanh(alpha)
         comp1 = (z + 1) / 2.0
-        comp2 = (1 - gaba) / SYNAPTIC_CONST_RISE[NeuronTypes.I]
-        comp3 = gaba / SYNAPTIC_CONST_DECAY[NeuronTypes.I]
-        return dt * 0.3 * (np.multiply(comp1, comp2) - comp3)
-
-    def _change_ampa(self, ampa, dt):
-        """
-        Computes the change in synaptic gates for inhibitory postsynaptic neurons.
-
-        :param gaba: current state of inhibitory synaptic gates.
-        :param dt: TODO
-
-        :return: change in synaptic gates for inhibitory postsynaptic neurons.
-        :rtype: ndarray[float]
-        """
-
-        alpha = self.potential[:self.nr_excit] / 10.0 + 2
-        z = np.tanh(alpha)
-        comp1 = (z + 1) / 2.0
-        comp2 = (1 - ampa) / SYNAPTIC_CONST_RISE[NeuronTypes.E]
-        comp3 = ampa / SYNAPTIC_CONST_DECAY[NeuronTypes.E]
+        comp2 = (1 - synaptic_potential) / SYNAPTIC_CONST_RISE[neuron_type]
+        comp3 = synaptic_potential / SYNAPTIC_CONST_DECAY[neuron_type]
         return dt * 0.3 * (np.multiply(comp1, comp2) - comp3)
 
     def _change_thalamic_input(self):

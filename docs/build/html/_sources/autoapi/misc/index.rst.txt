@@ -48,7 +48,7 @@ Functions
    :param p2: coordinates of point 2.
    :type p2: tuple[float]
 
-   :return: the Euclidian distance between two 2D points.
+   :return: the Euclidean distance between two 2D points.
    :rtype: float
 
 
@@ -71,7 +71,11 @@ Functions
 
 .. py:function:: crange(*args, **kwargs)
 
+   Range excluding the end-point - from `cust_range`.
+
 
 .. py:function:: orange(*args, **kwargs)
+
+   Range including the end-point - from `cust_range`.
 
 

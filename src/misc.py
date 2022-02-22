@@ -36,7 +36,7 @@ def euclidian_dist_R2(p1, p2):
     :param p2: coordinates of point 2.
     :type p2: tuple[float]
 
-    :return: the Euclidian distance between two 2D points.
+    :return: the Euclidean distance between two 2D points.
     :rtype: float
     """
 
@@ -92,8 +92,16 @@ def cust_range(*args, rtol=1e-05, atol=1e-08, include=[True, False]):
 
 
 def crange(*args, **kwargs):
+    """
+    Range excluding the end-point - from `cust_range`.
+    """
+
     return cust_range(*args, **kwargs, include=[True, True])
 
 
 def orange(*args, **kwargs):
+    """
+    Range including the end-point - from `cust_range`.
+    """
+
     return cust_range(*args, **kwargs, include=[True, False])

@@ -384,8 +384,6 @@ class TestGridConnectivity:
             [0.07, 0.07, -0.015, -0.015]
         ]
 
-        assert np.array_equal(all_coupling_weights1, all_coupling_weights1_expected)
-
         # -----------------------------------------------------------------------
 
         oscillators2, neuron_oscillator_map2 = self.connectivity2._assign_oscillators()

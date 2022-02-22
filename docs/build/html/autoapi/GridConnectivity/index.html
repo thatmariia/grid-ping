@@ -209,25 +209,9 @@
 </table></div>
 <dl class="py class">
 <dt class="sig sig-object py" id="GridConnectivity.GridConnectivity">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">GridConnectivity.</span></span><span class="sig-name descname"><span class="pre">GridConnectivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nr_excit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_inhibit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_oscillators</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridConnectivity.GridConnectivity" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">GridConnectivity.</span></span><span class="sig-name descname"><span class="pre">GridConnectivity</span></span><a class="headerlink" href="#GridConnectivity.GridConnectivity" title="Permalink to this definition">#</a></dt>
 <dd><p>This class constructs the connectivity for the oscillatory network.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>nr_excit</strong> – number of excitatory neurons in the network.</p></li>
-<li><p><strong>nr_inhibit</strong> – number of inhibitory neurons in the network.</p></li>
-<li><p><strong>nr_oscillators</strong> – number of oscillators in the network.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Neuron_type nr_excit</dt>
-<dd class="field-even"><p>int</p>
-</dd>
-<dt class="field-odd">Neuron_type nr_inhibit</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-<dt class="field-even">Neuron_type nr_oscillators</dt>
-<dd class="field-even"><p>int</p>
-</dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><p>AssertionError: If the number of oscillators is smaller than 1.</p>
 </dd>
@@ -243,24 +227,10 @@ an equal number of inhibitory neurons in each oscillator.</p>
 <dd class="field-even"><p>AssertionError: if the number of oscillators is not a square as oscillators should be arranged in a square grid.</p>
 </dd>
 <dt class="field-odd">Variables</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>nr_excit</strong> – number of excitatory neurons in the network.</p></li>
-<li><p><strong>nr_inhibit</strong> – number of inhibitory neurons in the network.</p></li>
-<li><p><strong>nr_oscillators</strong> – number of oscillators in the network.</p></li>
-<li><p><strong>K</strong> – Matrix of all coupling weights.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>K</strong> – Matrix of all coupling weights.</p>
 </dd>
-<dt class="field-even">Neuron_type nr_excit</dt>
-<dd class="field-even"><p>int</p>
-</dd>
-<dt class="field-odd">Neuron_type nr_inhibit</dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-<dt class="field-even">Neuron_type nr_oscillators</dt>
-<dd class="field-even"><p>int</p>
-</dd>
-<dt class="field-odd">Neuron_type K</dt>
-<dd class="field-odd"><p>ndarray[ndarray[float]]</p>
+<dt class="field-even">Neuron_type K</dt>
+<dd class="field-even"><p>ndarray[ndarray[float]]</p>
 </dd>
 </dl>
 <dl class="py method">
@@ -283,8 +253,6 @@ an equal number of inhibitory neurons in each oscillator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>nr_excit</strong> – number of excitatory neurons.</p></li>
-<li><p><strong>nr_inhibit</strong> – number of inhibitory neurons.</p></li>
 <li><p><strong>oscillators</strong> – list of oscillators in the network.</p></li>
 <li><p><strong>neuron_oscillator_map</strong> – a dictionary mapping a neuron to the oscillator it belongs to.</p></li>
 </ul>
@@ -378,17 +346,7 @@ an equal number of inhibitory neurons in each oscillator.</p>
 <dd><p>Assigns coupling weights.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>nr_excit</strong> – number of excitatory neurons in the network.</p></li>
-<li><p><strong>nr_inhibit</strong> – number of inhibitory neurons in the network.</p></li>
-<li><p><strong>KIE</strong> (<em>KEE</em><em>, </em><em>KII</em><em>, </em><em>KEI</em><em>,</em>) – coupling weights of respective connections.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Neuron_type nr_excit</dt>
-<dd class="field-even"><p>int</p>
-</dd>
-<dt class="field-odd">Neuron_type nr_inhibit</dt>
-<dd class="field-odd"><p>int</p>
+<dd class="field-odd"><p><strong>KIE</strong> (<em>KEE</em><em>, </em><em>KII</em><em>, </em><em>KEI</em><em>,</em>) – coupling weights of respective connections.</p>
 </dd>
 <dt class="field-even">Neuron_type KEE, KII, KEI, KIE</dt>
 <dd class="field-even"><p>list[list[int]]</p>

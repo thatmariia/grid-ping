@@ -1,5 +1,23 @@
+from src.constants import *
+from src.NeuronTypes import *
+
 import numpy as np
 import math
+
+def neur_slice(neuron_type):
+    """
+    The setup: we put excitatory neurons in lists before inhibitory. This function returns relevant slices.
+
+    :param neuron_type: the type of neuron we need indices for.
+    :type neuron_type: NeuronTypes
+
+    :return: a slice for the neurons of given type.
+    :rtype: slice
+    """
+
+    if neuron_type == NeuronTypes.E:
+        return slice(NR_NEURONS[NeuronTypes.E])
+    return slice(NR_NEURONS[NeuronTypes.E], NR_NEURONS[NeuronTypes.E] + NR_NEURONS[NeuronTypes.I])
 
 
 def euclidian_dist_R2(p1, p2):

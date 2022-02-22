@@ -31,10 +31,10 @@ def euclidian_dist_R2(p1, p2):
     Calculates the Eaclidian distance between two 2D points.
 
     :param p1: coordinates of point 1.
-    :neuron_type p1: tuple[float]
+    :type p1: tuple[float]
 
     :param p2: coordinates of point 2.
-    :neuron_type p2: tuple[float]
+    :type p2: tuple[float]
 
     :return: the Eaclidian distance between two 2D points.
     :rtype: float

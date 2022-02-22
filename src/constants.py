@@ -1,12 +1,5 @@
 from src.NeuronTypes import *
 
-NR_NEURONS = {
-    NeuronTypes.E: 2,
-    NeuronTypes.I: 2
-}
-
-NR_OSCILLATORS = 1
-
 """Network connectivity constants"""
 
 MAX_CONNECT_STRENGTH = {

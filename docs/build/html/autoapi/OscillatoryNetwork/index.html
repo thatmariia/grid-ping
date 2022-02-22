@@ -209,17 +209,26 @@
 </table></div>
 <dl class="py class">
 <dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">OscillatoryNetwork.</span></span><span class="sig-name descname"><span class="pre">OscillatoryNetwork</span></span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">OscillatoryNetwork.</span></span><span class="sig-name descname"><span class="pre">OscillatoryNetwork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nr_excitatory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_inhibitory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_oscillators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork" title="Permalink to this definition">#</a></dt>
 <dd><p>This class runs the simulation of the network of OscillatoryNetwork oscillators.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p>AssertionError: if the number of excitatory neurons is smaller than 2.</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nr_excitatory</strong> (<em>int</em>) – number of excitatory neurons in the network.</p></li>
+<li><p><strong>nr_inhibitory</strong> (<em>int</em>) – number of inhibitory neurons in the network.</p></li>
+<li><p><strong>nr_oscillators</strong> (<em>int</em>) – number of oscillators in the network.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p>AssertionError: if the number of inhibitory neurons is smaller than 2.</p>
+<dd class="field-even"><p>AssertionError: if the number of excitatory neurons is smaller than 2.</p>
 </dd>
-<dt class="field-odd">Variables</dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>AssertionError: if the number of inhibitory neurons is smaller than 2.</p>
+</dd>
+<dt class="field-even">Variables</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>nr_neurons</strong> – number of neurons of each type in the network.</p></li>
+<li><p><strong>nr_oscillators</strong> – number of oscillators in the network.</p></li>
 <li><p><strong>potential</strong> – voltage (membrane potential).</p></li>
 <li><p><strong>recovery</strong> – membrane recovery variable.</p></li>
 <li><p><strong>izhi_alpha</strong> – timescale of recovery variable u.</p></li>

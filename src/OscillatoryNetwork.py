@@ -11,11 +11,27 @@ class OscillatoryNetwork:
     """
     This class runs the simulation of the network of OscillatoryNetwork oscillators.
 
+    :param nr_excitatory: number of excitatory neurons in the network.
+    :type nr_excitatory: int
+
+    :param nr_inhibitory: number of inhibitory neurons in the network.
+    :type nr_inhibitory: int
+
+    :param nr_oscillators: number of oscillators in the network.
+    :type nr_oscillators: int
+
+
     :raises:
         AssertionError: if the number of excitatory neurons is smaller than 2.
     :raises:
         AssertionError: if the number of inhibitory neurons is smaller than 2.
 
+
+    :ivar nr_neurons: number of neurons of each type in the network.
+    :type nr_neurons: dict[NeuronTypes: int]
+
+    :ivar nr_oscillators: number of oscillators in the network.
+    :type nr_oscillators: int
 
     :ivar potential: voltage (membrane potential).
     :type potential: ndarray[float]
@@ -36,31 +52,37 @@ class OscillatoryNetwork:
     :type izhi_zeta: ndarray[float]
     """
 
-    def __init__(self):
+    def __init__(self, nr_excitatory, nr_inhibitory, nr_oscillators=1):
 
         # FIXME:: this assertions are only there because of the stim_input
-        assert NR_NEURONS[NeuronTypes.E] >= 2, "Number of excitatory neurons cannot be smaller than 2."
-        assert NR_NEURONS[NeuronTypes.I] >= 2, "Number of inhibitory neurons cannot be smaller than 2."
+        assert nr_excitatory >= 2, "Number of excitatory neurons cannot be smaller than 2."
+        assert nr_inhibitory >= 2, "Number of inhibitory neurons cannot be smaller than 2."
+
+        self.nr_neurons = {
+            NeuronTypes.E: nr_excitatory,
+            NeuronTypes.I: nr_inhibitory
+        }
+        self.nr_oscillators = nr_oscillators
 
         self.izhi_alpha = np.array(
-            [IZHI_ALPHA[NeuronTypes.E] for _ in range(NR_NEURONS[NeuronTypes.E])] +
-            [IZHI_ALPHA[NeuronTypes.I] for _ in range(NR_NEURONS[NeuronTypes.I])]
+            [IZHI_ALPHA[NeuronTypes.E] for _ in range(self.nr_neurons[NeuronTypes.E])] +
+            [IZHI_ALPHA[NeuronTypes.I] for _ in range(self.nr_neurons[NeuronTypes.I])]
         )
         self.izhi_beta = np.array(
-            [IZHI_BETA[NeuronTypes.E] for _ in range(NR_NEURONS[NeuronTypes.E])] +
-            [IZHI_BETA[NeuronTypes.I] for _ in range(NR_NEURONS[NeuronTypes.I])]
+            [IZHI_BETA[NeuronTypes.E] for _ in range(self.nr_neurons[NeuronTypes.E])] +
+            [IZHI_BETA[NeuronTypes.I] for _ in range(self.nr_neurons[NeuronTypes.I])]
         )
         self.izhi_gamma = np.array(
-            [IZHI_GAMMA[NeuronTypes.E] for _ in range(NR_NEURONS[NeuronTypes.E])] +
-            [IZHI_GAMMA[NeuronTypes.I] for _ in range(NR_NEURONS[NeuronTypes.I])]
+            [IZHI_GAMMA[NeuronTypes.E] for _ in range(self.nr_neurons[NeuronTypes.E])] +
+            [IZHI_GAMMA[NeuronTypes.I] for _ in range(self.nr_neurons[NeuronTypes.I])]
         )
         self.izhi_zeta = np.array(
-            [IZHI_ZETA[NeuronTypes.E] for _ in range(NR_NEURONS[NeuronTypes.E])] +
-            [IZHI_ZETA[NeuronTypes.I] for _ in range(NR_NEURONS[NeuronTypes.I])]
+            [IZHI_ZETA[NeuronTypes.E] for _ in range(self.nr_neurons[NeuronTypes.E])] +
+            [IZHI_ZETA[NeuronTypes.I] for _ in range(self.nr_neurons[NeuronTypes.I])]
         )
 
         self.potential = np.array(
-            [INIT_MEMBRANE_POTENTIAL for _ in range(NR_NEURONS[NeuronTypes.E] + NR_NEURONS[NeuronTypes.I])]
+            [INIT_MEMBRANE_POTENTIAL for _ in range(self.nr_neurons[NeuronTypes.E] + self.nr_neurons[NeuronTypes.I])]
         )
         self.recovery = np.multiply(self.izhi_beta, self.potential)
 
@@ -77,12 +99,15 @@ class OscillatoryNetwork:
         # spike timings
         firing_times = []
 
-        ampa = np.zeros(NR_NEURONS[NeuronTypes.E])
-        gaba = np.zeros(NR_NEURONS[NeuronTypes.I])
+        ampa = np.zeros(self.nr_neurons[NeuronTypes.E])
+        gaba = np.zeros(self.nr_neurons[NeuronTypes.I])
 
         stim_input = self._create_main_input_stimulus()
 
-        connectivity = GridConnectivity()
+        connectivity = GridConnectivity(
+            nr_neurons=self.nr_neurons,
+            nr_oscillators=self.nr_oscillators
+        )
 
         print("Simulation started")
 
@@ -163,7 +188,9 @@ class OscillatoryNetwork:
         :rtype: ndarray[float]
         """
 
-        potentials = self.potential[neur_slice(neuron_type)]
+        potentials = self.potential[
+            neur_slice(neuron_type, self.nr_neurons[NeuronTypes.E], self.nr_neurons[NeuronTypes.I])
+        ]
         # TODO:: in the paper, this computation is different
         alpha = potentials / 10.0 + 2
         z = np.tanh(alpha)
@@ -181,8 +208,8 @@ class OscillatoryNetwork:
         """
 
         return np.append(
-            GAUSSIAN_INPUT[NeuronTypes.E] * np.random.randn(NR_NEURONS[NeuronTypes.E]),
-            GAUSSIAN_INPUT[NeuronTypes.I] * np.random.randn(NR_NEURONS[NeuronTypes.I])
+            GAUSSIAN_INPUT[NeuronTypes.E] * np.random.randn(self.nr_neurons[NeuronTypes.E]),
+            GAUSSIAN_INPUT[NeuronTypes.I] * np.random.randn(self.nr_neurons[NeuronTypes.I])
         )
 
     def _create_main_input_stimulus(self):
@@ -197,11 +224,11 @@ class OscillatoryNetwork:
         amplitude = 1
         # mean input level to RS cells
         mean_input_lvl_RS = 7
-        step = 2 * pi / (NR_NEURONS[NeuronTypes.E] - 1)
+        step = 2 * pi / (self.nr_neurons[NeuronTypes.E] - 1)
         stim_input = mean_input_lvl_RS + amplitude * np.sin(
             crange(-pi, pi, step)
         )
         # additional mean input to FS cells
-        stim_input = np.append(stim_input, 3.5 * np.ones(NR_NEURONS[NeuronTypes.I]))
+        stim_input = np.append(stim_input, 3.5 * np.ones(self.nr_neurons[NeuronTypes.I]))
 
         return stim_input

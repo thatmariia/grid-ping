@@ -10,6 +10,13 @@ class GridConnectivity:
     """
     This class constructs the connectivity for the oscillatory network.
 
+    :param nr_neurons: number of neurons of each type in the network.
+    :type nr_neurons: dict[NeuronTypes: int]
+
+    :param nr_oscillators: number of oscillators in the network.
+    :type nr_oscillators: int
+
+
     :raises:
         AssertionError: If the number of oscillators is smaller than 1.
     :raises:
@@ -21,22 +28,32 @@ class GridConnectivity:
     :raises:
         AssertionError: if the number of oscillators is not a square as oscillators should be arranged in a square grid.
 
+
+    :ivar nr_neurons: number of neurons of each type in the network.
+    :type nr_neurons: dict[NeuronTypes: int]
+
+    :ivar nr_oscillators: number of oscillators in the network.
+    :type nr_oscillators: int
+
     :ivar coupling_weights: Matrix of all coupling weights.
     :type coupling_weights: ndarray[ndarray[float]]
     """
 
-    def __init__(self):
+    def __init__(self, nr_neurons, nr_oscillators):
 
-        assert NR_OSCILLATORS >= 1, "Number of oscillators cannot be smaller than 1."
-        assert NR_NEURONS[NeuronTypes.E] % NR_OSCILLATORS == 0, \
+        assert nr_oscillators >= 1, "Number of oscillators cannot be smaller than 1."
+        assert nr_neurons[NeuronTypes.E] % nr_oscillators == 0, \
             "Cannot allocated equal number of excitatory neurons to each oscillator. Make sure the number of " \
             "oscillators divides the number of excitatory neurons. "
-        assert NR_NEURONS[NeuronTypes.I] % NR_OSCILLATORS == 0, \
+        assert nr_neurons[NeuronTypes.I] % nr_oscillators == 0, \
             "Cannot allocated equal number of inhibitory neurons to each oscillator. Make sure the number of " \
             "oscillators divides the number of inhibitory neurons. "
-        assert int(math.sqrt(NR_OSCILLATORS)) == math.sqrt(NR_OSCILLATORS), \
+        assert int(math.sqrt(nr_oscillators)) == math.sqrt(nr_oscillators), \
             "The oscillators should be arranged in a square grid. Make sure the number of oscillators is a perfect " \
             "square. "
+
+        self.nr_neurons = nr_neurons
+        self.nr_oscillators = nr_oscillators
 
         oscillators, neuron_oscillator_map = self._assign_oscillators()
 
@@ -59,32 +76,30 @@ class GridConnectivity:
             NeuronTypes.I: {}
         }
 
-        grid_size = int(math.sqrt(NR_OSCILLATORS))  # now assuming the grid is square
+        grid_size = int(math.sqrt(self.nr_oscillators))  # now assuming the grid is square
 
         #  number of neurons of each neuron_type in each oscillator
-        nr_excit_per_oscillator = NR_NEURONS[NeuronTypes.E] // NR_OSCILLATORS
-        nr_inhibit_per_oscillator = NR_NEURONS[NeuronTypes.I] // NR_OSCILLATORS
+        nr_ex_per_oscillator = self.nr_neurons[NeuronTypes.E] // self.nr_oscillators
+        nr_in_per_oscillator = self.nr_neurons[NeuronTypes.I] // self.nr_oscillators
 
-        for i in range(NR_OSCILLATORS):
+        for i in range(self.nr_oscillators):
             x = i // grid_size
             y = i % grid_size
 
-            excit_ids = []
-
-            for neuron_id in range(i * nr_excit_per_oscillator, (i + 1) * nr_excit_per_oscillator):
-                excit_ids.append(neuron_id)
+            ex_ids = []
+            for neuron_id in range(i * nr_ex_per_oscillator, (i + 1) * nr_ex_per_oscillator):
+                ex_ids.append(neuron_id)
                 neuron_oscillator_map[NeuronTypes.E][neuron_id] = i
 
-            inhibit_ids = []
-
-            for neuron_id in range(i * nr_inhibit_per_oscillator, (i + 1) * nr_inhibit_per_oscillator):
-                inhibit_ids.append(neuron_id)
+            in_ids = []
+            for neuron_id in range(i * nr_in_per_oscillator, (i + 1) * nr_in_per_oscillator):
+                in_ids.append(neuron_id)
                 neuron_oscillator_map[NeuronTypes.I][neuron_id] = i
 
             oscillator = Oscillator(
                 location=(x, y),
-                excit_ids=excit_ids,
-                inhibit_ids=inhibit_ids
+                excit_ids=ex_ids,
+                inhibit_ids=in_ids
             )
             oscillators.append(oscillator)
 
@@ -104,15 +119,15 @@ class GridConnectivity:
         :rtype: ndarray[ndarray[float]]
         """
 
-        nr_neurons = NR_NEURONS[NeuronTypes.E] + NR_NEURONS[NeuronTypes.I]
+        nr_neurons = self.nr_neurons[NeuronTypes.E] + self.nr_neurons[NeuronTypes.I]
         all_coupling_weights = np.zeros((nr_neurons, nr_neurons))
 
         for neuron_types in list(product([NeuronTypes.E, NeuronTypes.I], repeat=2)):
             dist = self._get_neurons_dist(
                 neuron_type1=neuron_types[0],
                 neuron_type2=neuron_types[1],
-                nr1=NR_NEURONS[neuron_types[0]],
-                nr2=NR_NEURONS[neuron_types[1]],
+                nr1=self.nr_neurons[neuron_types[0]],
+                nr2=self.nr_neurons[neuron_types[1]],
                 oscillators=oscillators,
                 neuron_oscillator_map=neuron_oscillator_map
             )
@@ -123,9 +138,15 @@ class GridConnectivity:
             )
             # TODO:: why is this?
             if neuron_types[0] == neuron_types[1]:
-                all_coupling_weights[neur_slice(neuron_types[0]), neur_slice(neuron_types[1])] = types_coupling_weights
+                all_coupling_weights[
+                    neur_slice(neuron_types[0], self.nr_neurons[NeuronTypes.E], self.nr_neurons[NeuronTypes.I]),
+                    neur_slice(neuron_types[1], self.nr_neurons[NeuronTypes.E], self.nr_neurons[NeuronTypes.I])
+                ] = types_coupling_weights
             else:
-                all_coupling_weights[neur_slice(neuron_types[1]), neur_slice(neuron_types[0])] = types_coupling_weights.T
+                all_coupling_weights[
+                    neur_slice(neuron_types[1], self.nr_neurons[NeuronTypes.E], self.nr_neurons[NeuronTypes.I]),
+                    neur_slice(neuron_types[0], self.nr_neurons[NeuronTypes.E], self.nr_neurons[NeuronTypes.I])
+                ] = types_coupling_weights.T
 
         return np.nan_to_num(all_coupling_weights)
 

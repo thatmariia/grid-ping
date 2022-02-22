@@ -209,25 +209,35 @@
 </table></div>
 <dl class="py class">
 <dt class="sig sig-object py" id="GridConnectivity.GridConnectivity">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">GridConnectivity.</span></span><span class="sig-name descname"><span class="pre">GridConnectivity</span></span><a class="headerlink" href="#GridConnectivity.GridConnectivity" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">GridConnectivity.</span></span><span class="sig-name descname"><span class="pre">GridConnectivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nr_neurons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_oscillators</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridConnectivity.GridConnectivity" title="Permalink to this definition">#</a></dt>
 <dd><p>This class constructs the connectivity for the oscillatory network.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p>AssertionError: If the number of oscillators is smaller than 1.</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nr_neurons</strong> (<em>dict</em><em>[</em><em>NeuronTypes: int</em><em>]</em>) – number of neurons of each type in the network.</p></li>
+<li><p><strong>nr_oscillators</strong> (<em>int</em>) – number of oscillators in the network.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p>AssertionError: if number of excitatory neurons doesn’t divide the number of oscillators as there should be
+<dd class="field-even"><p>AssertionError: If the number of oscillators is smaller than 1.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>AssertionError: if number of excitatory neurons doesn’t divide the number of oscillators as there should be
 an equal number of excitatory neurons in each oscillator.</p>
 </dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p>AssertionError: if number of inhibitory neurons doesn’t divide the number of oscillators as there should be
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>AssertionError: if number of inhibitory neurons doesn’t divide the number of oscillators as there should be
 an equal number of inhibitory neurons in each oscillator.</p>
 </dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p>AssertionError: if the number of oscillators is not a square as oscillators should be arranged in a square grid.</p>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>AssertionError: if the number of oscillators is not a square as oscillators should be arranged in a square grid.</p>
 </dd>
-<dt class="field-odd">Variables</dt>
-<dd class="field-odd"><p><strong>coupling_weights</strong> – Matrix of all coupling weights.</p>
+<dt class="field-even">Variables</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>nr_neurons</strong> – number of neurons of each type in the network.</p></li>
+<li><p><strong>nr_oscillators</strong> – number of oscillators in the network.</p></li>
+<li><p><strong>coupling_weights</strong> – Matrix of all coupling weights.</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py method">

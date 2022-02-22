@@ -53,6 +53,8 @@ def cust_range(*args, rtol=1e-05, atol=1e-08, include=[True, False]):
     >>> numpy.arange(1, 1.3, 0.1)
     array([1. , 1.1, 1.2, 1.3])
 
+    Code taken from https://stackoverflow.com/questions/50299172/python-range-or-numpy-arange-with-end-limit-include
+
     args: [start, ]stop, [step, ]
         as in numpy.arange
     rtol, atol: floats

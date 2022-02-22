@@ -39,23 +39,23 @@ class OscillatoryNetwork:
     :ivar nr_oscillators: number of oscillators in the network.
     :type nr_oscillators: int
 
-    :ivar v: voltage (membrane potential).
-    :type v: ndarray[float]
+    :ivar potential: voltage (membrane potential).
+    :type potential: ndarray[float]
 
-    :ivar u: membrane recovery variable.
-    :type u: ndarray[float]
+    :ivar recovery: membrane recovery variable.
+    :type recovery: ndarray[float]
 
-    :ivar a: timescale of recovery variable u.
-    :type a: ndarray[float]
+    :ivar izhi_alpha: timescale of recovery variable u.
+    :type izhi_alpha: ndarray[float]
 
-    :ivar b: sensitivity of u to sub-threshold oscillations of v.
-    :type b: ndarray[float]
+    :ivar izhi_beta: sensitivity of u to sub-threshold oscillations of v.
+    :type izhi_beta: ndarray[float]
 
-    :ivar c: membrane voltage after spike (after-spike reset of v).
-    :type c: ndarray[float]
+    :ivar izhi_gamma: membrane voltage after spike (after-spike reset of v).
+    :type izhi_gamma: ndarray[float]
 
-    :ivar d: after-spike reset of recovery variable u.
-    :type d: ndarray[float]
+    :ivar izhi_zeta: after-spike reset of recovery variable u.
+    :type izhi_zeta: ndarray[float]
     """
 
     def __init__(self, nr_excit, nr_inhibit, nr_oscillators=1):
@@ -69,13 +69,25 @@ class OscillatoryNetwork:
         self.nr_neurons = self.nr_excit + self.nr_inhibit
         self.nr_oscillators = nr_oscillators
 
-        self.a = np.array([a_EXCIT for _ in range(self.nr_excit)] + [a_INHIBIT for _ in range(self.nr_inhibit)])
-        self.b = np.array([b_EXCIT for _ in range(self.nr_excit)] + [b_INHIBIT for _ in range(self.nr_inhibit)])
-        self.c = np.array([c_EXCIT for _ in range(self.nr_excit)] + [c_INHIBIT for _ in range(self.nr_inhibit)])
-        self.d = np.array([d_EXCIT for _ in range(self.nr_excit)] + [d_INHIBIT for _ in range(self.nr_inhibit)])
+        self.izhi_alpha = np.array(
+            [IZHI_ALPHA[NeuronTypes.E] for _ in range(nr_excit)] +
+            [IZHI_ALPHA[NeuronTypes.I] for _ in range(nr_inhibit)]
+        )
+        self.izhi_beta = np.array(
+            [IZHI_BETA[NeuronTypes.E] for _ in range(nr_excit)] +
+            [IZHI_BETA[NeuronTypes.I] for _ in range(nr_inhibit)]
+        )
+        self.izhi_gamma = np.array(
+            [IZHI_GAMMA[NeuronTypes.E] for _ in range(nr_excit)] +
+            [IZHI_GAMMA[NeuronTypes.I] for _ in range(nr_inhibit)]
+        )
+        self.izhi_zeta = np.array(
+            [IZHI_ZETA[NeuronTypes.E] for _ in range(nr_excit)] +
+            [IZHI_ZETA[NeuronTypes.I] for _ in range(nr_inhibit)]
+        )
 
-        self.v = np.array([v_INIT for _ in range(self.nr_excit + self.nr_inhibit)])
-        self.u = np.multiply(self.b, self.v)
+        self.potential = np.array([INIT_MEMBRANE_POTENTIAL for _ in range(nr_excit + nr_inhibit)])
+        self.recovery = np.multiply(self.izhi_beta, self.potential)
 
     def run_simulation(self, simulation_time, dt):
         """
@@ -105,12 +117,12 @@ class OscillatoryNetwork:
 
         for t in tqdm(range(simulation_time)):
 
-            fired = np.argwhere(self.v > 30).flatten()  # indices of spikes
+            fired = np.argwhere(self.potential > 30).flatten()  # indices of spikes
             # TODO:: why do we need firing_times?
             firing_times = [firing_times, [t for _ in range(len(fired))] + fired]
             for f in fired:
-                self.v[f] = self.c[f]
-                self.u[f] += self.d[f]
+                self.potential[f] = self.izhi_gamma[f]
+                self.recovery[f] += self.izhi_zeta[f]
 
             # thalamic input
             I = np.add(stim_input, self._change_thalamic_input())
@@ -124,9 +136,9 @@ class OscillatoryNetwork:
             # form all connected neurons
             I = np.add(I, np.matmul(connectivity.K, gsyn))
 
-            self.v = np.add(self.v, self._change_v(I=I))
-            self.v = np.add(self.v, self._change_v(I=I))
-            self.u = np.add(self.u, self._change_u())
+            self.potential = np.add(self.potential, self._change_v(I=I))
+            self.potential = np.add(self.potential, self._change_v(I=I))
+            self.recovery = np.add(self.recovery, self._change_u())
 
         print("Simulation ended")
 
@@ -139,8 +151,8 @@ class OscillatoryNetwork:
         """
 
         return np.multiply(
-            self.a,
-            np.multiply(self.b, self.v) - self.u
+            self.izhi_alpha,
+            np.multiply(self.izhi_beta, self.potential) - self.recovery
         )
 
     def _change_v(self, I):
@@ -154,7 +166,7 @@ class OscillatoryNetwork:
         """
 
         # TODO:: why do we multiply the equation for dv/dt with 0.5 and then call this function twice in run_simulation?
-        return 0.5 * (0.04 * self.v ** 2 + 5 * self.v + 140 - self.u + I)
+        return 0.5 * (0.04 * self.potential ** 2 + 5 * self.potential + 140 - self.recovery + I)
 
     def _change_gaba(self, gaba, dt):
         """
@@ -168,11 +180,11 @@ class OscillatoryNetwork:
         """
 
         # TODO:: in the paper, this computation is different
-        alpha = self.v[self.nr_excit:] / 10.0 + 2
+        alpha = self.potential[self.nr_excit:] / 10.0 + 2
         z = np.tanh(alpha)
         comp1 = (z + 1) / 2.0
-        comp2 = (1 - gaba) / RISE_GABA
-        comp3 = gaba / DECAY_GABA
+        comp2 = (1 - gaba) / SYNAPTIC_CONST_RISE[NeuronTypes.I]
+        comp3 = gaba / SYNAPTIC_CONST_DECAY[NeuronTypes.I]
         return dt * 0.3 * (np.multiply(comp1, comp2) - comp3)
 
     def _change_ampa(self, ampa, dt):
@@ -186,11 +198,11 @@ class OscillatoryNetwork:
         :rtype: ndarray[float]
         """
 
-        alpha = self.v[:self.nr_excit] / 10.0 + 2
+        alpha = self.potential[:self.nr_excit] / 10.0 + 2
         z = np.tanh(alpha)
         comp1 = (z + 1) / 2.0
-        comp2 = (1 - ampa) / RISE_AMPA
-        comp3 = ampa / DECAY_AMPA
+        comp2 = (1 - ampa) / SYNAPTIC_CONST_RISE[NeuronTypes.E]
+        comp3 = ampa / SYNAPTIC_CONST_DECAY[NeuronTypes.E]
         return dt * 0.3 * (np.multiply(comp1, comp2) - comp3)
 
     def _change_thalamic_input(self):
@@ -202,8 +214,8 @@ class OscillatoryNetwork:
         """
 
         return np.append(
-            GAUSSIAN_EXCIT_INPUT * np.random.randn(self.nr_excit),
-            GAUSSIAN_INHIBIT_INPUT * np.random.randn(self.nr_inhibit)
+            GAUSSIAN_INPUT[NeuronTypes.E] * np.random.randn(self.nr_excit),
+            GAUSSIAN_INPUT[NeuronTypes.I] * np.random.randn(self.nr_inhibit)
         )
 
     def _create_main_input_stimulus(self):

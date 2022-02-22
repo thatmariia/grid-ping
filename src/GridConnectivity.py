@@ -168,10 +168,28 @@ class GridConnectivity:
             neuron_oscillator_map=neuron_oscillator_map
         )
 
-        return self._compute_KXX(dist=dist_EE, XX=EE, sXX=sEE), \
-               self._compute_KXX(dist=dist_II, XX=II, sXX=sII), \
-               self._compute_KXX(dist=dist_EI, XX=EI, sXX=sEI), \
-               self._compute_KXX(dist=dist_IE, XX=IE, sXX=sIE)
+        KEE =  self._compute_KXX(
+            dist=dist_EE,
+            XX=MAX_CONNECT_STRENGTH[(NeuronTypes.E, NeuronTypes.E)],
+            sXX=SPATIAL_CONST[(NeuronTypes.E, NeuronTypes.E)]
+        )
+        KII = self._compute_KXX(
+            dist=dist_II,
+            XX=MAX_CONNECT_STRENGTH[(NeuronTypes.I, NeuronTypes.I)],
+            sXX=SPATIAL_CONST[(NeuronTypes.I, NeuronTypes.I)]
+        )
+        KEI = self._compute_KXX(
+            dist=dist_EI,
+            XX=MAX_CONNECT_STRENGTH[(NeuronTypes.E, NeuronTypes.I)],
+            sXX=SPATIAL_CONST[(NeuronTypes.E, NeuronTypes.I)]
+        )
+        KIE = self._compute_KXX(
+            dist=dist_IE,
+            XX=MAX_CONNECT_STRENGTH[(NeuronTypes.I, NeuronTypes.E)],
+            sXX=SPATIAL_CONST[(NeuronTypes.I, NeuronTypes.E)]
+        )
+
+        return KEE, KII, KEI, KIE
 
     def _get_neurons_dist(self, X1, X2, nr1, nr2, oscillators, neuron_oscillator_map):
         """

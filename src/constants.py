@@ -1,57 +1,67 @@
+from NeuronTypes import *
 
 """Network connectivity constants"""
 
-# excitatory  to excitatory
-EE = 0.004
-sEE = 0.4
+MAX_CONNECT_STRENGTH = {
+    (NeuronTypes.E, NeuronTypes.E): 0.004,
+    (NeuronTypes.E, NeuronTypes.I): 0.07,
+    (NeuronTypes.I, NeuronTypes.E): -0.04,
+    (NeuronTypes.I, NeuronTypes.I): -0.015
+}
 
-# excitatory  to inhibitory
-EI = 0.07
-sEI = 0.3
-
-# inhibitory to excitatory
-IE = -0.04
-sIE = 0.3
-
-# inhibitory to inhibitory
-II = -0.015
-sII = 0.3
+SPATIAL_CONST = {
+    (NeuronTypes.E, NeuronTypes.E): 0.4,
+    (NeuronTypes.E, NeuronTypes.I): 0.3,
+    (NeuronTypes.I, NeuronTypes.E): 0.3,
+    (NeuronTypes.I, NeuronTypes.I): 0.3
+}
 
 """Izhikevich neuron params"""
 
-# for timescale of recovery variable u
-a_EXCIT = 0.02
-a_INHIBIT = 0.1
+# for timescale of recovery variable recovery
+IZHI_ALPHA = {
+    NeuronTypes.E: 0.02,
+    NeuronTypes.I: 0.1
+}
 
-# for sensitivity of u to sub-threshold oscillations of v
-b_EXCIT = 0.2
-b_INHIBIT = 0.2
+# for sensitivity of recovery to sub-threshold oscillations of potential
+IZHI_BETA = {
+    NeuronTypes.E: 0.2,
+    NeuronTypes.I: 0.2
+}
 
-# for membrane voltage after spike (after-spike reset of v)
-c_EXCIT = -65
-c_INHIBIT = -65
+# for membrane voltage after spike (after-spike reset of potential)
+IZHI_GAMMA = {
+    NeuronTypes.E: -65,
+    NeuronTypes.I: -65
+}
 
-# for after-spike reset of recovery variable u
-d_EXCIT = 8
-d_INHIBIT = 2
+# for after-spike reset of recovery variable recovery
+IZHI_ZETA = {
+    NeuronTypes.E: 8,
+    NeuronTypes.I: 2
+}
 
-# for initial values of v = voltage (membrane potential)
-v_INIT = -65
+# for initial values of potential = voltage (membrane potential)
+INIT_MEMBRANE_POTENTIAL = -65
 
 """Gaussian input"""
 
-# Gaussian excitatory input
-GAUSSIAN_EXCIT_INPUT = 1.5
-
-# Gaussian inhibitory input
-GAUSSIAN_INHIBIT_INPUT = 1.5
+GAUSSIAN_INPUT = {
+    NeuronTypes.E: 1.5,
+    NeuronTypes.I: 1.5
+}
 
 """Synaptic constants"""
 
 # TODO
-DECAY_AMPA = 1.0
-RISE_AMPA = 0.1
+SYNAPTIC_CONST_RISE = {
+    NeuronTypes.E: 0.1,
+    NeuronTypes.I: 0.1
+}
 
 # TODO
-DECAY_GABA = 4.0
-RISE_GABA = 0.1
+SYNAPTIC_CONST_DECAY = {
+    NeuronTypes.E: 1.0,
+    NeuronTypes.I: 4.0
+}

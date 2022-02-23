@@ -8,7 +8,25 @@ from itertools import product
 
 class GridConnectivity:
     """
-    This class constructs the connectivity for the oscillatory network.
+    This class constructs the connectivity matrix for the oscillatory network.
+
+    The interaction strength of lateral connections is represented by a matrix :math:`K` of pairwise coupling weights
+    defined by an exponential function decaying by the euclidean distance between the oscillators they belong to:
+
+    :math:`K_{v, w} = C_{ \mathsf{type}(v), \mathsf{type}(w)} \exp (-\| \mathsf{loc}(v), \mathsf{loc}(w) \| / s_{v, w}),`
+
+    where
+
+    * :math:`v, w` are two arbitrary neurons in the network,
+    * :math:`\mathsf{type}(v)` maps a neuron to its type (excitatory or inhibitory),
+    * :math:`\mathsf{loc}(v)` maps a neuron to its location on the grid,
+    * :math:`s_{v, w}` is the spatial constant (see :obj:`constants.SPATIAL_CONST`).
+
+    This equation was introduced in :cite:p:`Izhikevich2003`.
+
+    This class performs the assignment of neurons to relevant oscillators arranged in a grid and computes the matrix
+    of coupling weights.
+
 
     :param nr_neurons: number of neurons of each type in the network.
     :type nr_neurons: dict[NeuronTypes: int]
@@ -57,7 +75,7 @@ class GridConnectivity:
 
         oscillators, neuron_oscillator_map = self._assign_oscillators()
 
-        self.coupling_weights = self.compute_coupling_weights(
+        self.coupling_weights = self._compute_coupling_weights(
             oscillators=oscillators,
             neuron_oscillator_map=neuron_oscillator_map
         )
@@ -105,7 +123,7 @@ class GridConnectivity:
 
         return oscillators, neuron_oscillator_map
 
-    def compute_coupling_weights(self, oscillators, neuron_oscillator_map):
+    def _compute_coupling_weights(self, oscillators, neuron_oscillator_map):
         """
         Computes the coupling weights between all neurons.
 

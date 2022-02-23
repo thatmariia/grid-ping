@@ -376,7 +376,7 @@ class TestGridConnectivity:
 
     def test_compute_coupling_weights(self):
         oscillators1, neuron_oscillator_map1 = self.connectivity1._assign_oscillators()
-        all_coupling_weights1 = self.connectivity1.compute_coupling_weights(oscillators1, neuron_oscillator_map1)
+        all_coupling_weights1 = self.connectivity1._compute_coupling_weights(oscillators1, neuron_oscillator_map1)
         all_coupling_weights1_expected = [
             [0.004, 0.004, -0.04, -0.04],
             [0.004, 0.004, -0.04, -0.04],
@@ -387,7 +387,7 @@ class TestGridConnectivity:
         # -----------------------------------------------------------------------
 
         oscillators2, neuron_oscillator_map2 = self.connectivity2._assign_oscillators()
-        all_coupling_weights2 = self.connectivity2.compute_coupling_weights(oscillators2, neuron_oscillator_map2)
+        all_coupling_weights2 = self.connectivity2._compute_coupling_weights(oscillators2, neuron_oscillator_map2)
         all_coupling_weights2_expected = [
             [0.004, 0.004, 0.004 * exp(-2.5), 0.004 * exp(-2.5), 0.004 * exp(-2.5), 0.004 * exp(-2.5),
              0.004 * exp(-sqrt(2) / 0.4), 0.004 * exp(-sqrt(2) / 0.4), -0.04, -0.04 * exp(-1 / 0.3),

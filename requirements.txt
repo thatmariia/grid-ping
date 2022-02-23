@@ -5,3 +5,4 @@ sphinx-autoapi
 furo
 pytest
 sphinxcontrib-bibtex
+coverage

@@ -12,7 +12,7 @@ class OscillatoryNetwork:
     This class runs the simulation of the network of oscillators.
 
     Parts of the code in this class are rewritten from MATLAB code listed in supplementary
-    materials of :cite:p:`Lowet2015`.
+    materials of :cite:p:`Lowet2015`. The neural dynamic model is is introduced in :cite:p:`Izhikevich2003`.
 
     :param nr_excitatory: number of excitatory neurons in the network.
     :type nr_excitatory: int

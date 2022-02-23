@@ -4,3 +4,4 @@ sphinx
 sphinx-autoapi
 furo
 pytest
+sphinxcontrib-bibtex

@@ -9,11 +9,19 @@ BEP documentation!
 .. note::
    This project is under active development.
 
+Contents
+--------
+
 .. toctree::
    :maxdepth: 3
-   :caption: Contents:
 
    usage
+
+References
+----------
+
+.. bibliography:: references.bib
+   :style: plain
 
 Indices and tables
 ==================

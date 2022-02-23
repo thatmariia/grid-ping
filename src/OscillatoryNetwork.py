@@ -9,7 +9,10 @@ from math import pi
 
 class OscillatoryNetwork:
     """
-    This class runs the simulation of the network of OscillatoryNetwork oscillators.
+    This class runs the simulation of the network of oscillators.
+
+    Parts of the code in this class are rewritten from MATLAB code listed in supplementary
+    materials of :cite:p:`Lowet2015`.
 
     :param nr_excitatory: number of excitatory neurons in the network.
     :type nr_excitatory: int

@@ -230,7 +230,8 @@ materials of <span id="id1">[<a class="reference internal" href="../../index.htm
 <dd class="field-even"><ul class="simple">
 <li><p><strong>nr_neurons</strong> – number of neurons of each type in the network.</p></li>
 <li><p><strong>nr_oscillators</strong> – number of oscillators in the network.</p></li>
-<li><p><strong>potential</strong> – voltage (membrane potential).</p></li>
+<li><p><strong>synaptic_potentials</strong> – synaptic potentials.</p></li>
+<li><p><strong>potentials</strong> – voltage (membrane potential).</p></li>
 <li><p><strong>recovery</strong> – membrane recovery variable.</p></li>
 <li><p><strong>izhi_alpha</strong> – timescale of recovery variable u.</p></li>
 <li><p><strong>izhi_beta</strong> – sensitivity of u to sub-threshold oscillations of v.</p></li>
@@ -271,13 +272,13 @@ materials of <span id="id1">[<a class="reference internal" href="../../index.htm
 <dl class="py method">
 <dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_potential">
 <span class="sig-name descname"><span class="pre">_change_potential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_potential" title="Permalink to this definition">#</a></dt>
-<dd><p>Computes the change in membrane potential.</p>
+<dd><p>Computes the change in membrane potentials.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>current</strong> – current.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>change in membrane potential.</p>
+<dd class="field-even"><p>change in membrane potentials.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>ndarray[float]</p>
@@ -286,13 +287,12 @@ materials of <span id="id1">[<a class="reference internal" href="../../index.htm
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_synaptic_potentials">
-<span class="sig-name descname"><span class="pre">_change_synaptic_potentials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neuron_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synaptic_potential</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_synaptic_potentials" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_change_synaptic_potentials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neuron_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_synaptic_potentials" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the change in synaptic gates for postsynaptic neurons.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>neuron_type</strong> (<a class="reference internal" href="../NeuronTypes/index.html#NeuronTypes.NeuronTypes" title="NeuronTypes.NeuronTypes"><em>NeuronTypes</em></a>) – neuron type</p></li>
-<li><p><strong>synaptic_potential</strong> (<em>ndarray</em><em>[</em><em>float</em><em>]</em>) – current synaptic potential</p></li>
 <li><p><strong>dt</strong> – TODO</p></li>
 </ul>
 </dd>

@@ -36,8 +36,11 @@ class OscillatoryNetwork:
     :ivar nr_oscillators: number of oscillators in the network.
     :type nr_oscillators: int
 
-    :ivar potential: voltage (membrane potential).
-    :type potential: ndarray[float]
+    :ivar synaptic_potentials: synaptic potentials.
+    :type synaptic_potentials: ndarray[float]
+
+    :ivar potentials: voltage (membrane potential).
+    :type potentials: ndarray[float]
 
     :ivar recovery: membrane recovery variable.
     :type recovery: ndarray[float]
@@ -84,10 +87,15 @@ class OscillatoryNetwork:
             [IZHI_ZETA[NeuronTypes.I] for _ in range(self.nr_neurons[NeuronTypes.I])]
         )
 
-        self.potential = np.array(
+        self.synaptic_potentials = {
+            NeuronTypes.E: np.zeros(self.nr_neurons[NeuronTypes.E]),
+            NeuronTypes.I: np.zeros(self.nr_neurons[NeuronTypes.I])
+        }
+
+        self.potentials = np.array(
             [INIT_MEMBRANE_POTENTIAL for _ in range(self.nr_neurons[NeuronTypes.E] + self.nr_neurons[NeuronTypes.I])]
         )
-        self.recovery = np.multiply(self.izhi_beta, self.potential)
+        self.recovery = np.multiply(self.izhi_beta, self.potentials)
 
     def run_simulation(self, simulation_time, dt):
         """
@@ -102,9 +110,6 @@ class OscillatoryNetwork:
         # spike timings
         firing_times = []
 
-        ampa = np.zeros(self.nr_neurons[NeuronTypes.E])
-        gaba = np.zeros(self.nr_neurons[NeuronTypes.I])
-
         stim_input = self._create_main_input_stimulus()
 
         connectivity = GridConnectivity(
@@ -116,35 +121,33 @@ class OscillatoryNetwork:
 
         for t in tqdm(range(simulation_time)):
 
-            fired = np.argwhere(self.potential > 30).flatten()  # indices of spikes
+            fired = np.argwhere(self.potentials > 30).flatten()  # indices of spikes
             # TODO:: why do we need firing_times?
             firing_times = [firing_times, [t for _ in range(len(fired))] + fired]
             for f in fired:
-                self.potential[f] = self.izhi_gamma[f]
+                self.potentials[f] = self.izhi_gamma[f]
                 self.recovery[f] += self.izhi_zeta[f]
 
             # thalamic input
             current = np.add(stim_input, self._change_thalamic_input())
 
             # synaptic potentials
-            ampa = np.add(ampa, self._change_synaptic_potentials(
-                neuron_type=NeuronTypes.E,
-                synaptic_potential=ampa,
-                dt=dt
-            ))
-            gaba = np.add(gaba, self._change_synaptic_potentials(
-                neuron_type=NeuronTypes.I,
-                synaptic_potential=gaba,
-                dt=dt
-            ))
-            gsyn = np.append(ampa, gaba)
+            self.synaptic_potentials[NeuronTypes.E] = np.add(
+                self.synaptic_potentials[NeuronTypes.E],
+                self._change_synaptic_potentials(neuron_type=NeuronTypes.E, dt=dt)
+            )
+            self.synaptic_potentials[NeuronTypes.I] = np.add(
+                self.synaptic_potentials[NeuronTypes.I],
+                self._change_synaptic_potentials(neuron_type=NeuronTypes.I, dt=dt)
+            )
+            gsyn = np.append(self.synaptic_potentials[NeuronTypes.E], self.synaptic_potentials[NeuronTypes.I])
 
             # defining input to eah neuron as the summation of all synaptic input
             # form all connected neurons
             current = np.add(current, np.matmul(connectivity.coupling_weights, gsyn))
 
-            self.potential = np.add(self.potential, self._change_potential(current=current))
-            self.potential = np.add(self.potential, self._change_potential(current=current))
+            self.potentials = np.add(self.potentials, self._change_potential(current=current))
+            self.potentials = np.add(self.potentials, self._change_potential(current=current))
             self.recovery = np.add(self.recovery, self._change_recovery())
 
         print("Simulation ended")
@@ -159,31 +162,28 @@ class OscillatoryNetwork:
 
         return np.multiply(
             self.izhi_alpha,
-            np.multiply(self.izhi_beta, self.potential) - self.recovery
+            np.multiply(self.izhi_beta, self.potentials) - self.recovery
         )
 
     def _change_potential(self, current):
         """
-        Computes the change in membrane potential.
+        Computes the change in membrane potentials.
 
         :param current: current.
 
-        :return: change in membrane potential.
+        :return: change in membrane potentials.
         :rtype: ndarray[float]
         """
 
         # TODO:: why do we multiply the equation for dv/dt with 0.5 and then call this function twice in run_simulation?
-        return 0.5 * (0.04 * self.potential ** 2 + 5 * self.potential + 140 - self.recovery + current)
+        return 0.5 * (0.04 * self.potentials ** 2 + 5 * self.potentials + 140 - self.recovery + current)
 
-    def _change_synaptic_potentials(self, neuron_type, synaptic_potential, dt):
+    def _change_synaptic_potentials(self, neuron_type, dt):
         """
         Computes the change in synaptic gates for postsynaptic neurons.
 
         :param neuron_type: neuron type
         :type neuron_type: NeuronTypes
-
-        :param synaptic_potential: current synaptic potential
-        :type synaptic_potential: ndarray[float]
 
         :param dt: TODO
 
@@ -191,15 +191,15 @@ class OscillatoryNetwork:
         :rtype: ndarray[float]
         """
 
-        potentials = self.potential[
+        potentials = self.potentials[
             neur_slice(neuron_type, self.nr_neurons[NeuronTypes.E], self.nr_neurons[NeuronTypes.I])
         ]
         # TODO:: in the paper, this computation is different
         alpha = potentials / 10.0 + 2
         z = np.tanh(alpha)
         comp1 = (z + 1) / 2.0
-        comp2 = (1 - synaptic_potential) / SYNAPTIC_CONST_RISE[neuron_type]
-        comp3 = synaptic_potential / SYNAPTIC_CONST_DECAY[neuron_type]
+        comp2 = (1 - self.synaptic_potentials[neuron_type]) / SYNAPTIC_CONST_RISE[neuron_type]
+        comp3 = self.synaptic_potentials[neuron_type] / SYNAPTIC_CONST_DECAY[neuron_type]
         return dt * 0.3 * (np.multiply(comp1, comp2) - comp3)
 
     def _change_thalamic_input(self):

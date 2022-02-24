@@ -24,13 +24,13 @@ IZHI_ALPHA = {
     NeuronTypes.I: 0.1
 }
 
-# for sensitivity of recovery to sub-threshold oscillations of potential
+# for sensitivity of recovery to sub-threshold oscillations of potentials
 IZHI_BETA = {
     NeuronTypes.E: 0.2,
     NeuronTypes.I: 0.2
 }
 
-# for membrane voltage after spike (after-spike reset of potential)
+# for membrane voltage after spike (after-spike reset of potentials)
 IZHI_GAMMA = {
     NeuronTypes.E: -65,
     NeuronTypes.I: -65
@@ -42,7 +42,7 @@ IZHI_ZETA = {
     NeuronTypes.I: 2
 }
 
-# for initial values of potential = voltage (membrane potential)
+# for initial values of potentials = voltage (membrane potentials)
 INIT_MEMBRANE_POTENTIAL = -65
 
 """Gaussian input"""

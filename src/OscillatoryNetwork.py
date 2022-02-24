@@ -137,6 +137,7 @@ class OscillatoryNetwork:
             self.current = np.add(stim_input, self._change_thalamic_input())
 
             # synaptic potentials
+            # TODO:: change directly into 1 array later when I know what's going on
             self.synaptic_potentials[NeuronTypes.E] = np.add(
                 self.synaptic_potentials[NeuronTypes.E],
                 self._change_synaptic_potentials(neuron_type=NeuronTypes.E, dt=dt)

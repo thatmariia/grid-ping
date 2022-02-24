@@ -255,7 +255,8 @@ an equal number of inhibitory neurons in each oscillator.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="GridConnectivity.GridConnectivity._assign_oscillators">
 <span class="sig-name descname"><span class="pre">_assign_oscillators</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridConnectivity.GridConnectivity._assign_oscillators" title="Permalink to this definition">#</a></dt>
-<dd><p>Creates oscillators, assigns grid locations to them, and adds the same number of neurons of each neuron_type to them.</p>
+<dd><p>Creates oscillators, assigns grid locations to them, and adds the same number of neurons of each neuron type to them.</p>
+<p>In other words, this function creates a map that can be used as function <span class="math notranslate nohighlight">\(\mathsf{loc}\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>list of oscillators in the network and a dictionary mapping a neuron to the oscillator it belongs to.</p>
@@ -269,6 +270,7 @@ an equal number of inhibitory neurons in each oscillator.</p>
 <dt class="sig sig-object py" id="GridConnectivity.GridConnectivity._compute_coupling_weights">
 <span class="sig-name descname"><span class="pre">_compute_coupling_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oscillators</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neuron_oscillator_map</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridConnectivity.GridConnectivity._compute_coupling_weights" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the coupling weights between all neurons.</p>
+<p>Essentially, this method computes the full matrix <span class="math notranslate nohighlight">\(K\)</span> of coupling weights.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -288,6 +290,8 @@ an equal number of inhibitory neurons in each oscillator.</p>
 <dt class="sig sig-object py" id="GridConnectivity.GridConnectivity._get_neurons_dist">
 <span class="sig-name descname"><span class="pre">_get_neurons_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neuron_type1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neuron_type2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oscillators</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neuron_oscillator_map</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridConnectivity.GridConnectivity._get_neurons_dist" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the matrix of Euclidian distances between two types of neurons.</p>
+<p>This method computes a matrix of <span class="math notranslate nohighlight">\(\| \mathsf{loc}(v), \mathsf{loc}(w) \|\)</span> between neurons <span class="math notranslate nohighlight">\(v\)</span> and
+<span class="math notranslate nohighlight">\(w\)</span> of given types.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -311,6 +315,8 @@ an equal number of inhibitory neurons in each oscillator.</p>
 <dt class="sig sig-object py" id="GridConnectivity.GridConnectivity._compute_type_coupling_weights">
 <span class="sig-name descname"><span class="pre">_compute_type_coupling_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_connect_strength</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_const</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridConnectivity.GridConnectivity._compute_type_coupling_weights" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the coupling weights for connections between two types of neurons.</p>
+<p>This method computes a matrix of <span class="math notranslate nohighlight">\(K_{v, w}\)</span> between neurons <span class="math notranslate nohighlight">\(v\)</span> and
+<span class="math notranslate nohighlight">\(w\)</span> of given types.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -320,11 +326,13 @@ an equal number of inhibitory neurons in each oscillator.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the matrix of coupling weights of size nr1 x nr2, where n1 and nr2 - number of neurons of</p>
+<dd class="field-even"><p>the matrix of coupling weights of size nr1 x nr2, where n1 and nr2 - number of neurons of
+each neuron_type in the coupling of interest.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[list[float]]</p>
 </dd>
 </dl>
-<p>each neuron_type in the coupling of interest.
-:rtype: list[list[float]]</p>
 </dd></dl>
 </dd></dl>
 </section>

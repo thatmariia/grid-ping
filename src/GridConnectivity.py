@@ -82,7 +82,9 @@ class GridConnectivity:
 
     def _assign_oscillators(self):
         """
-        Creates oscillators, assigns grid locations to them, and adds the same number of neurons of each neuron_type to them.
+        Creates oscillators, assigns grid locations to them, and adds the same number of neurons of each neuron type to them.
+
+        In other words, this function creates a map that can be used as function :math:`\mathsf{loc}`.
 
         :return: list of oscillators in the network and a dictionary mapping a neuron to the oscillator it belongs to.
         :rtype: tuple[list[Oscillator], dict[NeuronTypes: dict[int, int]]]
@@ -126,6 +128,8 @@ class GridConnectivity:
     def _compute_coupling_weights(self, oscillators, neuron_oscillator_map):
         """
         Computes the coupling weights between all neurons.
+
+        Essentially, this method computes the full matrix :math:`K` of coupling weights.
 
         :param oscillators: list of oscillators in the network.
         :type oscillators: list[Oscillator]
@@ -172,6 +176,9 @@ class GridConnectivity:
         """
         Computes the matrix of Euclidian distances between two types of neurons.
 
+        This method computes a matrix of :math:`\| \mathsf{loc}(v), \mathsf{loc}(w) \|` between neurons :math:`v` and
+        :math:`w` of given types.
+
         :param neuron_type1: neurons neuron_type 1
         :type neuron_type1: NeuronTypes
 
@@ -217,6 +224,9 @@ class GridConnectivity:
         """
         Computes the coupling weights for connections between two types of neurons.
 
+        This method computes a matrix of :math:`K_{v, w}` between neurons :math:`v` and
+        :math:`w` of given types.
+
         :param dist: distance matrix with pairwise distances between neurons.
         :type dist: list[list[float]]
 
@@ -227,7 +237,7 @@ class GridConnectivity:
         :type spatial_const: float
 
         :return: the matrix of coupling weights of size nr1 x nr2, where n1 and nr2 - number of neurons of
-        each neuron_type in the coupling of interest.
+            each neuron_type in the coupling of interest.
         :rtype: list[list[float]]
         """
 

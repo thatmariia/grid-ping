@@ -9,10 +9,40 @@ from math import pi
 
 class OscillatoryNetwork:
     """
-    This class runs the simulation of the network of oscillators.
+    This class runs the simulation of the network of neurons.
 
-    Parts of the code in this class are rewritten from MATLAB code listed in supplementary
-    materials of :cite:p:`Lowet2015`. The neural dynamic model is is introduced in :cite:p:`Izhikevich2003`.
+    Every neuron in the system can be described with a 2D system of ODEs:
+
+    :math:`dp_v / dt = 0.04 p_v^2 + 5 p_v + 140 - r_v + I_v`,
+
+    :math:`dr_v / dt = \\alpha_{\mathsf{type}(v)} \cdot (\\beta_{\mathsf{type}(v)} p_v - r_v)`,
+
+    if :math:`p_v \geq 30` mV, then :math:`\\begin{cases} p_v \leftarrow \gamma_{\mathsf{type}(v)} \\\ r_v \leftarrow r_v + \zeta_{\mathsf{type}(v)} \\end{cases}`,
+
+    where
+
+    * :math:`v` is a neuron,
+    * :math:`\mathsf{type}(v)` maps a neuron to its type (see :obj:`NeuronTypes`),
+    * :math:`p` represents the membrane potential of the neuron,
+    * :math:`r` represents a membrane recovery variable; provides negative feedback to :math:`p`,
+    * :math:`\\alpha` describes the timescale of :math:`r` (see :obj:`constants.IZHI_ALPHA`),
+    * :math:`\\beta` describes the sensitivity of :math:`r` to the subthreshold fluctuations of :math:`p` (see :obj:`constants.IZHI_BETA`),
+    * :math:`\\gamma` describes the after-spike reset value of :math:`p` (see :obj:`constants.IZHI_GAMMA`),
+    * :math:`\\zeta` describes the after-spike reset of :math:`r` (see :obj:`constants.IZHI_ZETA`),
+    * :math:`I` describes the current.
+
+    This neural dynamics model is introduced in :cite:p:`Izhikevich2003`.
+
+    In the network, neurons are not isolated, and the current involves the accumulated effect of interactions
+    with other neurons:
+
+    :math:`I_v = \\begin{cases} \\sum_{w \in V} K_{v, w} I_{syn, w} + I_{stim, v} &\\text{ if } \mathsf{type}(v) = ex \\\ \\sum_{w \in V} K_{v, w} I_{syn, w} &\\text{ if } \mathsf{type}(v) = in \\end{cases}`,
+
+    where
+
+    * :math:`K` is the coupling weights (see :obj:`GridConnectivity`),
+    * :math:`I_{syn}` represents the effect of synaptic potentials,
+    * :math:`I_{stim}` is the current caused by external stimuli.
 
     :param nr_excitatory: number of excitatory neurons in the network.
     :type nr_excitatory: int
@@ -48,16 +78,16 @@ class OscillatoryNetwork:
     :ivar recovery: membrane recovery variable.
     :type recovery: ndarray[float]
 
-    :ivar izhi_alpha: timescale of recovery variable u.
+    :ivar izhi_alpha: timescale of recovery variable `recovery`.
     :type izhi_alpha: ndarray[float]
 
-    :ivar izhi_beta: sensitivity of u to sub-threshold oscillations of v.
+    :ivar izhi_beta: sensitivity of `recovery` to sub-threshold oscillations of `potential`.
     :type izhi_beta: ndarray[float]
 
-    :ivar izhi_gamma: membrane voltage after spike (after-spike reset of v).
+    :ivar izhi_gamma: membrane voltage after spike (after-spike reset of `potential`).
     :type izhi_gamma: ndarray[float]
 
-    :ivar izhi_zeta: after-spike reset of recovery variable u.
+    :ivar izhi_zeta: after-spike reset of recovery variable `recovery`.
     :type izhi_zeta: ndarray[float]
     """
 
@@ -105,6 +135,9 @@ class OscillatoryNetwork:
     def run_simulation(self, simulation_time, dt):
         """
         Runs the simulation.
+
+        Parts of the code in this function and its components are rewritten from MATLAB code listed in supplementary
+        materials of :cite:p:`Lowet2015`.
 
         :param simulation_time: number of epochs to run the simulation.
         :param dt: TODO
@@ -162,6 +195,8 @@ class OscillatoryNetwork:
         """
         Computes the change in membrane recovery.
 
+        Computes :math:`dr_v / dt = \\alpha_{\mathsf{type}(v)} \cdot (\\beta_{\mathsf{type}(v)} p_v - r_v)`.
+
         :return: change in membrane recovery.
         :rtype: ndarray[float]
         """
@@ -175,6 +210,8 @@ class OscillatoryNetwork:
         """
         Computes the change in membrane potentials.
 
+        Computes :math:`dp_v / dt = 0.04 p_v^2 + 5 p_v + 140 - r_v + I_v`.
+
         :return: change in membrane potentials.
         :rtype: ndarray[float]
         """
@@ -185,6 +222,9 @@ class OscillatoryNetwork:
     def _change_synaptic_potentials(self, neuron_type, dt):
         """
         Computes the change in synaptic gates for postsynaptic neurons.
+
+        Computes the change in :math:`I_{syn}`.
+        TODO:: maybe make a separate class for this component later
 
         :param neuron_type: neuron type
         :type neuron_type: NeuronTypes
@@ -214,6 +254,7 @@ class OscillatoryNetwork:
         :rtype: ndarray[float]
         """
 
+        # TODO:: what is this exactly?
         return np.append(
             GAUSSIAN_INPUT[NeuronTypes.E] * np.random.randn(self.nr_neurons[NeuronTypes.E]),
             GAUSSIAN_INPUT[NeuronTypes.I] * np.random.randn(self.nr_neurons[NeuronTypes.I])
@@ -222,6 +263,8 @@ class OscillatoryNetwork:
     def _create_main_input_stimulus(self):
         """
         Creates main (external) input stimulus.
+
+        Creates initial :math:`I_{stim}`.
 
         :return: input stimulus.
         :rtype: ndarray[float]

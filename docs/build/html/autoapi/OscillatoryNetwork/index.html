@@ -202,16 +202,40 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork" title="OscillatoryNetwork.OscillatoryNetwork"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OscillatoryNetwork</span></code></a></p></td>
-<td><p>This class runs the simulation of the network of oscillators.</p></td>
+<td><p>This class runs the simulation of the network of neurons.</p></td>
 </tr>
 </tbody>
 </table></div>
 <dl class="py class">
 <dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">OscillatoryNetwork.</span></span><span class="sig-name descname"><span class="pre">OscillatoryNetwork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nr_excitatory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_inhibitory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_oscillators</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork" title="Permalink to this definition">#</a></dt>
-<dd><p>This class runs the simulation of the network of oscillators.</p>
-<p>Parts of the code in this class are rewritten from MATLAB code listed in supplementary
-materials of <span id="id1">[<a class="reference internal" href="../../index.html#id2" title="E. Lowet, M. Roberts, A. Hadjipapas, A. Peter, J. van der Eerden, and P. De Weerd. Input-dependent frequency modulation of cortical gamma oscillations shapes spatial synchronization and enables phase coding. PLoS Comput Biol, 11(2):e1004072, Feb 2015. doi:10.1371/journal.pcbi.1004072.">Lowet <em>et al.</em>, 2015</a>]</span>. The neural dynamic model is is introduced in <span id="id2">[<a class="reference internal" href="../../index.html#id3" title="E.M. Izhikevich. Simple model of spiking neurons. IEEE Transactions on Neural Networks, 14(6):1569-1572, 2003. doi:10.1109/TNN.2003.820440.">Izhikevich, 2003</a>]</span>.</p>
+<dd><p>This class runs the simulation of the network of neurons.</p>
+<p>Every neuron in the system can be described with a 2D system of ODEs:</p>
+<p><span class="math notranslate nohighlight">\(dp_v / dt = 0.04 p_v^2 + 5 p_v + 140 - r_v + I_v\)</span>,</p>
+<p><span class="math notranslate nohighlight">\(dr_v / dt = \alpha_{\mathsf{type}(v)} \cdot (\beta_{\mathsf{type}(v)} p_v - r_v)\)</span>,</p>
+<p>if <span class="math notranslate nohighlight">\(p_v \geq 30\)</span> mV, then <span class="math notranslate nohighlight">\(\begin{cases} p_v \leftarrow \gamma_{\mathsf{type}(v)} \\ r_v \leftarrow r_v + \zeta_{\mathsf{type}(v)} \end{cases}\)</span>,</p>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(v\)</span> is a neuron,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathsf{type}(v)\)</span> maps a neuron to its type (see <a class="reference internal" href="../NeuronTypes/index.html#module-NeuronTypes" title="NeuronTypes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a>),</p></li>
+<li><p><span class="math notranslate nohighlight">\(p\)</span> represents the membrane potential of the neuron,</p></li>
+<li><p><span class="math notranslate nohighlight">\(r\)</span> represents a membrane recovery variable; provides negative feedback to <span class="math notranslate nohighlight">\(p\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\alpha\)</span> describes the timescale of <span class="math notranslate nohighlight">\(r\)</span> (see <a class="reference internal" href="../constants/index.html#constants.IZHI_ALPHA" title="constants.IZHI_ALPHA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">constants.IZHI_ALPHA</span></code></a>),</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta\)</span> describes the sensitivity of <span class="math notranslate nohighlight">\(r\)</span> to the subthreshold fluctuations of <span class="math notranslate nohighlight">\(p\)</span> (see <a class="reference internal" href="../constants/index.html#constants.IZHI_BETA" title="constants.IZHI_BETA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">constants.IZHI_BETA</span></code></a>),</p></li>
+<li><p><span class="math notranslate nohighlight">\(\gamma\)</span> describes the after-spike reset value of <span class="math notranslate nohighlight">\(p\)</span> (see <a class="reference internal" href="../constants/index.html#constants.IZHI_GAMMA" title="constants.IZHI_GAMMA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">constants.IZHI_GAMMA</span></code></a>),</p></li>
+<li><p><span class="math notranslate nohighlight">\(\zeta\)</span> describes the after-spike reset of <span class="math notranslate nohighlight">\(r\)</span> (see <a class="reference internal" href="../constants/index.html#constants.IZHI_ZETA" title="constants.IZHI_ZETA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">constants.IZHI_ZETA</span></code></a>),</p></li>
+<li><p><span class="math notranslate nohighlight">\(I\)</span> describes the current.</p></li>
+</ul>
+<p>This neural dynamics model is introduced in <span id="id1">[<a class="reference internal" href="../../index.html#id3" title="E.M. Izhikevich. Simple model of spiking neurons. IEEE Transactions on Neural Networks, 14(6):1569-1572, 2003. doi:10.1109/TNN.2003.820440.">Izhikevich, 2003</a>]</span>.</p>
+<p>In the network, neurons are not isolated, and the current involves the accumulated effect of interactions
+with other neurons:</p>
+<p><span class="math notranslate nohighlight">\(I_v = \begin{cases} \sum_{w \in V} K_{v, w} I_{syn, w} + I_{stim, v} &amp;\text{ if } \mathsf{type}(v) = ex \\ \sum_{w \in V} K_{v, w} I_{syn, w} &amp;\text{ if } \mathsf{type}(v) = in \end{cases}\)</span>,</p>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(K\)</span> is the coupling weights (see <a class="reference internal" href="../GridConnectivity/index.html#module-GridConnectivity" title="GridConnectivity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GridConnectivity</span></code></a>),</p></li>
+<li><p><span class="math notranslate nohighlight">\(I_{syn}\)</span> represents the effect of synaptic potentials,</p></li>
+<li><p><span class="math notranslate nohighlight">\(I_{stim}\)</span> is the current caused by external stimuli.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -234,10 +258,10 @@ materials of <span id="id1">[<a class="reference internal" href="../../index.htm
 <li><p><strong>current</strong> – current (from input and interaction).</p></li>
 <li><p><strong>potentials</strong> – voltage (membrane potential).</p></li>
 <li><p><strong>recovery</strong> – membrane recovery variable.</p></li>
-<li><p><strong>izhi_alpha</strong> – timescale of recovery variable u.</p></li>
-<li><p><strong>izhi_beta</strong> – sensitivity of u to sub-threshold oscillations of v.</p></li>
-<li><p><strong>izhi_gamma</strong> – membrane voltage after spike (after-spike reset of v).</p></li>
-<li><p><strong>izhi_zeta</strong> – after-spike reset of recovery variable u.</p></li>
+<li><p><strong>izhi_alpha</strong> – timescale of recovery variable <cite>recovery</cite>.</p></li>
+<li><p><strong>izhi_beta</strong> – sensitivity of <cite>recovery</cite> to sub-threshold oscillations of <cite>potential</cite>.</p></li>
+<li><p><strong>izhi_gamma</strong> – membrane voltage after spike (after-spike reset of <cite>potential</cite>).</p></li>
+<li><p><strong>izhi_zeta</strong> – after-spike reset of recovery variable <cite>recovery</cite>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -245,6 +269,8 @@ materials of <span id="id1">[<a class="reference internal" href="../../index.htm
 <dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork.run_simulation">
 <span class="sig-name descname"><span class="pre">run_simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulation_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork.run_simulation" title="Permalink to this definition">#</a></dt>
 <dd><p>Runs the simulation.</p>
+<p>Parts of the code in this function and its components are rewritten from MATLAB code listed in supplementary
+materials of <span id="id2">[<a class="reference internal" href="../../index.html#id2" title="E. Lowet, M. Roberts, A. Hadjipapas, A. Peter, J. van der Eerden, and P. De Weerd. Input-dependent frequency modulation of cortical gamma oscillations shapes spatial synchronization and enables phase coding. PLoS Comput Biol, 11(2):e1004072, Feb 2015. doi:10.1371/journal.pcbi.1004072.">Lowet <em>et al.</em>, 2015</a>]</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -261,6 +287,7 @@ materials of <span id="id1">[<a class="reference internal" href="../../index.htm
 <dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_recovery">
 <span class="sig-name descname"><span class="pre">_change_recovery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_recovery" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the change in membrane recovery.</p>
+<p>Computes <span class="math notranslate nohighlight">\(dr_v / dt = \alpha_{\mathsf{type}(v)} \cdot (\beta_{\mathsf{type}(v)} p_v - r_v)\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>change in membrane recovery.</p>
@@ -274,6 +301,7 @@ materials of <span id="id1">[<a class="reference internal" href="../../index.htm
 <dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_potential">
 <span class="sig-name descname"><span class="pre">_change_potential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_potential" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the change in membrane potentials.</p>
+<p>Computes <span class="math notranslate nohighlight">\(dp_v / dt = 0.04 p_v^2 + 5 p_v + 140 - r_v + I_v\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>change in membrane potentials.</p>
@@ -287,6 +315,8 @@ materials of <span id="id1">[<a class="reference internal" href="../../index.htm
 <dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_synaptic_potentials">
 <span class="sig-name descname"><span class="pre">_change_synaptic_potentials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neuron_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_synaptic_potentials" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the change in synaptic gates for postsynaptic neurons.</p>
+<p>Computes the change in <span class="math notranslate nohighlight">\(I_{syn}\)</span>.
+TODO:: maybe make a separate class for this component later</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -319,6 +349,7 @@ materials of <span id="id1">[<a class="reference internal" href="../../index.htm
 <dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._create_main_input_stimulus">
 <span class="sig-name descname"><span class="pre">_create_main_input_stimulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._create_main_input_stimulus" title="Permalink to this definition">#</a></dt>
 <dd><p>Creates main (external) input stimulus.</p>
+<p>Creates initial <span class="math notranslate nohighlight">\(I_{stim}\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>input stimulus.</p>
@@ -404,5 +435,6 @@ materials of <span id="id1">[<a class="reference internal" href="../../index.htm
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>

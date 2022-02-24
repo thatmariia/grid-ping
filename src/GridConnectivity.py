@@ -18,7 +18,7 @@ class GridConnectivity:
     where
 
     * :math:`v, w` are two arbitrary neurons in the network,
-    * :math:`\mathsf{type}(v)` maps a neuron to its type (excitatory or inhibitory),
+    * :math:`\mathsf{type}(v)` maps a neuron to its type (see :obj:`NeuronTypes`),
     * :math:`\mathsf{loc}(v)` maps a neuron to its location on the grid,
     * :math:`s_{v, w}` is the spatial constant (see :obj:`constants.SPATIAL_CONST`).
 

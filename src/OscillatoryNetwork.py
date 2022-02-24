@@ -39,6 +39,9 @@ class OscillatoryNetwork:
     :ivar synaptic_potentials: synaptic potentials.
     :type synaptic_potentials: ndarray[float]
 
+    :ivar current: current (from input and interaction).
+    :type current: ndarray[float]
+
     :ivar potentials: voltage (membrane potential).
     :type potentials: ndarray[float]
 
@@ -92,6 +95,8 @@ class OscillatoryNetwork:
             NeuronTypes.I: np.zeros(self.nr_neurons[NeuronTypes.I])
         }
 
+        self.current = np.array((0, 0))
+
         self.potentials = np.array(
             [INIT_MEMBRANE_POTENTIAL for _ in range(self.nr_neurons[NeuronTypes.E] + self.nr_neurons[NeuronTypes.I])]
         )
@@ -129,7 +134,7 @@ class OscillatoryNetwork:
                 self.recovery[f] += self.izhi_zeta[f]
 
             # thalamic input
-            current = np.add(stim_input, self._change_thalamic_input())
+            self.current = np.add(stim_input, self._change_thalamic_input())
 
             # synaptic potentials
             self.synaptic_potentials[NeuronTypes.E] = np.add(
@@ -144,10 +149,10 @@ class OscillatoryNetwork:
 
             # defining input to eah neuron as the summation of all synaptic input
             # form all connected neurons
-            current = np.add(current, np.matmul(connectivity.coupling_weights, gsyn))
+            self.current = np.add(self.current, np.matmul(connectivity.coupling_weights, gsyn))
 
-            self.potentials = np.add(self.potentials, self._change_potential(current=current))
-            self.potentials = np.add(self.potentials, self._change_potential(current=current))
+            self.potentials = np.add(self.potentials, self._change_potential())
+            self.potentials = np.add(self.potentials, self._change_potential())
             self.recovery = np.add(self.recovery, self._change_recovery())
 
         print("Simulation ended")
@@ -165,18 +170,16 @@ class OscillatoryNetwork:
             np.multiply(self.izhi_beta, self.potentials) - self.recovery
         )
 
-    def _change_potential(self, current):
+    def _change_potential(self):
         """
         Computes the change in membrane potentials.
-
-        :param current: current.
 
         :return: change in membrane potentials.
         :rtype: ndarray[float]
         """
 
         # TODO:: why do we multiply the equation for dv/dt with 0.5 and then call this function twice in run_simulation?
-        return 0.5 * (0.04 * self.potentials ** 2 + 5 * self.potentials + 140 - self.recovery + current)
+        return 0.5 * (0.04 * self.potentials ** 2 + 5 * self.potentials + 140 - self.recovery + self.current)
 
     def _change_synaptic_potentials(self, neuron_type, dt):
         """

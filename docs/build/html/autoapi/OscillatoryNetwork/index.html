@@ -231,6 +231,7 @@ materials of <span id="id1">[<a class="reference internal" href="../../index.htm
 <li><p><strong>nr_neurons</strong> – number of neurons of each type in the network.</p></li>
 <li><p><strong>nr_oscillators</strong> – number of oscillators in the network.</p></li>
 <li><p><strong>synaptic_potentials</strong> – synaptic potentials.</p></li>
+<li><p><strong>current</strong> – current (from input and interaction).</p></li>
 <li><p><strong>potentials</strong> – voltage (membrane potential).</p></li>
 <li><p><strong>recovery</strong> – membrane recovery variable.</p></li>
 <li><p><strong>izhi_alpha</strong> – timescale of recovery variable u.</p></li>
@@ -271,17 +272,14 @@ materials of <span id="id1">[<a class="reference internal" href="../../index.htm
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_potential">
-<span class="sig-name descname"><span class="pre">_change_potential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_potential" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_change_potential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_potential" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the change in membrane potentials.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>current</strong> – current.</p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>change in membrane potentials.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>change in membrane potentials.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>ndarray[float]</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>ndarray[float]</p>
 </dd>
 </dl>
 </dd></dl>

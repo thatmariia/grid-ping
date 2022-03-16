@@ -2,7 +2,9 @@ numpy
 tqdm
 sphinx
 sphinx-autoapi
+sphinxcontrib-bibtex
 furo
 pytest
-sphinxcontrib-bibtex
+seaborn
+matplotlib
 coverage

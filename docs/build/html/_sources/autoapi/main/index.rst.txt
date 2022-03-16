@@ -7,7 +7,7 @@
 Module Contents
 ---------------
 
-.. py:data:: oscillatory_network
+.. py:data:: stimulus
    
 
    

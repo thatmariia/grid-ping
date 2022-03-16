@@ -69,6 +69,23 @@ class GaborTextureStimulus:
         self.stimulus = self._get_full_stimulus(grating, dist_scale, contrast_range, diameter, grating_res)
         self.stimulus_patch = self._get_stimulus_patch(self.stimulus)
 
+    def eccentricity_in_patch(self, point):
+        """
+        Calculates eccentricity at the given point, that is the distance between that point and the center of stimulus.
+
+        :param point: coordinates of the point (within the stimulus patch).
+        :type point: (float, float)
+
+        :return: eccentricity at the point.
+        :rtype: float
+        """
+
+        patch_start = self._get_start_of_patch()
+        point_in_stimulus = (patch_start[0] + point[0], patch_start[1] + point[1])
+        stimulus_center = (self.stimulus.shape[0] / 2.0, self.stimulus.shape[1] / 2.0)
+
+        return euclidian_dist_R2(point_in_stimulus, stimulus_center)
+
     def plot_stimulus(self, stimulus, filename):
         """
         Plots the binary heatmap of a given stimulus.
@@ -166,6 +183,20 @@ class GaborTextureStimulus:
 
         return stimulus
 
+    def _get_start_of_patch(self):
+        """
+        Determines the starting point (left top) of the stimulus patch.
+
+        :return: left top coordinate of the stimulus patch within the full stimulus.
+        :rtype: (int, int)
+        """
+
+        # TODO:: select an actually relevant patch
+        half_res = ceil((self.stim_res - self.patch_res) / 2)
+        start = half_res
+
+        return start, start
+
     def _get_stimulus_patch(self, stimulus):
         """
         Selects a patch of the stimulus.
@@ -177,11 +208,8 @@ class GaborTextureStimulus:
         :rtype: ndarray[ndarray[float]]
         """
 
-        # TODO:: select an actually relevant patch
-        half_res = ceil((self.stim_res - self.patch_res) / 2)
+        start = self._get_start_of_patch()
+        end = (start[0] + self.patch_res, start[1] + self.patch_res)
+        stimulus_patch = stimulus[start[0]:end[0], start[1]:end[1]]
 
-        low = half_res
-        high = low + self.patch_res
-        stimulus_patch = stimulus[low:high, low:high]
-
-        return stimulus_patch#.flatten()
+        return stimulus_patch

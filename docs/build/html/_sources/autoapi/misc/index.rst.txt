@@ -13,12 +13,16 @@ Functions
 
 .. autoapisummary::
 
+   misc.plot_binary_heatmap
    misc.neur_slice
    misc.euclidian_dist_R2
    misc.cust_range
    misc.crange
    misc.orange
 
+
+
+.. py:function:: plot_binary_heatmap(im, path)
 
 
 .. py:function:: neur_slice(neuron_type, nr_ex, nr_in)

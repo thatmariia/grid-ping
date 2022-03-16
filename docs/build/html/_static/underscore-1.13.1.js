@@ -1801,7 +1801,7 @@
   }
 
   // Generate an integer Array containing an arithmetic progression. A port of
-  // the native Python `contrast_range()` function. See
+  // the native Python `range()` function. See
   // [the Python documentation](https://docs.python.org/library/functions.html#range).
   function range(start, stop, step) {
     if (stop == null) {

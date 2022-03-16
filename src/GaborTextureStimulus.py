@@ -3,7 +3,8 @@ from misc import *
 import numpy as np
 from math import pi, ceil
 
-class StimulusGenerator:
+
+class GaborTextureStimulus:
     """
     This class constructs the Gabor texture stimulus and selects a patch from it.
 
@@ -37,29 +38,20 @@ class StimulusGenerator:
         AssertionError: if the contrast range falls outside of the range :math:`(0, 1]`.
 
 
-    :ivar dist_scale: how far the circles are from each other.
-    :type dist_scale: float
-
-    :ivar contrast_range: contrast range for the figure.
-    :type contrast_range: float
-
-    :ivar spatial_freq: spatial frequency of the grating (cycles / degree).
-    :type spatial_freq: float
-
-    :ivar diameter: annulus diameter (degree).
-    :type diameter: float
-
     :ivar side_length: side length (degree) of square stimulus region.
     :type side_length: TODO:: float or int?
-
-    :ivar grating_res: resolution (number of pixels in a single row) of single grating.
-    :type grating_res: int
 
     :ivar patch_res: resolution (number of pixels in a single row) of the stimulus patch.
     :type patch_res: int
 
     :ivar stim_res: TODO
     :type stim_res: TODO
+
+    :ivar stimulus: the luminance matrix of the full stimulus.
+    :type stimulus: ndarray[ndarray[float]]
+
+    :ivar stimulus_patch: the luminance matrix of a patch of the stimulus.
+    :type stimulus_patch: ndarray[ndarray[float]]
     """
 
     def __init__(self, dist_scale, contrast_range, spatial_freq, diameter, side_length, grating_res, patch_res):
@@ -67,83 +59,109 @@ class StimulusGenerator:
         assert dist_scale >= 1, "The distance between neighbouring annuli should be at least 1 diameter."
         assert (contrast_range > 0) and (contrast_range <= 1), "The contrast range should fall in range :math:`(0, 1]`."
 
-        self.dist_scale = dist_scale
-        self.contrast_range = contrast_range
-        self.spatial_freq = spatial_freq
-        self.diameter = diameter
         self.side_length = side_length
-        self.grating_res = grating_res
         self.patch_res = patch_res
 
+        # TODO:: figure out what it is and remove it as instance
         self.stim_res = None
 
-    def generate(self):
+        grating = self._get_grating(spatial_freq, diameter, grating_res)
+        self.stimulus = self._get_full_stimulus(grating, dist_scale, contrast_range, diameter, grating_res)
+        self.stimulus_patch = self._get_stimulus_patch(self.stimulus)
+
+    def plot_stimulus(self, stimulus, filename):
         """
-        Goes through all the steps (generating grating, full stimulus, patch) to generate the stimulus patch.
+        Plots the binary heatmap of a given stimulus.
 
-        :return: the luminance matrix of the stimulus patch.
-        :rtype: ndarray[ndarray[float]]
+        :param stimulus: a luminance matrix to plot.
+        :type stimulus: list[list[float]]
+
+        :rtype: None
         """
 
-        grating = self._get_grating()
-        stimulus = self._get_full_stimulus(grating=grating)
-        stimulus = self._get_stimulus_patch(stimulus=stimulus)
-        return stimulus
+        path = f"../plots/{filename}.png"
+        print("Plotting the stimulus...")
+        plot_binary_heatmap(im=stimulus, path=path)
+        print(f"Plotting done, result: {path[3:]} \n")
 
-    def _get_grating(self):
+    def _get_grating(self, spatial_freq, diameter, grating_res):
         """
         Generates a grating (single annulus) of the maximum contrast.
+
+        :param spatial_freq: spatial frequency of the grating (cycles / degree).
+        :type spatial_freq: float
+
+        :param diameter: annulus diameter (degree).
+        :type diameter: float
+
+        :param grating_res: resolution (number of pixels in a single row) of single grating.
+        :type grating_res: int
 
         :return: the luminance matrix of the single annulus.
         :rtype: ndarray[ndarray[float]]
         """
 
         r = np.linspace(
-            -self.diameter / 2,
-            self.diameter / 2,
-            num=self.grating_res,
+            -diameter / 2,
+            diameter / 2,
+            num=grating_res,
             endpoint=True
         )
         x, y = np.meshgrid(r, r)
         radius = np.power(np.power(x, 2) + np.power(y, 2), 1 / 2)
-        mask = radius <= (self.diameter / 2)
-        grating = np.cos(2 * pi * radius * self.spatial_freq + pi)
+        mask = radius <= (diameter / 2)
+        grating = np.cos(2 * pi * radius * spatial_freq + pi)
         grating = 0.5 * (np.multiply(grating, mask) + 1)
         return grating
 
-    def _get_full_stimulus(self, grating):
+    def _get_full_stimulus(self, grating, dist_scale, contrast_range, diameter, grating_res):
         """
         Generates the whole stimulus.
+
+        :param grating: the luminance matrix of the annulus.
+        :type grating: ndarray[ndarray[float]]
+
+        :param dist_scale: how far the circles are from each other.
+        :type dist_scale: float
+
+        :param contrast_range: contrast range for the figure.
+        :type contrast_range: float
+
+        :param diameter: annulus diameter (degree).
+        :type diameter: float
+
+        :param grating_res: resolution (number of pixels in a single row) of single grating.
+        :type grating_res: int
 
         :return: the luminance matrix of a full stimulus.
         :rtype: ndarray[ndarray[float]]
         """
 
-        new_diameter = self.dist_scale * self.diameter
+        new_diameter = dist_scale * diameter
         reps = ceil(self.side_length / new_diameter)
-        new_res = ceil(self.grating_res * self.dist_scale)
+        new_res = ceil(grating_res * dist_scale)
 
         self.stim_res = reps * new_res
 
-        total = self.grating_res**2
+        total = grating_res**2
 
-        stim_size = (total // self.grating_res) * new_res + self.grating_res
+        stim_size = (total // grating_res) * new_res + grating_res
         stimulus = np.zeros((stim_size, stim_size))
         # TODO:: color the whole uncovered area with 0.5
         stimulus[:self.stim_res, :self.stim_res] = 0.5
         # stimulus = np.ones((self.stim_res, self.stim_res)) * 0.5
 
         for t in range(total):
-            i = t // self.grating_res
-            j = t % self.grating_res
+            i = t // grating_res
+            j = t % grating_res
 
             # TODO:: use contrast contrast_range for a figure only
-            contrast = np.random.uniform() * self.contrast_range + 0.5 - self.contrast_range / 2
+            contrast = np.random.uniform() * contrast_range + 0.5 - contrast_range / 2
             lower = 0.5 - contrast / 2   # to keep the mean equals to 0.5
             element = grating * contrast + lower
 
             low = lambda x: x * new_res
-            high = lambda x: low(x) + self.grating_res
+            high = lambda x: low(x) + grating_res
             stimulus[low(i):high(i), low(j):high(j)] = element
 
         return stimulus
@@ -164,9 +182,6 @@ class StimulusGenerator:
 
         low = half_res
         high = low + self.patch_res
-        stimulus = stimulus[low:high, low:high]
+        stimulus_patch = stimulus[low:high, low:high]
 
-        print("Plotting the stimulus patch")
-        plot_binary_heatmap(im=stimulus, path="../plots/stimulus-patch.png")
-
-        return stimulus#.flatten()
+        return stimulus_patch#.flatten()

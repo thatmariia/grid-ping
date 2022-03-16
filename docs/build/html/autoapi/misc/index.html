@@ -156,8 +156,10 @@
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">misc</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../NeuronTypes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../WeightsGenerator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">WeightsGenerator</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">constants</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Oscillator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Oscillator</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../GaborTextureStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaborTextureStimulus</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../main/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../OscillatoryNetwork/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OscillatoryNetwork</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../GridConnectivity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GridConnectivity</span></code></a></li>
@@ -201,23 +203,30 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#misc.neur_slice" title="misc.neur_slice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neur_slice</span></code></a>(neuron_type, nr_ex, nr_in)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#misc.plot_binary_heatmap" title="misc.plot_binary_heatmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_binary_heatmap</span></code></a>(im, path)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#misc.neur_slice" title="misc.neur_slice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neur_slice</span></code></a>(neuron_type, nr_ex, nr_in)</p></td>
 <td><p>The setup: we put excitatory neurons in lists before inhibitory. This function returns relevant slices.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#misc.euclidian_dist_R2" title="misc.euclidian_dist_R2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">euclidian_dist_R2</span></code></a>(p1, p2)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#misc.euclidian_dist_R2" title="misc.euclidian_dist_R2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">euclidian_dist_R2</span></code></a>(p1, p2)</p></td>
 <td><p>Calculates the Eaclidian distance between two 2D points.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#misc.cust_range" title="misc.cust_range"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cust_range</span></code></a>(*args, rtol=1e-05, atol=1e-08, include=[True, False])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#misc.cust_range" title="misc.cust_range"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cust_range</span></code></a>(*args, rtol=1e-05, atol=1e-08, include=[True, False])</p></td>
 <td><p>Code taken from <a class="reference external" href="https://stackoverflow.com/questions/50299172/python-range-or-numpy-arange-with-end-limit-include">https://stackoverflow.com/questions/50299172/python-range-or-numpy-arange-with-end-limit-include</a></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#misc.crange" title="misc.crange"><code class="xref py py-obj docutils literal notranslate"><span class="pre">crange</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#misc.crange" title="misc.crange"><code class="xref py py-obj docutils literal notranslate"><span class="pre">crange</span></code></a>(*args, **kwargs)</p></td>
 <td><p>Range excluding the end-point - from <cite>cust_range</cite>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#misc.orange" title="misc.orange"><code class="xref py py-obj docutils literal notranslate"><span class="pre">orange</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#misc.orange" title="misc.orange"><code class="xref py py-obj docutils literal notranslate"><span class="pre">orange</span></code></a>(*args, **kwargs)</p></td>
 <td><p>Range including the end-point - from <cite>cust_range</cite>.</p></td>
 </tr>
 </tbody>
 </table></div>
+<dl class="py function">
+<dt class="sig sig-object py" id="misc.plot_binary_heatmap">
+<span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">plot_binary_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#misc.plot_binary_heatmap" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="misc.neur_slice">
 <span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">neur_slice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">neuron_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_ex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_in</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#misc.neur_slice" title="Permalink to this definition">#</a></dt>
@@ -330,6 +339,7 @@ array([1. , 1.1, 1.2, 1.3])</p>
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">misc</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#functions">Functions</a><ul>
+<li><a class="reference internal" href="#misc.plot_binary_heatmap">plot_binary_heatmap</a></li>
 <li><a class="reference internal" href="#misc.neur_slice">neur_slice</a></li>
 <li><a class="reference internal" href="#misc.euclidian_dist_R2">euclidian_dist_R2</a></li>
 <li><a class="reference internal" href="#misc.cust_range">cust_range</a></li>

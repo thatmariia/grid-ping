@@ -8,8 +8,10 @@ This page contains auto-generated API reference documentation [#f1]_.
 
    /autoapi/misc/index
    /autoapi/NeuronTypes/index
+   /autoapi/WeightsGenerator/index
    /autoapi/constants/index
    /autoapi/Oscillator/index
+   /autoapi/GaborTextureStimulus/index
    /autoapi/main/index
    /autoapi/OscillatoryNetwork/index
    /autoapi/GridConnectivity/index

@@ -1,4 +1,5 @@
 from src.OscillatoryNetwork import *
+from src.StimulusGenerator import *
 
 
 if __name__ == "__main__":
@@ -11,4 +12,14 @@ if __name__ == "__main__":
         simulation_time=8,
         dt=1
     )
+    # stimulus_generator = StimulusGenerator(
+    #     dist_scale=2,
+    #     contrast_range=0.5,
+    #     spatial_freq=5.7,
+    #     diameter=0.7,
+    #     side_length=7,
+    #     grating_res=50,
+    #     patch_res=480
+    # )
+    # stimulus = stimulus_generator.generate()
 

@@ -6,21 +6,21 @@ import math
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-def plot_heatmap(im):
+def plot_binary_heatmap(im, path):
     fig, ax = plt.subplots(figsize=(300, 300))
     sns.heatmap(
         im,
         annot=False,
         vmin=0,
         vmax=1,
-        cmap="spring",
+        cmap="binary",
         square=True,
         cbar=False,
         xticklabels=False,
         yticklabels=False,
         ax=ax
     )
-    fig.savefig('img.png')
+    fig.savefig(path)
 
 def neur_slice(neuron_type, nr_ex, nr_in):
     """

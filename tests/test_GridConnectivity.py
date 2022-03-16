@@ -1,5 +1,5 @@
 from src.GridConnectivity import *
-from src.Oscillator import *
+from src.PINGNetwork import *
 from src.NeuronTypes import *
 from src.constants import *
 
@@ -14,7 +14,7 @@ class TestGridConnectivity:
             NeuronTypes.E: 2,
             NeuronTypes.I: 2
         },
-        nr_oscillators=1
+        nr_ping_networks=1
     )
 
     connectivity2 = GridConnectivity(
@@ -22,46 +22,46 @@ class TestGridConnectivity:
             NeuronTypes.E: 8,
             NeuronTypes.I: 4
         },
-        nr_oscillators=4
+        nr_ping_networks=4
     )
 
-    def test_assign_oscillators(self):
-        oscillators1, neuron_oscillator_map1 = self.connectivity1._assign_oscillators()
-        oscillators1_expected = [
-            Oscillator((0, 0), [0, 1], [0, 1])
+    def test_assign_ping_networks(self):
+        ping_networks1, neuron_ping_map1 = self.connectivity1._assign_ping_networks()
+        ping_networks1_expected = [
+            PINGNetwork((0, 0), [0, 1], [0, 1])
         ]
-        neuron_oscillator_map1_expected = {
+        neuron_ping_map1_expected = {
             NeuronTypes.E: {0: 0, 1: 0},
             NeuronTypes.I: {0: 0, 1: 0},
         }
-        assert oscillators1 == oscillators1_expected
-        assert neuron_oscillator_map1 == neuron_oscillator_map1_expected
+        assert ping_networks1 == ping_networks1_expected
+        assert neuron_ping_map1 == neuron_ping_map1_expected
 
         # -----------------------------------------------------------------------
 
-        oscillators2, neuron_oscillator_map2 = self.connectivity2._assign_oscillators()
-        oscillators2_expected = [
-            Oscillator((0, 0), [0, 1], [0]),
-            Oscillator((0, 1), [2, 3], [1]),
-            Oscillator((1, 0), [4, 5], [2]),
-            Oscillator((1, 1), [6, 7], [3]),
+        ping_networks2, neuron_ping_map2 = self.connectivity2._assign_ping_networks()
+        ping_networks2_expected = [
+            PINGNetwork((0, 0), [0, 1], [0]),
+            PINGNetwork((0, 1), [2, 3], [1]),
+            PINGNetwork((1, 0), [4, 5], [2]),
+            PINGNetwork((1, 1), [6, 7], [3]),
         ]
-        neuron_oscillator_map2_expected = {
+        neuron_ping_map2_expected = {
             NeuronTypes.E: {0: 0, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2, 6: 3, 7: 3},
             NeuronTypes.I: {0: 0, 1: 1, 2: 2, 3: 3},
         }
-        assert oscillators2 == oscillators2_expected
-        assert neuron_oscillator_map2 == neuron_oscillator_map2_expected
+        assert ping_networks2 == ping_networks2_expected
+        assert neuron_ping_map2 == neuron_ping_map2_expected
 
     def test_get_neurons_dist(self):
-        oscillators1, neuron_oscillator_map1 = self.connectivity1._assign_oscillators()
+        ping_networks1, neuron_ping_map1 = self.connectivity1._assign_ping_networks()
         distEE1 = self.connectivity1._get_neurons_dist(
             neuron_type1=NeuronTypes.E,
             neuron_type2=NeuronTypes.E,
             nr1=self.connectivity1.nr_neurons[NeuronTypes.E],
             nr2=self.connectivity1.nr_neurons[NeuronTypes.E],
-            oscillators=oscillators1,
-            neuron_oscillator_map=neuron_oscillator_map1
+            ping_networks=ping_networks1,
+            neuron_ping_map=neuron_ping_map1
         )
         distEE1_expected = [[0.0, 0.0], [0.0, 0.0]]
 
@@ -70,8 +70,8 @@ class TestGridConnectivity:
             neuron_type2=NeuronTypes.I,
             nr1=self.connectivity1.nr_neurons[NeuronTypes.I],
             nr2=self.connectivity1.nr_neurons[NeuronTypes.I],
-            oscillators=oscillators1,
-            neuron_oscillator_map=neuron_oscillator_map1
+            ping_networks=ping_networks1,
+            neuron_ping_map=neuron_ping_map1
         )
         distII1_expected = [[0.0, 0.0], [0.0, 0.0]]
 
@@ -80,8 +80,8 @@ class TestGridConnectivity:
             neuron_type2=NeuronTypes.I,
             nr1=self.connectivity1.nr_neurons[NeuronTypes.E],
             nr2=self.connectivity1.nr_neurons[NeuronTypes.I],
-            oscillators=oscillators1,
-            neuron_oscillator_map=neuron_oscillator_map1
+            ping_networks=ping_networks1,
+            neuron_ping_map=neuron_ping_map1
         )
         distEI1_expected = [[0.0, 0.0], [0.0, 0.0]]
 
@@ -90,8 +90,8 @@ class TestGridConnectivity:
             neuron_type2=NeuronTypes.E,
             nr1=self.connectivity1.nr_neurons[NeuronTypes.I],
             nr2=self.connectivity1.nr_neurons[NeuronTypes.E],
-            oscillators=oscillators1,
-            neuron_oscillator_map=neuron_oscillator_map1
+            ping_networks=ping_networks1,
+            neuron_ping_map=neuron_ping_map1
         )
         distIE1_expected = [[0, 0], [0, 0]]
 
@@ -102,14 +102,14 @@ class TestGridConnectivity:
 
         # -----------------------------------------------------------------------
 
-        oscillators2, neuron_oscillator_map2 = self.connectivity2._assign_oscillators()
+        ping_networks2, neuron_ping_map2 = self.connectivity2._assign_ping_networks()
         distEE2 = self.connectivity2._get_neurons_dist(
             neuron_type1=NeuronTypes.E,
             neuron_type2=NeuronTypes.E,
             nr1=self.connectivity2.nr_neurons[NeuronTypes.E],
             nr2=self.connectivity2.nr_neurons[NeuronTypes.E],
-            oscillators=oscillators2,
-            neuron_oscillator_map=neuron_oscillator_map2
+            ping_networks=ping_networks2,
+            neuron_ping_map=neuron_ping_map2
         )
         distEE2_expected = [
             [0, 0, 1, 1, 1, 1, sqrt(2), sqrt(2)],
@@ -127,8 +127,8 @@ class TestGridConnectivity:
             neuron_type2=NeuronTypes.I,
             nr1=self.connectivity2.nr_neurons[NeuronTypes.I],
             nr2=self.connectivity2.nr_neurons[NeuronTypes.I],
-            oscillators=oscillators2,
-            neuron_oscillator_map=neuron_oscillator_map2
+            ping_networks=ping_networks2,
+            neuron_ping_map=neuron_ping_map2
         )
         distII2_expected = [
             [0, 1, 1, sqrt(2)],
@@ -142,8 +142,8 @@ class TestGridConnectivity:
             neuron_type2=NeuronTypes.I,
             nr1=self.connectivity2.nr_neurons[NeuronTypes.E],
             nr2=self.connectivity2.nr_neurons[NeuronTypes.I],
-            oscillators=oscillators2,
-            neuron_oscillator_map=neuron_oscillator_map2
+            ping_networks=ping_networks2,
+            neuron_ping_map=neuron_ping_map2
         )
         distEI2_expected = [
             [0, 1, 1, sqrt(2)],
@@ -161,8 +161,8 @@ class TestGridConnectivity:
             neuron_type2=NeuronTypes.E,
             nr1=self.connectivity2.nr_neurons[NeuronTypes.I],
             nr2=self.connectivity2.nr_neurons[NeuronTypes.E],
-            oscillators=oscillators2,
-            neuron_oscillator_map=neuron_oscillator_map2
+            ping_networks=ping_networks2,
+            neuron_ping_map=neuron_ping_map2
         )
         distIE2_expected = [
             [0, 0, 1, 1, 1, 1, sqrt(2), sqrt(2)],
@@ -177,15 +177,15 @@ class TestGridConnectivity:
         assert np.array_equal(distIE2, distIE2_expected)
 
     def test_compute_type_coupling_weights(self):
-        oscillators1, neuron_oscillator_map1 = self.connectivity1._assign_oscillators()
+        ping_networks1, neuron_ping_map1 = self.connectivity1._assign_ping_networks()
 
         distEE1 = self.connectivity1._get_neurons_dist(
             neuron_type1=NeuronTypes.E,
             neuron_type2=NeuronTypes.E,
             nr1=self.connectivity1.nr_neurons[NeuronTypes.E],
             nr2=self.connectivity1.nr_neurons[NeuronTypes.E],
-            oscillators=oscillators1,
-            neuron_oscillator_map=neuron_oscillator_map1
+            ping_networks=ping_networks1,
+            neuron_ping_map=neuron_ping_map1
         )
         type_coupling_weights_EE1 = self.connectivity1._compute_type_coupling_weights(
             dist=distEE1,
@@ -202,8 +202,8 @@ class TestGridConnectivity:
             neuron_type2=NeuronTypes.I,
             nr1=self.connectivity1.nr_neurons[NeuronTypes.I],
             nr2=self.connectivity1.nr_neurons[NeuronTypes.I],
-            oscillators=oscillators1,
-            neuron_oscillator_map=neuron_oscillator_map1
+            ping_networks=ping_networks1,
+            neuron_ping_map=neuron_ping_map1
         )
         type_coupling_weights_II1 = self.connectivity1._compute_type_coupling_weights(
             dist=distII1,
@@ -220,8 +220,8 @@ class TestGridConnectivity:
             neuron_type2=NeuronTypes.I,
             nr1=self.connectivity1.nr_neurons[NeuronTypes.E],
             nr2=self.connectivity1.nr_neurons[NeuronTypes.I],
-            oscillators=oscillators1,
-            neuron_oscillator_map=neuron_oscillator_map1
+            ping_networks=ping_networks1,
+            neuron_ping_map=neuron_ping_map1
         )
         type_coupling_weights_EI1 = self.connectivity1._compute_type_coupling_weights(
             dist=distEI1,
@@ -238,8 +238,8 @@ class TestGridConnectivity:
             neuron_type2=NeuronTypes.E,
             nr1=self.connectivity1.nr_neurons[NeuronTypes.I],
             nr2=self.connectivity1.nr_neurons[NeuronTypes.E],
-            oscillators=oscillators1,
-            neuron_oscillator_map=neuron_oscillator_map1
+            ping_networks=ping_networks1,
+            neuron_ping_map=neuron_ping_map1
         )
         type_coupling_weights_IE1 = self.connectivity1._compute_type_coupling_weights(
             dist=distIE1,
@@ -258,15 +258,15 @@ class TestGridConnectivity:
 
         # -----------------------------------------------------------------------
 
-        oscillators2, neuron_oscillator_map2 = self.connectivity2._assign_oscillators()
+        ping_networks2, neuron_ping_map2 = self.connectivity2._assign_ping_networks()
 
         distEE2 = self.connectivity2._get_neurons_dist(
             neuron_type1=NeuronTypes.E,
             neuron_type2=NeuronTypes.E,
             nr1=self.connectivity2.nr_neurons[NeuronTypes.E],
             nr2=self.connectivity2.nr_neurons[NeuronTypes.E],
-            oscillators=oscillators2,
-            neuron_oscillator_map=neuron_oscillator_map2
+            ping_networks=ping_networks2,
+            neuron_ping_map=neuron_ping_map2
         )
         type_coupling_weights_EE2 = self.connectivity2._compute_type_coupling_weights(
             dist=distEE2,
@@ -300,8 +300,8 @@ class TestGridConnectivity:
             neuron_type2=NeuronTypes.I,
             nr1=self.connectivity2.nr_neurons[NeuronTypes.I],
             nr2=self.connectivity2.nr_neurons[NeuronTypes.I],
-            oscillators=oscillators2,
-            neuron_oscillator_map=neuron_oscillator_map2
+            ping_networks=ping_networks2,
+            neuron_ping_map=neuron_ping_map2
         )
         type_coupling_weights_II2 = self.connectivity2._compute_type_coupling_weights(
             dist=distII2,
@@ -320,8 +320,8 @@ class TestGridConnectivity:
             neuron_type2=NeuronTypes.I,
             nr1=self.connectivity2.nr_neurons[NeuronTypes.E],
             nr2=self.connectivity2.nr_neurons[NeuronTypes.I],
-            oscillators=oscillators2,
-            neuron_oscillator_map=neuron_oscillator_map2
+            ping_networks=ping_networks2,
+            neuron_ping_map=neuron_ping_map2
         )
         type_coupling_weights_EI2 = self.connectivity2._compute_type_coupling_weights(
             dist=distEI2,
@@ -347,8 +347,8 @@ class TestGridConnectivity:
             neuron_type2=NeuronTypes.E,
             nr1=self.connectivity2.nr_neurons[NeuronTypes.I],
             nr2=self.connectivity2.nr_neurons[NeuronTypes.E],
-            oscillators=oscillators2,
-            neuron_oscillator_map=neuron_oscillator_map2
+            ping_networks=ping_networks2,
+            neuron_ping_map=neuron_ping_map2
         )
         type_coupling_weights_IE2 = self.connectivity2._compute_type_coupling_weights(
             dist=distIE2,
@@ -375,8 +375,8 @@ class TestGridConnectivity:
         assert np.array_equal(type_coupling_weights_IE2, type_coupling_weights_IE2_expected)
 
     def test_compute_coupling_weights(self):
-        oscillators1, neuron_oscillator_map1 = self.connectivity1._assign_oscillators()
-        all_coupling_weights1 = self.connectivity1._compute_coupling_weights(oscillators1, neuron_oscillator_map1)
+        ping_networks1, neuron_ping_map1 = self.connectivity1._assign_ping_networks()
+        all_coupling_weights1 = self.connectivity1._compute_coupling_weights(ping_networks1, neuron_ping_map1)
         all_coupling_weights1_expected = [
             [0.004, 0.004, -0.04, -0.04],
             [0.004, 0.004, -0.04, -0.04],
@@ -386,8 +386,8 @@ class TestGridConnectivity:
 
         # -----------------------------------------------------------------------
 
-        oscillators2, neuron_oscillator_map2 = self.connectivity2._assign_oscillators()
-        all_coupling_weights2 = self.connectivity2._compute_coupling_weights(oscillators2, neuron_oscillator_map2)
+        ping_networks2, neuron_ping_map2 = self.connectivity2._assign_ping_networks()
+        all_coupling_weights2 = self.connectivity2._compute_coupling_weights(ping_networks2, neuron_ping_map2)
         all_coupling_weights2_expected = [
             [0.004, 0.004, 0.004 * exp(-2.5), 0.004 * exp(-2.5), 0.004 * exp(-2.5), 0.004 * exp(-2.5),
              0.004 * exp(-sqrt(2) / 0.4), 0.004 * exp(-sqrt(2) / 0.4), -0.04, -0.04 * exp(-1 / 0.3),

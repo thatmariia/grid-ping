@@ -5,13 +5,13 @@ class TestOscillatoryNetwork:
     network1 = OscillatoryNetwork(
         nr_excitatory=2,
         nr_inhibitory=2,
-        nr_oscillators=1
+        nr_ping_networks=1
     )
 
     network2 = OscillatoryNetwork(
         nr_excitatory=8,
         nr_inhibitory=4,
-        nr_oscillators=4
+        nr_ping_networks=4
     )
 
     def test_change_recovery(self):
@@ -28,6 +28,7 @@ class TestOscillatoryNetwork:
         assert np.array_equal(d_recovery2, d_recovery2_expected)
 
     def test_change_potential(self):
+        # FIXME:: fix this, update with the new func
 
         c1 = [0.1] * 4
 

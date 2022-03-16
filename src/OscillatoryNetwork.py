@@ -50,8 +50,8 @@ class OscillatoryNetwork:
     :param nr_inhibitory: number of inhibitory neurons in the network.
     :type nr_inhibitory: int
 
-    :param nr_oscillators: number of oscillators in the network.
-    :type nr_oscillators: int
+    :param nr_ping_networks: number of ping_networks in the network.
+    :type nr_ping_networks: int
 
 
     :raises:
@@ -63,8 +63,8 @@ class OscillatoryNetwork:
     :ivar nr_neurons: number of neurons of each type in the network.
     :type nr_neurons: dict[NeuronTypes: int]
 
-    :ivar nr_oscillators: number of oscillators in the network.
-    :type nr_oscillators: int
+    :ivar nr_ping_networks: number of ping_networks in the network.
+    :type nr_ping_networks: int
 
     :ivar synaptic_potentials: synaptic potentials.
     :type synaptic_potentials: ndarray[float]
@@ -91,7 +91,7 @@ class OscillatoryNetwork:
     :type izhi_zeta: ndarray[float]
     """
 
-    def __init__(self, nr_excitatory, nr_inhibitory, nr_oscillators=1):
+    def __init__(self, nr_excitatory, nr_inhibitory, nr_ping_networks=1):
 
         # FIXME:: this assertions are only there because of the stim_input
         assert nr_excitatory >= 2, "Number of excitatory neurons cannot be smaller than 2."
@@ -101,7 +101,7 @@ class OscillatoryNetwork:
             NeuronTypes.E: nr_excitatory,
             NeuronTypes.I: nr_inhibitory
         }
-        self.nr_oscillators = nr_oscillators
+        self.nr_ping_networks = nr_ping_networks
 
         self.izhi_alpha = np.array(
             [IZHI_ALPHA[NeuronTypes.E] for _ in range(self.nr_neurons[NeuronTypes.E])] +
@@ -152,7 +152,7 @@ class OscillatoryNetwork:
 
         connectivity = GridConnectivity(
             nr_neurons=self.nr_neurons,
-            nr_oscillators=self.nr_oscillators
+            nr_ping_networks=self.nr_ping_networks
         )
 
         print("Simulation started")

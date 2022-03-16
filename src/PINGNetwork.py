@@ -1,9 +1,9 @@
 from src.NeuronTypes import *
 
 
-class Oscillator:
+class PINGNetwork:
     """
-    Class containing locational information about a single oscillator (PING).
+    Class containing locational information about a single PING network oscillator.
 
     :param location: 2D coordinates of this oscillator within the grid.
     :type location: tuple[int]

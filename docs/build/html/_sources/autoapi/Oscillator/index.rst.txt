@@ -1,7 +1,7 @@
-:py:mod:`Oscillator`
+:py:mod:`PINGNetwork`
 ====================
 
-.. py:module:: Oscillator
+.. py:module:: PINGNetwork
 
 
 Module Contents
@@ -12,12 +12,12 @@ Classes
 
 .. autoapisummary::
 
-   Oscillator.Oscillator
+   PINGNetwork.PINGNetwork
 
 
 
 
-.. py:class:: Oscillator(location, excit_ids, inhibit_ids)
+.. py:class:: PINGNetwork(location, excit_ids, inhibit_ids)
 
    Class containing locational information about a single oscillator (PING).
 

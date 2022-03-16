@@ -10,7 +10,7 @@ class WeightsGenerator:
     """
 
     def __init__(self, N, mu_x, mu_y, offset, slope, intercept, theta, side_length, contrast_res):
-        self.N = N  # TODO:: number of oscillators (small squares)?
+        self.N = N  # TODO:: number of ping_networks (small squares)?
         self.mu_x = mu_x  # TODO + where do we get these from? - pixel location relative to (0, 0)
         self.mu_y = mu_y
         self.offset = offset

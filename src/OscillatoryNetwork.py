@@ -44,6 +44,9 @@ class OscillatoryNetwork:
     * :math:`I_{syn}` represents the effect of synaptic potentials,
     * :math:`I_{stim}` is the current caused by external stimuli.
 
+    :param stimulus: TODO
+    :type stimulus: TODO
+
     :param nr_excitatory: number of excitatory neurons in the network.
     :type nr_excitatory: int
 
@@ -65,6 +68,9 @@ class OscillatoryNetwork:
 
     :ivar nr_ping_networks: number of ping_networks in the network.
     :type nr_ping_networks: int
+
+    :ivar stimulus: TODO
+    :type stimulus: TODO
 
     :ivar synaptic_potentials: synaptic potentials.
     :type synaptic_potentials: ndarray[float]
@@ -91,7 +97,7 @@ class OscillatoryNetwork:
     :type izhi_zeta: ndarray[float]
     """
 
-    def __init__(self, nr_excitatory, nr_inhibitory, nr_ping_networks=1):
+    def __init__(self, stimulus, nr_excitatory, nr_inhibitory, nr_ping_networks=1):
 
         # FIXME:: this assertions are only there because of the stim_input
         assert nr_excitatory >= 2, "Number of excitatory neurons cannot be smaller than 2."
@@ -119,6 +125,8 @@ class OscillatoryNetwork:
             [IZHI_ZETA[NeuronTypes.E] for _ in range(self.nr_neurons[NeuronTypes.E])] +
             [IZHI_ZETA[NeuronTypes.I] for _ in range(self.nr_neurons[NeuronTypes.I])]
         )
+
+        self.stimulus = stimulus
 
         self.synaptic_potentials = {
             NeuronTypes.E: np.zeros(self.nr_neurons[NeuronTypes.E]),
@@ -262,7 +270,7 @@ class OscillatoryNetwork:
 
     def _create_main_input_stimulus(self):
         """
-        Creates main (external) input stimulus.
+        Parses external input stimulus. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.
 
         Creates initial :math:`I_{stim}`.
 
@@ -270,15 +278,30 @@ class OscillatoryNetwork:
         :rtype: ndarray[float]
         """
 
-        # sinusoidal spatial modulation of input strength
-        amplitude = 1
-        # mean input level to RS cells
-        mean_input_lvl_RS = 7
-        step = 2 * pi / (self.nr_neurons[NeuronTypes.E] - 1)
-        stim_input = mean_input_lvl_RS + amplitude * np.sin(
-            crange(-pi, pi, step)
-        )
-        # additional mean input to FS cells
-        stim_input = np.append(stim_input, 3.5 * np.ones(self.nr_neurons[NeuronTypes.I]))
+        # TODO:: implement the real strategy
+
+        stim_input = []
+        for i in self.stimulus:
+            stim_input += [i] * \
+                          ((self.nr_neurons[NeuronTypes.E] + self.nr_neurons[NeuronTypes.I]) // self.nr_ping_networks)
 
         return stim_input
+
+
+
+
+        # old code:
+        # # sinusoidal spatial modulation of input strength
+        # amplitude = 1
+        # # mean input level to RS cells
+        # mean_input_lvl_RS = 7
+        # step = 2 * pi / (self.nr_neurons[NeuronTypes.E] - 1)
+        # stim_input = mean_input_lvl_RS + amplitude * np.sin(
+        #     crange(-pi, pi, step)
+        # )
+        # # additional mean input to FS cells
+        # stim_input = np.append(stim_input, 3.5 * np.ones(self.nr_neurons[NeuronTypes.I]))
+        #
+        # print("stim input\n", stim_input)
+        #
+        # return stim_input

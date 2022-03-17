@@ -7,8 +7,8 @@
 Module Contents
 ---------------
 
-.. py:data:: stimulus
-   
+.. py:data:: nr_circuits
+   :annotation: = 4
 
    
 

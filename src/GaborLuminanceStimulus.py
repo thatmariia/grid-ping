@@ -4,7 +4,7 @@ import numpy as np
 from math import pi, ceil
 
 
-class GaborTextureStimulus:
+class GaborLuminanceStimulus:
     """
     This class constructs the Gabor texture stimulus and selects a patch from it.
 

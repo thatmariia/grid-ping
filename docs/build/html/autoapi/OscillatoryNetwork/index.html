@@ -156,9 +156,10 @@
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">misc</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../NeuronTypes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="../WeightsGenerator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">WeightsGenerator</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">constants</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="../GaborTextureStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaborTextureStimulus</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../StimulusCircuit/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusCircuit</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../InputStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">InputStimulus</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../GaborLuminanceStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaborLuminanceStimulus</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../main/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OscillatoryNetwork</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../PINGNetwork/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PINGNetwork</span></code></a></li>
@@ -210,7 +211,7 @@
 </table></div>
 <dl class="py class">
 <dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">OscillatoryNetwork.</span></span><span class="sig-name descname"><span class="pre">OscillatoryNetwork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nr_excitatory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_inhibitory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_ping_networks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">OscillatoryNetwork.</span></span><span class="sig-name descname"><span class="pre">OscillatoryNetwork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stimulus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_excitatory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_inhibitory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_ping_networks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork" title="Permalink to this definition">#</a></dt>
 <dd><p>This class runs the simulation of the network of neurons.</p>
 <p>Every neuron in the system can be described with a 2D system of ODEs:</p>
 <p><span class="math notranslate nohighlight">\(dp_v / dt = 0.04 p_v^2 + 5 p_v + 140 - r_v + I_v\)</span>,</p>
@@ -241,6 +242,7 @@ with other neurons:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>stimulus</strong> (<em>TODO</em>) – TODO</p></li>
 <li><p><strong>nr_excitatory</strong> (<em>int</em>) – number of excitatory neurons in the network.</p></li>
 <li><p><strong>nr_inhibitory</strong> (<em>int</em>) – number of inhibitory neurons in the network.</p></li>
 <li><p><strong>nr_ping_networks</strong> (<em>int</em>) – number of ping_networks in the network.</p></li>
@@ -256,6 +258,7 @@ with other neurons:</p>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>nr_neurons</strong> – number of neurons of each type in the network.</p></li>
 <li><p><strong>nr_ping_networks</strong> – number of ping_networks in the network.</p></li>
+<li><p><strong>stimulus</strong> – TODO</p></li>
 <li><p><strong>synaptic_potentials</strong> – synaptic potentials.</p></li>
 <li><p><strong>current</strong> – current (from input and interaction).</p></li>
 <li><p><strong>potentials</strong> – voltage (membrane potential).</p></li>
@@ -350,7 +353,7 @@ TODO:: maybe make a separate class for this component later</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._create_main_input_stimulus">
 <span class="sig-name descname"><span class="pre">_create_main_input_stimulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._create_main_input_stimulus" title="Permalink to this definition">#</a></dt>
-<dd><p>Creates main (external) input stimulus.</p>
+<dd><p>Parses external input stimulus. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.</p>
 <p>Creates initial <span class="math notranslate nohighlight">\(I_{stim}\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>

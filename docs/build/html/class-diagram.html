@@ -196,7 +196,7 @@
           <section id="class-diagram">
 <h1>Class diagram<a class="headerlink" href="#class-diagram" title="Permalink to this headline">#</a></h1>
 <p class="plantuml">
-<img alt="@startuml
+<img alt='@startuml
 
 enum NeuronTypes {
   excitatory
@@ -264,7 +264,7 @@ class PINGNetwork {
 class GridConnectivity {
   -_nr_neurons: int
   -_nr_ping_networks: int
-  +coupling_weights_int
+  +coupling_weights: int
 
   -_assign_ping_networks()
   -_compute_coupling_weights()
@@ -272,19 +272,19 @@ class GridConnectivity {
   -_compute_type_coupling_weights()
 }
 
-OscillatoryNetwork *-- GridConnectivity
-GridConnectivity *-- PINGNetwork
+OscillatoryNetwork "1" *-- "1" GridConnectivity
+GridConnectivity "1" *-- "1..*" PINGNetwork
 
 GaborLuminanceStimulus &lt;|-- InputStimulus
-InputStimulus *-- StimulusCircuit
+InputStimulus "1" *-- "1..*" StimulusCircuit
 
-OscillatoryNetwork o-- InputStimulus
+OscillatoryNetwork "1" o-- "1" InputStimulus
 
 NeuronTypes .. OscillatoryNetwork
 NeuronTypes .. GridConnectivity
 
 
-@enduml" src="_images/plantuml-b1bf179176c5366415e0789ee2f2e563d4cb140a.png"/>
+@enduml' src="_images/plantuml-aea492051309ca34aa5bcd63d540b896b3b75885.png"/>
 </p>
 </section>
 

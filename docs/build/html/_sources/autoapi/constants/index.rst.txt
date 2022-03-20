@@ -1,0 +1,62 @@
+:py:mod:`constants`
+===================
+
+.. py:module:: constants
+
+
+Module Contents
+---------------
+
+.. py:data:: MAX_CONNECT_STRENGTH
+   
+
+   
+
+.. py:data:: SPATIAL_CONST
+   
+
+   Izhikevich neuron params
+
+
+.. py:data:: IZHI_ALPHA
+   
+
+   
+
+.. py:data:: IZHI_BETA
+   
+
+   
+
+.. py:data:: IZHI_GAMMA
+   
+
+   
+
+.. py:data:: IZHI_ZETA
+   
+
+   
+
+.. py:data:: INIT_MEMBRANE_POTENTIAL
+   
+
+   Gaussian input
+
+
+.. py:data:: GAUSSIAN_INPUT
+   
+
+   Synaptic constants
+
+
+.. py:data:: SYNAPTIC_CONST_RISE
+   
+
+   
+
+.. py:data:: SYNAPTIC_CONST_DECAY
+   
+
+   
+

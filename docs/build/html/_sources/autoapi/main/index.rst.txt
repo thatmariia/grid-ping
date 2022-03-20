@@ -1,0 +1,14 @@
+:py:mod:`main`
+==============
+
+.. py:module:: main
+
+
+Module Contents
+---------------
+
+.. py:data:: nr_circuits
+   :annotation: = 4
+
+   
+

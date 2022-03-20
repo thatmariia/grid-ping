@@ -9,7 +9,7 @@ from statistics import mean
 
 class InputStimulus(GaborLuminanceStimulus):
     """
-    This class transforms a luminance stimulus patch to current.
+    This class transforms a luminance _stimulus patch to _current.
 
     TODO:: more elaborate explanation + ref.
 
@@ -25,13 +25,13 @@ class InputStimulus(GaborLuminanceStimulus):
     :param diameter: annulus diameter (degree).
     :type diameter: float
 
-    :param side_length: side length (degree) of square stimulus region.
+    :param side_length: side length (degree) of square _stimulus region.
     :type side_length: TODO:: float or int?
 
     :param grating_res: resolution (number of pixels in a single row) of single grating.
     :type grating_res: int
 
-    :param patch_res: resolution (number of pixels in a single row) of the stimulus patch.
+    :param patch_res: resolution (number of pixels in a single row) of the _stimulus patch.
     :type patch_res: int
 
     :param nr_circuits: number of circuits created by applying the lattice.
@@ -54,10 +54,10 @@ class InputStimulus(GaborLuminanceStimulus):
         grid.
 
 
-    :ivar nr_circuits: number of circuits created by applying the lattice.
-    :type nr_circuits: int
+    :ivar _nr_circuits: number of circuits created by applying the lattice.
+    :type _nr_circuits: int
 
-    :ivar current: list of currents produced by respective circuits in the stimulus.
+    :ivar current: list of currents produced by respective circuits in the _stimulus.
     :type current: list[float]
     """
 
@@ -72,18 +72,18 @@ class InputStimulus(GaborLuminanceStimulus):
             "The circuits created by lattice should be arranged in a square grid. Make sure the number of circuits " \
             "is a perfect square. "
 
-        # TODO:: add assert on the nr_circuits vs patch size if full pixels need to be contained in lattice: N|M
+        # TODO:: add assert on the _nr_circuits vs patch size if full pixels need to be contained in lattice: N|M
 
-        self.nr_circuits = nr_circuits
+        self._nr_circuits = nr_circuits
 
         circuits = self._assign_circuits()
         self.current = self._get_input_current(circuits, slope, intercept, min_diam_rf)
 
     def _assign_circuits(self):
         """
-        Creates circuits and assigns centers and pixels of the stimulus patch to them.
+        Creates circuits and assigns centers and pixels of the _stimulus patch to them.
 
-        :return: list of all circuits of the stimulus patch created by applying a lattice.
+        :return: list of all circuits of the _stimulus patch created by applying a lattice.
         :rtype: list[StimulusCircuit]
         """
 
@@ -93,7 +93,7 @@ class InputStimulus(GaborLuminanceStimulus):
             np.linspace(
                 0,
                 np.shape(self.stimulus_patch)[0],
-                num=int(sqrt(self.nr_circuits)) + 1,
+                num=int(sqrt(self._nr_circuits)) + 1,
                 endpoint=True,
                 dtype=int
             ),
@@ -101,7 +101,7 @@ class InputStimulus(GaborLuminanceStimulus):
             np.linspace(
                 0,
                 np.shape(self.stimulus_patch)[1],
-                num=int(sqrt(self.nr_circuits)) + 1,
+                num=int(sqrt(self._nr_circuits)) + 1,
                 endpoint=True,
                 dtype=int
             )
@@ -129,9 +129,9 @@ class InputStimulus(GaborLuminanceStimulus):
 
     def _get_input_current(self, circuits, slope, intercept, min_diam_rf):
         """
-        Performes all the neccessary steps to transform luminance to current.
+        Performes all the neccessary steps to transform luminance to _current.
 
-        :param circuits: list of all circuits of the stimulus patch created by applying a lattice.
+        :param circuits: list of all circuits of the _stimulus patch created by applying a lattice.
         :type circuits: list[StimulusCircuit]
 
         :param slope: slope of the receptive field size.
@@ -176,7 +176,7 @@ class InputStimulus(GaborLuminanceStimulus):
         :rtype: float
         """
 
-        eccentricity = self.eccentricity_in_patch(point=center)
+        eccentricity = self._eccentricity_in_patch(point=center)
         diam_rf = max(slope * eccentricity + intercept, min_diam_rf)
         std = diam_rf / 4.0
         return exp(-euclidian_dist_R2(pixel, center) / (2 * std ** 2))
@@ -185,7 +185,7 @@ class InputStimulus(GaborLuminanceStimulus):
         """
         Computes local contrasts for each circuit.
 
-        :param circuits: list of all circuits of the stimulus patch created by applying a lattice.
+        :param circuits: list of all circuits of the _stimulus patch created by applying a lattice.
         :type circuits: list[StimulusCircuit]
 
         :param slope: slope of the receptive field size.
@@ -238,7 +238,7 @@ class InputStimulus(GaborLuminanceStimulus):
 
     def _compute_current(self, frequencies):
         """
-        Computes current through oscillation frequencies. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.
+        Computes _current through oscillation frequencies. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.
 
         :param frequencies: list containing oscillation frequencies for each circuit.
         :type frequencies: list[float]

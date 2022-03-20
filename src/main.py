@@ -19,7 +19,7 @@ if __name__ == "__main__":
         intercept=0,
         min_diam_rf=1
     )
-    # stimulus.plot_stimulus(stimulus.stimulus_patch, filename="stim-patch")
+    # _stimulus.plot_stimulus(_stimulus.stimulus_patch, filename="stim-patch")
 
     oscillatory_network = OscillatoryNetwork(
         stimulus=stimulus.current,

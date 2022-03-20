@@ -3,6 +3,7 @@ tqdm
 sphinx
 sphinx-autoapi
 sphinxcontrib-bibtex
+sphinxcontrib-plantuml
 furo
 pytest
 seaborn

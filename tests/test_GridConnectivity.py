@@ -58,8 +58,8 @@ class TestGridConnectivity:
         distEE1 = self.connectivity1._get_neurons_dist(
             neuron_type1=NeuronTypes.E,
             neuron_type2=NeuronTypes.E,
-            nr1=self.connectivity1.nr_neurons[NeuronTypes.E],
-            nr2=self.connectivity1.nr_neurons[NeuronTypes.E],
+            nr1=self.connectivity1._nr_neurons[NeuronTypes.E],
+            nr2=self.connectivity1._nr_neurons[NeuronTypes.E],
             ping_networks=ping_networks1,
             neuron_ping_map=neuron_ping_map1
         )
@@ -68,8 +68,8 @@ class TestGridConnectivity:
         distII1 = self.connectivity1._get_neurons_dist(
             neuron_type1=NeuronTypes.I,
             neuron_type2=NeuronTypes.I,
-            nr1=self.connectivity1.nr_neurons[NeuronTypes.I],
-            nr2=self.connectivity1.nr_neurons[NeuronTypes.I],
+            nr1=self.connectivity1._nr_neurons[NeuronTypes.I],
+            nr2=self.connectivity1._nr_neurons[NeuronTypes.I],
             ping_networks=ping_networks1,
             neuron_ping_map=neuron_ping_map1
         )
@@ -78,8 +78,8 @@ class TestGridConnectivity:
         distEI1 = self.connectivity1._get_neurons_dist(
             neuron_type1=NeuronTypes.E,
             neuron_type2=NeuronTypes.I,
-            nr1=self.connectivity1.nr_neurons[NeuronTypes.E],
-            nr2=self.connectivity1.nr_neurons[NeuronTypes.I],
+            nr1=self.connectivity1._nr_neurons[NeuronTypes.E],
+            nr2=self.connectivity1._nr_neurons[NeuronTypes.I],
             ping_networks=ping_networks1,
             neuron_ping_map=neuron_ping_map1
         )
@@ -88,8 +88,8 @@ class TestGridConnectivity:
         distIE1 = self.connectivity1._get_neurons_dist(
             neuron_type1=NeuronTypes.I,
             neuron_type2=NeuronTypes.E,
-            nr1=self.connectivity1.nr_neurons[NeuronTypes.I],
-            nr2=self.connectivity1.nr_neurons[NeuronTypes.E],
+            nr1=self.connectivity1._nr_neurons[NeuronTypes.I],
+            nr2=self.connectivity1._nr_neurons[NeuronTypes.E],
             ping_networks=ping_networks1,
             neuron_ping_map=neuron_ping_map1
         )
@@ -106,8 +106,8 @@ class TestGridConnectivity:
         distEE2 = self.connectivity2._get_neurons_dist(
             neuron_type1=NeuronTypes.E,
             neuron_type2=NeuronTypes.E,
-            nr1=self.connectivity2.nr_neurons[NeuronTypes.E],
-            nr2=self.connectivity2.nr_neurons[NeuronTypes.E],
+            nr1=self.connectivity2._nr_neurons[NeuronTypes.E],
+            nr2=self.connectivity2._nr_neurons[NeuronTypes.E],
             ping_networks=ping_networks2,
             neuron_ping_map=neuron_ping_map2
         )
@@ -125,8 +125,8 @@ class TestGridConnectivity:
         distII2 = self.connectivity2._get_neurons_dist(
             neuron_type1=NeuronTypes.I,
             neuron_type2=NeuronTypes.I,
-            nr1=self.connectivity2.nr_neurons[NeuronTypes.I],
-            nr2=self.connectivity2.nr_neurons[NeuronTypes.I],
+            nr1=self.connectivity2._nr_neurons[NeuronTypes.I],
+            nr2=self.connectivity2._nr_neurons[NeuronTypes.I],
             ping_networks=ping_networks2,
             neuron_ping_map=neuron_ping_map2
         )
@@ -140,8 +140,8 @@ class TestGridConnectivity:
         distEI2 = self.connectivity2._get_neurons_dist(
             neuron_type1=NeuronTypes.E,
             neuron_type2=NeuronTypes.I,
-            nr1=self.connectivity2.nr_neurons[NeuronTypes.E],
-            nr2=self.connectivity2.nr_neurons[NeuronTypes.I],
+            nr1=self.connectivity2._nr_neurons[NeuronTypes.E],
+            nr2=self.connectivity2._nr_neurons[NeuronTypes.I],
             ping_networks=ping_networks2,
             neuron_ping_map=neuron_ping_map2
         )
@@ -159,8 +159,8 @@ class TestGridConnectivity:
         distIE2 = self.connectivity2._get_neurons_dist(
             neuron_type1=NeuronTypes.I,
             neuron_type2=NeuronTypes.E,
-            nr1=self.connectivity2.nr_neurons[NeuronTypes.I],
-            nr2=self.connectivity2.nr_neurons[NeuronTypes.E],
+            nr1=self.connectivity2._nr_neurons[NeuronTypes.I],
+            nr2=self.connectivity2._nr_neurons[NeuronTypes.E],
             ping_networks=ping_networks2,
             neuron_ping_map=neuron_ping_map2
         )
@@ -182,8 +182,8 @@ class TestGridConnectivity:
         distEE1 = self.connectivity1._get_neurons_dist(
             neuron_type1=NeuronTypes.E,
             neuron_type2=NeuronTypes.E,
-            nr1=self.connectivity1.nr_neurons[NeuronTypes.E],
-            nr2=self.connectivity1.nr_neurons[NeuronTypes.E],
+            nr1=self.connectivity1._nr_neurons[NeuronTypes.E],
+            nr2=self.connectivity1._nr_neurons[NeuronTypes.E],
             ping_networks=ping_networks1,
             neuron_ping_map=neuron_ping_map1
         )
@@ -200,8 +200,8 @@ class TestGridConnectivity:
         distII1 = self.connectivity1._get_neurons_dist(
             neuron_type1=NeuronTypes.I,
             neuron_type2=NeuronTypes.I,
-            nr1=self.connectivity1.nr_neurons[NeuronTypes.I],
-            nr2=self.connectivity1.nr_neurons[NeuronTypes.I],
+            nr1=self.connectivity1._nr_neurons[NeuronTypes.I],
+            nr2=self.connectivity1._nr_neurons[NeuronTypes.I],
             ping_networks=ping_networks1,
             neuron_ping_map=neuron_ping_map1
         )
@@ -218,8 +218,8 @@ class TestGridConnectivity:
         distEI1 = self.connectivity1._get_neurons_dist(
             neuron_type1=NeuronTypes.E,
             neuron_type2=NeuronTypes.I,
-            nr1=self.connectivity1.nr_neurons[NeuronTypes.E],
-            nr2=self.connectivity1.nr_neurons[NeuronTypes.I],
+            nr1=self.connectivity1._nr_neurons[NeuronTypes.E],
+            nr2=self.connectivity1._nr_neurons[NeuronTypes.I],
             ping_networks=ping_networks1,
             neuron_ping_map=neuron_ping_map1
         )
@@ -236,8 +236,8 @@ class TestGridConnectivity:
         distIE1 = self.connectivity1._get_neurons_dist(
             neuron_type1=NeuronTypes.I,
             neuron_type2=NeuronTypes.E,
-            nr1=self.connectivity1.nr_neurons[NeuronTypes.I],
-            nr2=self.connectivity1.nr_neurons[NeuronTypes.E],
+            nr1=self.connectivity1._nr_neurons[NeuronTypes.I],
+            nr2=self.connectivity1._nr_neurons[NeuronTypes.E],
             ping_networks=ping_networks1,
             neuron_ping_map=neuron_ping_map1
         )
@@ -263,8 +263,8 @@ class TestGridConnectivity:
         distEE2 = self.connectivity2._get_neurons_dist(
             neuron_type1=NeuronTypes.E,
             neuron_type2=NeuronTypes.E,
-            nr1=self.connectivity2.nr_neurons[NeuronTypes.E],
-            nr2=self.connectivity2.nr_neurons[NeuronTypes.E],
+            nr1=self.connectivity2._nr_neurons[NeuronTypes.E],
+            nr2=self.connectivity2._nr_neurons[NeuronTypes.E],
             ping_networks=ping_networks2,
             neuron_ping_map=neuron_ping_map2
         )
@@ -298,8 +298,8 @@ class TestGridConnectivity:
         distII2 = self.connectivity2._get_neurons_dist(
             neuron_type1=NeuronTypes.I,
             neuron_type2=NeuronTypes.I,
-            nr1=self.connectivity2.nr_neurons[NeuronTypes.I],
-            nr2=self.connectivity2.nr_neurons[NeuronTypes.I],
+            nr1=self.connectivity2._nr_neurons[NeuronTypes.I],
+            nr2=self.connectivity2._nr_neurons[NeuronTypes.I],
             ping_networks=ping_networks2,
             neuron_ping_map=neuron_ping_map2
         )
@@ -318,8 +318,8 @@ class TestGridConnectivity:
         distEI2 = self.connectivity2._get_neurons_dist(
             neuron_type1=NeuronTypes.E,
             neuron_type2=NeuronTypes.I,
-            nr1=self.connectivity2.nr_neurons[NeuronTypes.E],
-            nr2=self.connectivity2.nr_neurons[NeuronTypes.I],
+            nr1=self.connectivity2._nr_neurons[NeuronTypes.E],
+            nr2=self.connectivity2._nr_neurons[NeuronTypes.I],
             ping_networks=ping_networks2,
             neuron_ping_map=neuron_ping_map2
         )
@@ -345,8 +345,8 @@ class TestGridConnectivity:
         distIE2 = self.connectivity2._get_neurons_dist(
             neuron_type1=NeuronTypes.I,
             neuron_type2=NeuronTypes.E,
-            nr1=self.connectivity2.nr_neurons[NeuronTypes.I],
-            nr2=self.connectivity2.nr_neurons[NeuronTypes.E],
+            nr1=self.connectivity2._nr_neurons[NeuronTypes.I],
+            nr2=self.connectivity2._nr_neurons[NeuronTypes.E],
             ping_networks=ping_networks2,
             neuron_ping_map=neuron_ping_map2
         )

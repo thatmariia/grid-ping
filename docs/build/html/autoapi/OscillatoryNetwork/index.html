@@ -153,6 +153,7 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../class-diagram.html">Class diagram</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">misc</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../NeuronTypes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a></li>
@@ -227,17 +228,17 @@
 <li><p><span class="math notranslate nohighlight">\(\beta\)</span> describes the sensitivity of <span class="math notranslate nohighlight">\(r\)</span> to the subthreshold fluctuations of <span class="math notranslate nohighlight">\(p\)</span> (see <a class="reference internal" href="../constants/index.html#constants.IZHI_BETA" title="constants.IZHI_BETA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">constants.IZHI_BETA</span></code></a>),</p></li>
 <li><p><span class="math notranslate nohighlight">\(\gamma\)</span> describes the after-spike reset value of <span class="math notranslate nohighlight">\(p\)</span> (see <a class="reference internal" href="../constants/index.html#constants.IZHI_GAMMA" title="constants.IZHI_GAMMA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">constants.IZHI_GAMMA</span></code></a>),</p></li>
 <li><p><span class="math notranslate nohighlight">\(\zeta\)</span> describes the after-spike reset of <span class="math notranslate nohighlight">\(r\)</span> (see <a class="reference internal" href="../constants/index.html#constants.IZHI_ZETA" title="constants.IZHI_ZETA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">constants.IZHI_ZETA</span></code></a>),</p></li>
-<li><p><span class="math notranslate nohighlight">\(I\)</span> describes the current.</p></li>
+<li><p><span class="math notranslate nohighlight">\(I\)</span> describes the _current.</p></li>
 </ul>
 <p>This neural dynamics model is introduced in <span id="id1">[<a class="reference internal" href="../../index.html#id3" title="E.M. Izhikevich. Simple model of spiking neurons. IEEE Transactions on Neural Networks, 14(6):1569-1572, 2003. doi:10.1109/TNN.2003.820440.">Izhikevich, 2003</a>]</span>.</p>
-<p>In the network, neurons are not isolated, and the current involves the accumulated effect of interactions
+<p>In the network, neurons are not isolated, and the _current involves the accumulated effect of interactions
 with other neurons:</p>
 <p><span class="math notranslate nohighlight">\(I_v = \begin{cases} \sum_{w \in V} K_{v, w} I_{syn, w} + I_{stim, v} &amp;\text{ if } \mathsf{type}(v) = ex \\ \sum_{w \in V} K_{v, w} I_{syn, w} &amp;\text{ if } \mathsf{type}(v) = in \end{cases}\)</span>,</p>
 <p>where</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(K\)</span> is the coupling weights (see <a class="reference internal" href="../GridConnectivity/index.html#module-GridConnectivity" title="GridConnectivity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GridConnectivity</span></code></a>),</p></li>
 <li><p><span class="math notranslate nohighlight">\(I_{syn}\)</span> represents the effect of synaptic potentials,</p></li>
-<li><p><span class="math notranslate nohighlight">\(I_{stim}\)</span> is the current caused by external stimuli.</p></li>
+<li><p><span class="math notranslate nohighlight">\(I_{stim}\)</span> is the _current caused by external stimuli.</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -256,17 +257,17 @@ with other neurons:</p>
 </dd>
 <dt class="field-even">Variables</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>nr_neurons</strong> – number of neurons of each type in the network.</p></li>
-<li><p><strong>nr_ping_networks</strong> – number of ping_networks in the network.</p></li>
-<li><p><strong>stimulus</strong> – TODO</p></li>
-<li><p><strong>synaptic_potentials</strong> – synaptic potentials.</p></li>
-<li><p><strong>current</strong> – current (from input and interaction).</p></li>
-<li><p><strong>potentials</strong> – voltage (membrane potential).</p></li>
-<li><p><strong>recovery</strong> – membrane recovery variable.</p></li>
-<li><p><strong>izhi_alpha</strong> – timescale of recovery variable <cite>recovery</cite>.</p></li>
-<li><p><strong>izhi_beta</strong> – sensitivity of <cite>recovery</cite> to sub-threshold oscillations of <cite>potential</cite>.</p></li>
-<li><p><strong>izhi_gamma</strong> – membrane voltage after spike (after-spike reset of <cite>potential</cite>).</p></li>
-<li><p><strong>izhi_zeta</strong> – after-spike reset of recovery variable <cite>recovery</cite>.</p></li>
+<li><p><strong>_nr_neurons</strong> – number of neurons of each type in the network.</p></li>
+<li><p><strong>_nr_ping_networks</strong> – number of ping_networks in the network.</p></li>
+<li><p><strong>_stimulus</strong> – TODO</p></li>
+<li><p><strong>_synaptic_potentials</strong> – synaptic potentials.</p></li>
+<li><p><strong>_current</strong> – _current (from input and interaction).</p></li>
+<li><p><strong>_potentials</strong> – voltage (membrane potential).</p></li>
+<li><p><strong>_recovery</strong> – membrane recovery variable.</p></li>
+<li><p><strong>_izhi_alpha</strong> – timescale of recovery variable <cite>recovery</cite>.</p></li>
+<li><p><strong>_izhi_beta</strong> – sensitivity of <cite>recovery</cite> to sub-threshold oscillations of <cite>potential</cite>.</p></li>
+<li><p><strong>_izhi_gamma</strong> – membrane voltage after spike (after-spike reset of <cite>potential</cite>).</p></li>
+<li><p><strong>_izhi_zeta</strong> – after-spike reset of recovery variable <cite>recovery</cite>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -291,11 +292,11 @@ materials of <span id="id2">[<a class="reference internal" href="../../index.htm
 <dl class="py method">
 <dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_recovery">
 <span class="sig-name descname"><span class="pre">_change_recovery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_recovery" title="Permalink to this definition">#</a></dt>
-<dd><p>Computes the change in membrane recovery.</p>
+<dd><p>Computes the change in membrane _recovery.</p>
 <p>Computes <span class="math notranslate nohighlight">\(dr_v / dt = \alpha_{\mathsf{type}(v)} \cdot (\beta_{\mathsf{type}(v)} p_v - r_v)\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>change in membrane recovery.</p>
+<dd class="field-odd"><p>change in membrane _recovery.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>ndarray[float]</p>
@@ -305,11 +306,11 @@ materials of <span id="id2">[<a class="reference internal" href="../../index.htm
 <dl class="py method">
 <dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_potential">
 <span class="sig-name descname"><span class="pre">_change_potential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_potential" title="Permalink to this definition">#</a></dt>
-<dd><p>Computes the change in membrane potentials.</p>
+<dd><p>Computes the change in membrane _potentials.</p>
 <p>Computes <span class="math notranslate nohighlight">\(dp_v / dt = 0.04 p_v^2 + 5 p_v + 140 - r_v + I_v\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>change in membrane potentials.</p>
+<dd class="field-odd"><p>change in membrane _potentials.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>ndarray[float]</p>
@@ -353,11 +354,11 @@ TODO:: maybe make a separate class for this component later</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._create_main_input_stimulus">
 <span class="sig-name descname"><span class="pre">_create_main_input_stimulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._create_main_input_stimulus" title="Permalink to this definition">#</a></dt>
-<dd><p>Parses external input stimulus. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.</p>
+<dd><p>Parses external input _stimulus. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.</p>
 <p>Creates initial <span class="math notranslate nohighlight">\(I_{stim}\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>input stimulus.</p>
+<dd class="field-odd"><p>input _stimulus.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>ndarray[float]</p>

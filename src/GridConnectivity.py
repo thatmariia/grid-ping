@@ -48,11 +48,11 @@ class GridConnectivity:
         grid.
 
 
-    :ivar nr_neurons: number of neurons of each type in the network.
-    :type nr_neurons: dict[NeuronTypes: int]
+    :ivar _nr_neurons: number of neurons of each type in the network.
+    :type _nr_neurons: dict[NeuronTypes: int]
 
-    :ivar nr_ping_networks: number of ping_networks in the network.
-    :type nr_ping_networks: int
+    :ivar _nr_ping_networks: number of ping_networks in the network.
+    :type _nr_ping_networks: int
 
     :ivar coupling_weights: Matrix of all coupling weights.
     :type coupling_weights: ndarray[ndarray[float]]
@@ -71,8 +71,8 @@ class GridConnectivity:
             "The PING networks should be arranged in a square grid. Make sure the number of PING networks is a " \
             "perfect square."
 
-        self.nr_neurons = nr_neurons
-        self.nr_ping_networks = nr_ping_networks
+        self._nr_neurons = nr_neurons
+        self._nr_ping_networks = nr_ping_networks
 
         ping_networks, neuron_ping_map = self._assign_ping_networks()
 
@@ -99,13 +99,13 @@ class GridConnectivity:
             NeuronTypes.I: {}
         }
 
-        grid_size = int(math.sqrt(self.nr_ping_networks))  # now assuming the grid is square
+        grid_size = int(math.sqrt(self._nr_ping_networks))  # now assuming the grid is square
 
         #  number of neurons of each neuron_type in each PING network
-        nr_ex_per_ping_network = self.nr_neurons[NeuronTypes.E] // self.nr_ping_networks
-        nr_in_per_ping_network = self.nr_neurons[NeuronTypes.I] // self.nr_ping_networks
+        nr_ex_per_ping_network = self._nr_neurons[NeuronTypes.E] // self._nr_ping_networks
+        nr_in_per_ping_network = self._nr_neurons[NeuronTypes.I] // self._nr_ping_networks
 
-        for i in range(self.nr_ping_networks):
+        for i in range(self._nr_ping_networks):
             x = i // grid_size
             y = i % grid_size
 
@@ -144,15 +144,15 @@ class GridConnectivity:
         :rtype: ndarray[ndarray[float]]
         """
 
-        nr_neurons = self.nr_neurons[NeuronTypes.E] + self.nr_neurons[NeuronTypes.I]
+        nr_neurons = self._nr_neurons[NeuronTypes.E] + self._nr_neurons[NeuronTypes.I]
         all_coupling_weights = np.zeros((nr_neurons, nr_neurons))
 
         for neuron_types in list(product([NeuronTypes.E, NeuronTypes.I], repeat=2)):
             dist = self._get_neurons_dist(
                 neuron_type1=neuron_types[0],
                 neuron_type2=neuron_types[1],
-                nr1=self.nr_neurons[neuron_types[0]],
-                nr2=self.nr_neurons[neuron_types[1]],
+                nr1=self._nr_neurons[neuron_types[0]],
+                nr2=self._nr_neurons[neuron_types[1]],
                 ping_networks=ping_networks,
                 neuron_ping_map=neuron_ping_map
             )
@@ -164,13 +164,13 @@ class GridConnectivity:
             # TODO:: why is this?
             if neuron_types[0] == neuron_types[1]:
                 all_coupling_weights[
-                    neur_slice(neuron_types[0], self.nr_neurons[NeuronTypes.E], self.nr_neurons[NeuronTypes.I]),
-                    neur_slice(neuron_types[1], self.nr_neurons[NeuronTypes.E], self.nr_neurons[NeuronTypes.I])
+                    neur_slice(neuron_types[0], self._nr_neurons[NeuronTypes.E], self._nr_neurons[NeuronTypes.I]),
+                    neur_slice(neuron_types[1], self._nr_neurons[NeuronTypes.E], self._nr_neurons[NeuronTypes.I])
                 ] = types_coupling_weights
             else:
                 all_coupling_weights[
-                    neur_slice(neuron_types[1], self.nr_neurons[NeuronTypes.E], self.nr_neurons[NeuronTypes.I]),
-                    neur_slice(neuron_types[0], self.nr_neurons[NeuronTypes.E], self.nr_neurons[NeuronTypes.I])
+                    neur_slice(neuron_types[1], self._nr_neurons[NeuronTypes.E], self._nr_neurons[NeuronTypes.I]),
+                    neur_slice(neuron_types[0], self._nr_neurons[NeuronTypes.E], self._nr_neurons[NeuronTypes.I])
                 ] = types_coupling_weights.T
 
         return np.nan_to_num(all_coupling_weights)

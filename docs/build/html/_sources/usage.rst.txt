@@ -15,13 +15,4 @@ Run the tests::
 
     $ pytest
 
-Generate documentation::
-
-    $ sphinx-build -b html source/ build/html
-
-Clear documentation::
-
-    $ cd docs
-    $ make clean
-
 

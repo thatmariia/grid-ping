@@ -153,6 +153,7 @@
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../class-diagram.html">Class diagram</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">misc</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../NeuronTypes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a></li>
@@ -205,14 +206,14 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus" title="GaborLuminanceStimulus.GaborLuminanceStimulus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GaborLuminanceStimulus</span></code></a></p></td>
-<td><p>This class constructs the Gabor texture stimulus and selects a patch from it.</p></td>
+<td><p>This class constructs the Gabor texture _stimulus and selects a patch from it.</p></td>
 </tr>
 </tbody>
 </table></div>
 <dl class="py class">
 <dt class="sig sig-object py" id="GaborLuminanceStimulus.GaborLuminanceStimulus">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">GaborLuminanceStimulus.</span></span><span class="sig-name descname"><span class="pre">GaborLuminanceStimulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dist_scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contrast_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grating_res</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_res</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus" title="Permalink to this definition">#</a></dt>
-<dd><p>This class constructs the Gabor texture stimulus and selects a patch from it.</p>
+<dd><p>This class constructs the Gabor texture _stimulus and selects a patch from it.</p>
 <p>TODO:: more elaborate explanation + ref.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -221,9 +222,9 @@
 <li><p><strong>contrast_range</strong> (<em>float</em>) – contrast range for the figure.</p></li>
 <li><p><strong>spatial_freq</strong> (<em>float</em>) – spatial frequency of the grating (cycles / degree).</p></li>
 <li><p><strong>diameter</strong> (<em>float</em>) – annulus diameter (degree).</p></li>
-<li><p><strong>side_length</strong> (<em>TODO:: float</em><em> or </em><em>int?</em>) – side length (degree) of square stimulus region.</p></li>
+<li><p><strong>side_length</strong> (<em>TODO:: float</em><em> or </em><em>int?</em>) – side length (degree) of square _stimulus region.</p></li>
 <li><p><strong>grating_res</strong> (<em>int</em>) – resolution (number of pixels in a single row) of single grating.</p></li>
-<li><p><strong>patch_res</strong> (<em>int</em>) – resolution (number of pixels in a single row) of the stimulus patch.</p></li>
+<li><p><strong>patch_res</strong> (<em>int</em>) – resolution (number of pixels in a single row) of the _stimulus patch.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
@@ -234,40 +235,40 @@
 </dd>
 <dt class="field-even">Variables</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>side_length</strong> – side length (degree) of square stimulus region.</p></li>
-<li><p><strong>patch_res</strong> – resolution (number of pixels in a single row) of the stimulus patch.</p></li>
-<li><p><strong>stim_res</strong> – TODO</p></li>
-<li><p><strong>stimulus</strong> – the luminance matrix of the full stimulus.</p></li>
-<li><p><strong>stimulus_patch</strong> – the luminance matrix of a patch of the stimulus.</p></li>
+<li><p><strong>_side_length</strong> – side length (degree) of square _stimulus region.</p></li>
+<li><p><strong>_patch_res</strong> – resolution (number of pixels in a single row) of the _stimulus patch.</p></li>
+<li><p><strong>_stim_res</strong> – TODO</p></li>
+<li><p><strong>stimulus</strong> – the luminance matrix of the full _stimulus.</p></li>
+<li><p><strong>stimulus_patch</strong> – the luminance matrix of a patch of the _stimulus.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="GaborLuminanceStimulus.GaborLuminanceStimulus.eccentricity_in_patch">
-<span class="sig-name descname"><span class="pre">eccentricity_in_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus.eccentricity_in_patch" title="Permalink to this definition">#</a></dt>
-<dd><p>Calculates eccentricity at the given point, that is the distance between that point and the center of stimulus.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>point</strong> (<em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – coordinates of the point (within the stimulus patch).</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>eccentricity at the point.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
 <dt class="sig sig-object py" id="GaborLuminanceStimulus.GaborLuminanceStimulus.plot_stimulus">
 <span class="sig-name descname"><span class="pre">plot_stimulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stimulus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus.plot_stimulus" title="Permalink to this definition">#</a></dt>
-<dd><p>Plots the binary heatmap of a given stimulus.</p>
+<dd><p>Plots the binary heatmap of a given _stimulus.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>stimulus</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>float</em><em>]</em><em>]</em>) – a luminance matrix to plot.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="GaborLuminanceStimulus.GaborLuminanceStimulus._eccentricity_in_patch">
+<span class="sig-name descname"><span class="pre">_eccentricity_in_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._eccentricity_in_patch" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates eccentricity at the given point, that is the distance between that point and the center of _stimulus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>point</strong> (<em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – coordinates of the point (within the _stimulus patch).</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>eccentricity at the point.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -294,7 +295,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="GaborLuminanceStimulus.GaborLuminanceStimulus._get_full_stimulus">
 <span class="sig-name descname"><span class="pre">_get_full_stimulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grating</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contrast_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grating_res</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_full_stimulus" title="Permalink to this definition">#</a></dt>
-<dd><p>Generates the whole stimulus.</p>
+<dd><p>Generates the whole _stimulus.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -306,7 +307,7 @@
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the luminance matrix of a full stimulus.</p>
+<dd class="field-even"><p>the luminance matrix of a full _stimulus.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>ndarray[ndarray[float]]</p>
@@ -316,10 +317,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="GaborLuminanceStimulus.GaborLuminanceStimulus._get_start_of_patch">
 <span class="sig-name descname"><span class="pre">_get_start_of_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_start_of_patch" title="Permalink to this definition">#</a></dt>
-<dd><p>Determines the starting point (left top) of the stimulus patch.</p>
+<dd><p>Determines the starting point (left top) of the _stimulus patch.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>left top coordinate of the stimulus patch within the full stimulus.</p>
+<dd class="field-odd"><p>left top coordinate of the _stimulus patch within the full _stimulus.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>(int, int)</p>
@@ -329,13 +330,13 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="GaborLuminanceStimulus.GaborLuminanceStimulus._get_stimulus_patch">
 <span class="sig-name descname"><span class="pre">_get_stimulus_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stimulus</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_stimulus_patch" title="Permalink to this definition">#</a></dt>
-<dd><p>Selects a patch of the stimulus.</p>
+<dd><p>Selects a patch of the _stimulus.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>stimulus</strong> (<em>ndarray</em><em>[</em><em>ndarray</em><em>[</em><em>float</em><em>]</em><em>]</em>) – the full stimulus.</p>
+<dd class="field-odd"><p><strong>stimulus</strong> (<em>ndarray</em><em>[</em><em>ndarray</em><em>[</em><em>float</em><em>]</em><em>]</em>) – the full _stimulus.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the luminance matrix of a patch of the stimulus.</p>
+<dd class="field-even"><p>the luminance matrix of a patch of the _stimulus.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>ndarray[ndarray[float]]</p>
@@ -390,8 +391,8 @@
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
 <li><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus">GaborLuminanceStimulus</a><ul>
-<li><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus.eccentricity_in_patch">eccentricity_in_patch</a></li>
 <li><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus.plot_stimulus">plot_stimulus</a></li>
+<li><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._eccentricity_in_patch">_eccentricity_in_patch</a></li>
 <li><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_grating">_get_grating</a></li>
 <li><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_full_stimulus">_get_full_stimulus</a></li>
 <li><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_start_of_patch">_get_start_of_patch</a></li>

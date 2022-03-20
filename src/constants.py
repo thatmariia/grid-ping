@@ -18,31 +18,31 @@ SPATIAL_CONST = {
 
 """Izhikevich neuron params"""
 
-# for timescale of recovery variable recovery
+# for timescale of _recovery variable _recovery
 IZHI_ALPHA = {
     NeuronTypes.E: 0.02,
     NeuronTypes.I: 0.1
 }
 
-# for sensitivity of recovery to sub-threshold oscillations of potentials
+# for sensitivity of _recovery to sub-threshold oscillations of _potentials
 IZHI_BETA = {
     NeuronTypes.E: 0.2,
     NeuronTypes.I: 0.2
 }
 
-# for membrane voltage after spike (after-spike reset of potentials)
+# for membrane voltage after spike (after-spike reset of _potentials)
 IZHI_GAMMA = {
     NeuronTypes.E: -65,
     NeuronTypes.I: -65
 }
 
-# for after-spike reset of recovery variable recovery
+# for after-spike reset of _recovery variable _recovery
 IZHI_ZETA = {
     NeuronTypes.E: 8,
     NeuronTypes.I: 2
 }
 
-# for initial values of potentials = voltage (membrane potentials)
+# for initial values of _potentials = voltage (membrane _potentials)
 INIT_MEMBRANE_POTENTIAL = -65
 
 """Gaussian input"""

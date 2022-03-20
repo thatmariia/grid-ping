@@ -1,4 +1,4 @@
-from misc import *
+from src.misc import *
 
 import numpy as np
 from math import pi, ceil
@@ -6,7 +6,7 @@ from math import pi, ceil
 
 class GaborLuminanceStimulus:
     """
-    This class constructs the Gabor texture stimulus and selects a patch from it.
+    This class constructs the Gabor texture _stimulus and selects a patch from it.
 
     TODO:: more elaborate explanation + ref.
 
@@ -22,13 +22,13 @@ class GaborLuminanceStimulus:
     :param diameter: annulus diameter (degree).
     :type diameter: float
 
-    :param side_length: side length (degree) of square stimulus region.
+    :param side_length: side length (degree) of square _stimulus region.
     :type side_length: TODO:: float or int?
 
     :param grating_res: resolution (number of pixels in a single row) of single grating.
     :type grating_res: int
 
-    :param patch_res: resolution (number of pixels in a single row) of the stimulus patch.
+    :param patch_res: resolution (number of pixels in a single row) of the _stimulus patch.
     :type patch_res: int
 
 
@@ -38,19 +38,19 @@ class GaborLuminanceStimulus:
         AssertionError: if the contrast range falls outside of the range :math:`(0, 1]`.
 
 
-    :ivar side_length: side length (degree) of square stimulus region.
-    :type side_length: TODO:: float or int?
+    :ivar _side_length: side length (degree) of square _stimulus region.
+    :type _side_length: TODO:: float or int?
 
-    :ivar patch_res: resolution (number of pixels in a single row) of the stimulus patch.
-    :type patch_res: int
+    :ivar _patch_res: resolution (number of pixels in a single row) of the _stimulus patch.
+    :type _patch_res: int
 
-    :ivar stim_res: TODO
-    :type stim_res: TODO
+    :ivar _stim_res: TODO
+    :type _stim_res: TODO
 
-    :ivar stimulus: the luminance matrix of the full stimulus.
+    :ivar stimulus: the luminance matrix of the full _stimulus.
     :type stimulus: ndarray[ndarray[float]]
 
-    :ivar stimulus_patch: the luminance matrix of a patch of the stimulus.
+    :ivar stimulus_patch: the luminance matrix of a patch of the _stimulus.
     :type stimulus_patch: ndarray[ndarray[float]]
     """
 
@@ -59,21 +59,36 @@ class GaborLuminanceStimulus:
         assert dist_scale >= 1, "The distance between neighbouring annuli should be at least 1 diameter."
         assert (contrast_range > 0) and (contrast_range <= 1), "The contrast range should fall in range :math:`(0, 1]`."
 
-        self.side_length = side_length
-        self.patch_res = patch_res
+        self._side_length = side_length
+        self._patch_res = patch_res
 
         # TODO:: figure out what it is and remove it as instance
-        self.stim_res = None
+        self._stim_res = None
 
         grating = self._get_grating(spatial_freq, diameter, grating_res)
         self.stimulus = self._get_full_stimulus(grating, dist_scale, contrast_range, diameter, grating_res)
         self.stimulus_patch = self._get_stimulus_patch(self.stimulus)
 
-    def eccentricity_in_patch(self, point):
+    def plot_stimulus(self, stimulus, filename):
         """
-        Calculates eccentricity at the given point, that is the distance between that point and the center of stimulus.
+        Plots the binary heatmap of a given _stimulus.
 
-        :param point: coordinates of the point (within the stimulus patch).
+        :param stimulus: a luminance matrix to plot.
+        :type stimulus: list[list[float]]
+
+        :rtype: None
+        """
+
+        path = f"../plots/{filename}.png"
+        print("Plotting the _stimulus...")
+        plot_binary_heatmap(im=stimulus, path=path)
+        print(f"Plotting done, result: {path[3:]} \n")
+
+    def _eccentricity_in_patch(self, point):
+        """
+        Calculates eccentricity at the given point, that is the distance between that point and the center of _stimulus.
+
+        :param point: coordinates of the point (within the _stimulus patch).
         :type point: (float, float)
 
         :return: eccentricity at the point.
@@ -85,21 +100,6 @@ class GaborLuminanceStimulus:
         stimulus_center = (self.stimulus.shape[0] / 2.0, self.stimulus.shape[1] / 2.0)
 
         return euclidian_dist_R2(point_in_stimulus, stimulus_center)
-
-    def plot_stimulus(self, stimulus, filename):
-        """
-        Plots the binary heatmap of a given stimulus.
-
-        :param stimulus: a luminance matrix to plot.
-        :type stimulus: list[list[float]]
-
-        :rtype: None
-        """
-
-        path = f"../plots/{filename}.png"
-        print("Plotting the stimulus...")
-        plot_binary_heatmap(im=stimulus, path=path)
-        print(f"Plotting done, result: {path[3:]} \n")
 
     def _get_grating(self, spatial_freq, diameter, grating_res):
         """
@@ -133,7 +133,7 @@ class GaborLuminanceStimulus:
 
     def _get_full_stimulus(self, grating, dist_scale, contrast_range, diameter, grating_res):
         """
-        Generates the whole stimulus.
+        Generates the whole _stimulus.
 
         :param grating: the luminance matrix of the annulus.
         :type grating: ndarray[ndarray[float]]
@@ -150,23 +150,23 @@ class GaborLuminanceStimulus:
         :param grating_res: resolution (number of pixels in a single row) of single grating.
         :type grating_res: int
 
-        :return: the luminance matrix of a full stimulus.
+        :return: the luminance matrix of a full _stimulus.
         :rtype: ndarray[ndarray[float]]
         """
 
         new_diameter = dist_scale * diameter
-        reps = ceil(self.side_length / new_diameter)
+        reps = ceil(self._side_length / new_diameter)
         new_res = ceil(grating_res * dist_scale)
 
-        self.stim_res = reps * new_res
+        self._stim_res = reps * new_res
 
         total = grating_res**2
 
         stim_size = (total // grating_res) * new_res + grating_res
         stimulus = np.zeros((stim_size, stim_size))
         # TODO:: color the whole uncovered area with 0.5
-        stimulus[:self.stim_res, :self.stim_res] = 0.5
-        # stimulus = np.ones((self.stim_res, self.stim_res)) * 0.5
+        stimulus[:self._stim_res, :self._stim_res] = 0.5
+        # _stimulus = np.ones((self._stim_res, self._stim_res)) * 0.5
 
         for t in range(total):
             i = t // grating_res
@@ -185,31 +185,31 @@ class GaborLuminanceStimulus:
 
     def _get_start_of_patch(self):
         """
-        Determines the starting point (left top) of the stimulus patch.
+        Determines the starting point (left top) of the _stimulus patch.
 
-        :return: left top coordinate of the stimulus patch within the full stimulus.
+        :return: left top coordinate of the _stimulus patch within the full _stimulus.
         :rtype: (int, int)
         """
 
         # TODO:: select an actually relevant patch
-        half_res = ceil((self.stim_res - self.patch_res) / 2)
+        half_res = ceil((self._stim_res - self._patch_res) / 2)
         start = half_res
 
         return start, start
 
     def _get_stimulus_patch(self, stimulus):
         """
-        Selects a patch of the stimulus.
+        Selects a patch of the _stimulus.
 
-        :param stimulus: the full stimulus.
+        :param stimulus: the full _stimulus.
         :type stimulus: ndarray[ndarray[float]]
 
-        :return: the luminance matrix of a patch of the stimulus.
+        :return: the luminance matrix of a patch of the _stimulus.
         :rtype: ndarray[ndarray[float]]
         """
 
         start = self._get_start_of_patch()
-        end = (start[0] + self.patch_res, start[1] + self.patch_res)
+        end = (start[0] + self._patch_res, start[1] + self._patch_res)
         stimulus_patch = stimulus[start[0]:end[0], start[1]:end[1]]
 
         return stimulus_patch

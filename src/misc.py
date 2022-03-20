@@ -1,4 +1,3 @@
-from src.constants import *
 from src.NeuronTypes import *
 
 import numpy as np

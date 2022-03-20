@@ -17,6 +17,7 @@ Contents
 
    usage
    class-diagram
+   sequence-diagram
 
 References
 ----------

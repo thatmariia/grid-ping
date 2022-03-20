@@ -9,7 +9,7 @@ from statistics import mean
 
 class InputStimulus(GaborLuminanceStimulus):
     """
-    This class transforms a luminance _stimulus patch to _current.
+    This class transforms a luminance stimulus patch to current.
 
     TODO:: more elaborate explanation + ref.
 
@@ -25,13 +25,13 @@ class InputStimulus(GaborLuminanceStimulus):
     :param diameter: annulus diameter (degree).
     :type diameter: float
 
-    :param side_length: side length (degree) of square _stimulus region.
+    :param side_length: side length (degree) of square stimulus region.
     :type side_length: TODO:: float or int?
 
     :param grating_res: resolution (number of pixels in a single row) of single grating.
     :type grating_res: int
 
-    :param patch_res: resolution (number of pixels in a single row) of the _stimulus patch.
+    :param patch_res: resolution (number of pixels in a single row) of the stimulus patch.
     :type patch_res: int
 
     :param nr_circuits: number of circuits created by applying the lattice.
@@ -57,7 +57,7 @@ class InputStimulus(GaborLuminanceStimulus):
     :ivar _nr_circuits: number of circuits created by applying the lattice.
     :type _nr_circuits: int
 
-    :ivar current: list of currents produced by respective circuits in the _stimulus.
+    :ivar current: list of currents produced by respective circuits in the stimulus.
     :type current: list[float]
     """
 
@@ -81,9 +81,9 @@ class InputStimulus(GaborLuminanceStimulus):
 
     def _assign_circuits(self):
         """
-        Creates circuits and assigns centers and pixels of the _stimulus patch to them.
+        Creates circuits and assigns centers and pixels of the stimulus patch to them.
 
-        :return: list of all circuits of the _stimulus patch created by applying a lattice.
+        :return: list of all circuits of the stimulus patch created by applying a lattice.
         :rtype: list[StimulusCircuit]
         """
 
@@ -131,7 +131,7 @@ class InputStimulus(GaborLuminanceStimulus):
         """
         Performes all the neccessary steps to transform luminance to _current.
 
-        :param circuits: list of all circuits of the _stimulus patch created by applying a lattice.
+        :param circuits: list of all circuits of the stimulus patch created by applying a lattice.
         :type circuits: list[StimulusCircuit]
 
         :param slope: slope of the receptive field size.
@@ -143,7 +143,7 @@ class InputStimulus(GaborLuminanceStimulus):
         :param min_diam_rf: minimal size of the receptive field.
         :type min_diam_rf: float
 
-        :return: list containing currents created by each circuit
+        :return: list containing currents created by each circuit.
         :rtype: list[float]
         """
 
@@ -185,7 +185,7 @@ class InputStimulus(GaborLuminanceStimulus):
         """
         Computes local contrasts for each circuit.
 
-        :param circuits: list of all circuits of the _stimulus patch created by applying a lattice.
+        :param circuits: list of all circuits of the stimulus patch created by applying a lattice.
         :type circuits: list[StimulusCircuit]
 
         :param slope: slope of the receptive field size.

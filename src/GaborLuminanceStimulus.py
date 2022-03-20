@@ -6,7 +6,7 @@ from math import pi, ceil
 
 class GaborLuminanceStimulus:
     """
-    This class constructs the Gabor texture _stimulus and selects a patch from it.
+    This class constructs the Gabor texture stimulus and selects a patch from it.
 
     TODO:: more elaborate explanation + ref.
 
@@ -22,13 +22,13 @@ class GaborLuminanceStimulus:
     :param diameter: annulus diameter (degree).
     :type diameter: float
 
-    :param side_length: side length (degree) of square _stimulus region.
+    :param side_length: side length (degree) of square stimulus region.
     :type side_length: TODO:: float or int?
 
     :param grating_res: resolution (number of pixels in a single row) of single grating.
     :type grating_res: int
 
-    :param patch_res: resolution (number of pixels in a single row) of the _stimulus patch.
+    :param patch_res: resolution (number of pixels in a single row) of the stimulus patch.
     :type patch_res: int
 
 
@@ -38,19 +38,19 @@ class GaborLuminanceStimulus:
         AssertionError: if the contrast range falls outside of the range :math:`(0, 1]`.
 
 
-    :ivar _side_length: side length (degree) of square _stimulus region.
+    :ivar _side_length: side length (degree) of square stimulus region.
     :type _side_length: TODO:: float or int?
 
-    :ivar _patch_res: resolution (number of pixels in a single row) of the _stimulus patch.
+    :ivar _patch_res: resolution (number of pixels in a single row) of the stimulus patch.
     :type _patch_res: int
 
     :ivar _stim_res: TODO
     :type _stim_res: TODO
 
-    :ivar stimulus: the luminance matrix of the full _stimulus.
+    :ivar stimulus: the luminance matrix of the full stimulus.
     :type stimulus: ndarray[ndarray[float]]
 
-    :ivar stimulus_patch: the luminance matrix of a patch of the _stimulus.
+    :ivar stimulus_patch: the luminance matrix of a patch of the stimulus.
     :type stimulus_patch: ndarray[ndarray[float]]
     """
 
@@ -71,7 +71,7 @@ class GaborLuminanceStimulus:
 
     def plot_stimulus(self, stimulus, filename):
         """
-        Plots the binary heatmap of a given _stimulus.
+        Plots the binary heatmap of a given stimulus.
 
         :param stimulus: a luminance matrix to plot.
         :type stimulus: list[list[float]]
@@ -86,9 +86,9 @@ class GaborLuminanceStimulus:
 
     def _eccentricity_in_patch(self, point):
         """
-        Calculates eccentricity at the given point, that is the distance between that point and the center of _stimulus.
+        Calculates eccentricity at the given point, that is the distance between that point and the center of stimulus.
 
-        :param point: coordinates of the point (within the _stimulus patch).
+        :param point: coordinates of the point (within the stimulus patch).
         :type point: (float, float)
 
         :return: eccentricity at the point.
@@ -133,7 +133,7 @@ class GaborLuminanceStimulus:
 
     def _get_full_stimulus(self, grating, dist_scale, contrast_range, diameter, grating_res):
         """
-        Generates the whole _stimulus.
+        Generates the whole stimulus.
 
         :param grating: the luminance matrix of the annulus.
         :type grating: ndarray[ndarray[float]]
@@ -150,7 +150,7 @@ class GaborLuminanceStimulus:
         :param grating_res: resolution (number of pixels in a single row) of single grating.
         :type grating_res: int
 
-        :return: the luminance matrix of a full _stimulus.
+        :return: the luminance matrix of a full stimulus.
         :rtype: ndarray[ndarray[float]]
         """
 
@@ -185,9 +185,9 @@ class GaborLuminanceStimulus:
 
     def _get_start_of_patch(self):
         """
-        Determines the starting point (left top) of the _stimulus patch.
+        Determines the starting point (left top) of the stimulus patch.
 
-        :return: left top coordinate of the _stimulus patch within the full _stimulus.
+        :return: left top coordinate of the stimulus patch within the full stimulus.
         :rtype: (int, int)
         """
 
@@ -199,12 +199,12 @@ class GaborLuminanceStimulus:
 
     def _get_stimulus_patch(self, stimulus):
         """
-        Selects a patch of the _stimulus.
+        Selects a patch of the stimulus.
 
-        :param stimulus: the full _stimulus.
+        :param stimulus: the full stimulus.
         :type stimulus: ndarray[ndarray[float]]
 
-        :return: the luminance matrix of a patch of the _stimulus.
+        :return: the luminance matrix of a patch of the stimulus.
         :rtype: ndarray[ndarray[float]]
         """
 

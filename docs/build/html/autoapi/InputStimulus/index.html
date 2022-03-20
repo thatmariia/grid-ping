@@ -207,7 +207,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#InputStimulus.InputStimulus" title="InputStimulus.InputStimulus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InputStimulus</span></code></a></p></td>
-<td><p>This class transforms a luminance _stimulus patch to _current.</p></td>
+<td><p>This class transforms a luminance stimulus patch to current.</p></td>
 </tr>
 </tbody>
 </table></div>
@@ -215,7 +215,7 @@
 <dt class="sig sig-object py" id="InputStimulus.InputStimulus">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">InputStimulus.</span></span><span class="sig-name descname"><span class="pre">InputStimulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dist_scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contrast_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grating_res</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_res</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_circuits</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intercept</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_diam_rf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#InputStimulus.InputStimulus" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">src.GaborLuminanceStimulus.GaborLuminanceStimulus</span></code></p>
-<p>This class transforms a luminance _stimulus patch to _current.</p>
+<p>This class transforms a luminance stimulus patch to current.</p>
 <p>TODO:: more elaborate explanation + ref.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -224,9 +224,9 @@
 <li><p><strong>contrast_range</strong> (<em>float</em>) – contrast range for the figure.</p></li>
 <li><p><strong>spatial_freq</strong> (<em>float</em>) – spatial frequency of the grating (cycles / degree).</p></li>
 <li><p><strong>diameter</strong> (<em>float</em>) – annulus diameter (degree).</p></li>
-<li><p><strong>side_length</strong> (<em>TODO:: float</em><em> or </em><em>int?</em>) – side length (degree) of square _stimulus region.</p></li>
+<li><p><strong>side_length</strong> (<em>TODO:: float</em><em> or </em><em>int?</em>) – side length (degree) of square stimulus region.</p></li>
 <li><p><strong>grating_res</strong> (<em>int</em>) – resolution (number of pixels in a single row) of single grating.</p></li>
-<li><p><strong>patch_res</strong> (<em>int</em>) – resolution (number of pixels in a single row) of the _stimulus patch.</p></li>
+<li><p><strong>patch_res</strong> (<em>int</em>) – resolution (number of pixels in a single row) of the stimulus patch.</p></li>
 <li><p><strong>nr_circuits</strong> (<em>int</em>) – number of circuits created by applying the lattice.</p></li>
 <li><p><strong>slope</strong> (<em>float</em>) – slope of the receptive field size.</p></li>
 <li><p><strong>intercept</strong> (<em>float</em>) – intercept of the receptive field size.</p></li>
@@ -243,17 +243,17 @@ grid.</p>
 <dt class="field-even">Variables</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>_nr_circuits</strong> – number of circuits created by applying the lattice.</p></li>
-<li><p><strong>current</strong> – list of currents produced by respective circuits in the _stimulus.</p></li>
+<li><p><strong>current</strong> – list of currents produced by respective circuits in the stimulus.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="InputStimulus.InputStimulus._assign_circuits">
 <span class="sig-name descname"><span class="pre">_assign_circuits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#InputStimulus.InputStimulus._assign_circuits" title="Permalink to this definition">#</a></dt>
-<dd><p>Creates circuits and assigns centers and pixels of the _stimulus patch to them.</p>
+<dd><p>Creates circuits and assigns centers and pixels of the stimulus patch to them.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>list of all circuits of the _stimulus patch created by applying a lattice.</p>
+<dd class="field-odd"><p>list of all circuits of the stimulus patch created by applying a lattice.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>list[<a class="reference internal" href="../StimulusCircuit/index.html#StimulusCircuit.StimulusCircuit" title="StimulusCircuit.StimulusCircuit">StimulusCircuit</a>]</p>
@@ -267,14 +267,14 @@ grid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>circuits</strong> (<em>list</em><em>[</em><a class="reference internal" href="../StimulusCircuit/index.html#StimulusCircuit.StimulusCircuit" title="StimulusCircuit.StimulusCircuit"><em>StimulusCircuit</em></a><em>]</em>) – list of all circuits of the _stimulus patch created by applying a lattice.</p></li>
+<li><p><strong>circuits</strong> (<em>list</em><em>[</em><a class="reference internal" href="../StimulusCircuit/index.html#StimulusCircuit.StimulusCircuit" title="StimulusCircuit.StimulusCircuit"><em>StimulusCircuit</em></a><em>]</em>) – list of all circuits of the stimulus patch created by applying a lattice.</p></li>
 <li><p><strong>slope</strong> (<em>float</em>) – slope of the receptive field size.</p></li>
 <li><p><strong>intercept</strong> (<em>float</em>) – intercept of the receptive field size.</p></li>
 <li><p><strong>min_diam_rf</strong> (<em>float</em>) – minimal size of the receptive field.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>list containing currents created by each circuit</p>
+<dd class="field-even"><p>list containing currents created by each circuit.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>list[float]</p>
@@ -310,7 +310,7 @@ grid.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>circuits</strong> (<em>list</em><em>[</em><a class="reference internal" href="../StimulusCircuit/index.html#StimulusCircuit.StimulusCircuit" title="StimulusCircuit.StimulusCircuit"><em>StimulusCircuit</em></a><em>]</em>) – list of all circuits of the _stimulus patch created by applying a lattice.</p></li>
+<li><p><strong>circuits</strong> (<em>list</em><em>[</em><a class="reference internal" href="../StimulusCircuit/index.html#StimulusCircuit.StimulusCircuit" title="StimulusCircuit.StimulusCircuit"><em>StimulusCircuit</em></a><em>]</em>) – list of all circuits of the stimulus patch created by applying a lattice.</p></li>
 <li><p><strong>slope</strong> (<em>float</em>) – slope of the receptive field size.</p></li>
 <li><p><strong>intercept</strong> (<em>float</em>) – intercept of the receptive field size.</p></li>
 <li><p><strong>min_diam_rf</strong> (<em>float</em>) – minimal size of the receptive field.</p></li>

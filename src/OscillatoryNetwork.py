@@ -32,7 +32,7 @@ class OscillatoryNetwork:
 
     This neural dynamics model is introduced in :cite:p:`Izhikevich2003`.
 
-    In the network, neurons are not isolated, and the _current involves the accumulated effect of interactions
+    In the network, neurons are not isolated, and the current involves the accumulated effect of interactions
     with other neurons:
 
     :math:`I_v = \\begin{cases} \\sum_{w \in V} K_{v, w} I_{syn, w} + I_{stim, v} &\\text{ if } \mathsf{type}(v) = ex \\\ \\sum_{w \in V} K_{v, w} I_{syn, w} &\\text{ if } \mathsf{type}(v) = in \\end{cases}`,
@@ -41,7 +41,7 @@ class OscillatoryNetwork:
 
     * :math:`K` is the coupling weights (see :obj:`GridConnectivity`),
     * :math:`I_{syn}` represents the effect of synaptic potentials,
-    * :math:`I_{stim}` is the _current caused by external stimuli.
+    * :math:`I_{stim}` is the current caused by external stimuli.
 
     :param stimulus: TODO
     :type stimulus: TODO
@@ -74,7 +74,7 @@ class OscillatoryNetwork:
     :ivar _synaptic_potentials: synaptic potentials.
     :type _synaptic_potentials: ndarray[float]
 
-    :ivar _current: _current (from input and interaction).
+    :ivar _current: current (from input and interaction).
     :type _current: ndarray[float]
 
     :ivar _potentials: voltage (membrane potential).
@@ -200,11 +200,11 @@ class OscillatoryNetwork:
 
     def _change_recovery(self):
         """
-        Computes the change in membrane _recovery.
+        Computes the change in membrane recovery.
 
         Computes :math:`dr_v / dt = \\alpha_{\mathsf{type}(v)} \cdot (\\beta_{\mathsf{type}(v)} p_v - r_v)`.
 
-        :return: change in membrane _recovery.
+        :return: change in membrane recovery.
         :rtype: ndarray[float]
         """
 
@@ -215,11 +215,11 @@ class OscillatoryNetwork:
 
     def _change_potential(self):
         """
-        Computes the change in membrane _potentials.
+        Computes the change in membrane potentials.
 
         Computes :math:`dp_v / dt = 0.04 p_v^2 + 5 p_v + 140 - r_v + I_v`.
 
-        :return: change in membrane _potentials.
+        :return: change in membrane potentials.
         :rtype: ndarray[float]
         """
 
@@ -269,11 +269,11 @@ class OscillatoryNetwork:
 
     def _create_main_input_stimulus(self):
         """
-        Parses external input _stimulus. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.
+        Parses external input stimulus. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.
 
         Creates initial :math:`I_{stim}`.
 
-        :return: input _stimulus.
+        :return: input stimulus.
         :rtype: ndarray[float]
         """
 

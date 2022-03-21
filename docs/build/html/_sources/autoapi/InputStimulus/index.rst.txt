@@ -64,6 +64,10 @@ Classes
    :raises:
        AssertionError: if the number of circuits is not a square as these circuits should be arranged in a square
        grid.
+   :raises:
+       AssertionError: if vertical lines of lattice cut through pixels.
+   :raises:
+       AssertionError: if horizontal lines of lattice cut through pixels.
 
 
    :ivar _nr_circuits: number of circuits created by applying the lattice.

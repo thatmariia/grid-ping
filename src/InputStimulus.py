@@ -52,6 +52,10 @@ class InputStimulus(GaborLuminanceStimulus):
     :raises:
         AssertionError: if the number of circuits is not a square as these circuits should be arranged in a square
         grid.
+    :raises:
+        AssertionError: if vertical lines of lattice cut through pixels.
+    :raises:
+        AssertionError: if horizontal lines of lattice cut through pixels.
 
 
     :ivar _nr_circuits: number of circuits created by applying the lattice.
@@ -71,8 +75,10 @@ class InputStimulus(GaborLuminanceStimulus):
         assert int(math.sqrt(nr_circuits)) == math.sqrt(nr_circuits), \
             "The circuits created by lattice should be arranged in a square grid. Make sure the number of circuits " \
             "is a perfect square. "
-
-        # TODO:: add assert on the _nr_circuits vs patch size if full pixels need to be contained in lattice: N|M
+        assert np.shape(self.stimulus_patch)[0] % int(math.sqrt(nr_circuits)) == 0, \
+            "Vertical lines of lattice should not cut through pixels."
+        assert np.shape(self.stimulus_patch)[1] % int(math.sqrt(nr_circuits)) == 0, \
+            "Horizontal lines of lattice should not cut through pixels."
 
         self._nr_circuits = nr_circuits
 

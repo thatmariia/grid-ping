@@ -1,0 +1,3 @@
+[submodule "bthesis-latex"]
+	path = bthesis-latex
+	url = https://github.com/thatmariia/bthesis-latex.git

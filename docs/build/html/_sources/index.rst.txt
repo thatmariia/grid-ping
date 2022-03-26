@@ -9,6 +9,20 @@ BEP documentation!
 .. note::
    This project is under active development.
 
+.. button:: thesis document (draft)
+    :class: button
+    :link: https://git.mariia.me/bthesis-latex/doc.pdf
+
+.. |br| raw:: html
+
+  <div style="line-height: 0; padding: 0; margin: 0"></div>
+
+|br|
+
+.. button:: git repository
+    :class: button
+    :link: https://github.com/thatmariia/grid-ping
+
 Contents
 --------
 
@@ -22,7 +36,7 @@ Contents
 References
 ----------
 
-.. bibliography:: ../../bthesis-latex/bib.bib
+.. bibliography:: ../../bthesis-latex/src/bib.bib
    :style: plain
 
 Indices and tables

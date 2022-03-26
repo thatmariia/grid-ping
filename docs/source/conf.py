@@ -32,6 +32,7 @@ author = '<authors>'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
+    'docs.source.button',
     'sphinx.ext.autodoc',
     'autoapi.extension',
     'sphinxcontrib.bibtex',
@@ -42,7 +43,7 @@ extensions = [
 plantuml = 'java -jar plantuml-1.2022.2.jar'
 
 # Latex setup path
-bibtex_bibfiles = ['../../bthesis-latex/bib.bib']
+bibtex_bibfiles = ['../../bthesis-latex/src/bib.bib']
 bibtex_reference_style = 'author_year'
 
 # Add any paths that contain templates here, relative to this directory.

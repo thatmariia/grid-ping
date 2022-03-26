@@ -22,7 +22,7 @@ Contents
 References
 ----------
 
-.. bibliography:: references.bib
+.. bibliography:: ../../bthesis-latex/bib.bib
    :style: plain
 
 Indices and tables

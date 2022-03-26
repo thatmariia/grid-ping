@@ -231,7 +231,7 @@
 <li><p><span class="math notranslate nohighlight">\(\zeta\)</span> describes the after-spike reset of <span class="math notranslate nohighlight">\(r\)</span> (see <a class="reference internal" href="../constants/index.html#constants.IZHI_ZETA" title="constants.IZHI_ZETA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">constants.IZHI_ZETA</span></code></a>),</p></li>
 <li><p><span class="math notranslate nohighlight">\(I\)</span> describes the _current.</p></li>
 </ul>
-<p>This neural dynamics model is introduced in <span id="id1">[<a class="reference internal" href="../../index.html#id3" title="E.M. Izhikevich. Simple model of spiking neurons. IEEE Transactions on Neural Networks, 14(6):1569-1572, 2003. doi:10.1109/TNN.2003.820440.">Izhikevich, 2003</a>]</span>.</p>
+<p>This neural dynamics model is introduced in <span id="id1">[<a class="reference internal" href="../../index.html#id18" title="E M Izhikevich. Simple model of spiking neurons. IEEE Transactions on Neural Networks, 14(6):1569–1572, 2003. URL: https://ieeexplore.ieee.org/document/1257420, doi:10.1109/TNN.2003.820440.">Izhikevich, 2003</a>]</span>.</p>
 <p>In the network, neurons are not isolated, and the current involves the accumulated effect of interactions
 with other neurons:</p>
 <p><span class="math notranslate nohighlight">\(I_v = \begin{cases} \sum_{w \in V} K_{v, w} I_{syn, w} + I_{stim, v} &amp;\text{ if } \mathsf{type}(v) = ex \\ \sum_{w \in V} K_{v, w} I_{syn, w} &amp;\text{ if } \mathsf{type}(v) = in \end{cases}\)</span>,</p>
@@ -277,7 +277,7 @@ with other neurons:</p>
 <span class="sig-name descname"><span class="pre">run_simulation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulation_time</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork.run_simulation" title="Permalink to this definition">#</a></dt>
 <dd><p>Runs the simulation.</p>
 <p>Parts of the code in this function and its components are rewritten from MATLAB code listed in supplementary
-materials of <span id="id2">[<a class="reference internal" href="../../index.html#id2" title="E. Lowet, M. Roberts, A. Hadjipapas, A. Peter, J. van der Eerden, and P. De Weerd. Input-dependent frequency modulation of cortical gamma oscillations shapes spatial synchronization and enables phase coding. PLoS Comput Biol, 11(2):e1004072, Feb 2015. doi:10.1371/journal.pcbi.1004072.">Lowet <em>et al.</em>, 2015</a>]</span>.</p>
+materials of <span id="id2">[<a class="reference internal" href="../../index.html#id9" title="Eric Lowet, Mark Roberts, Avgis Hadjipapas, Alina Peter, Jan van der Eerden, and Peter De Weerd. Input-Dependent Frequency Modulation of Cortical Gamma Oscillations Shapes Spatial Synchronization and Enables Phase Coding. PLoS Computational Biology, 2015. URL: https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004072, doi:10.1371/JOURNAL.PCBI.1004072.">Lowet <em>et al.</em>, 2015</a>]</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

@@ -58,7 +58,7 @@ Class diagram
       +run_simulation()
       -_change_recovery()
       -_change_potential()
-      -_change_synaptic_potentials()
+      -_get_synaptic_current()
       -_change_thalamic_input()
       -_create_main_input_stimulus()
     }

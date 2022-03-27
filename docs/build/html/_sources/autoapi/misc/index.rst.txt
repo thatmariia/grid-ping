@@ -15,6 +15,7 @@ Functions
 
    misc.plot_binary_heatmap
    misc.neur_slice
+   misc.neur_type
    misc.euclidian_dist_R2
    misc.cust_range
    misc.crange
@@ -40,6 +41,14 @@ Functions
 
    :return: a slice for the neurons of given type.
    :rtype: slice
+
+
+.. py:function:: neur_type(id, nr_ex)
+
+   TODO
+   :param id:
+   :param nr_ex:
+   :return:
 
 
 .. py:function:: euclidian_dist_R2(p1, p2)

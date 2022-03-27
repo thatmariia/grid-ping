@@ -18,6 +18,11 @@ Module Contents
    Izhikevich neuron params
 
 
+.. py:data:: THRESHOLD_POTENTIAL
+   :annotation: = 30
+
+   
+
 .. py:data:: IZHI_ALPHA
    
 
@@ -56,6 +61,16 @@ Module Contents
    
 
 .. py:data:: SYNAPTIC_CONST_DECAY
+   
+
+   
+
+.. py:data:: CONDUCTANCE_DENSITY
+   
+
+   
+
+.. py:data:: REVERSAL_POTENTIALS
    
 
    

@@ -44,7 +44,7 @@ Classes
    This neural dynamics model is introduced in :cite:p:`Izhikevich2003`.
 
    In the network, neurons are not isolated, and the current involves the accumulated effect of interactions
-   with other neurons:
+   with other neurons: TODO:: change the equation to match the report
 
    :math:`I_v = \begin{cases} \sum_{w \in V} K_{v, w} I_{syn, w} + I_{stim, v} &\text{ if } \mathsf{type}(v) = ex \\ \sum_{w \in V} K_{v, w} I_{syn, w} &\text{ if } \mathsf{type}(v) = in \end{cases}`,
 
@@ -82,8 +82,8 @@ Classes
    :ivar _stimulus: TODO
    :type _stimulus: TODO
 
-   :ivar _synaptic_potentials: synaptic potentials.
-   :type _synaptic_potentials: ndarray[float]
+   :ivar _synaptic_currents: synaptic potentials.
+   :type _synaptic_currents: ndarray[float]
 
    :ivar _current: current (from input and interaction).
    :type _current: ndarray[float]
@@ -114,7 +114,10 @@ Classes
       materials of :cite:p:`Lowet2015`.
 
       :param simulation_time: number of epochs to run the simulation.
-      :param dt: TODO
+      :type simulation_time: int
+
+      :param dt: time interval
+      :type dt: float
 
       :rtype: None
 
@@ -139,17 +142,17 @@ Classes
       :rtype: ndarray[float]
 
 
-   .. py:method:: _change_synaptic_potentials(self, neuron_type, dt)
+   .. py:method:: _get_synaptic_current(self, gatings, dt)
 
-      Computes the change in synaptic gates for postsynaptic neurons.
+      Computes the new synaptic currents for postsynaptic neurons.
 
-      Computes the change in :math:`I_{syn}`.
-      TODO:: maybe make a separate class for this component later
+      Computes the :math:`I_{syn}`.
 
-      :param neuron_type: neuron type
-      :type neuron_type: NeuronTypes
+      :param gatings: synaptic gating values
+      :type gatings: ndarray[ndarray[float]]
 
-      :param dt: TODO
+      :param dt: time interval
+      :type dt: float
 
       :return: change in synaptic gates for excitatory postsynaptic neurons.
       :rtype: ndarray[float]

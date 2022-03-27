@@ -44,6 +44,18 @@ def neur_slice(neuron_type, nr_ex, nr_in):
         return slice(nr_ex)
     return slice(nr_ex, nr_ex + nr_in)
 
+def neur_type(id, nr_ex):
+    """
+    TODO
+    :param id:
+    :param nr_ex:
+    :return:
+    """
+
+    if id < nr_ex:
+        return NeuronTypes.E
+    return NeuronTypes.I
+
 
 def euclidian_dist_R2(p1, p2):
     """

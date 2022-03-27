@@ -18,6 +18,8 @@ SPATIAL_CONST = {
 
 """Izhikevich neuron params"""
 
+THRESHOLD_POTENTIAL = 30
+
 # for timescale of _recovery variable _recovery
 IZHI_ALPHA = {
     NeuronTypes.E: 0.02,
@@ -56,12 +58,29 @@ GAUSSIAN_INPUT = {
 
 # TODO
 SYNAPTIC_CONST_RISE = {
-    NeuronTypes.E: 0.1,
-    NeuronTypes.I: 0.1
+    (NeuronTypes.E, NeuronTypes.E): 1,
+    (NeuronTypes.E, NeuronTypes.I): 1,
+    (NeuronTypes.I, NeuronTypes.E): 1,
+    (NeuronTypes.I, NeuronTypes.I): 1
 }
 
 # TODO
 SYNAPTIC_CONST_DECAY = {
-    NeuronTypes.E: 1.0,
-    NeuronTypes.I: 4.0
+    (NeuronTypes.E, NeuronTypes.E): 1,
+    (NeuronTypes.E, NeuronTypes.I): 1,
+    (NeuronTypes.I, NeuronTypes.E): 1,
+    (NeuronTypes.I, NeuronTypes.I): 1
+}
+
+# TODO
+CONDUCTANCE_DENSITY = {
+    (NeuronTypes.E, NeuronTypes.E): 1,
+    (NeuronTypes.E, NeuronTypes.I): 1,
+    (NeuronTypes.I, NeuronTypes.E): 1,
+    (NeuronTypes.I, NeuronTypes.I): 1
+}
+
+REVERSAL_POTENTIALS = {
+    NeuronTypes.E: -80,
+    NeuronTypes.I: 0
 }

@@ -82,7 +82,7 @@ Classes
    :ivar _stimulus: TODO
    :type _stimulus: TODO
 
-   :ivar _synaptic_currents: synaptic potentials.
+   :ivar _synaptic_currents: synaptic currents.
    :type _synaptic_currents: ndarray[float]
 
    :ivar _current: current (from input and interaction).

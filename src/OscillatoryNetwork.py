@@ -71,7 +71,7 @@ class OscillatoryNetwork:
     :ivar _stimulus: TODO
     :type _stimulus: TODO
 
-    :ivar _synaptic_currents: synaptic potentials.
+    :ivar _synaptic_currents: synaptic currents.
     :type _synaptic_currents: ndarray[float]
 
     :ivar _current: current (from input and interaction).
@@ -127,10 +127,9 @@ class OscillatoryNetwork:
 
         self._stimulus = stimulus
 
-        # TODO:: dont need to init?
-        self._synaptic_currents = np.zeros((nr_excitatory + nr_inhibitory, nr_excitatory + nr_inhibitory))
+        self._synaptic_currents = None
 
-        self._current = np.array((0, 0))
+        self._current = None
 
         self._potentials = np.array(
             [INIT_MEMBRANE_POTENTIAL for _ in range(self._nr_neurons[NeuronTypes.E] + self._nr_neurons[NeuronTypes.I])]
@@ -181,7 +180,6 @@ class OscillatoryNetwork:
             self._current = np.add(stim_input, self._change_thalamic_input())
 
             # synaptic currents
-            # TODO:: change directly into 1 array later when I know what's going on
             self._synaptic_currents, gatings = self._get_synaptic_current(gatings=gatings, dt=dt)
 
             # defining input to eah neuron as the summation of all synaptic input

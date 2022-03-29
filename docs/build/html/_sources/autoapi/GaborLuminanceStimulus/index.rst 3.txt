@@ -1,0 +1,149 @@
+:py:mod:`GaborLuminanceStimulus`
+================================
+
+.. py:module:: GaborLuminanceStimulus
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   GaborLuminanceStimulus.GaborLuminanceStimulus
+
+
+
+
+.. py:class:: GaborLuminanceStimulus(dist_scale, contrast_range, spatial_freq, diameter, side_length, grating_res, patch_res)
+
+   This class constructs the Gabor texture stimulus and selects a patch from it.
+
+   TODO:: more elaborate explanation + ref.
+
+   :param dist_scale: how far the circles are from each other.
+   :type dist_scale: float
+
+   :param contrast_range: contrast range for the figure.
+   :type contrast_range: float
+
+   :param spatial_freq: spatial frequency of the grating (cycles / degree).
+   :type spatial_freq: float
+
+   :param diameter: annulus diameter (degree).
+   :type diameter: float
+
+   :param side_length: side length (degree) of square stimulus region.
+   :type side_length: TODO:: float or int?
+
+   :param grating_res: resolution (number of pixels in a single row) of single grating.
+   :type grating_res: int
+
+   :param patch_res: resolution (number of pixels in a single row) of the stimulus patch.
+   :type patch_res: int
+
+
+   :raises:
+       AssertionError: if distance between neighbouring annuli is smaller than the diameter of an annulus.
+   :raises:
+       AssertionError: if the contrast range falls outside of the range :math:`(0, 1]`.
+
+
+   :ivar _side_length: side length (degree) of square stimulus region.
+   :type _side_length: TODO:: float or int?
+
+   :ivar _patch_res: resolution (number of pixels in a single row) of the stimulus patch.
+   :type _patch_res: int
+
+   :ivar _stim_res: TODO
+   :type _stim_res: TODO
+
+   :ivar stimulus: the luminance matrix of the full stimulus.
+   :type stimulus: ndarray[ndarray[float]]
+
+   :ivar stimulus_patch: the luminance matrix of a patch of the stimulus.
+   :type stimulus_patch: ndarray[ndarray[float]]
+
+   .. py:method:: plot_stimulus(self, stimulus, filename)
+
+      Plots the binary heatmap of a given stimulus.
+
+      :param stimulus: a luminance matrix to plot.
+      :type stimulus: list[list[float]]
+
+      :rtype: None
+
+
+   .. py:method:: _eccentricity_in_patch(self, point)
+
+      Calculates eccentricity at the given point, that is the distance between that point and the center of stimulus.
+
+      :param point: coordinates of the point (within the stimulus patch).
+      :type point: (float, float)
+
+      :return: eccentricity at the point.
+      :rtype: float
+
+
+   .. py:method:: _get_grating(self, spatial_freq, diameter, grating_res)
+
+      Generates a grating (single annulus) of the maximum contrast.
+
+      :param spatial_freq: spatial frequency of the grating (cycles / degree).
+      :type spatial_freq: float
+
+      :param diameter: annulus diameter (degree).
+      :type diameter: float
+
+      :param grating_res: resolution (number of pixels in a single row) of single grating.
+      :type grating_res: int
+
+      :return: the luminance matrix of the single annulus.
+      :rtype: ndarray[ndarray[float]]
+
+
+   .. py:method:: _get_full_stimulus(self, grating, dist_scale, contrast_range, diameter, grating_res)
+
+      Generates the whole stimulus.
+
+      :param grating: the luminance matrix of the annulus.
+      :type grating: ndarray[ndarray[float]]
+
+      :param dist_scale: how far the circles are from each other.
+      :type dist_scale: float
+
+      :param contrast_range: contrast range for the figure.
+      :type contrast_range: float
+
+      :param diameter: annulus diameter (degree).
+      :type diameter: float
+
+      :param grating_res: resolution (number of pixels in a single row) of single grating.
+      :type grating_res: int
+
+      :return: the luminance matrix of a full stimulus.
+      :rtype: ndarray[ndarray[float]]
+
+
+   .. py:method:: _get_start_of_patch(self)
+
+      Determines the starting point (left top) of the stimulus patch.
+
+      :return: left top coordinate of the stimulus patch within the full stimulus.
+      :rtype: (int, int)
+
+
+   .. py:method:: _get_stimulus_patch(self, stimulus)
+
+      Selects a patch of the stimulus.
+
+      :param stimulus: the full stimulus.
+      :type stimulus: ndarray[ndarray[float]]
+
+      :return: the luminance matrix of a patch of the stimulus.
+      :rtype: ndarray[ndarray[float]]
+
+
+

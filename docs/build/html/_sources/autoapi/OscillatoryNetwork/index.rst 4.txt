@@ -1,0 +1,176 @@
+:py:mod:`OscillatoryNetwork`
+============================
+
+.. py:module:: OscillatoryNetwork
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   OscillatoryNetwork.OscillatoryNetwork
+
+
+
+
+.. py:class:: OscillatoryNetwork(stimulus, nr_excitatory, nr_inhibitory, nr_ping_networks=1)
+
+   This class runs the simulation of the network of neurons.
+
+   Every neuron in the system can be described with a 2D system of ODEs:
+
+   :math:`dp_v / dt = 0.04 p_v^2 + 5 p_v + 140 - r_v + I_v`,
+
+   :math:`dr_v / dt = \alpha_{\mathsf{type}(v)} \cdot (\beta_{\mathsf{type}(v)} p_v - r_v)`,
+
+   if :math:`p_v \geq 30` mV, then :math:`\begin{cases} p_v \leftarrow \gamma_{\mathsf{type}(v)} \\ r_v \leftarrow r_v + \zeta_{\mathsf{type}(v)} \end{cases}`,
+
+   where
+
+   * :math:`v` is a neuron,
+   * :math:`\mathsf{type}(v)` maps a neuron to its type (see :obj:`NeuronTypes`),
+   * :math:`p` represents the membrane potential of the neuron,
+   * :math:`r` represents a membrane recovery variable; provides negative feedback to :math:`p`,
+   * :math:`\alpha` describes the timescale of :math:`r` (see :obj:`constants.IZHI_ALPHA`),
+   * :math:`\beta` describes the sensitivity of :math:`r` to the subthreshold fluctuations of :math:`p` (see :obj:`constants.IZHI_BETA`),
+   * :math:`\gamma` describes the after-spike reset value of :math:`p` (see :obj:`constants.IZHI_GAMMA`),
+   * :math:`\zeta` describes the after-spike reset of :math:`r` (see :obj:`constants.IZHI_ZETA`),
+   * :math:`I` describes the _current.
+
+   This neural dynamics model is introduced in :cite:p:`Izhikevich2003`.
+
+   In the network, neurons are not isolated, and the current involves the accumulated effect of interactions
+   with other neurons:
+
+   :math:`I_v = \begin{cases} \sum_{w \in V} K_{v, w} I_{syn, w} + I_{stim, v} &\text{ if } \mathsf{type}(v) = ex \\ \sum_{w \in V} K_{v, w} I_{syn, w} &\text{ if } \mathsf{type}(v) = in \end{cases}`,
+
+   where
+
+   * :math:`K` is the coupling weights (see :obj:`GridConnectivity`),
+   * :math:`I_{syn}` represents the effect of synaptic potentials,
+   * :math:`I_{stim}` is the current caused by external stimuli.
+
+   :param stimulus: TODO
+   :type stimulus: TODO
+
+   :param nr_excitatory: number of excitatory neurons in the network.
+   :type nr_excitatory: int
+
+   :param nr_inhibitory: number of inhibitory neurons in the network.
+   :type nr_inhibitory: int
+
+   :param nr_ping_networks: number of ping_networks in the network.
+   :type nr_ping_networks: int
+
+
+   :raises:
+       AssertionError: if the number of excitatory neurons is smaller than 2.
+   :raises:
+       AssertionError: if the number of inhibitory neurons is smaller than 2.
+
+
+   :ivar _nr_neurons: number of neurons of each type in the network.
+   :type _nr_neurons: dict[NeuronTypes: int]
+
+   :ivar _nr_ping_networks: number of ping_networks in the network.
+   :type _nr_ping_networks: int
+
+   :ivar _stimulus: TODO
+   :type _stimulus: TODO
+
+   :ivar _synaptic_potentials: synaptic potentials.
+   :type _synaptic_potentials: ndarray[float]
+
+   :ivar _current: current (from input and interaction).
+   :type _current: ndarray[float]
+
+   :ivar _potentials: voltage (membrane potential).
+   :type _potentials: ndarray[float]
+
+   :ivar _recovery: membrane recovery variable.
+   :type _recovery: ndarray[float]
+
+   :ivar _izhi_alpha: timescale of recovery variable `recovery`.
+   :type _izhi_alpha: ndarray[float]
+
+   :ivar _izhi_beta: sensitivity of `recovery` to sub-threshold oscillations of `potential`.
+   :type _izhi_beta: ndarray[float]
+
+   :ivar _izhi_gamma: membrane voltage after spike (after-spike reset of `potential`).
+   :type _izhi_gamma: ndarray[float]
+
+   :ivar _izhi_zeta: after-spike reset of recovery variable `recovery`.
+   :type _izhi_zeta: ndarray[float]
+
+   .. py:method:: run_simulation(self, simulation_time, dt)
+
+      Runs the simulation.
+
+      Parts of the code in this function and its components are rewritten from MATLAB code listed in supplementary
+      materials of :cite:p:`Lowet2015`.
+
+      :param simulation_time: number of epochs to run the simulation.
+      :param dt: TODO
+
+      :rtype: None
+
+
+   .. py:method:: _change_recovery(self)
+
+      Computes the change in membrane recovery.
+
+      Computes :math:`dr_v / dt = \alpha_{\mathsf{type}(v)} \cdot (\beta_{\mathsf{type}(v)} p_v - r_v)`.
+
+      :return: change in membrane recovery.
+      :rtype: ndarray[float]
+
+
+   .. py:method:: _change_potential(self)
+
+      Computes the change in membrane potentials.
+
+      Computes :math:`dp_v / dt = 0.04 p_v^2 + 5 p_v + 140 - r_v + I_v`.
+
+      :return: change in membrane potentials.
+      :rtype: ndarray[float]
+
+
+   .. py:method:: _change_synaptic_potentials(self, neuron_type, dt)
+
+      Computes the change in synaptic gates for postsynaptic neurons.
+
+      Computes the change in :math:`I_{syn}`.
+      TODO:: maybe make a separate class for this component later
+
+      :param neuron_type: neuron type
+      :type neuron_type: NeuronTypes
+
+      :param dt: TODO
+
+      :return: change in synaptic gates for excitatory postsynaptic neurons.
+      :rtype: ndarray[float]
+
+
+   .. py:method:: _change_thalamic_input(self)
+
+      Computes the change in thalamic input.
+
+      :return: change in thalamic input.
+      :rtype: ndarray[float]
+
+
+   .. py:method:: _create_main_input_stimulus(self)
+
+      Parses external input stimulus. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.
+
+      Creates initial :math:`I_{stim}`.
+
+      :return: input stimulus.
+      :rtype: ndarray[float]
+
+
+

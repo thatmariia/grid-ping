@@ -165,9 +165,8 @@ class OscillatoryNetwork:
             nr_ping_networks=self._nr_ping_networks
         )
 
-        print("Simulation started")
-
-        for t in tqdm(range(simulation_time)):
+        for t in (pbar := tqdm(range(simulation_time))):
+            pbar.set_description("Simulation")
 
             fired = np.argwhere(self._potentials > THRESHOLD_POTENTIAL).flatten()  # indices of spikes
             # firing times will be used later
@@ -189,8 +188,6 @@ class OscillatoryNetwork:
             self._potentials = np.add(self._potentials, self._change_potential())
             self._potentials = np.add(self._potentials, self._change_potential())
             self._recovery = np.add(self._recovery, self._change_recovery())
-
-        print("Simulation ended")
 
     def _change_recovery(self):
         """
@@ -271,7 +268,7 @@ class OscillatoryNetwork:
                                    (self._potentials[postsyn_i] - REVERSAL_POTENTIALS[NeuronTypes.I])
             synaptic_currents_ex = total_conductance_ex * \
                                    (self._potentials[postsyn_i] - REVERSAL_POTENTIALS[NeuronTypes.E])
-            new_current[postsyn_i] = total_conductance_in + synaptic_currents_ex
+            new_current[postsyn_i] = synaptic_currents_in + synaptic_currents_ex
 
         return new_current, new_gatings
 

@@ -4,6 +4,7 @@ import numpy as np
 import math
 import seaborn as sns
 import matplotlib.pyplot as plt
+from math import ceil
 
 
 def plot_binary_heatmap(im, path):
@@ -22,6 +23,7 @@ def plot_binary_heatmap(im, path):
     )
     # TODO:: remove white outer borders
     fig.savefig(path)
+
 
 def neur_slice(neuron_type, nr_ex, nr_in):
     """
@@ -44,6 +46,7 @@ def neur_slice(neuron_type, nr_ex, nr_in):
         return slice(nr_ex)
     return slice(nr_ex, nr_ex + nr_in)
 
+
 def neur_type(id, nr_ex):
     """
     TODO
@@ -57,14 +60,44 @@ def neur_type(id, nr_ex):
     return NeuronTypes.I
 
 
-def euclidian_dist_R2(p1, p2):
+def add_points(points, coeffs=None):
+    """
+    TODO
+    :param coeffs:
+    :param points:
+    :return:
+    """
+
+    if coeffs != None:
+        assert len(points) == len(coeffs), "Number of points and number of coefficients must be equal."
+    else:
+        coeffs = [1] * len(points)
+
+    tuple_length = len(points[0])
+    assert all(len(p) == tuple_length for p in points), "Number of coordinates should be equal for all points."
+
+    points_t = [
+        tuple([points[p][i] * coeffs[p] for p in range(len(points))]) for i in range(tuple_length)
+    ]
+    return tuple(map(sum, points_t))
+
+def point_ceil(p):
+    """
+    TODO
+    :param p:
+    :return:
+    """
+    return tuple(ceil(i) for i in p)
+
+
+def euclidian_dist_R2(p1, p2=(0, 0)):
     """
     Calculates the Eaclidian distance between two 2D points.
 
-    :param p1: coordinates of point 1.
+    :param p1: coordinates of point_pix 1.
     :type p1: tuple[float]
 
-    :param p2: coordinates of point 2.
+    :param p2: coordinates of point_pix 2.
     :type p2: tuple[float]
 
     :return: the Euclidean distance between two 2D points.
@@ -81,16 +114,16 @@ def cust_range(*args, rtol=1e-05, atol=1e-08, include=[True, False]):
     Code taken from https://stackoverflow.com/questions/50299172/python-range-or-numpy-arange-with-end-limit-include
 
     Combines numpy.arange and numpy.isclose to mimic open, half-open and closed intervals.
-    Avoids also floating point rounding errors as with
+    Avoids also floating point_pix rounding errors as with
     >>> numpy.arange(1, 1.3, 0.1)
     array([1. , 1.1, 1.2, 1.3])
 
     args: [start, ]stop, [step, ]
         as in numpy.arange
     rtol, atol: floats
-        floating point tolerance as in numpy.isclose
+        floating point_pix tolerance as in numpy.isclose
     include: boolean list-like, length 2
-        if start and end point are included
+        if start and end point_pix are included
     """
     # process arguments
     if len(args) == 1:
@@ -124,7 +157,7 @@ def cust_range(*args, rtol=1e-05, atol=1e-08, include=[True, False]):
 
 def crange(*args, **kwargs):
     """
-    Range excluding the end-point - from `cust_range`.
+    Range excluding the end-point_pix - from `cust_range`.
     """
 
     return cust_range(*args, **kwargs, include=[True, True])
@@ -132,7 +165,7 @@ def crange(*args, **kwargs):
 
 def orange(*args, **kwargs):
     """
-    Range including the end-point - from `cust_range`.
+    Range including the end-point_pix - from `cust_range`.
     """
 
     return cust_range(*args, **kwargs, include=[True, False])

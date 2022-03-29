@@ -221,33 +221,69 @@
 </table></div>
 <dl class="py class">
 <dt class="sig sig-object py" id="GaborLuminanceStimulus.GaborLuminanceStimulus">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">GaborLuminanceStimulus.</span></span><span class="sig-name descname"><span class="pre">GaborLuminanceStimulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dist_scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contrast_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grating_res</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_res</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">GaborLuminanceStimulus.</span></span><span class="sig-name descname"><span class="pre">GaborLuminanceStimulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_freq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vlum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_width_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_height_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contrast_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_width_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_height_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_ecc_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_size_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus" title="Permalink to this definition">#</a></dt>
 <dd><p>This class constructs the Gabor texture stimulus and selects a patch from it.</p>
 <p>TODO:: more elaborate explanation + ref.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dist_scale</strong> (<em>float</em>) – how far the circles are from each other.</p></li>
-<li><p><strong>contrast_range</strong> (<em>float</em>) – contrast range for the figure.</p></li>
 <li><p><strong>spatial_freq</strong> (<em>float</em>) – spatial frequency of the grating (cycles / degree).</p></li>
-<li><p><strong>diameter</strong> (<em>float</em>) – annulus diameter (degree).</p></li>
-<li><p><strong>side_length</strong> (<em>TODO:: float</em><em> or </em><em>int?</em>) – side length (degree) of square stimulus region.</p></li>
-<li><p><strong>grating_res</strong> (<em>int</em>) – resolution (number of pixels in a single row) of single grating.</p></li>
-<li><p><strong>patch_res</strong> (<em>int</em>) – resolution (number of pixels in a single row) of the stimulus patch.</p></li>
+<li><p><strong>vlum</strong> (<em>float</em>) – luminance of the void.</p></li>
+<li><p><strong>diameter_dg</strong> (<em>float</em>) – annulus’ diameter in degrees.</p></li>
+<li><p><strong>diameter</strong> (<em>int</em>) – resolution (number of pixels in a single row) of single grating.</p></li>
+<li><p><strong>dist_scale</strong> (<em>float</em>) – how far the circles are from each other.</p></li>
+<li><p><strong>full_width_dg</strong> (<em>float</em>) – width of the full stimulus in degrees.</p></li>
+<li><p><strong>full_height_dg</strong> (<em>float</em>) – height of the full stimulus in degrees.</p></li>
+<li><p><strong>contrast_range</strong> (<em>float</em>) – contrast range for the figure.</p></li>
+<li><p><strong>figure_width_dg</strong> (<em>float</em>) – width of the figure in degrees.</p></li>
+<li><p><strong>figure_height_dg</strong> (<em>float</em>) – height of the figure in degrees.</p></li>
+<li><p><strong>figure_ecc_dg</strong> (<em>float</em>) – distance between the center of the stimulus and the center of the figure in degrees.</p></li>
+<li><p><strong>patch_size_dg</strong> (<em>float</em>) – side length of the stimulus patch in degrees.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p>AssertionError: if distance between neighbouring annuli is smaller than the diameter of an annulus.</p>
+<dd class="field-even"><p>AssertionError: spatial frequency is not greater than 0.</p>
 </dd>
 <dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p>AssertionError: if the contrast range falls outside of the range <span class="math notranslate nohighlight">\((0, 1]\)</span>.</p>
+<dd class="field-odd"><p>AssertionError: void luminance does not fall in range <span class="math notranslate nohighlight">\([0, 1]\)</span>.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>AssertionError: annulus diameter is not larger than 0 degrees.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>AssertionError: annulus diameter is smaller than 1 pixel.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>AssertionError: the distance between neighbouring annuli is less than 1 diameter.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>AssertionError: stimulus is less wide than annulus.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>AssertionError: stimulus is less tall than annulus.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>AssertionError: contrast range does not fall in range <span class="math notranslate nohighlight">\((0, 1]\)</span>.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>AssertionError: figure width is larger than half the width of the stimulus or is not larger than 0.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>AssertionError: figure height is larger than half the height of the stimulus or is not larger than 0.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p>AssertionError: figure cannot be positioned so that it is contained within the stimulus quadrant.</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p>AssertionError: size of the patch is smaller than one of the figure sides.</p>
 </dd>
 <dt class="field-even">Variables</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>_side_length</strong> – side length (degree) of square stimulus region.</p></li>
-<li><p><strong>_patch_res</strong> – resolution (number of pixels in a single row) of the stimulus patch.</p></li>
-<li><p><strong>_stim_res</strong> – TODO</p></li>
+<li><p><strong>atopix</strong> – conversion coefficient between pixels and visual degrees.</p></li>
+<li><p><strong>full_width</strong> – width of the full stimulus.</p></li>
+<li><p><strong>full_height</strong> – height of the full stimulus.</p></li>
 <li><p><strong>stimulus</strong> – the luminance matrix of the full stimulus.</p></li>
+<li><p><strong>_patch_start</strong> – top left coordinate of the stimulus patch.</p></li>
 <li><p><strong>stimulus_patch</strong> – the luminance matrix of a patch of the stimulus.</p></li>
 </ul>
 </dd>
@@ -258,7 +294,10 @@
 <dd><p>Plots the binary heatmap of a given stimulus.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>stimulus</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>float</em><em>]</em><em>]</em>) – a luminance matrix to plot.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – name of the file for the plot (exluding extension)</p></li>
+<li><p><strong>stimulus</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>float</em><em>]</em><em>]</em>) – a luminance matrix to plot.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>None</p>
@@ -267,14 +306,14 @@
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="GaborLuminanceStimulus.GaborLuminanceStimulus._eccentricity_in_patch">
-<span class="sig-name descname"><span class="pre">_eccentricity_in_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._eccentricity_in_patch" title="Permalink to this definition">#</a></dt>
-<dd><p>Calculates eccentricity at the given point, that is the distance between that point and the center of stimulus.</p>
+<span class="sig-name descname"><span class="pre">_eccentricity_in_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._eccentricity_in_patch" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates eccentricity at the given point in degrees.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>point</strong> (<em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – coordinates of the point (within the stimulus patch).</p>
+<dd class="field-odd"><p><strong>point</strong> (<em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – coordinates of the point within a patch.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>eccentricity at the point.</p>
+<dd class="field-even"><p>eccentricity in degrees.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>float</p>
@@ -283,72 +322,111 @@
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="GaborLuminanceStimulus.GaborLuminanceStimulus._get_grating">
-<span class="sig-name descname"><span class="pre">_get_grating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grating_res</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_grating" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_get_grating</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_freq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_grating" title="Permalink to this definition">#</a></dt>
 <dd><p>Generates a grating (single annulus) of the maximum contrast.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>spatial_freq</strong> (<em>float</em>) – spatial frequency of the grating (cycles / degree).</p></li>
-<li><p><strong>diameter</strong> (<em>float</em>) – annulus diameter (degree).</p></li>
-<li><p><strong>grating_res</strong> (<em>int</em>) – resolution (number of pixels in a single row) of single grating.</p></li>
+<li><p><strong>diameter_dg</strong> (<em>float</em>) – annulus diameter in degrees.</p></li>
+<li><p><strong>diameter</strong> (<em>int</em>) – resolution (number of pixels in a single row) of single grating.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the luminance matrix of the single annulus.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>ndarray[ndarray[float]]</p>
+<dd class="field-odd"><p>numpy.ndarray[(int, int), float]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="GaborLuminanceStimulus.GaborLuminanceStimulus._get_figure_coords">
+<span class="sig-name descname"><span class="pre">_get_figure_coords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_ecc</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_figure_coords" title="Permalink to this definition">#</a></dt>
+<dd><p>Determines the location of the figure within the stimulus.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>figure_width</strong> (<em>float</em>) – width of the figure.</p></li>
+<li><p><strong>figure_height</strong> (<em>float</em>) – height of the figure.</p></li>
+<li><p><strong>figure_ecc</strong> – distance between the center of the stimulus and the center of the figure.</p></li>
+<li><p><strong>figure_ecc</strong> – float</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>top left, bottom right, and center coordinates of the figure.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple[tuple[int, int], tuple[int, int], tuple[float, float]]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="GaborLuminanceStimulus.GaborLuminanceStimulus._get_full_stimulus">
-<span class="sig-name descname"><span class="pre">_get_full_stimulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grating</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_scale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contrast_range</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grating_res</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_full_stimulus" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_get_full_stimulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grating</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contrast_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_full_stimulus" title="Permalink to this definition">#</a></dt>
 <dd><p>Generates the whole stimulus.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>grating</strong> (<em>ndarray</em><em>[</em><em>ndarray</em><em>[</em><em>float</em><em>]</em><em>]</em>) – the luminance matrix of the annulus.</p></li>
-<li><p><strong>dist_scale</strong> (<em>float</em>) – how far the circles are from each other.</p></li>
+<li><p><strong>grating</strong> (<em>numpy.ndarray</em><em>[</em><em>(</em><em>int</em><em>, </em><em>int</em><em>)</em><em>, </em><em>float</em><em>]</em>) – <dl class="field-list simple">
+<dt class="field-odd">param grating</dt>
+<dd class="field-odd"><p>the luminance matrix of the annulus.</p>
+</dd>
+</dl>
+</p></li>
+<li><p><strong>diameter</strong> (<em>float</em>) – annulus diameter.</p></li>
 <li><p><strong>contrast_range</strong> (<em>float</em>) – contrast range for the figure.</p></li>
-<li><p><strong>diameter</strong> (<em>float</em>) – annulus diameter (degree).</p></li>
-<li><p><strong>grating_res</strong> (<em>int</em>) – resolution (number of pixels in a single row) of single grating.</p></li>
+<li><p><strong>dist_scale</strong> (<em>float</em>) – how far the annuli are from each other.</p></li>
+<li><p><strong>figure_start</strong> (<em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – left top coordinate of the figure.</p></li>
+<li><p><strong>figure_end</strong> (<em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – bottom right coordinate of the figure.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the luminance matrix of a full stimulus.</p>
+<dd class="field-even"><p>luminance matrix of the stimulus.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>ndarray[ndarray[float]]</p>
+<dd class="field-odd"><p>numpy.ndarray[(int, int), float]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="GaborLuminanceStimulus.GaborLuminanceStimulus._get_start_of_patch">
-<span class="sig-name descname"><span class="pre">_get_start_of_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_start_of_patch" title="Permalink to this definition">#</a></dt>
-<dd><p>Determines the starting point (left top) of the stimulus patch.</p>
+<dt class="sig sig-object py" id="GaborLuminanceStimulus.GaborLuminanceStimulus._is_annulus_in_figure">
+<span class="sig-name descname"><span class="pre">_is_annulus_in_figure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annulus_corners</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_end</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._is_annulus_in_figure" title="Permalink to this definition">#</a></dt>
+<dd><p>Checks if an annulus belongs to the figure.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>left top coordinate of the stimulus patch within the full stimulus.</p>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>annulus_corners</strong> (<em>list</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em>) – list of corner coordinates of the annulus.</p></li>
+<li><p><strong>figure_start</strong> (<em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – left top coordinate of the figure.</p></li>
+<li><p><strong>figure_end</strong> (<em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – bottom right coordinate of the figure.</p></li>
+</ul>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>(int, int)</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True if the annulus belongs to the figure, False otherwise.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="GaborLuminanceStimulus.GaborLuminanceStimulus._get_stimulus_patch">
-<span class="sig-name descname"><span class="pre">_get_stimulus_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stimulus</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_stimulus_patch" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="GaborLuminanceStimulus.GaborLuminanceStimulus._select_stimulus_patch">
+<span class="sig-name descname"><span class="pre">_select_stimulus_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_center</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._select_stimulus_patch" title="Permalink to this definition">#</a></dt>
 <dd><p>Selects a patch of the stimulus.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>stimulus</strong> (<em>ndarray</em><em>[</em><em>ndarray</em><em>[</em><em>float</em><em>]</em><em>]</em>) – the full stimulus.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>figure_center</strong> – the center point of the figure.</p></li>
+<li><p><strong>figure_center</strong> – tuple[float, float]</p></li>
+<li><p><strong>patch_size</strong> – side length of the stimulus.</p></li>
+<li><p><strong>patch_size</strong> – int</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the luminance matrix of a patch of the stimulus.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>ndarray[ndarray[float]]</p>
+<dd class="field-odd"><p>numpy.ndarray[(int, int), float]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -403,9 +481,10 @@
 <li><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus.plot_stimulus">plot_stimulus</a></li>
 <li><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._eccentricity_in_patch">_eccentricity_in_patch</a></li>
 <li><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_grating">_get_grating</a></li>
+<li><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_figure_coords">_get_figure_coords</a></li>
 <li><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_full_stimulus">_get_full_stimulus</a></li>
-<li><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_start_of_patch">_get_start_of_patch</a></li>
-<li><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._get_stimulus_patch">_get_stimulus_patch</a></li>
+<li><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._is_annulus_in_figure">_is_annulus_in_figure</a></li>
+<li><a class="reference internal" href="#GaborLuminanceStimulus.GaborLuminanceStimulus._select_stimulus_patch">_select_stimulus_patch</a></li>
 </ul>
 </li>
 </ul>

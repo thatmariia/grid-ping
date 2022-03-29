@@ -12,27 +12,43 @@ class InputStimulus(GaborLuminanceStimulus):
     This class transforms a luminance stimulus patch to current.
 
     TODO:: more elaborate explanation + ref.
-
-    :param dist_scale: how far the circles are from each other.
-    :type dist_scale: float
-
-    :param contrast_range: contrast range for the figure.
-    :type contrast_range: float
+    TODO:: fix all the params and ivars
 
     :param spatial_freq: spatial frequency of the grating (cycles / degree).
     :type spatial_freq: float
 
-    :param diameter: annulus diameter (degree).
-    :type diameter: float
+    :param vlum: luminance of the void.
+    :type vlum: float
 
-    :param side_length: side length (degree) of square stimulus region.
-    :type side_length: TODO:: float or int?
+    :param diameter_dg: annulus' diameter in degrees.
+    :type diameter_dg: float
 
-    :param grating_res: resolution (number of pixels in a single row) of single grating.
-    :type grating_res: int
+    :param diameter: resolution (number of pixels in a single row) of single grating.
+    :type diameter: int
 
-    :param patch_res: resolution (number of pixels in a single row) of the stimulus patch.
-    :type patch_res: int
+    :param dist_scale: how far the circles are from each other.
+    :type dist_scale: float
+
+    :param full_width_dg: width of the full stimulus in degrees.
+    :type full_width_dg: float
+
+    :param full_height_dg: height of the full stimulus in degrees.
+    :type full_height_dg: float
+
+    :param contrast_range: contrast range for the figure.
+    :type contrast_range: float
+
+    :param figure_width_dg: width of the figure in degrees.
+    :type figure_width_dg: float
+
+    :param figure_height_dg: height of the figure in degrees.
+    :type figure_height_dg: float
+
+    :param figure_ecc_dg: distance between the center of the stimulus and the center of the figure in degrees.
+    :type figure_ecc_dg: float
+
+    :param patch_size_dg: side length of the stimulus patch in degrees.
+    :type patch_size_dg: float
 
     :param nr_circuits: number of circuits created by applying the lattice.
     :type nr_circuits: int
@@ -66,12 +82,21 @@ class InputStimulus(GaborLuminanceStimulus):
     """
 
     def __init__(self,
-                 dist_scale, contrast_range, spatial_freq, diameter, side_length, grating_res, patch_res,
-                 nr_circuits, slope, intercept, min_diam_rf
+                 spatial_freq: float, vlum: float, diameter_dg: float, diameter: int,
+                 dist_scale: float, full_width_dg: float, full_height_dg: float,
+                 contrast_range: float, figure_width_dg: float, figure_height_dg: float, figure_ecc_dg: float,
+                 patch_size_dg: float,
+                 nr_circuits: int, slope: float, intercept: float, min_diam_rf: float
                  ):
-        super().__init__(dist_scale, contrast_range, spatial_freq, diameter, side_length, grating_res, patch_res)
+        super().__init__(
+            spatial_freq, vlum, diameter_dg, diameter,
+            dist_scale, full_width_dg, full_height_dg,
+            contrast_range, figure_width_dg, figure_height_dg, figure_ecc_dg,
+            patch_size_dg
+        )
 
-        assert min_diam_rf > 0, "The minimal diameter of the receptive field should be larger than 0."
+        assert min_diam_rf > 0, \
+            "The minimal diameter_dg of the receptive field should be larger than 0."
         assert int(math.sqrt(nr_circuits)) == math.sqrt(nr_circuits), \
             "The circuits created by lattice should be arranged in a square grid. Make sure the number of circuits " \
             "is a perfect square. "
@@ -82,10 +107,10 @@ class InputStimulus(GaborLuminanceStimulus):
 
         self._nr_circuits = nr_circuits
 
-        circuits = self._assign_circuits()
+        circuits: list[StimulusCircuit] = self._assign_circuits()
         self.current = self._get_input_current(circuits, slope, intercept, min_diam_rf)
 
-    def _assign_circuits(self):
+    def _assign_circuits(self) -> list[StimulusCircuit]:
         """
         Creates circuits and assigns centers and pixels of the stimulus patch to them.
 
@@ -94,37 +119,28 @@ class InputStimulus(GaborLuminanceStimulus):
         """
 
         # assuming that circuits contain full pixels
-        lattice_edges = (
-            # horizontal edges
-            np.linspace(
-                0,
-                np.shape(self.stimulus_patch)[0],
-                num=int(sqrt(self._nr_circuits)) + 1,
-                endpoint=True,
-                dtype=int
-            ),
-            # vertical edges
-            np.linspace(
-                0,
-                np.shape(self.stimulus_patch)[1],
-                num=int(sqrt(self._nr_circuits)) + 1,
-                endpoint=True,
-                dtype=int
-            )
+        lattice_edges = np.linspace(
+            0,
+            np.shape(self.stimulus_patch)[0],
+            num=int(sqrt(self._nr_circuits)) + 1,
+            endpoint=True,
+            dtype=int
         )
 
         circuits = []
 
-        for hor_i in range(len(lattice_edges[0]) - 1):
-            for ver_i in range(len(lattice_edges[1]) - 1):
-                center = (
-                    lattice_edges[0][hor_i] + (lattice_edges[0][hor_i + 1] - lattice_edges[0][hor_i]) / 2.0,
-                    lattice_edges[0][ver_i] + (lattice_edges[0][ver_i + 1] - lattice_edges[0][ver_i]) / 2.0,
-                )
+        for i in range(len(lattice_edges) - 1):
+            for j in range(len(lattice_edges) - 1):
+
+                center = add_points([
+                    (lattice_edges[i], lattice_edges[j]),
+                    ((lattice_edges[i + 1] - lattice_edges[i]) / 2, (lattice_edges[j + 1] - lattice_edges[j]) / 2)
+                ])
                 pixels = list(product(
-                    np.arange(lattice_edges[0][hor_i], lattice_edges[0][hor_i + 1]),
-                    np.arange(lattice_edges[0][ver_i], lattice_edges[0][ver_i + 1])
+                    np.arange(lattice_edges[i], lattice_edges[i + 1]),
+                    np.arange(lattice_edges[j], lattice_edges[j + 1])
                 ))
+
                 circuit = StimulusCircuit(
                     center=center,
                     pixels=pixels
@@ -135,7 +151,7 @@ class InputStimulus(GaborLuminanceStimulus):
 
     def _get_input_current(self, circuits, slope, intercept, min_diam_rf):
         """
-        Performes all the neccessary steps to transform luminance to _current.
+        Performs all the necessary steps to transform luminance to current.
 
         :param circuits: list of all circuits of the stimulus patch created by applying a lattice.
         :type circuits: list[StimulusCircuit]
@@ -159,15 +175,19 @@ class InputStimulus(GaborLuminanceStimulus):
 
         return current
 
-    def _get_weight(self, center, pixel, slope, intercept, min_diam_rf):
+    def _get_weight(self, center: tuple[float, float], pixel: tuple[int, int], eccentricity: float,
+                    slope: float, intercept: float, min_diam_rf: float) -> float:
         """
         Computes weight of a pixel with respect to a circuit.
 
         :param center: coordinate of the circuit center.
-        :type center: tuple(float, float)
+        :type center: tuple[float, float]
 
         :param pixel: coordinate of the pixel.
-        :type pixel: tuple(float, float)
+        :type pixel: tuple[float, float]
+
+        :param eccentricity: eccentricity of the circuit center.
+        :type eccentricity: float
 
         :param slope: slope of the receptive field size.
         :type slope: float
@@ -182,12 +202,12 @@ class InputStimulus(GaborLuminanceStimulus):
         :rtype: float
         """
 
-        eccentricity = self._eccentricity_in_patch(point=center)
         diam_rf = max(slope * eccentricity + intercept, min_diam_rf)
         std = diam_rf / 4.0
         return exp(-euclidian_dist_R2(pixel, center) / (2 * std ** 2))
 
-    def _compute_local_contrasts(self, circuits, slope, intercept, min_diam_rf):
+    def _compute_local_contrasts(self, circuits: list[StimulusCircuit],
+                                 slope: float, intercept: float, min_diam_rf: float) -> list[float]:
         """
         Computes local contrasts for each circuit.
 
@@ -211,12 +231,15 @@ class InputStimulus(GaborLuminanceStimulus):
         local_contrasts = []
 
         for circuit in circuits:
+            eccentricity = self._eccentricity_in_patch(point=circuit.center)
+
             num = 0
             denum = 0
             for pix in circuit.pixels:
                 weight = self._get_weight(
                     center=circuit.center,
                     pixel=pix,
+                    eccentricity=eccentricity,
                     slope=slope,
                     intercept=intercept,
                     min_diam_rf=min_diam_rf

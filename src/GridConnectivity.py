@@ -124,6 +124,7 @@ class GridConnectivity:
                 excit_ids=ex_ids,
                 inhibit_ids=in_ids
             )
+
             ping_networks.append(ping_network)
 
         return ping_networks, neuron_ping_map

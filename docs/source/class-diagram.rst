@@ -36,6 +36,7 @@ Class diagram
 
       +plot_stimulus()
       #_eccentricity_in_patch()
+      -_from_pixel_to_physical_stim()
       -_get_grating()
       -_get_full_stimulus()
       -_get_start_of_patch()
@@ -46,7 +47,7 @@ Class diagram
       -_nr_neurons: int
       -_nr_ping_networks: int
       -_stimulus: list
-      -_synaptic_potentials: list
+      -_synaptic_currents: list
       -_current: TODO
       -_potentials: list
       -_recovery: list

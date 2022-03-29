@@ -17,58 +17,98 @@ Classes
 
 
 
-.. py:class:: GaborLuminanceStimulus(dist_scale, contrast_range, spatial_freq, diameter, side_length, grating_res, patch_res)
+.. py:class:: GaborLuminanceStimulus(spatial_freq: float, vlum: float, diameter_dg: float, diameter: int, dist_scale: float, full_width_dg: float, full_height_dg: float, contrast_range: float, figure_width_dg: float, figure_height_dg: float, figure_ecc_dg: float, patch_size_dg: float)
 
    This class constructs the Gabor texture stimulus and selects a patch from it.
 
    TODO:: more elaborate explanation + ref.
 
+   :param spatial_freq: spatial frequency of the grating (cycles / degree).
+   :type spatial_freq: float
+
+   :param vlum: luminance of the void.
+   :type vlum: float
+
+   :param diameter_dg: annulus' diameter in degrees.
+   :type diameter_dg: float
+
+   :param diameter: resolution (number of pixels in a single row) of single grating.
+   :type diameter: int
+
    :param dist_scale: how far the circles are from each other.
    :type dist_scale: float
+
+   :param full_width_dg: width of the full stimulus in degrees.
+   :type full_width_dg: float
+
+   :param full_height_dg: height of the full stimulus in degrees.
+   :type full_height_dg: float
 
    :param contrast_range: contrast range for the figure.
    :type contrast_range: float
 
-   :param spatial_freq: spatial frequency of the grating (cycles / degree).
-   :type spatial_freq: float
+   :param figure_width_dg: width of the figure in degrees.
+   :type figure_width_dg: float
 
-   :param diameter: annulus diameter (degree).
-   :type diameter: float
+   :param figure_height_dg: height of the figure in degrees.
+   :type figure_height_dg: float
 
-   :param side_length: side length (degree) of square stimulus region.
-   :type side_length: TODO:: float or int?
+   :param figure_ecc_dg: distance between the center of the stimulus and the center of the figure in degrees.
+   :type figure_ecc_dg: float
 
-   :param grating_res: resolution (number of pixels in a single row) of single grating.
-   :type grating_res: int
-
-   :param patch_res: resolution (number of pixels in a single row) of the stimulus patch.
-   :type patch_res: int
+   :param patch_size_dg: side length of the stimulus patch in degrees.
+   :type patch_size_dg: float
 
 
    :raises:
-       AssertionError: if distance between neighbouring annuli is smaller than the diameter of an annulus.
+       AssertionError: spatial frequency is not greater than 0.
    :raises:
-       AssertionError: if the contrast range falls outside of the range :math:`(0, 1]`.
+       AssertionError: void luminance does not fall in range :math:`[0, 1]`.
+   :raises:
+       AssertionError: annulus diameter is not larger than 0 degrees.
+   :raises:
+       AssertionError: annulus diameter is smaller than 1 pixel.
+   :raises:
+       AssertionError: the distance between neighbouring annuli is less than 1 diameter.
+   :raises:
+       AssertionError: stimulus is less wide than annulus.
+   :raises:
+       AssertionError: stimulus is less tall than annulus.
+   :raises:
+       AssertionError: contrast range does not fall in range :math:`(0, 1]`.
+   :raises:
+       AssertionError: figure width is larger than half the width of the stimulus or is not larger than 0.
+   :raises:
+       AssertionError: figure height is larger than half the height of the stimulus or is not larger than 0.
+   :raises:
+       AssertionError: figure cannot be positioned so that it is contained within the stimulus quadrant.
+   :raises:
+       AssertionError: size of the patch is smaller than one of the figure sides.
 
+   :ivar atopix: conversion coefficient between pixels and visual degrees.
+   :type atopix: float
 
-   :ivar _side_length: side length (degree) of square stimulus region.
-   :type _side_length: TODO:: float or int?
+   :ivar full_width: width of the full stimulus.
+   :type full_width: int
 
-   :ivar _patch_res: resolution (number of pixels in a single row) of the stimulus patch.
-   :type _patch_res: int
-
-   :ivar _stim_res: TODO
-   :type _stim_res: TODO
+   :ivar full_height: height of the full stimulus.
+   :type full_height: int
 
    :ivar stimulus: the luminance matrix of the full stimulus.
-   :type stimulus: ndarray[ndarray[float]]
+   :type stimulus: numpy.ndarray[(int, int), float]
+
+   :ivar _patch_start: top left coordinate of the stimulus patch.
+   :type _patch_start: tuple[int]
 
    :ivar stimulus_patch: the luminance matrix of a patch of the stimulus.
-   :type stimulus_patch: ndarray[ndarray[float]]
+   :type stimulus_patch: numpy.ndarray[(int, int), float]
 
    .. py:method:: plot_stimulus(self, stimulus, filename)
 
       Plots the binary heatmap of a given stimulus.
+
+      :param filename: name of the file for the plot (exluding extension)
+      :type filename: str
 
       :param stimulus: a luminance matrix to plot.
       :type stimulus: list[list[float]]
@@ -76,74 +116,106 @@ Classes
       :rtype: None
 
 
-   .. py:method:: _eccentricity_in_patch(self, point)
+   .. py:method:: _eccentricity_in_patch(self, point: tuple[int, int]) -> float
 
-      Calculates eccentricity at the given point, that is the distance between that point and the center of stimulus.
+      Calculates eccentricity at the given point in degrees.
 
-      :param point: coordinates of the point (within the stimulus patch).
-      :type point: (float, float)
+      :param point: coordinates of the point within a patch.
+      :type point: tuple[int, int]
 
-      :return: eccentricity at the point.
+      :return: eccentricity in degrees.
       :rtype: float
 
 
-   .. py:method:: _get_grating(self, spatial_freq, diameter, grating_res)
+   .. py:method:: _get_grating(self, spatial_freq: float, diameter_dg: float, diameter: int) -> numpy.ndarray[(int, int), float]
 
       Generates a grating (single annulus) of the maximum contrast.
 
       :param spatial_freq: spatial frequency of the grating (cycles / degree).
       :type spatial_freq: float
 
-      :param diameter: annulus diameter (degree).
-      :type diameter: float
+      :param diameter_dg: annulus diameter in degrees.
+      :type diameter_dg: float
 
-      :param grating_res: resolution (number of pixels in a single row) of single grating.
-      :type grating_res: int
+      :param diameter: resolution (number of pixels in a single row) of single grating.
+      :type diameter: int
 
       :return: the luminance matrix of the single annulus.
-      :rtype: ndarray[ndarray[float]]
+      :rtype: numpy.ndarray[(int, int), float]
 
 
-   .. py:method:: _get_full_stimulus(self, grating, dist_scale, contrast_range, diameter, grating_res)
+   .. py:method:: _get_figure_coords(self, figure_width: int, figure_height: int, figure_ecc: float) -> tuple[tuple[int, int], tuple[int, int], tuple[float, float]]
+
+      Determines the location of the figure within the stimulus.
+
+      :param figure_width: width of the figure.
+      :type figure_width: float
+
+      :param figure_height: height of the figure.
+      :type figure_height: float
+
+      :param figure_ecc: distance between the center of the stimulus and the center of the figure.
+      :param figure_ecc: float
+
+      :return: top left, bottom right, and center coordinates of the figure.
+      :rtype: tuple[tuple[int, int], tuple[int, int], tuple[float, float]]
+
+
+   .. py:method:: _get_full_stimulus(self, grating: numpy.ndarray[(int, int), float], diameter: int, contrast_range: float, dist_scale: float, figure_start: tuple[int, int], figure_end: tuple[int, int]) -> numpy.ndarray[(int, int), float]
 
       Generates the whole stimulus.
 
-      :param grating: the luminance matrix of the annulus.
-      :type grating: ndarray[ndarray[float]]
+      :param grating: :param grating: the luminance matrix of the annulus.
+      :type grating: numpy.ndarray[(int, int), float]
 
-      :param dist_scale: how far the circles are from each other.
-      :type dist_scale: float
+      :param diameter: annulus diameter.
+      :type diameter: float
 
       :param contrast_range: contrast range for the figure.
       :type contrast_range: float
 
-      :param diameter: annulus diameter (degree).
-      :type diameter: float
+      :param dist_scale: how far the annuli are from each other.
+      :type dist_scale: float
 
-      :param grating_res: resolution (number of pixels in a single row) of single grating.
-      :type grating_res: int
+      :param figure_start: left top coordinate of the figure.
+      :type figure_start: tuple[int, int]
 
-      :return: the luminance matrix of a full stimulus.
-      :rtype: ndarray[ndarray[float]]
+      :param figure_end: bottom right coordinate of the figure.
+      :type figure_end: tuple[int, int]
 
-
-   .. py:method:: _get_start_of_patch(self)
-
-      Determines the starting point (left top) of the stimulus patch.
-
-      :return: left top coordinate of the stimulus patch within the full stimulus.
-      :rtype: (int, int)
+      :return: luminance matrix of the stimulus.
+      :rtype: numpy.ndarray[(int, int), float]
 
 
-   .. py:method:: _get_stimulus_patch(self, stimulus)
+   .. py:method:: _is_annulus_in_figure(self, annulus_corners: list[tuple[int, int]], figure_start: tuple[int, int], figure_end: tuple[int, int]) -> bool
+
+      Checks if an annulus belongs to the figure.
+
+      :param annulus_corners: list of corner coordinates of the annulus.
+      :type annulus_corners: list[tuple[int, int]]
+
+      :param figure_start: left top coordinate of the figure.
+      :type figure_start: tuple[int, int]
+
+      :param figure_end: bottom right coordinate of the figure.
+      :type figure_end: tuple[int, int]
+
+      :return: True if the annulus belongs to the figure, False otherwise.
+      :rtype: bool
+
+
+   .. py:method:: _select_stimulus_patch(self, figure_center: tuple[float, float], patch_size: int) -> numpy.ndarray[(int, int), float]
 
       Selects a patch of the stimulus.
 
-      :param stimulus: the full stimulus.
-      :type stimulus: ndarray[ndarray[float]]
+      :param figure_center: the center point of the figure.
+      :param figure_center: tuple[float, float]
+
+      :param patch_size: side length of the stimulus.
+      :param patch_size: int
 
       :return: the luminance matrix of a patch of the stimulus.
-      :rtype: ndarray[ndarray[float]]
+      :rtype: numpy.ndarray[(int, int), float]
 
 
 

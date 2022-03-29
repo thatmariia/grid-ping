@@ -9,3 +9,4 @@ pytest
 seaborn
 matplotlib
 coverage
+nptyping

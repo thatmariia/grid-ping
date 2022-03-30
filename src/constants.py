@@ -57,7 +57,7 @@ GAUSSIAN_INPUT = {
 """Synaptic constants"""
 
 # TODO
-SYNAPTIC_CONST_RISE = {
+SYNAPTIC_RISE = {
     (NeuronTypes.E, NeuronTypes.E): 1,
     (NeuronTypes.E, NeuronTypes.I): 1,
     (NeuronTypes.I, NeuronTypes.E): 1,
@@ -65,7 +65,7 @@ SYNAPTIC_CONST_RISE = {
 }
 
 # TODO
-SYNAPTIC_CONST_DECAY = {
+SYNAPTIC_DECAY = {
     (NeuronTypes.E, NeuronTypes.E): 1,
     (NeuronTypes.E, NeuronTypes.I): 1,
     (NeuronTypes.I, NeuronTypes.E): 1,

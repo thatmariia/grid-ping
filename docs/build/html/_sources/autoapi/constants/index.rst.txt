@@ -55,12 +55,12 @@ Module Contents
    Synaptic constants
 
 
-.. py:data:: SYNAPTIC_CONST_RISE
+.. py:data:: SYNAPTIC_RISE
    
 
    
 
-.. py:data:: SYNAPTIC_CONST_DECAY
+.. py:data:: SYNAPTIC_DECAY
    
 
    

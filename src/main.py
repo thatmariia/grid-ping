@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
     oscillatory_network = OscillatoryNetwork(
         stimulus=stimulus.current,
-        nr_excitatory=8,
+        nr_excitatory=4,
         nr_inhibitory=4,
         nr_ping_networks=nr_circuits
     )

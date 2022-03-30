@@ -153,7 +153,7 @@ class OscillatoryNetwork:
         # spike timings
         firing_times = []
 
-        gatings = np.zeros((self._nr_neurons["total"], self._nr_neurons["total"]))
+        gatings = np.zeros(self._nr_neurons["total"])
 
         stim_input = self._create_main_input_stimulus()
 
@@ -211,46 +211,46 @@ class OscillatoryNetwork:
         # TODO:: why do we multiply the equation for dv/dt with 0.5 and then call this function twice in run_simulation?
         return 0.5 * (0.04 * self._potentials ** 2 + 5 * self._potentials + 140 - self._recovery + self._current)
 
-    def _get_change_in_gatings(
-            self, gatings: np.ndarray[(int, int), float], presyn_type: NeuronTypes, postsyn_type: NeuronTypes
-    ) -> np.ndarray[(int, int), float]:
+    def _get_gatings(
+            self, gatings: np.ndarray[int, float], dt: float,
+    ) -> np.ndarray[int, float]:
         """
-        Computes the change in gating values for synapses of given types.
+        Computes the gating values for synapses of given types.
 
         :param gatings: current gating values.
-        :type gatings: numpy.ndarray[(int, int), float]
+        :type gatings: numpy.ndarray[int, float]
 
-        :param presyn_type: type of the presynaptic neuron.
-        :type presyn_type: NeuronTypes
-
-        :param postsyn_type: typw of the postsynaptic neuron.
-        :type postsyn_type: NeuronTypes
+        :param dt: time interval.
+        :type dt: float
 
         :return: the change in synaptic values for a unit of time.
-        :rtype: numpy.ndarray[(int, int), float]
+        :rtype: numpy.ndarray[int, float]
         """
 
-        presyn_slice = neur_slice(presyn_type, self._nr_neurons[NeuronTypes.E], self._nr_neurons[NeuronTypes.I])
-        postsyn_slice = neur_slice(postsyn_type, self._nr_neurons[NeuronTypes.E], self._nr_neurons[NeuronTypes.I])
+        new_gatings = np.zeros(self._nr_neurons["total"])
 
-        transmission_concs = 1 + np.tanh(self._potentials[presyn_slice] / 4)
-        new_gatings = (
-            SYNAPTIC_RISE[(presyn_type, postsyn_type)] * transmission_concs *
-            (1 - gatings[presyn_slice, postsyn_slice]) -
-            gatings[presyn_slice, postsyn_slice] / SYNAPTIC_DECAY[(presyn_type, postsyn_type)]
-        )
+        for nt in [NeuronTypes.E, NeuronTypes.I]:
+            nt_slice = neur_slice(nt, self._nr_neurons[NeuronTypes.E], self._nr_neurons[NeuronTypes.I])
+
+            transmission_concs = 1 + np.tanh(self._potentials[nt_slice] / 4)
+            change_gatings = (
+                SYNAPTIC_RISE[nt] * transmission_concs * (1 - gatings[nt_slice]) -
+                gatings[nt_slice] / SYNAPTIC_DECAY[nt]
+            )
+            new_gatings[nt_slice] = gatings[nt_slice] + dt * change_gatings
+
         return new_gatings
 
     def _get_synaptic_current(
             self, gatings: np.ndarray[(int, int), float], dt: float
-    ) -> tuple[np.ndarray[(int, int), float], np.ndarray[int, float]]:
+    ) -> tuple[np.ndarray[int, float], np.ndarray[int, float]]:
         """
         Computes the new synaptic currents for postsynaptic neurons.
 
         Computes the :math:`I_{syn}`.
 
         :param gatings: synaptic gating values
-        :type gatings: numpy.ndarray[(int, int), float]
+        :type gatings: numpy.ndarray[int, float]
 
         :param dt: time interval
         :type dt: float
@@ -259,20 +259,15 @@ class OscillatoryNetwork:
         :rtype: numpy.ndarray[(int, int), float]
         """
 
-        new_gatings = np.zeros((self._nr_neurons["total"], self._nr_neurons["total"]))
+        new_gatings = self._get_gatings(gatings, dt)
         new_currents = np.zeros(self._nr_neurons["total"])
 
         for postsyn_type, presyn_type in list(product([NeuronTypes.E, NeuronTypes.I], repeat=2)):
             presyn_slice = neur_slice(presyn_type, self._nr_neurons[NeuronTypes.E], self._nr_neurons[NeuronTypes.I])
             postsyn_slice = neur_slice(postsyn_type, self._nr_neurons[NeuronTypes.E], self._nr_neurons[NeuronTypes.I])
 
-            # gating calculation between neurons (synapse)
-            new_gatings[presyn_slice, postsyn_slice] = \
-                gatings[presyn_slice, postsyn_slice] + \
-                dt * self._get_change_in_gatings(gatings, presyn_type, postsyn_type)
-
             # conductance calculation between neurons (synapse)
-            conductances = CONDUCTANCE_DENSITY[(presyn_type, postsyn_type)] * new_gatings[presyn_slice, postsyn_slice]
+            conductances = CONDUCTANCE_DENSITY[(presyn_type, postsyn_type)] * new_gatings[presyn_slice]
 
             # synaptic current calculation of a postsynaptic neuron
             new_currents[postsyn_slice] += \

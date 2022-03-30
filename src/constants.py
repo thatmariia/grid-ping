@@ -58,18 +58,14 @@ GAUSSIAN_INPUT = {
 
 # TODO
 SYNAPTIC_RISE = {
-    (NeuronTypes.E, NeuronTypes.E): 1,
-    (NeuronTypes.E, NeuronTypes.I): 1,
-    (NeuronTypes.I, NeuronTypes.E): 1,
-    (NeuronTypes.I, NeuronTypes.I): 1
+    NeuronTypes.E: 1,
+    NeuronTypes.I: 1,
 }
 
 # TODO
 SYNAPTIC_DECAY = {
-    (NeuronTypes.E, NeuronTypes.E): 1,
-    (NeuronTypes.E, NeuronTypes.I): 1,
-    (NeuronTypes.I, NeuronTypes.E): 1,
-    (NeuronTypes.I, NeuronTypes.I): 1
+    NeuronTypes.E: 1,
+    NeuronTypes.I: 1,
 }
 
 # TODO

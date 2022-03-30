@@ -139,31 +139,28 @@ Classes
       :rtype: numpy.ndarray[int, float]
 
 
-   .. py:method:: _get_change_in_gatings(self, gatings: numpy.ndarray[(int, int), float], presyn_type: src.constants.NeuronTypes, postsyn_type: src.constants.NeuronTypes) -> numpy.ndarray[(int, int), float]
+   .. py:method:: _get_gatings(self, gatings: numpy.ndarray[int, float], dt: float) -> numpy.ndarray[int, float]
 
-      Computes the change in gating values for synapses of given types.
+      Computes the gating values for synapses of given types.
 
       :param gatings: current gating values.
-      :type gatings: numpy.ndarray[(int, int), float]
+      :type gatings: numpy.ndarray[int, float]
 
-      :param presyn_type: type of the presynaptic neuron.
-      :type presyn_type: NeuronTypes
-
-      :param postsyn_type: typw of the postsynaptic neuron.
-      :type postsyn_type: NeuronTypes
+      :param dt: time interval.
+      :type dt: float
 
       :return: the change in synaptic values for a unit of time.
-      :rtype: numpy.ndarray[(int, int), float]
+      :rtype: numpy.ndarray[int, float]
 
 
-   .. py:method:: _get_synaptic_current(self, gatings: numpy.ndarray[(int, int), float], dt: float) -> tuple[numpy.ndarray[(int, int), float], numpy.ndarray[int, float]]
+   .. py:method:: _get_synaptic_current(self, gatings: numpy.ndarray[(int, int), float], dt: float) -> tuple[numpy.ndarray[int, float], numpy.ndarray[int, float]]
 
       Computes the new synaptic currents for postsynaptic neurons.
 
       Computes the :math:`I_{syn}`.
 
       :param gatings: synaptic gating values
-      :type gatings: numpy.ndarray[(int, int), float]
+      :type gatings: numpy.ndarray[int, float]
 
       :param dt: time interval
       :type dt: float

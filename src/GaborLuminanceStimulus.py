@@ -77,20 +77,20 @@ class GaborLuminanceStimulus:
     :raises:
         AssertionError: size of the patch is smaller than one of the figure sides.
 
-    :ivar atopix: conversion coefficient between pixels and visual degrees.
-    :type atopix: float
+    :ivar _atopix: conversion coefficient between pixels and visual degrees.
+    :type _atopix: float
 
-    :ivar full_width: width of the full stimulus.
-    :type full_width: int
+    :ivar _full_width: width of the full stimulus.
+    :type _full_width: int
 
-    :ivar full_height: height of the full stimulus.
-    :type full_height: int
-
-    :ivar stimulus: the luminance matrix of the full stimulus.
-    :type stimulus: numpy.ndarray[(int, int), float]
+    :ivar _full_height: height of the full stimulus.
+    :type _full_height: int
 
     :ivar _patch_start: top left coordinate of the stimulus patch.
     :type _patch_start: tuple[int]
+
+    :ivar stimulus: the luminance matrix of the full stimulus.
+    :type stimulus: numpy.ndarray[(int, int), float]
 
     :ivar stimulus_patch: the luminance matrix of a patch of the stimulus.
     :type stimulus_patch: numpy.ndarray[(int, int), float]
@@ -131,14 +131,14 @@ class GaborLuminanceStimulus:
         assert (patch_size_dg > 0) and (patch_size_dg <= min(figure_width_dg, figure_height_dg)), \
             "The size of the patch cannot be smaller than either of the figure sides."
 
-        self.atopix = diameter / diameter_dg  # conversion between pixels and degrees
+        self._atopix = diameter / diameter_dg  # conversion between pixels and degrees
 
-        self.full_width: int = ceil(self.atopix * full_width_dg)
-        self.full_height: int = ceil(self.atopix * full_height_dg)
-        figure_width: int = ceil(self.atopix * figure_width_dg)
-        figure_height: int = ceil(self.atopix * figure_height_dg)
-        figure_ecc: float = self.atopix * figure_ecc_dg
-        patch_size: int = ceil(self.atopix * patch_size_dg)
+        self._full_width: int = ceil(self._atopix * full_width_dg)
+        self._full_height: int = ceil(self._atopix * full_height_dg)
+        figure_width: int = ceil(self._atopix * figure_width_dg)
+        figure_height: int = ceil(self._atopix * figure_height_dg)
+        figure_ecc: float = self._atopix * figure_ecc_dg
+        patch_size: int = ceil(self._atopix * patch_size_dg)
 
         # annulus composition
         grating = self._get_grating(spatial_freq, diameter_dg, diameter)
@@ -189,9 +189,9 @@ class GaborLuminanceStimulus:
         ])
         ecc_in_stimulus = euclidian_dist_R2(
             point_in_stimulus,
-            (self.full_height / 2, self.full_width / 2)
+            (self._full_height / 2, self._full_width / 2)
         )
-        return ecc_in_stimulus / self.atopix
+        return ecc_in_stimulus / self._atopix
 
     def _get_grating(self, spatial_freq: float, diameter_dg: float, diameter: int) -> np.ndarray[(int, int), float]:
         """
@@ -247,7 +247,7 @@ class GaborLuminanceStimulus:
             pi / 2 - np.arcsin(figure_width / (2 * figure_ecc))
         )
         figure_center = add_points([
-            (self.full_height / 2, self.full_width / 2),
+            (self._full_height / 2, self._full_width / 2),
             (figure_ecc * np.sin(angle), figure_ecc * np.cos(angle))
         ])
 
@@ -295,10 +295,10 @@ class GaborLuminanceStimulus:
         annulus_start_in_alloc = (alloc_space - diameter) // 2
 
         # nr of annuli in each row and column
-        reps_in_row = ceil(self.full_width / alloc_space)  # nr of cols
-        reps_in_col = ceil(self.full_height / alloc_space)  # nr of rows
+        reps_in_row = ceil(self._full_width / alloc_space)  # nr of cols
+        reps_in_col = ceil(self._full_height / alloc_space)  # nr of rows
 
-        stimulus = np.ones((self.full_height, self.full_width)) * 0.5
+        stimulus = np.ones((self._full_height, self._full_width)) * 0.5
 
         # for i in tqdm(range(reps_in_col)):
         #     for j in tqdm(range(reps_in_row), leave=False):
@@ -327,8 +327,8 @@ class GaborLuminanceStimulus:
 
             # if the whole annulus doesn't fit
             annulus_cutoff = (
-                min(annulus_end[0], self.full_height),
-                min(annulus_end[1], self.full_width)
+                min(annulus_end[0], self._full_height),
+                min(annulus_end[1], self._full_width)
             )
             cut_amount = add_points([
                 annulus_end,
@@ -376,10 +376,10 @@ class GaborLuminanceStimulus:
         Selects a patch of the stimulus.
 
         :param figure_center: the center point of the figure.
-        :param figure_center: tuple[float, float]
+        :type figure_center: tuple[float, float]
 
         :param patch_size: side length of the stimulus.
-        :param patch_size: int
+        :type patch_size: int
 
         :return: the luminance matrix of a patch of the stimulus.
         :rtype: numpy.ndarray[(int, int), float]

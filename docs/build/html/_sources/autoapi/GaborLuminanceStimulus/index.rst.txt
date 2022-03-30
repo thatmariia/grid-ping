@@ -85,20 +85,20 @@ Classes
    :raises:
        AssertionError: size of the patch is smaller than one of the figure sides.
 
-   :ivar atopix: conversion coefficient between pixels and visual degrees.
-   :type atopix: float
+   :ivar _atopix: conversion coefficient between pixels and visual degrees.
+   :type _atopix: float
 
-   :ivar full_width: width of the full stimulus.
-   :type full_width: int
+   :ivar _full_width: width of the full stimulus.
+   :type _full_width: int
 
-   :ivar full_height: height of the full stimulus.
-   :type full_height: int
-
-   :ivar stimulus: the luminance matrix of the full stimulus.
-   :type stimulus: numpy.ndarray[(int, int), float]
+   :ivar _full_height: height of the full stimulus.
+   :type _full_height: int
 
    :ivar _patch_start: top left coordinate of the stimulus patch.
    :type _patch_start: tuple[int]
+
+   :ivar stimulus: the luminance matrix of the full stimulus.
+   :type stimulus: numpy.ndarray[(int, int), float]
 
    :ivar stimulus_patch: the luminance matrix of a patch of the stimulus.
    :type stimulus_patch: numpy.ndarray[(int, int), float]
@@ -209,10 +209,10 @@ Classes
       Selects a patch of the stimulus.
 
       :param figure_center: the center point of the figure.
-      :param figure_center: tuple[float, float]
+      :type figure_center: tuple[float, float]
 
       :param patch_size: side length of the stimulus.
-      :param patch_size: int
+      :type patch_size: int
 
       :return: the luminance matrix of a patch of the stimulus.
       :rtype: numpy.ndarray[(int, int), float]

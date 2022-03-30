@@ -279,11 +279,11 @@
 </dd>
 <dt class="field-even">Variables</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>atopix</strong> – conversion coefficient between pixels and visual degrees.</p></li>
-<li><p><strong>full_width</strong> – width of the full stimulus.</p></li>
-<li><p><strong>full_height</strong> – height of the full stimulus.</p></li>
-<li><p><strong>stimulus</strong> – the luminance matrix of the full stimulus.</p></li>
+<li><p><strong>_atopix</strong> – conversion coefficient between pixels and visual degrees.</p></li>
+<li><p><strong>_full_width</strong> – width of the full stimulus.</p></li>
+<li><p><strong>_full_height</strong> – height of the full stimulus.</p></li>
 <li><p><strong>_patch_start</strong> – top left coordinate of the stimulus patch.</p></li>
+<li><p><strong>stimulus</strong> – the luminance matrix of the full stimulus.</p></li>
 <li><p><strong>stimulus_patch</strong> – the luminance matrix of a patch of the stimulus.</p></li>
 </ul>
 </dd>
@@ -416,10 +416,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>figure_center</strong> – the center point of the figure.</p></li>
-<li><p><strong>figure_center</strong> – tuple[float, float]</p></li>
-<li><p><strong>patch_size</strong> – side length of the stimulus.</p></li>
-<li><p><strong>patch_size</strong> – int</p></li>
+<li><p><strong>figure_center</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – the center point of the figure.</p></li>
+<li><p><strong>patch_size</strong> (<em>int</em>) – side length of the stimulus.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>

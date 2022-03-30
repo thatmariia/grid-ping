@@ -269,7 +269,7 @@ with other neurons: TODO:: change the equation to match the report</p>
 <li><p><strong>_nr_neurons</strong> – number of neurons of each type in the network.</p></li>
 <li><p><strong>_nr_ping_networks</strong> – number of ping_networks in the network.</p></li>
 <li><p><strong>_stimulus</strong> – TODO</p></li>
-<li><p><strong>_current</strong> – current (from input and interaction).</p></li>
+<li><p><strong>_currents</strong> – current (from input and interaction).</p></li>
 <li><p><strong>_potentials</strong> – voltage (membrane potential).</p></li>
 <li><p><strong>_recovery</strong> – membrane recovery variable.</p></li>
 <li><p><strong>_izhi_alpha</strong> – timescale of recovery variable <cite>recovery</cite>.</p></li>
@@ -298,8 +298,8 @@ materials of <span id="id2">[<a class="reference internal" href="../../index.htm
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_recovery">
-<span class="sig-name descname"><span class="pre">_change_recovery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_recovery" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._get_change_in_recovery">
+<span class="sig-name descname"><span class="pre">_get_change_in_recovery</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._get_change_in_recovery" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the change in membrane recovery.</p>
 <p>Computes <span class="math notranslate nohighlight">\(dr_v / dt = \alpha_{\mathsf{type}(v)} \cdot (\beta_{\mathsf{type}(v)} p_v - r_v)\)</span>.</p>
 <dl class="field-list simple">
@@ -312,8 +312,8 @@ materials of <span id="id2">[<a class="reference internal" href="../../index.htm
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._change_potential">
-<span class="sig-name descname"><span class="pre">_change_potential</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._change_potential" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._get_change_in_potentials">
+<span class="sig-name descname"><span class="pre">_get_change_in_potentials</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._get_change_in_potentials" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the change in membrane potentials.</p>
 <p>Computes <span class="math notranslate nohighlight">\(dp_v / dt = 0.04 p_v^2 + 5 p_v + 140 - r_v + I_v\)</span>.</p>
 <dl class="field-list simple">
@@ -345,8 +345,8 @@ materials of <span id="id2">[<a class="reference internal" href="../../index.htm
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._get_synaptic_current">
-<span class="sig-name descname"><span class="pre">_get_synaptic_current</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gatings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._get_synaptic_current" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._get_synaptic_currents">
+<span class="sig-name descname"><span class="pre">_get_synaptic_currents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gatings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._get_synaptic_currents" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the new synaptic currents for postsynaptic neurons.</p>
 <p>Computes the <span class="math notranslate nohighlight">\(I_{syn}\)</span>.</p>
 <dl class="field-list simple">
@@ -379,7 +379,7 @@ materials of <span id="id2">[<a class="reference internal" href="../../index.htm
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="OscillatoryNetwork.OscillatoryNetwork._create_main_input_stimulus">
-<span class="sig-name descname"><span class="pre">_create_main_input_stimulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._create_main_input_stimulus" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_create_main_input_stimulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#OscillatoryNetwork.OscillatoryNetwork._create_main_input_stimulus" title="Permalink to this definition">#</a></dt>
 <dd><p>Parses external input stimulus. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.</p>
 <p>Creates initial <span class="math notranslate nohighlight">\(I_{stim}\)</span>.</p>
 <dl class="field-list simple">
@@ -387,7 +387,7 @@ materials of <span id="id2">[<a class="reference internal" href="../../index.htm
 <dd class="field-odd"><p>input stimulus.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>numpy.ndarray[int, float]</p>
+<dd class="field-even"><p>list[float]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -440,10 +440,10 @@ materials of <span id="id2">[<a class="reference internal" href="../../index.htm
 <li><a class="reference internal" href="#classes">Classes</a><ul>
 <li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork">OscillatoryNetwork</a><ul>
 <li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork.run_simulation">run_simulation</a></li>
-<li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._change_recovery">_change_recovery</a></li>
-<li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._change_potential">_change_potential</a></li>
+<li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._get_change_in_recovery">_get_change_in_recovery</a></li>
+<li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._get_change_in_potentials">_get_change_in_potentials</a></li>
 <li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._get_gatings">_get_gatings</a></li>
-<li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._get_synaptic_current">_get_synaptic_current</a></li>
+<li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._get_synaptic_currents">_get_synaptic_currents</a></li>
 <li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._get_thalamic_input">_get_thalamic_input</a></li>
 <li><a class="reference internal" href="#OscillatoryNetwork.OscillatoryNetwork._create_main_input_stimulus">_create_main_input_stimulus</a></li>
 </ul>

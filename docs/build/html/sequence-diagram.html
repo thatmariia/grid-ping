@@ -215,14 +215,15 @@ activate InputStimulus
 InputStimulus -&gt; GaborLuminanceStimulus : super()
 activate GaborLuminanceStimulus
 
-GaborLuminanceStimulus -&gt; GaborLuminanceStimulus: creates full luminance matrix
-GaborLuminanceStimulus -&gt; GaborLuminanceStimulus: selects patch luminance matrix
+GaborLuminanceStimulus -&gt; GaborLuminanceStimulus: composes figure and ground
+GaborLuminanceStimulus -&gt; GaborLuminanceStimulus: creates luminance stimulus
+GaborLuminanceStimulus -&gt; GaborLuminanceStimulus: selects patch from figure
 
 GaborLuminanceStimulus --&gt; InputStimulus
 
 InputStimulus -&gt; InputStimulus: creates circuits from luminance stimulus
 InputStimulus -&gt; InputStimulus: converts luminance to local contrast
-InputStimulus -&gt; InputStimulus: converts local contrast to frequencies
+InputStimulus -&gt; InputStimulus: converts local contrast to frequencies (TODO)
 InputStimulus -&gt; InputStimulus: converts frequencies to current (TODO)
 
 InputStimulus --&gt; user : initialized stimulus
@@ -251,7 +252,7 @@ OscillatoryNetwork --&gt; user: ended simulation
 deactivate OscillatoryNetwork
 deactivate user
 
-@enduml" src="_images/plantuml-8b4e48cdc6e83291d1ee45ab81f4aa8f26a1ab05.png"/>
+@enduml" src="_images/plantuml-0bced400920d4e5a669ccf45fc7cdb491921a183.png"/>
 </p>
 </section>
 

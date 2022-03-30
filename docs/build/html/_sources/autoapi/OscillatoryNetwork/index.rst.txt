@@ -82,8 +82,8 @@ Classes
    :ivar _stimulus: TODO
    :type _stimulus: TODO
 
-   :ivar _current: current (from input and interaction).
-   :type _current: numpy.ndarray[int, float]
+   :ivar _currents: current (from input and interaction).
+   :type _currents: numpy.ndarray[int, float]
 
    :ivar _potentials: voltage (membrane potential).
    :type _potentials: numpy.ndarray[int, float]
@@ -119,7 +119,7 @@ Classes
       :rtype: None
 
 
-   .. py:method:: _change_recovery(self) -> numpy.ndarray[int, float]
+   .. py:method:: _get_change_in_recovery(self) -> numpy.ndarray[int, float]
 
       Computes the change in membrane recovery.
 
@@ -129,7 +129,7 @@ Classes
       :rtype: numpy.ndarray[int, float]
 
 
-   .. py:method:: _change_potential(self) -> numpy.ndarray[int, float]
+   .. py:method:: _get_change_in_potentials(self) -> numpy.ndarray[int, float]
 
       Computes the change in membrane potentials.
 
@@ -153,7 +153,7 @@ Classes
       :rtype: numpy.ndarray[int, float]
 
 
-   .. py:method:: _get_synaptic_current(self, gatings: numpy.ndarray[(int, int), float], dt: float) -> tuple[numpy.ndarray[int, float], numpy.ndarray[int, float]]
+   .. py:method:: _get_synaptic_currents(self, gatings: numpy.ndarray[(int, int), float], dt: float) -> tuple[numpy.ndarray[int, float], numpy.ndarray[int, float]]
 
       Computes the new synaptic currents for postsynaptic neurons.
 
@@ -177,14 +177,14 @@ Classes
       :rtype: numpy.ndarray[int, float]
 
 
-   .. py:method:: _create_main_input_stimulus(self) -> numpy.ndarray[int, float]
+   .. py:method:: _create_main_input_stimulus(self) -> list[float]
 
       Parses external input stimulus. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.
 
       Creates initial :math:`I_{stim}`.
 
       :return: input stimulus.
-      :rtype: numpy.ndarray[int, float]
+      :rtype: list[float]
 
 
 

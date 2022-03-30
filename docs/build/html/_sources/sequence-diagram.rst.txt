@@ -13,14 +13,15 @@ Sequence diagram
     InputStimulus -> GaborLuminanceStimulus : super()
     activate GaborLuminanceStimulus
 
-    GaborLuminanceStimulus -> GaborLuminanceStimulus: creates full luminance matrix
-    GaborLuminanceStimulus -> GaborLuminanceStimulus: selects patch luminance matrix
+    GaborLuminanceStimulus -> GaborLuminanceStimulus: composes figure and ground
+    GaborLuminanceStimulus -> GaborLuminanceStimulus: creates luminance stimulus
+    GaborLuminanceStimulus -> GaborLuminanceStimulus: selects patch from figure
 
     GaborLuminanceStimulus --> InputStimulus
 
     InputStimulus -> InputStimulus: creates circuits from luminance stimulus
     InputStimulus -> InputStimulus: converts luminance to local contrast
-    InputStimulus -> InputStimulus: converts local contrast to frequencies
+    InputStimulus -> InputStimulus: converts local contrast to frequencies (TODO)
     InputStimulus -> InputStimulus: converts frequencies to current (TODO)
 
     InputStimulus --> user : initialized stimulus

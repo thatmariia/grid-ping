@@ -65,12 +65,12 @@ Module Contents
 
    
 
-.. py:data:: CONDUCTANCE_DENSITY
+.. py:data:: SYNAPTIC_CONDUCTANCE
    
 
    
 
-.. py:data:: REVERSAL_POTENTIALS
+.. py:data:: REVERSAL_POTENTIAL
    
 
    

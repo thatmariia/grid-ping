@@ -16,12 +16,12 @@ class TestOscillatoryNetwork:
 
     def test_change_recovery(self):
 
-        d_recovery1 = self.network1._change_recovery()
+        d_recovery1 = self.network1._get_change_in_recovery()
         d_recovery1_expected = [0, 0, 0, 0]
 
         # -----------------------------------------------------------------------
 
-        d_recovery2 = self.network2._change_recovery()
+        d_recovery2 = self.network2._get_change_in_recovery()
         d_recovery2_expected = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
         assert np.array_equal(d_recovery1, d_recovery1_expected)
@@ -32,14 +32,14 @@ class TestOscillatoryNetwork:
 
         c1 = [0.1] * 4
 
-        d_potential1 = self.network1._change_potential(current=c1)
+        d_potential1 = self.network1._get_change_in_potentials(current=c1)
         d_potential1_expected = [-1.45] * 4
 
         # -----------------------------------------------------------------------
 
         c2 = [0.1] * 12
 
-        d_potential2 = self.network2._change_potential(current=c2)
+        d_potential2 = self.network2._get_change_in_potentials(current=c2)
         d_potential2_expected = [-1.45] * 12
 
         assert np.array_equal(d_potential1, d_potential1_expected)

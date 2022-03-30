@@ -72,8 +72,8 @@ class OscillatoryNetwork:
     :ivar _stimulus: TODO
     :type _stimulus: TODO
 
-    :ivar _current: current (from input and interaction).
-    :type _current: numpy.ndarray[int, float]
+    :ivar _currents: current (from input and interaction).
+    :type _currents: numpy.ndarray[int, float]
 
     :ivar _potentials: voltage (membrane potential).
     :type _potentials: numpy.ndarray[int, float]
@@ -127,7 +127,7 @@ class OscillatoryNetwork:
         self._stimulus = stimulus
 
         # TODO:: change init
-        self._current = np.zeros((self._nr_neurons["total"]))
+        self._currents = np.zeros((self._nr_neurons["total"]))
 
         self._potentials = np.array(
             [INIT_MEMBRANE_POTENTIAL for _ in range(self._nr_neurons["total"])]
@@ -174,16 +174,16 @@ class OscillatoryNetwork:
                 self._recovery[f] += self._izhi_zeta[f]
 
             # synaptic current
-            syn_currents, gatings = self._get_synaptic_current(gatings=gatings, dt=dt)
+            syn_currents, gatings = self._get_synaptic_currents(gatings=gatings, dt=dt)
             # total current
-            self._current = stim_input + self._get_thalamic_input() + np.matmul(coupling_weights, syn_currents)
+            self._currents = stim_input + self._get_thalamic_input() + np.matmul(coupling_weights, syn_currents)
             
             # updating potential and recovery
-            self._potentials = self._potentials + self._change_potential()
-            self._potentials = self._potentials + self._change_potential()
-            self._recovery = self._recovery + self._change_recovery()
+            self._potentials = self._potentials + self._get_change_in_potentials()
+            self._potentials = self._potentials + self._get_change_in_potentials()
+            self._recovery = self._recovery + self._get_change_in_recovery()
 
-    def _change_recovery(self) -> np.ndarray[int, float]:
+    def _get_change_in_recovery(self) -> np.ndarray[int, float]:
         """
         Computes the change in membrane recovery.
 
@@ -198,7 +198,7 @@ class OscillatoryNetwork:
             np.multiply(self._izhi_beta, self._potentials) - self._recovery
         )
 
-    def _change_potential(self) -> np.ndarray[int, float]:
+    def _get_change_in_potentials(self) -> np.ndarray[int, float]:
         """
         Computes the change in membrane potentials.
 
@@ -209,7 +209,7 @@ class OscillatoryNetwork:
         """
 
         # TODO:: why do we multiply the equation for dv/dt with 0.5 and then call this function twice in run_simulation?
-        return 0.5 * (0.04 * self._potentials ** 2 + 5 * self._potentials + 140 - self._recovery + self._current)
+        return 0.5 * (0.04 * self._potentials ** 2 + 5 * self._potentials + 140 - self._recovery + self._currents)
 
     def _get_gatings(
             self, gatings: np.ndarray[int, float], dt: float,
@@ -241,7 +241,7 @@ class OscillatoryNetwork:
 
         return new_gatings
 
-    def _get_synaptic_current(
+    def _get_synaptic_currents(
             self, gatings: np.ndarray[(int, int), float], dt: float
     ) -> tuple[np.ndarray[int, float], np.ndarray[int, float]]:
         """

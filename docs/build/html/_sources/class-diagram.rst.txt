@@ -11,13 +11,13 @@ Class diagram
     }
 
     class StimulusCircuit {
-      +center: tuple
-      +pixels: list
+      +center
+      +pixels
     }
 
     class InputStimulus {
-      -nr_circuits: int
-      +current: list
+      -_nr_circuits
+      +current
 
       -_assign_circuits()
       -_get_input_current()
@@ -28,51 +28,52 @@ Class diagram
     }
 
     abstract class GaborLuminanceStimulus {
-      -_side_length: TODO
-      -_patch_res: int
-      -_stim_res: TODO
-      +stimulus: list
-      +stimulus_patch: list
+      -_atopix
+      -_full_width
+      -_full_height
+      -_patch_start
+      +stimulus
+      +stimulus_patch
 
       +plot_stimulus()
       #_eccentricity_in_patch()
-      -_from_pixel_to_physical_stim()
       -_get_grating()
+      -_get_figure_coords()
       -_get_full_stimulus()
-      -_get_start_of_patch()
-      -_get_stimulus_patch()
+      -_is_annulus_in_figure()
+      -_select_stimulus_patch()
     }
 
     class OscillatoryNetwork {
-      -_nr_neurons: int
-      -_nr_ping_networks: int
-      -_stimulus: list
-      -_synaptic_currents: list
-      -_current: TODO
-      -_potentials: list
-      -_recovery: list
-      -_izhi_alpha: list
-      -_izhi_beta: list
-      -_izhi_gamma: list
-      -_izhi_zeta: list
+      -_nr_neurons
+      -_nr_ping_networks
+      -_stimulus
+      -_currents
+      -_potentials
+      -_recovery
+      -_izhi_alpha
+      -_izhi_beta
+      -_izhi_gamma
+      -_izhi_zeta
 
       +run_simulation()
-      -_change_recovery()
-      -_change_potential()
-      -_get_synaptic_current()
+      -_get_change_in_recovery()
+      -_get_change_in_potentials()
+      -_get_change_in_gatings()
+      -_get_synaptic_currents()
       -_get_thalamic_input()
       -_create_main_input_stimulus()
     }
 
     class PINGNetwork {
-      +location: tuple
-      +ids: dict
+      +location
+      +ids
     }
 
     class GridConnectivity {
-      -_nr_neurons: int
-      -_nr_ping_networks: int
-      +coupling_weights: int
+      -_nr_neurons
+      -_nr_ping_networks
+      +coupling_weights
 
       -_assign_ping_networks()
       -_compute_coupling_weights()

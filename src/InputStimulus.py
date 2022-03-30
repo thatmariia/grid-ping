@@ -273,7 +273,7 @@ class InputStimulus(GaborLuminanceStimulus):
 
     def _compute_current(self, frequencies: np.ndarray[int, float]) -> np.ndarray[int, float]:
         """
-        Computes _current through oscillation frequencies. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.
+        Computes _currents through oscillation frequencies. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.
 
         :param frequencies: list containing oscillation frequencies for each circuit.
         :type frequencies: list[float]

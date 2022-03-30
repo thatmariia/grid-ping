@@ -64,7 +64,7 @@ class OscillatoryNetwork:
 
 
     :ivar _nr_neurons: number of neurons of each type in the network.
-    :type _nr_neurons: dict[NeuronTypes: int]
+    :type _nr_neurons: dict[Any, int]
 
     :ivar _nr_ping_networks: number of ping_networks in the network.
     :type _nr_ping_networks: int
@@ -72,29 +72,26 @@ class OscillatoryNetwork:
     :ivar _stimulus: TODO
     :type _stimulus: TODO
 
-    :ivar _synaptic_currents: synaptic currents.
-    :type _synaptic_currents: ndarray[float]
-
     :ivar _current: current (from input and interaction).
-    :type _current: ndarray[float]
+    :type _current: numpy.ndarray[int, float]
 
     :ivar _potentials: voltage (membrane potential).
-    :type _potentials: ndarray[float]
+    :type _potentials: numpy.ndarray[int, float]
 
     :ivar _recovery: membrane recovery variable.
-    :type _recovery: ndarray[float]
+    :type _recovery: numpy.ndarray[int, float]
 
     :ivar _izhi_alpha: timescale of recovery variable `recovery`.
-    :type _izhi_alpha: ndarray[float]
+    :type _izhi_alpha: numpy.ndarray[int, float]
 
     :ivar _izhi_beta: sensitivity of `recovery` to sub-threshold oscillations of `potential`.
-    :type _izhi_beta: ndarray[float]
+    :type _izhi_beta: numpy.ndarray[int, float]
 
     :ivar _izhi_gamma: membrane voltage after spike (after-spike reset of `potential`).
-    :type _izhi_gamma: ndarray[float]
+    :type _izhi_gamma: numpy.ndarray[int, float]
 
     :ivar _izhi_zeta: after-spike reset of recovery variable `recovery`.
-    :type _izhi_zeta: ndarray[float]
+    :type _izhi_zeta: numpy.ndarray[int, float]
     """
 
     def __init__(self, stimulus, nr_excitatory, nr_inhibitory, nr_ping_networks=1):
@@ -105,7 +102,8 @@ class OscillatoryNetwork:
 
         self._nr_neurons = {
             NeuronTypes.E: nr_excitatory,
-            NeuronTypes.I: nr_inhibitory
+            NeuronTypes.I: nr_inhibitory,
+            "total": nr_excitatory + nr_inhibitory
         }
         self._nr_ping_networks = nr_ping_networks
 
@@ -128,16 +126,15 @@ class OscillatoryNetwork:
 
         self._stimulus = stimulus
 
-        self._synaptic_currents = None
-
-        self._current = None
+        # TODO:: change init
+        self._current = np.zeros((self._nr_neurons["total"]))
 
         self._potentials = np.array(
-            [INIT_MEMBRANE_POTENTIAL for _ in range(self._nr_neurons[NeuronTypes.E] + self._nr_neurons[NeuronTypes.I])]
+            [INIT_MEMBRANE_POTENTIAL for _ in range(self._nr_neurons["total"])]
         )
         self._recovery = np.multiply(self._izhi_beta, self._potentials)
 
-    def run_simulation(self, simulation_time, dt):
+    def run_simulation(self, simulation_time: int, dt: float) -> None:
         """
         Runs the simulation.
 
@@ -156,19 +153,19 @@ class OscillatoryNetwork:
         # spike timings
         firing_times = []
 
-        nr_neurons = nr_neurons = sum(self._nr_neurons.values())
-        gatings = np.zeros((nr_neurons, nr_neurons))
+        gatings = np.zeros((self._nr_neurons["total"], self._nr_neurons["total"]))
 
-        stim_input = np.ones(nr_neurons)  # self._create_main_input_stimulus() TODO uncomment
+        stim_input = self._create_main_input_stimulus()
 
-        connectivity = GridConnectivity(
+        coupling_weights = GridConnectivity(
             nr_neurons=self._nr_neurons,
             nr_ping_networks=self._nr_ping_networks
-        )
+        ).coupling_weights
 
         for t in (pbar := tqdm(range(simulation_time))):
-            pbar.set_description("Simulation")
+            pbar.set_description("Network simulation")
 
+            # spiking
             fired = np.argwhere(self._potentials > THRESHOLD_POTENTIAL).flatten()  # indices of spikes
             # firing times will be used later
             firing_times = [firing_times, [t for _ in range(len(fired))] + fired]
@@ -176,29 +173,24 @@ class OscillatoryNetwork:
                 self._potentials[f] = self._izhi_gamma[f]
                 self._recovery[f] += self._izhi_zeta[f]
 
-            # thalamic input
-            self._current = np.add(stim_input, self._change_thalamic_input())
+            # synaptic current
+            syn_currents, gatings = self._get_synaptic_current(gatings=gatings, dt=dt)
+            # total current
+            self._current = stim_input + self._get_thalamic_input() + np.matmul(coupling_weights, syn_currents)
+            
+            # updating potential and recovery
+            self._potentials = self._potentials + self._change_potential()
+            self._potentials = self._potentials + self._change_potential()
+            self._recovery = self._recovery + self._change_recovery()
 
-            # synaptic currents
-            self._synaptic_currents, gatings = self._get_synaptic_current(gatings=gatings, dt=dt)
-            print(self._synaptic_currents)
-
-            # defining input to eah neuron as the summation of all synaptic input
-            # form all connected neurons
-            self._current = np.add(self._current, np.matmul(connectivity.coupling_weights, self._synaptic_currents))
-
-            self._potentials = np.add(self._potentials, self._change_potential())
-            self._potentials = np.add(self._potentials, self._change_potential())
-            self._recovery = np.add(self._recovery, self._change_recovery())
-
-    def _change_recovery(self):
+    def _change_recovery(self) -> np.ndarray[int, float]:
         """
         Computes the change in membrane recovery.
 
         Computes :math:`dr_v / dt = \\alpha_{\mathsf{type}(v)} \cdot (\\beta_{\mathsf{type}(v)} p_v - r_v)`.
 
         :return: change in membrane recovery.
-        :rtype: ndarray[float]
+        :rtype: numpy.ndarray[int, float]
         """
 
         return np.multiply(
@@ -206,21 +198,22 @@ class OscillatoryNetwork:
             np.multiply(self._izhi_beta, self._potentials) - self._recovery
         )
 
-    def _change_potential(self):
+    def _change_potential(self) -> np.ndarray[int, float]:
         """
         Computes the change in membrane potentials.
 
         Computes :math:`dp_v / dt = 0.04 p_v^2 + 5 p_v + 140 - r_v + I_v`.
 
         :return: change in membrane potentials.
-        :rtype: ndarray[float]
+        :rtype: numpy.ndarray[int, float]
         """
 
         # TODO:: why do we multiply the equation for dv/dt with 0.5 and then call this function twice in run_simulation?
         return 0.5 * (0.04 * self._potentials ** 2 + 5 * self._potentials + 140 - self._recovery + self._current)
 
-    def _get_change_in_gatings(self, gatings: np.ndarray[(int, int), float],
-                               presyn_type: NeuronTypes, postsyn_type: NeuronTypes) -> np.ndarray[(int, int), float]:
+    def _get_change_in_gatings(
+            self, gatings: np.ndarray[(int, int), float], presyn_type: NeuronTypes, postsyn_type: NeuronTypes
+    ) -> np.ndarray[(int, int), float]:
         """
         Computes the change in gating values for synapses of given types.
 
@@ -248,8 +241,9 @@ class OscillatoryNetwork:
         )
         return new_gatings
 
-    def _get_synaptic_current(self, gatings: np.ndarray[(int, int), float], dt: float) \
-            -> tuple[np.ndarray[(int, int), float], np.ndarray[int, float]]:
+    def _get_synaptic_current(
+            self, gatings: np.ndarray[(int, int), float], dt: float
+    ) -> tuple[np.ndarray[(int, int), float], np.ndarray[int, float]]:
         """
         Computes the new synaptic currents for postsynaptic neurons.
 
@@ -265,9 +259,8 @@ class OscillatoryNetwork:
         :rtype: numpy.ndarray[(int, int), float]
         """
 
-        nr_neurons = sum(self._nr_neurons.values())
-        new_gatings = np.zeros((nr_neurons, nr_neurons))
-        new_currents = np.zeros(nr_neurons)
+        new_gatings = np.zeros((self._nr_neurons["total"], self._nr_neurons["total"]))
+        new_currents = np.zeros(self._nr_neurons["total"])
 
         for postsyn_type, presyn_type in list(product([NeuronTypes.E, NeuronTypes.I], repeat=2)):
             presyn_slice = neur_slice(presyn_type, self._nr_neurons[NeuronTypes.E], self._nr_neurons[NeuronTypes.I])
@@ -287,41 +280,28 @@ class OscillatoryNetwork:
 
         return new_currents, new_gatings
 
-        # potentials = self._potentials[
-        #     neur_slice(neuron_type, self._nr_neurons[NeuronTypes.E], self._nr_neurons[NeuronTypes.I])
-        # ]
-        # # TODO:: in the paper, this computation is different
-        # alpha = potentials / 10.0 + 2
-        # z = np.tanh(alpha)
-        # comp1 = (z + 1) / 2.0
-        # comp2 = (1 - self._synaptic_currents[neuron_type]) / SYNAPTIC_RISE[neuron_type]
-        # comp3 = self._synaptic_currents[neuron_type] / SYNAPTIC_DECAY[neuron_type]
-        # return dt * 0.3 * (np.multiply(comp1, comp2) - comp3)
-
-    def _change_thalamic_input(self):
+    def _get_thalamic_input(self) -> np.ndarray[int, float]:
         """
-        Computes the change in thalamic input.
+        Generates the thalamic input.
 
         :return: change in thalamic input.
-        :rtype: ndarray[float]
+        :rtype: numpy.ndarray[int, float]
         """
 
         # TODO:: what is this exactly?
         return np.append(
-            GAUSSIAN_INPUT[NeuronTypes.E] * np.ones(self._nr_neurons[NeuronTypes.E]),
-            # np.random.randn(self._nr_neurons[NeuronTypes.E]), TODO uncomment
-            GAUSSIAN_INPUT[NeuronTypes.I] * np.ones(self._nr_neurons[NeuronTypes.I])
-            # np.random.randn(self._nr_neurons[NeuronTypes.I])
+            GAUSSIAN_INPUT[NeuronTypes.E] * np.random.randn(self._nr_neurons[NeuronTypes.E]),
+            GAUSSIAN_INPUT[NeuronTypes.I] * np.random.randn(self._nr_neurons[NeuronTypes.I])
         )
 
-    def _create_main_input_stimulus(self):
+    def _create_main_input_stimulus(self) -> np.ndarray[int, float]:
         """
         Parses external input stimulus. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.
 
         Creates initial :math:`I_{stim}`.
 
         :return: input stimulus.
-        :rtype: ndarray[float]
+        :rtype: numpy.ndarray[int, float]
         """
 
         # TODO:: implement the real strategy

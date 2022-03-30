@@ -60,7 +60,7 @@ Class diagram
       -_change_recovery()
       -_change_potential()
       -_get_synaptic_current()
-      -_change_thalamic_input()
+      -_get_thalamic_input()
       -_create_main_input_stimulus()
     }
 

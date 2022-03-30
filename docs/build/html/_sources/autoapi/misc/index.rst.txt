@@ -19,18 +19,25 @@ Functions
    misc.add_points
    misc.point_ceil
    misc.euclidian_dist_R2
-   misc.cust_range
-   misc.crange
-   misc.orange
 
 
 
-.. py:function:: plot_binary_heatmap(im, path)
+.. py:function:: plot_binary_heatmap(im: list[list[float]], path: str) -> None
+
+   Plots a heatmap with the binary color scheme
+
+   :param im: matrix to plot
+   :type im: list[list[float]]
+
+   :param path: path for saving the resulting plot
+   :type path: str
+
+   :rtype: None
 
 
-.. py:function:: neur_slice(neuron_type, nr_ex, nr_in)
+.. py:function:: neur_slice(neuron_type: src.NeuronTypes.NeuronTypes, nr_ex: int, nr_in: int) -> slice
 
-   The setup: we put excitatory neurons in lists before inhibitory. This function returns relevant slices.
+   By design, we put excitatory neurons in lists before inhibitory. This function returns relevant slices.
 
    :param neuron_type: the type of neuron we need indices for.
    :type neuron_type: NeuronTypes
@@ -45,67 +52,61 @@ Functions
    :rtype: slice
 
 
-.. py:function:: neur_type(id, nr_ex)
+.. py:function:: neur_type(id: int, nr_ex: int) -> src.NeuronTypes.NeuronTypes
 
-   TODO
-   :param id:
-   :param nr_ex:
-   :return:
+   Returns the type of the neuron at a particular ID.
 
+   :param id: the ID of the neuron.
+   :type id: int
 
-.. py:function:: add_points(points, coeffs=None)
+   :param nr_ex: number of excitatory neurons in a network, where the neuron is located.
+   :type nr_ex: int
 
-   TODO
-   :param coeffs:
-   :param points:
-   :return:
+   :return: the neuron type.
+   :rtype: NeuronTypes
 
 
-.. py:function:: point_ceil(p)
+.. py:function:: add_points(points: tuple, coeffs=None) -> tuple
 
-   TODO
-   :param p:
-   :return:
+   Adds values in tuples (for adding coordinates).
+
+   :param points: list of tuples to add together.
+   :type points: list[tuple]
+
+   :param coeffs: coefficients before the tuples (all 1's by default).
+   :type coeffs: list[float]
+
+   :raises:
+       AssertionError: if the number of tuples and coefficients are not equal.
+   :raises:
+       AssertionError: if the number of values is not equal in all tuples.
+
+   :return: the sum of tuples.
+   :rtype: tuple
 
 
-.. py:function:: euclidian_dist_R2(p1, p2=(0, 0))
+.. py:function:: point_ceil(p: tuple) -> tuple
+
+   Computes the ceiling of a tuple.
+
+   :param p: a tuple.
+   :type p: tuple
+
+   :return: tuple of ceilings of all values in the given tuple.
+   :rtype: tuple
+
+
+.. py:function:: euclidian_dist_R2(p1: tuple[float, float], p2=(0, 0)) -> float
 
    Calculates the Eaclidian distance between two 2D points.
 
    :param p1: coordinates of point_pix 1.
-   :type p1: tuple[float]
+   :type p1: tuple[float, float]
 
    :param p2: coordinates of point_pix 2.
-   :type p2: tuple[float]
+   :type p2: tuple[float, float]
 
    :return: the Euclidean distance between two 2D points.
    :rtype: float
-
-
-.. py:function:: cust_range(*args, rtol=1e-05, atol=1e-08, include=[True, False])
-
-   Code taken from https://stackoverflow.com/questions/50299172/python-range-or-numpy-arange-with-end-limit-include
-
-   Combines numpy.arange and numpy.isclose to mimic open, half-open and closed intervals.
-   Avoids also floating point_pix rounding errors as with
-   >>> numpy.arange(1, 1.3, 0.1)
-   array([1. , 1.1, 1.2, 1.3])
-
-   args: [start, ]stop, [step, ]
-       as in numpy.arange
-   rtol, atol: floats
-       floating point_pix tolerance as in numpy.isclose
-   include: boolean list-like, length 2
-       if start and end point_pix are included
-
-
-.. py:function:: crange(*args, **kwargs)
-
-   Range excluding the end-point_pix - from `cust_range`.
-
-
-.. py:function:: orange(*args, **kwargs)
-
-   Range including the end-point_pix - from `cust_range`.
 
 

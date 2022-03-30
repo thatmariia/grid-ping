@@ -12,7 +12,6 @@ class InputStimulus(GaborLuminanceStimulus):
     This class transforms a luminance stimulus patch to current.
 
     TODO:: more elaborate explanation + ref.
-    TODO:: fix all the params and ivars
 
     :param spatial_freq: spatial frequency of the grating (cycles / degree).
     :type spatial_freq: float
@@ -81,13 +80,14 @@ class InputStimulus(GaborLuminanceStimulus):
     :type current: list[float]
     """
 
-    def __init__(self,
-                 spatial_freq: float, vlum: float, diameter_dg: float, diameter: int,
-                 dist_scale: float, full_width_dg: float, full_height_dg: float,
-                 contrast_range: float, figure_width_dg: float, figure_height_dg: float, figure_ecc_dg: float,
-                 patch_size_dg: float,
-                 nr_circuits: int, slope: float, intercept: float, min_diam_rf: float
-                 ):
+    def __init__(
+            self,
+            spatial_freq: float, vlum: float, diameter_dg: float, diameter: int,
+            dist_scale: float, full_width_dg: float, full_height_dg: float,
+            contrast_range: float, figure_width_dg: float, figure_height_dg: float, figure_ecc_dg: float,
+            patch_size_dg: float,
+            nr_circuits: int, slope: float, intercept: float, min_diam_rf: float
+    ):
         super().__init__(
             spatial_freq, vlum, diameter_dg, diameter,
             dist_scale, full_width_dg, full_height_dg,
@@ -149,7 +149,9 @@ class InputStimulus(GaborLuminanceStimulus):
 
         return circuits
 
-    def _get_input_current(self, circuits, slope, intercept, min_diam_rf):
+    def _get_input_current(
+            self, circuits: list[StimulusCircuit], slope: float, intercept: float, min_diam_rf: float
+    ) -> list[float]:
         """
         Performs all the necessary steps to transform luminance to current.
 
@@ -175,8 +177,11 @@ class InputStimulus(GaborLuminanceStimulus):
 
         return current
 
-    def _get_weight(self, center: tuple[float, float], pixel: tuple[int, int], eccentricity: float,
-                    slope: float, intercept: float, min_diam_rf: float) -> float:
+    def _get_weight(
+            self,
+            center: tuple[float, float], pixel: tuple[int, int], eccentricity: float,
+            slope: float, intercept: float, min_diam_rf: float
+    ) -> float:
         """
         Computes weight of a pixel with respect to a circuit.
 
@@ -206,8 +211,9 @@ class InputStimulus(GaborLuminanceStimulus):
         std = diam_rf / 4.0
         return exp(-euclidian_dist_R2(pixel, center) / (2 * std ** 2))
 
-    def _compute_local_contrasts(self, circuits: list[StimulusCircuit],
-                                 slope: float, intercept: float, min_diam_rf: float) -> list[float]:
+    def _compute_local_contrasts(
+            self, circuits: list[StimulusCircuit], slope: float, intercept: float, min_diam_rf: float
+    ) -> list[float]:
         """
         Computes local contrasts for each circuit.
 
@@ -252,7 +258,7 @@ class InputStimulus(GaborLuminanceStimulus):
 
         return local_contrasts
 
-    def _compute_frequencies(self, local_contrasts):
+    def _compute_frequencies(self, local_contrasts: list[float]) -> np.ndarray[int, float]:
         """
         Computes oscillation frequencies of the circuit through local contrasts.
 
@@ -260,12 +266,12 @@ class InputStimulus(GaborLuminanceStimulus):
         :type local_contrasts: list[float]
 
         :return: list containing oscillation frequencies for each circuit.
-        :rtype: ndarray[float]
+        :rtype: numpy.ndarray[int, float]
         """
 
         return 25 + 0.25 * np.array(local_contrasts)
 
-    def _compute_current(self, frequencies):
+    def _compute_current(self, frequencies: np.ndarray[int, float]) -> np.ndarray[int, float]:
         """
         Computes _current through oscillation frequencies. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.
 
@@ -273,7 +279,7 @@ class InputStimulus(GaborLuminanceStimulus):
         :type frequencies: list[float]
 
         :return: TODO
-        :rtype: list[float]
+        :rtype: numpy.ndarray[int, float]
         """
 
         # TODO:: implement the real strategy

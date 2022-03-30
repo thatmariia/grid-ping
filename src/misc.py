@@ -7,7 +7,19 @@ import matplotlib.pyplot as plt
 from math import ceil
 
 
-def plot_binary_heatmap(im, path):
+def plot_binary_heatmap(im: list[list[float]], path: str) -> None:
+    """
+    Plots a heatmap with the binary color scheme
+
+    :param im: matrix to plot
+    :type im: list[list[float]]
+
+    :param path: path for saving the resulting plot
+    :type path: str
+
+    :rtype: None
+    """
+
     fig, ax = plt.subplots(figsize=(300, 300))
     sns.heatmap(
         im,
@@ -25,9 +37,9 @@ def plot_binary_heatmap(im, path):
     fig.savefig(path)
 
 
-def neur_slice(neuron_type, nr_ex, nr_in):
+def neur_slice(neuron_type: NeuronTypes, nr_ex: int, nr_in: int) -> slice:
     """
-    The setup: we put excitatory neurons in lists before inhibitory. This function returns relevant slices.
+    By design, we put excitatory neurons in lists before inhibitory. This function returns relevant slices.
 
     :param neuron_type: the type of neuron we need indices for.
     :type neuron_type: NeuronTypes
@@ -47,12 +59,18 @@ def neur_slice(neuron_type, nr_ex, nr_in):
     return slice(nr_ex, nr_ex + nr_in)
 
 
-def neur_type(id, nr_ex):
+def neur_type(id: int, nr_ex: int) -> NeuronTypes:
     """
-    TODO
-    :param id:
-    :param nr_ex:
-    :return:
+    Returns the type of the neuron at a particular ID.
+
+    :param id: the ID of the neuron.
+    :type id: int
+
+    :param nr_ex: number of excitatory neurons in a network, where the neuron is located.
+    :type nr_ex: int
+
+    :return: the neuron type.
+    :rtype: NeuronTypes
     """
 
     if id < nr_ex:
@@ -60,12 +78,23 @@ def neur_type(id, nr_ex):
     return NeuronTypes.I
 
 
-def add_points(points, coeffs=None):
+def add_points(points: tuple, coeffs=None) -> tuple:
     """
-    TODO
-    :param coeffs:
-    :param points:
-    :return:
+    Adds values in tuples (for adding coordinates).
+
+    :param points: list of tuples to add together.
+    :type points: list[tuple]
+
+    :param coeffs: coefficients before the tuples (all 1's by default).
+    :type coeffs: list[float]
+
+    :raises:
+        AssertionError: if the number of tuples and coefficients are not equal.
+    :raises:
+        AssertionError: if the number of values is not equal in all tuples.
+
+    :return: the sum of tuples.
+    :rtype: tuple
     """
 
     if coeffs != None:
@@ -74,31 +103,37 @@ def add_points(points, coeffs=None):
         coeffs = [1] * len(points)
 
     tuple_length = len(points[0])
-    assert all(len(p) == tuple_length for p in points), "Number of coordinates should be equal for all points."
+    assert all(len(p) == tuple_length for p in points), "Number of values should be equal for all points."
 
     points_t = [
         tuple([points[p][i] * coeffs[p] for p in range(len(points))]) for i in range(tuple_length)
     ]
     return tuple(map(sum, points_t))
 
-def point_ceil(p):
+
+def point_ceil(p: tuple) -> tuple:
     """
-    TODO
-    :param p:
-    :return:
+    Computes the ceiling of a tuple.
+
+    :param p: a tuple.
+    :type p: tuple
+
+    :return: tuple of ceilings of all values in the given tuple.
+    :rtype: tuple
     """
+
     return tuple(ceil(i) for i in p)
 
 
-def euclidian_dist_R2(p1, p2=(0, 0)):
+def euclidian_dist_R2(p1: tuple[float, float], p2=(0, 0)) -> float:
     """
     Calculates the Eaclidian distance between two 2D points.
 
     :param p1: coordinates of point_pix 1.
-    :type p1: tuple[float]
+    :type p1: tuple[float, float]
 
     :param p2: coordinates of point_pix 2.
-    :type p2: tuple[float]
+    :type p2: tuple[float, float]
 
     :return: the Euclidean distance between two 2D points.
     :rtype: float
@@ -108,64 +143,3 @@ def euclidian_dist_R2(p1, p2=(0, 0)):
         pow(p1[0] - p2[0], 2) + pow(p1[1] - p2[1], 2)
     )
 
-
-def cust_range(*args, rtol=1e-05, atol=1e-08, include=[True, False]):
-    """
-    Code taken from https://stackoverflow.com/questions/50299172/python-range-or-numpy-arange-with-end-limit-include
-
-    Combines numpy.arange and numpy.isclose to mimic open, half-open and closed intervals.
-    Avoids also floating point_pix rounding errors as with
-    >>> numpy.arange(1, 1.3, 0.1)
-    array([1. , 1.1, 1.2, 1.3])
-
-    args: [start, ]stop, [step, ]
-        as in numpy.arange
-    rtol, atol: floats
-        floating point_pix tolerance as in numpy.isclose
-    include: boolean list-like, length 2
-        if start and end point_pix are included
-    """
-    # process arguments
-    if len(args) == 1:
-        start = 0
-        stop = args[0]
-        step = 1
-    elif len(args) == 2:
-        start, stop = args
-        step = 1
-    else:
-        assert len(args) == 3
-        start, stop, step = tuple(args)
-
-    # determine number of segments
-    n = (stop - start) / step + 1
-
-    # do rounding for n
-    if np.isclose(n, np.round(n), rtol=rtol, atol=atol):
-        n = np.round(n)
-
-    # correct for start/end is exluded
-    if not include[0]:
-        n -= 1
-        start += step
-    if not include[1]:
-        n -= 1
-        stop -= step
-
-    return np.linspace(start, stop, int(n))
-
-
-def crange(*args, **kwargs):
-    """
-    Range excluding the end-point_pix - from `cust_range`.
-    """
-
-    return cust_range(*args, **kwargs, include=[True, True])
-
-
-def orange(*args, **kwargs):
-    """
-    Range including the end-point_pix - from `cust_range`.
-    """
-
-    return cust_range(*args, **kwargs, include=[True, False])

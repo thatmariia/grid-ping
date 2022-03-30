@@ -40,7 +40,7 @@ Classes
 
 
    :param nr_neurons: number of neurons of each type in the network.
-   :type nr_neurons: dict[NeuronTypes: int]
+   :type nr_neurons: dict[NeuronTypes, int]
 
    :param nr_ping_networks: number of PING networks in the network.
    :type nr_ping_networks: int
@@ -60,15 +60,15 @@ Classes
 
 
    :ivar _nr_neurons: number of neurons of each type in the network.
-   :type _nr_neurons: dict[NeuronTypes: int]
+   :type _nr_neurons: dict[NeuronTypes, int]
 
    :ivar _nr_ping_networks: number of ping_networks in the network.
    :type _nr_ping_networks: int
 
    :ivar coupling_weights: Matrix of all coupling weights.
-   :type coupling_weights: ndarray[ndarray[float]]
+   :type coupling_weights: np.ndarray[(int, int), float]
 
-   .. py:method:: _assign_ping_networks(self)
+   .. py:method:: _assign_ping_networks(self) -> tuple[list[src.PINGNetwork.PINGNetwork], dict[src.constants.NeuronTypes, dict[int, int]]]
 
       Creates PING networks, assigns grid locations to them, and adds the same number of neurons of each neuron type
       to them.
@@ -77,10 +77,10 @@ Classes
 
       :return: list of PING networks in the network and a dictionary mapping a neuron to the PING network it belongs
           to.
-      :rtype: tuple[list[PINGNetwork], dict[NeuronTypes: dict[int, int]]]
+      :rtype: tuple[list[PINGNetwork], dict[NeuronTypes, dict[int, int]]]
 
 
-   .. py:method:: _compute_coupling_weights(self, ping_networks, neuron_ping_map)
+   .. py:method:: _compute_coupling_weights(self, ping_networks: list[src.PINGNetwork.PINGNetwork], neuron_ping_map: dict[src.constants.NeuronTypes, dict[int, int]]) -> src.misc.np.ndarray[(int, int), float]
 
       Computes the coupling weights between all neurons.
 
@@ -90,13 +90,13 @@ Classes
       :type ping_networks: list[PINGNetwork]
 
       :param neuron_ping_map: a dictionary mapping a neuron to the PING network it belongs to.
-      :type neuron_ping_map: dict[NeuronTypes: dict[int, int]]
+      :type neuron_ping_map: dict[NeuronTypes, dict[int, int]]
 
       :return: matrix of all coupling weights.
-      :rtype: ndarray[ndarray[float]]
+      :rtype: numpy.ndarray[(int, int), float]
 
 
-   .. py:method:: _get_neurons_dist(self, neuron_type1, neuron_type2, nr1, nr2, ping_networks, neuron_ping_map)
+   .. py:method:: _get_neurons_dist(self, neuron_type1: src.constants.NeuronTypes, neuron_type2: src.constants.NeuronTypes, nr1: int, nr2: int, ping_networks: list[src.PINGNetwork.PINGNetwork], neuron_ping_map: dict[src.constants.NeuronTypes, dict[int, int]]) -> src.misc.np.ndarray[(int, int), float]
 
       Computes the matrix of Euclidian distances between two types of neurons.
 
@@ -119,13 +119,13 @@ Classes
       :type ping_networks: list[PINGNetwork]
 
       :param neuron_ping_map: a dictionary mapping a neuron to the PING network it belongs to.
-      :type neuron_ping_map: dict[NeuronTypes: dict[int, int]]
+      :type neuron_ping_map: dict[NeuronTypes, dict[int, int]]
 
       :return: The matrix nr1 x nr2 of pairwise distances between neurons.
-      :rtype: list[list[float]]
+      :rtype: numpy.ndarray[(int, int), float]
 
 
-   .. py:method:: _compute_type_coupling_weights(self, dist, max_connect_strength, spatial_const)
+   .. py:method:: _compute_type_coupling_weights(self, dist: src.misc.np.ndarray[(int, int), float], max_connect_strength: float, spatial_const: float) -> src.misc.np.ndarray[(int, int), float]
 
       Computes the coupling weights for connections between two types of neurons.
 
@@ -133,7 +133,7 @@ Classes
       :math:`w` of given types.
 
       :param dist: distance matrix with pairwise distances between neurons.
-      :type dist: list[list[float]]
+      :type dist: numpy.ndarray[(int, int), float]
 
       :param max_connect_strength: max connection strength between neuron types.
       :type max_connect_strength: float
@@ -143,7 +143,7 @@ Classes
 
       :return: the matrix of coupling weights of size nr1 x nr2, where n1 and nr2 - number of neurons of
           each neuron_type in the coupling of interest.
-      :rtype: list[list[float]]
+      :rtype: numpy.ndarray[(int, int), float]
 
 
 

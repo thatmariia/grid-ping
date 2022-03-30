@@ -24,7 +24,6 @@ Classes
    This class transforms a luminance stimulus patch to current.
 
    TODO:: more elaborate explanation + ref.
-   TODO:: fix all the params and ivars
 
    :param spatial_freq: spatial frequency of the grating (cycles / degree).
    :type spatial_freq: float
@@ -100,7 +99,7 @@ Classes
       :rtype: list[StimulusCircuit]
 
 
-   .. py:method:: _get_input_current(self, circuits, slope, intercept, min_diam_rf)
+   .. py:method:: _get_input_current(self, circuits: list[src.StimulusCircuit.StimulusCircuit], slope: float, intercept: float, min_diam_rf: float) -> list[float]
 
       Performs all the necessary steps to transform luminance to current.
 
@@ -166,7 +165,7 @@ Classes
       :rtype: list[float]
 
 
-   .. py:method:: _compute_frequencies(self, local_contrasts)
+   .. py:method:: _compute_frequencies(self, local_contrasts: list[float]) -> numpy.ndarray[int, float]
 
       Computes oscillation frequencies of the circuit through local contrasts.
 
@@ -174,10 +173,10 @@ Classes
       :type local_contrasts: list[float]
 
       :return: list containing oscillation frequencies for each circuit.
-      :rtype: ndarray[float]
+      :rtype: numpy.ndarray[int, float]
 
 
-   .. py:method:: _compute_current(self, frequencies)
+   .. py:method:: _compute_current(self, frequencies: numpy.ndarray[int, float]) -> numpy.ndarray[int, float]
 
       Computes _current through oscillation frequencies. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.
 
@@ -185,7 +184,7 @@ Classes
       :type frequencies: list[float]
 
       :return: TODO
-      :rtype: list[float]
+      :rtype: numpy.ndarray[int, float]
 
 
 

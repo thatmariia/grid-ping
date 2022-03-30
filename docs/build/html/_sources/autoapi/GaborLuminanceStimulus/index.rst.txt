@@ -85,6 +85,7 @@ Classes
    :raises:
        AssertionError: size of the patch is smaller than one of the figure sides.
 
+
    :ivar _atopix: conversion coefficient between pixels and visual degrees.
    :type _atopix: float
 
@@ -103,7 +104,7 @@ Classes
    :ivar stimulus_patch: the luminance matrix of a patch of the stimulus.
    :type stimulus_patch: numpy.ndarray[(int, int), float]
 
-   .. py:method:: plot_stimulus(self, stimulus, filename)
+   .. py:method:: plot_stimulus(self, stimulus: numpy.ndarray[(int, int), float], filename: str) -> None
 
       Plots the binary heatmap of a given stimulus.
 
@@ -111,7 +112,7 @@ Classes
       :type filename: str
 
       :param stimulus: a luminance matrix to plot.
-      :type stimulus: list[list[float]]
+      :type stimulus: np.ndarray[(int, int), float]
 
       :rtype: None
 

@@ -6,7 +6,6 @@ import numpy as np
 from math import pi, ceil
 from tqdm import tqdm
 from itertools import product
-from nptyping import NDArray
 
 
 class GaborLuminanceStimulus:
@@ -77,6 +76,7 @@ class GaborLuminanceStimulus:
     :raises:
         AssertionError: size of the patch is smaller than one of the figure sides.
 
+
     :ivar _atopix: conversion coefficient between pixels and visual degrees.
     :type _atopix: float
 
@@ -96,12 +96,13 @@ class GaborLuminanceStimulus:
     :type stimulus_patch: numpy.ndarray[(int, int), float]
     """
 
-    def __init__(self,
-                 spatial_freq: float, vlum: float, diameter_dg: float, diameter: int,
-                 dist_scale: float, full_width_dg: float, full_height_dg: float,
-                 contrast_range: float, figure_width_dg: float, figure_height_dg: float, figure_ecc_dg: float,
-                 patch_size_dg: float
-                 ):
+    def __init__(
+            self,
+            spatial_freq: float, vlum: float, diameter_dg: float, diameter: int,
+            dist_scale: float, full_width_dg: float, full_height_dg: float,
+            contrast_range: float, figure_width_dg: float, figure_height_dg: float, figure_ecc_dg: float,
+            patch_size_dg: float
+    ):
 
         figure_half_diag_dg = euclidian_dist_R2((0.5 * figure_width_dg, 0.5 * figure_height_dg))
         stim_half_diag_dg = euclidian_dist_R2((0.5 * full_width_dg, 0.5 * full_height_dg))
@@ -154,7 +155,7 @@ class GaborLuminanceStimulus:
         self._patch_start = tuple()
         self.stimulus_patch = self._select_stimulus_patch(figure_center, patch_size)
 
-    def plot_stimulus(self, stimulus, filename):
+    def plot_stimulus(self, stimulus: np.ndarray[(int, int), float], filename: str) -> None:
         """
         Plots the binary heatmap of a given stimulus.
 
@@ -162,7 +163,7 @@ class GaborLuminanceStimulus:
         :type filename: str
 
         :param stimulus: a luminance matrix to plot.
-        :type stimulus: list[list[float]]
+        :type stimulus: np.ndarray[(int, int), float]
 
         :rtype: None
         """
@@ -223,9 +224,9 @@ class GaborLuminanceStimulus:
         grating = 0.5 * (np.multiply(grating, mask) + 1)
         return grating
 
-    def _get_figure_coords(self,
-                           figure_width: int, figure_height: int, figure_ecc: float) \
-            -> tuple[tuple[int, int], tuple[int, int], tuple[float, float]]:
+    def _get_figure_coords(
+            self, figure_width: int, figure_height: int, figure_ecc: float
+    ) -> tuple[tuple[int, int], tuple[int, int], tuple[float, float]]:
         """
         Determines the location of the figure within the stimulus.
 
@@ -261,10 +262,11 @@ class GaborLuminanceStimulus:
         ])
         return figure_start, figure_end, figure_center
 
-    def _get_full_stimulus(self,
-                           grating: np.ndarray[(int, int), float], diameter: int, contrast_range: float,
-                           dist_scale: float, figure_start: tuple[int, int], figure_end: tuple[int, int]) \
-            -> np.ndarray[(int, int), float]:
+    def _get_full_stimulus(
+            self,
+            grating: np.ndarray[(int, int), float], diameter: int, contrast_range: float,
+            dist_scale: float, figure_start: tuple[int, int], figure_end: tuple[int, int]
+    ) -> np.ndarray[(int, int), float]:
         """
         Generates the whole stimulus.
 
@@ -344,9 +346,9 @@ class GaborLuminanceStimulus:
 
         return stimulus
 
-    def _is_annulus_in_figure(self,
-                              annulus_corners: list[tuple[int, int]],
-                              figure_start: tuple[int, int], figure_end: tuple[int, int]) -> bool:
+    def _is_annulus_in_figure(
+            self, annulus_corners: list[tuple[int, int]], figure_start: tuple[int, int], figure_end: tuple[int, int]
+    ) -> bool:
         """
         Checks if an annulus belongs to the figure.
 
@@ -370,8 +372,9 @@ class GaborLuminanceStimulus:
                 return True
         return False
 
-    def _select_stimulus_patch(self, figure_center: tuple[float, float], patch_size: int) \
-            -> np.ndarray[(int, int), float]:
+    def _select_stimulus_patch(
+            self, figure_center: tuple[float, float], patch_size: int
+    ) -> np.ndarray[(int, int), float]:
         """
         Selects a patch of the stimulus.
 

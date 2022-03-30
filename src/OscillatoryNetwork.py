@@ -267,11 +267,11 @@ class OscillatoryNetwork:
             postsyn_slice = neur_slice(postsyn_type, self._nr_neurons[NeuronTypes.E], self._nr_neurons[NeuronTypes.I])
 
             # conductance calculation between neurons (synapse)
-            conductances = CONDUCTANCE_DENSITY[(presyn_type, postsyn_type)] * new_gatings[presyn_slice]
+            conductances = SYNAPTIC_CONDUCTANCE[(presyn_type, postsyn_type)] * new_gatings[presyn_slice]
 
             # synaptic current calculation of a postsynaptic neuron
             new_currents[postsyn_slice] += \
-                sum(conductances) * (self._potentials[postsyn_slice] - REVERSAL_POTENTIALS[presyn_type])
+                sum(conductances) * (self._potentials[postsyn_slice] - REVERSAL_POTENTIAL[presyn_type])
 
         return new_currents, new_gatings
 
@@ -289,14 +289,14 @@ class OscillatoryNetwork:
             GAUSSIAN_INPUT[NeuronTypes.I] * np.random.randn(self._nr_neurons[NeuronTypes.I])
         )
 
-    def _create_main_input_stimulus(self) -> np.ndarray[int, float]:
+    def _create_main_input_stimulus(self) -> list[float]:
         """
         Parses external input stimulus. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.
 
         Creates initial :math:`I_{stim}`.
 
         :return: input stimulus.
-        :rtype: numpy.ndarray[int, float]
+        :rtype: list[float]
         """
 
         # TODO:: implement the real strategy

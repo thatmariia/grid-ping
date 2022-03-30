@@ -56,27 +56,28 @@ GAUSSIAN_INPUT = {
 
 """Synaptic constants"""
 
-# TODO
+# rise time
 SYNAPTIC_RISE = {
     NeuronTypes.E: 1,
-    NeuronTypes.I: 1,
+    NeuronTypes.I: 2,
 }
 
-# TODO
+# decay time
 SYNAPTIC_DECAY = {
-    NeuronTypes.E: 1,
-    NeuronTypes.I: 1,
+    NeuronTypes.E: 2.4,
+    NeuronTypes.I: 20,
 }
 
-# TODO
-CONDUCTANCE_DENSITY = {
-    (NeuronTypes.E, NeuronTypes.E): 1,
-    (NeuronTypes.E, NeuronTypes.I): 1,
-    (NeuronTypes.I, NeuronTypes.E): 1,
-    (NeuronTypes.I, NeuronTypes.I): 1
+# synaptic conductance density
+SYNAPTIC_CONDUCTANCE = {
+    (NeuronTypes.E, NeuronTypes.E): 0.6,
+    (NeuronTypes.E, NeuronTypes.I): 0.06,
+    (NeuronTypes.I, NeuronTypes.E): 0.8,
+    (NeuronTypes.I, NeuronTypes.I): 0.5
 }
 
-REVERSAL_POTENTIALS = {
+# reversal (equilibrium) potentials
+REVERSAL_POTENTIAL = {
     NeuronTypes.E: -80,
     NeuronTypes.I: 0
 }

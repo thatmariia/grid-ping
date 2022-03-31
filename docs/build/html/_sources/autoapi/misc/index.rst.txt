@@ -16,18 +16,19 @@ Functions
    misc.plot_binary_heatmap
    misc.neur_slice
    misc.neur_type
+   misc.multiply_point
    misc.add_points
    misc.point_ceil
-   misc.euclidian_dist_R2
+   misc.euclidian_dist
 
 
 
-.. py:function:: plot_binary_heatmap(im: list[list[float]], path: str) -> None
+.. py:function:: plot_binary_heatmap(im: numpy.ndarray[(int, int), float], path: str) -> None
 
    Plots a heatmap with the binary color scheme
 
    :param im: matrix to plot
-   :type im: list[list[float]]
+   :type im: numpy.ndarray[(int, int), float]
 
    :param path: path for saving the resulting plot
    :type path: str
@@ -54,7 +55,7 @@ Functions
 
 .. py:function:: neur_type(id: int, nr_ex: int) -> src.NeuronTypes.NeuronTypes
 
-   Returns the type of the neuron at a particular ID.
+   By design, we put excitatory neurons in lists before inhibitory. Returns the type of the neuron at a particular ID.
 
    :param id: the ID of the neuron.
    :type id: int
@@ -66,15 +67,29 @@ Functions
    :rtype: NeuronTypes
 
 
-.. py:function:: add_points(points: tuple, coeffs=None) -> tuple
+.. py:function:: multiply_point(point: tuple[float, Ellipsis], coef: float) -> tuple[float, Ellipsis]
+
+   Multiples each value in a given tuple by a coefficient.
+
+   :param point: the point to multiply.
+   :type point: tuple[float, ...]
+
+   :param coef: the coefficient to multiply the points by.
+   :type coef: float
+
+   :return: the tuple, where each element is multiplied by the coefficient.
+   :rtype: tuple[float]
+
+
+.. py:function:: add_points(points: list[tuple[float, Ellipsis]], coefs=None) -> tuple[float, Ellipsis]
 
    Adds values in tuples (for adding coordinates).
 
    :param points: list of tuples to add together.
-   :type points: list[tuple]
+   :type points: list[tuple[float, ...]]
 
-   :param coeffs: coefficients before the tuples (all 1's by default).
-   :type coeffs: list[float]
+   :param coefs: coefficients before the tuples (all 1's by default).
+   :type coefs: list[float]
 
    :raises:
        AssertionError: if the number of tuples and coefficients are not equal.
@@ -82,23 +97,23 @@ Functions
        AssertionError: if the number of values is not equal in all tuples.
 
    :return: the sum of tuples.
-   :rtype: tuple
+   :rtype: tuple[float, ...]
 
 
-.. py:function:: point_ceil(p: tuple) -> tuple
+.. py:function:: point_ceil(p: tuple[float, Ellipsis]) -> tuple[int, Ellipsis]
 
    Computes the ceiling of a tuple.
 
    :param p: a tuple.
-   :type p: tuple
+   :type p: tuple[float, ...]
 
    :return: tuple of ceilings of all values in the given tuple.
-   :rtype: tuple
+   :rtype: tuple[int, ...]
 
 
-.. py:function:: euclidian_dist_R2(p1: tuple[float, float], p2=(0, 0)) -> float
+.. py:function:: euclidian_dist(p1: tuple[float, float], p2=(0, 0)) -> float
 
-   Calculates the Eaclidian distance between two 2D points.
+   Calculates the Euclidian distance between two points.
 
    :param p1: coordinates of point_pix 1.
    :type p1: tuple[float, float]

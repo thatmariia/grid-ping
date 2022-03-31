@@ -108,24 +108,13 @@ Classes
 
       Plots the binary heatmap of a given stimulus.
 
-      :param filename: name of the file for the plot (exluding extension)
+      :param filename: name of the file for the plot (excluding extension).
       :type filename: str
 
       :param stimulus: a luminance matrix to plot.
       :type stimulus: np.ndarray[(int, int), float]
 
       :rtype: None
-
-
-   .. py:method:: _eccentricity_in_patch(self, point: tuple[int, int]) -> float
-
-      Calculates eccentricity at the given point in degrees.
-
-      :param point: coordinates of the point within a patch.
-      :type point: tuple[int, int]
-
-      :return: eccentricity in degrees.
-      :rtype: float
 
 
    .. py:method:: _get_grating(self, spatial_freq: float, diameter_dg: float, diameter: int) -> numpy.ndarray[(int, int), float]

@@ -89,7 +89,7 @@ Classes
    :type _nr_circuits: int
 
    :ivar current: list of currents produced by respective circuits in the stimulus.
-   :type current: list[float]
+   :type current: numpy.ndarray[int, float]
 
    .. py:method:: _assign_circuits(self) -> list[src.StimulusCircuit.StimulusCircuit]
 
@@ -99,7 +99,7 @@ Classes
       :rtype: list[StimulusCircuit]
 
 
-   .. py:method:: _get_input_current(self, circuits: list[src.StimulusCircuit.StimulusCircuit], slope: float, intercept: float, min_diam_rf: float) -> list[float]
+   .. py:method:: _get_input_current(self, circuits: list[src.StimulusCircuit.StimulusCircuit], slope: float, intercept: float, min_diam_rf: float) -> numpy.ndarray[int, float]
 
       Performs all the necessary steps to transform luminance to current.
 
@@ -116,7 +116,7 @@ Classes
       :type min_diam_rf: float
 
       :return: list containing currents created by each circuit.
-      :rtype: list[float]
+      :rtype: numpy.ndarray[int, float]
 
 
    .. py:method:: _get_weight(self, center: tuple[float, float], pixel: tuple[int, int], eccentricity: float, slope: float, intercept: float, min_diam_rf: float) -> float
@@ -142,6 +142,17 @@ Classes
       :type min_diam_rf: float
 
       :return: weight of a pixel with respect to a circuit.
+      :rtype: float
+
+
+   .. py:method:: _eccentricity_in_patch(self, point: tuple[float, float]) -> float
+
+      Calculates eccentricity at the given point within the patch.
+
+      :param point: coordinates of the point within the patch.
+      :type point: tuple[float, float]
+
+      :return: eccentricity in degrees.
       :rtype: float
 
 

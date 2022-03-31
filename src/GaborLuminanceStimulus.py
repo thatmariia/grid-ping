@@ -6,6 +6,7 @@ import numpy as np
 from math import pi, ceil
 from tqdm import tqdm
 from itertools import product
+import sys
 
 
 class GaborLuminanceStimulus:
@@ -104,8 +105,8 @@ class GaborLuminanceStimulus:
             patch_size_dg: float
     ):
 
-        figure_half_diag_dg = euclidian_dist_R2((0.5 * figure_width_dg, 0.5 * figure_height_dg))
-        stim_half_diag_dg = euclidian_dist_R2((0.5 * full_width_dg, 0.5 * full_height_dg))
+        figure_half_diag_dg = euclidian_dist((0.5 * figure_width_dg, 0.5 * figure_height_dg))
+        stim_half_diag_dg = euclidian_dist((0.5 * full_width_dg, 0.5 * full_height_dg))
 
         assert spatial_freq > 0, \
             "Spatial frequency must be greater than 0."
@@ -159,7 +160,7 @@ class GaborLuminanceStimulus:
         """
         Plots the binary heatmap of a given stimulus.
 
-        :param filename: name of the file for the plot (exluding extension)
+        :param filename: name of the file for the plot (excluding extension).
         :type filename: str
 
         :param stimulus: a luminance matrix to plot.
@@ -169,30 +170,10 @@ class GaborLuminanceStimulus:
         """
 
         path = f"../plots/{filename}.png"
-        print("Plotting started...")
+        print("Plotting started...", end="")
         plot_binary_heatmap(im=stimulus, path=path)
-        print(f"Plotting ended, result: {path[3:]} \n")
-
-    def _eccentricity_in_patch(self, point: tuple[int, int]) -> float:
-        """
-        Calculates eccentricity at the given point in degrees.
-
-        :param point: coordinates of the point within a patch.
-        :type point: tuple[int, int]
-
-        :return: eccentricity in degrees.
-        :rtype: float
-        """
-
-        point_in_stimulus = add_points([
-            self._patch_start,
-            point
-        ])
-        ecc_in_stimulus = euclidian_dist_R2(
-            point_in_stimulus,
-            (self._full_height / 2, self._full_width / 2)
-        )
-        return ecc_in_stimulus / self._atopix
+        print(end="\r", flush=True)
+        print(f"Plotting ended, result: {path[3:]}")
 
     def _get_grating(self, spatial_freq: float, diameter_dg: float, diameter: int) -> np.ndarray[(int, int), float]:
         """
@@ -243,10 +224,18 @@ class GaborLuminanceStimulus:
         :rtype: tuple[tuple[int, int], tuple[int, int], tuple[float, float]]
         """
 
-        angle = np.random.uniform(
-            np.arcsin(figure_height / (2 * figure_ecc)),
-            pi / 2 - np.arcsin(figure_width / (2 * figure_ecc))
-        )
+        dheight = self._full_height - figure_height
+        dwidth = self._full_width - figure_width
+
+        angle_max = np.arccos(0.5 * dheight / figure_ecc) if (figure_ecc > 0.5 * dheight) \
+            else np.arcsin(0.5 * figure_width / figure_ecc)
+        angle_max = pi / 2 - angle_max
+
+        angle_min = np.arccos(0.5 * dwidth / figure_ecc) if (figure_ecc > 0.5 * dwidth) \
+            else np.arcsin(0.5 * figure_height / figure_ecc)
+
+        angle = np.random.uniform( angle_min, angle_max)
+
         figure_center = add_points([
             (self._full_height / 2, self._full_width / 2),
             (figure_ecc * np.sin(angle), figure_ecc * np.cos(angle))
@@ -260,6 +249,7 @@ class GaborLuminanceStimulus:
             figure_start,
             (figure_height, figure_width)
         ])
+
         return figure_start, figure_end, figure_center
 
     def _get_full_stimulus(
@@ -341,8 +331,9 @@ class GaborLuminanceStimulus:
                 cut_amount
             ], [1, -1])
 
-            stimulus[annulus_start[0]:annulus_cutoff[0], annulus_start[1]:annulus_cutoff[1]] = \
-                modified_grating[:grating_cutoff[0], :grating_cutoff[1]]
+            if all(i >= 0 for i in grating_cutoff):
+                stimulus[annulus_start[0]:annulus_cutoff[0], annulus_start[1]:annulus_cutoff[1]] = \
+                    modified_grating[:grating_cutoff[0], :grating_cutoff[1]]
 
         return stimulus
 

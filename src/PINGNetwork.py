@@ -5,8 +5,8 @@ class PINGNetwork:
     """
     Class containing locational information about a single PING network oscillator.
 
-    :param location: 2D coordinates of this oscillator within the grid.
-    :type location: tuple[int]
+    :param location: coordinates of this oscillator within the grid.
+    :type location: tuple[int, int]
 
     :param excit_ids: id's of excitatory neurons located in this oscillator.
     :type excit_ids: list[int]
@@ -14,14 +14,14 @@ class PINGNetwork:
     :param inhibit_ids: id's of inhibitory neurons located in this oscillator.
     :type inhibit_ids: list[int]
 
-    :ivar location: 2D coordinates of this oscillator within the grid.
-    :type location: tuple[int]
+    :ivar location: coordinates of this oscillator within the grid.
+    :type location: tuple[int, int]
 
     :ivar ids: A dictionary with id's of neurons of both types in this oscillator.
     :type ids: dict[NeuronTypes, list[int]]
     """
 
-    def __init__(self, location, excit_ids, inhibit_ids):
+    def __init__(self, location: tuple[int, int], excit_ids: list[int], inhibit_ids: list[int]):
         self.location = location
         self.ids = {
             NeuronTypes.E: excit_ids,

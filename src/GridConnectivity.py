@@ -225,7 +225,7 @@ class GridConnectivity:
                 # computing the distance between the found PING networks
                 # (which = the distance between neurons in those PING networks)
                 # FIXME:: assuming unit distance for now
-                dist[id1][id2] = euclidian_dist_R2(
+                dist[id1][id2] = euclidian_dist(
                     p1=(ping_network1.location[0], ping_network1.location[1]),
                     p2=(ping_network2.location[0], ping_network2.location[1])
                 )

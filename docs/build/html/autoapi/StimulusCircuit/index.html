@@ -221,19 +221,22 @@
 </table></div>
 <dl class="py class">
 <dt class="sig sig-object py" id="StimulusCircuit.StimulusCircuit">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">StimulusCircuit.</span></span><span class="sig-name descname"><span class="pre">StimulusCircuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#StimulusCircuit.StimulusCircuit" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">StimulusCircuit.</span></span><span class="sig-name descname"><span class="pre">StimulusCircuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atopix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#StimulusCircuit.StimulusCircuit" title="Permalink to this definition">#</a></dt>
 <dd><p>Class containing information about a single _stimulus patch circuit.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>center</strong> (<em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em>) – coordinates of the center of the circuit within the _stimulus patch.</p></li>
-<li><p><strong>pixels</strong> (<em>list</em><em>[</em><em>tuple</em><em>(</em><em>int</em><em>, </em><em>int</em><em>)</em><em>]</em>) – list of pixel coordinates that belong to the circuit.</p></li>
+<li><p><strong>pixels</strong> (<em>list</em><em>[</em><em>tuple</em><em>(</em><em>float</em><em>, </em><em>float</em><em>)</em><em>]</em>) – list of pixel coordinates that belong to the circuit.</p></li>
+<li><p><strong>atopix</strong> (<em>float</em>) – conversion coefficient between pixels and visual degrees.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>center</strong> – coordinates of the center of the circuit within the _stimulus patch.</p></li>
-<li><p><strong>pixels</strong> – list of pixel coordinates that belong to the circuit.</p></li>
+<li><p><strong>center</strong> – coordinates of the center of the circuit within the stimulus patch (in pixels).</p></li>
+<li><p><strong>pixels</strong> – list of coordinates that belong to the circuit (in pixels).</p></li>
+<li><p><strong>center</strong> – coordinates of the center of the circuit within the stimulus patch (in degrees).</p></li>
+<li><p><strong>pixels</strong> – list of pixel coordinates that belong to the circuit (in degrees).</p></li>
 </ul>
 </dd>
 </dl>

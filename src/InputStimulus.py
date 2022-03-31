@@ -5,6 +5,7 @@ import numpy as np
 from math import sqrt, exp
 from itertools import product
 from statistics import mean
+from tqdm import tqdm
 
 
 class InputStimulus(GaborLuminanceStimulus):
@@ -77,7 +78,7 @@ class InputStimulus(GaborLuminanceStimulus):
     :type _nr_circuits: int
 
     :ivar current: list of currents produced by respective circuits in the stimulus.
-    :type current: list[float]
+    :type current: numpy.ndarray[int, float]
     """
 
     def __init__(
@@ -143,7 +144,8 @@ class InputStimulus(GaborLuminanceStimulus):
 
                 circuit = StimulusCircuit(
                     center=center,
-                    pixels=pixels
+                    pixels=pixels,
+                    atopix=self._atopix
                 )
                 circuits.append(circuit)
 
@@ -151,7 +153,7 @@ class InputStimulus(GaborLuminanceStimulus):
 
     def _get_input_current(
             self, circuits: list[StimulusCircuit], slope: float, intercept: float, min_diam_rf: float
-    ) -> list[float]:
+    ) -> np.ndarray[int, float]:
         """
         Performs all the necessary steps to transform luminance to current.
 
@@ -168,7 +170,7 @@ class InputStimulus(GaborLuminanceStimulus):
         :type min_diam_rf: float
 
         :return: list containing currents created by each circuit.
-        :rtype: list[float]
+        :rtype: numpy.ndarray[int, float]
         """
 
         local_contrasts = self._compute_local_contrasts(circuits, slope, intercept, min_diam_rf)
@@ -209,7 +211,28 @@ class InputStimulus(GaborLuminanceStimulus):
 
         diam_rf = max(slope * eccentricity + intercept, min_diam_rf)
         std = diam_rf / 4.0
-        return exp(-euclidian_dist_R2(pixel, center) / (2 * std ** 2))
+        return exp(-euclidian_dist(pixel, center) / (2 * std ** 2))
+
+    def _eccentricity_in_patch(self, point: tuple[float, float]) -> float:
+        """
+        Calculates eccentricity at the given point within the patch.
+
+        :param point: coordinates of the point within the patch.
+        :type point: tuple[float, float]
+
+        :return: eccentricity in degrees.
+        :rtype: float
+        """
+
+        point_in_stimulus = add_points([
+            point,
+            (self._patch_start[0] / self._atopix, self._patch_start[1] / self._atopix)
+        ])
+        ecc = euclidian_dist(
+            (0.5 * self._full_height / self._atopix, 0.5 * self._full_width / self._atopix),
+            point_in_stimulus
+        )
+        return ecc
 
     def _compute_local_contrasts(
             self, circuits: list[StimulusCircuit], slope: float, intercept: float, min_diam_rf: float
@@ -233,25 +256,32 @@ class InputStimulus(GaborLuminanceStimulus):
         :rtype: list[float]
         """
 
-        mean_luminance = mean(np.array(self.stimulus_patch).flatten())
+        mean_luminance = mean(np.array(self.stimulus).flatten())
         local_contrasts = []
 
-        for circuit in circuits:
-            eccentricity = self._eccentricity_in_patch(point=circuit.center)
+        for curr_circuit in (pbar := tqdm(circuits)):
+            pbar.set_description("Local contrast computation")
 
+            eccentricity = self._eccentricity_in_patch(point=curr_circuit.center_dg)
             num = 0
             denum = 0
-            for pix in circuit.pixels:
-                weight = self._get_weight(
-                    center=circuit.center,
-                    pixel=pix,
-                    eccentricity=eccentricity,
-                    slope=slope,
-                    intercept=intercept,
-                    min_diam_rf=min_diam_rf
-                )
-                num += weight * (self.stimulus_patch[pix[0]][pix[1]] - mean_luminance) ** 2 / mean_luminance
-                denum += weight
+
+            for circuit in circuits:
+                for i in range(len(circuit.pixels)):
+                    pix = circuit.pixels[i]
+                    pix_dg = circuit.pixels_dg[i]
+
+                    weight = self._get_weight(
+                        center=curr_circuit.center_dg,
+                        pixel=pix_dg,
+                        eccentricity=eccentricity,
+                        slope=slope,
+                        intercept=intercept,
+                        min_diam_rf=min_diam_rf
+                    )
+
+                    num += weight * (self.stimulus_patch[pix[0]][pix[1]] - mean_luminance) ** 2 / mean_luminance
+                    denum += weight
 
             local_contrast = sqrt(num / denum)
             local_contrasts.append(local_contrast)

@@ -221,19 +221,19 @@
 </table></div>
 <dl class="py class">
 <dt class="sig sig-object py" id="PINGNetwork.PINGNetwork">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PINGNetwork.</span></span><span class="sig-name descname"><span class="pre">PINGNetwork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">excit_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inhibit_ids</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PINGNetwork.PINGNetwork" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PINGNetwork.</span></span><span class="sig-name descname"><span class="pre">PINGNetwork</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">excit_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inhibit_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PINGNetwork.PINGNetwork" title="Permalink to this definition">#</a></dt>
 <dd><p>Class containing locational information about a single PING network oscillator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>location</strong> (<em>tuple</em><em>[</em><em>int</em><em>]</em>) – 2D coordinates of this oscillator within the grid.</p></li>
+<li><p><strong>location</strong> (<em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – coordinates of this oscillator within the grid.</p></li>
 <li><p><strong>excit_ids</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – id’s of excitatory neurons located in this oscillator.</p></li>
 <li><p><strong>inhibit_ids</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – id’s of inhibitory neurons located in this oscillator.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>location</strong> – 2D coordinates of this oscillator within the grid.</p></li>
+<li><p><strong>location</strong> – coordinates of this oscillator within the grid.</p></li>
 <li><p><strong>ids</strong> – A dictionary with id’s of neurons of both types in this oscillator.</p></li>
 </ul>
 </dd>

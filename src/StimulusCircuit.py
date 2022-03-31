@@ -1,3 +1,4 @@
+from misc import *
 
 class StimulusCircuit:
     """
@@ -9,13 +10,25 @@ class StimulusCircuit:
     :param pixels: list of pixel coordinates that belong to the circuit.
     :type pixels: list[tuple(int, int)]
 
-    :ivar center: coordinates of the center of the circuit within the _stimulus patch.
+    :param atopix: conversion coefficient between pixels and visual degrees.
+    :type atopix: float
+
+    :ivar center: coordinates of the center of the circuit within the stimulus patch (in pixels).
     :type center: tuple(float, float)
 
-    :ivar pixels: list of pixel coordinates that belong to the circuit.
+    :ivar pixels: list of coordinates that belong to the circuit (in pixels).
     :type pixels: list[tuple(int, int)]
+
+    :ivar center: coordinates of the center of the circuit within the stimulus patch (in degrees).
+    :type center: tuple(float, float)
+
+    :ivar pixels: list of pixel coordinates that belong to the circuit (in degrees).
+    :type pixels: list[tuple(float, float)]
     """
 
-    def __init__(self, center, pixels):
+    def __init__(self, center: tuple[float, float], pixels: list[tuple[int, int]], atopix: float):
         self.center = center
         self.pixels = pixels
+
+        self.center_dg = multiply_point(center, 1 / atopix)
+        self.pixels_dg = [multiply_point(p, 1 / atopix) for p in pixels]

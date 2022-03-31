@@ -13,6 +13,8 @@ Class diagram
     class StimulusCircuit {
       +center
       +pixels
+      +center_dg
+      +pixels_dg
     }
 
     class InputStimulus {
@@ -22,21 +24,21 @@ Class diagram
       -_assign_circuits()
       -_get_input_current()
       -_get_weight()
+      -_eccentricity_in_patch()
       -_compute_local_contrasts()
       -_compute_frequencies()
       -_compute_current()
     }
 
     abstract class GaborLuminanceStimulus {
-      -_atopix
-      -_full_width
-      -_full_height
-      -_patch_start
+      #_atopix
+      #_full_width
+      #_full_height
+      #_patch_start
       +stimulus
       +stimulus_patch
 
       +plot_stimulus()
-      #_eccentricity_in_patch()
       -_get_grating()
       -_get_figure_coords()
       -_get_full_stimulus()

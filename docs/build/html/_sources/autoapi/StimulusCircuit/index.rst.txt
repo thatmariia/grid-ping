@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: StimulusCircuit(center, pixels)
+.. py:class:: StimulusCircuit(center: tuple[float, float], pixels: list[tuple[int, int]], atopix: float)
 
    Class containing information about a single _stimulus patch circuit.
 
@@ -27,10 +27,19 @@ Classes
    :param pixels: list of pixel coordinates that belong to the circuit.
    :type pixels: list[tuple(int, int)]
 
-   :ivar center: coordinates of the center of the circuit within the _stimulus patch.
+   :param atopix: conversion coefficient between pixels and visual degrees.
+   :type atopix: float
+
+   :ivar center: coordinates of the center of the circuit within the stimulus patch (in pixels).
    :type center: tuple(float, float)
 
-   :ivar pixels: list of pixel coordinates that belong to the circuit.
+   :ivar pixels: list of coordinates that belong to the circuit (in pixels).
    :type pixels: list[tuple(int, int)]
+
+   :ivar center: coordinates of the center of the circuit within the stimulus patch (in degrees).
+   :type center: tuple(float, float)
+
+   :ivar pixels: list of pixel coordinates that belong to the circuit (in degrees).
+   :type pixels: list[tuple(float, float)]
 
 

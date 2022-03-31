@@ -7,12 +7,12 @@ import matplotlib.pyplot as plt
 from math import ceil
 
 
-def plot_binary_heatmap(im: list[list[float]], path: str) -> None:
+def plot_binary_heatmap(im: np.ndarray[(int, int), float], path: str) -> None:
     """
     Plots a heatmap with the binary color scheme
 
     :param im: matrix to plot
-    :type im: list[list[float]]
+    :type im: numpy.ndarray[(int, int), float]
 
     :param path: path for saving the resulting plot
     :type path: str
@@ -20,21 +20,22 @@ def plot_binary_heatmap(im: list[list[float]], path: str) -> None:
     :rtype: None
     """
 
-    fig, ax = plt.subplots(figsize=(300, 300))
+    fig, ax = plt.subplots(figsize=(30, 30))
+
     sns.heatmap(
         im,
         annot=False,
         vmin=0,
         vmax=1,
-        cmap="binary",
-        square=True,
+        cmap="gist_gray",
         cbar=False,
+        square=True,
         xticklabels=False,
         yticklabels=False,
         ax=ax
     )
-    # TODO:: remove white outer borders
-    fig.savefig(path)
+
+    fig.savefig(path, bbox_inches='tight', pad_inches=0)
 
 
 def neur_slice(neuron_type: NeuronTypes, nr_ex: int, nr_in: int) -> slice:
@@ -61,7 +62,7 @@ def neur_slice(neuron_type: NeuronTypes, nr_ex: int, nr_in: int) -> slice:
 
 def neur_type(id: int, nr_ex: int) -> NeuronTypes:
     """
-    Returns the type of the neuron at a particular ID.
+    By design, we put excitatory neurons in lists before inhibitory. Returns the type of the neuron at a particular ID.
 
     :param id: the ID of the neuron.
     :type id: int
@@ -78,15 +79,32 @@ def neur_type(id: int, nr_ex: int) -> NeuronTypes:
     return NeuronTypes.I
 
 
-def add_points(points: tuple, coeffs=None) -> tuple:
+def multiply_point(point: tuple[float, ...], coef: float) -> tuple[float, ...]:
+    """
+    Multiples each value in a given tuple by a coefficient.
+
+    :param point: the point to multiply.
+    :type point: tuple[float, ...]
+
+    :param coef: the coefficient to multiply the points by.
+    :type coef: float
+
+    :return: the tuple, where each element is multiplied by the coefficient.
+    :rtype: tuple[float]
+    """
+
+    return tuple(p * coef for p in point)
+
+
+def add_points(points: list[tuple[float, ...]], coefs=None) -> tuple[float, ...]:
     """
     Adds values in tuples (for adding coordinates).
 
     :param points: list of tuples to add together.
-    :type points: list[tuple]
+    :type points: list[tuple[float, ...]]
 
-    :param coeffs: coefficients before the tuples (all 1's by default).
-    :type coeffs: list[float]
+    :param coefs: coefficients before the tuples (all 1's by default).
+    :type coefs: list[float]
 
     :raises:
         AssertionError: if the number of tuples and coefficients are not equal.
@@ -94,40 +112,40 @@ def add_points(points: tuple, coeffs=None) -> tuple:
         AssertionError: if the number of values is not equal in all tuples.
 
     :return: the sum of tuples.
-    :rtype: tuple
+    :rtype: tuple[float, ...]
     """
 
-    if coeffs != None:
-        assert len(points) == len(coeffs), "Number of points and number of coefficients must be equal."
+    if coefs != None:
+        assert len(points) == len(coefs), "Number of points and number of coefficients must be equal."
     else:
-        coeffs = [1] * len(points)
+        coefs = [1] * len(points)
 
     tuple_length = len(points[0])
     assert all(len(p) == tuple_length for p in points), "Number of values should be equal for all points."
 
     points_t = [
-        tuple([points[p][i] * coeffs[p] for p in range(len(points))]) for i in range(tuple_length)
+        tuple([points[p][i] * coefs[p] for p in range(len(points))]) for i in range(tuple_length)
     ]
     return tuple(map(sum, points_t))
 
 
-def point_ceil(p: tuple) -> tuple:
+def point_ceil(p: tuple[float, ...]) -> tuple[int, ...]:
     """
     Computes the ceiling of a tuple.
 
     :param p: a tuple.
-    :type p: tuple
+    :type p: tuple[float, ...]
 
     :return: tuple of ceilings of all values in the given tuple.
-    :rtype: tuple
+    :rtype: tuple[int, ...]
     """
 
     return tuple(ceil(i) for i in p)
 
 
-def euclidian_dist_R2(p1: tuple[float, float], p2=(0, 0)) -> float:
+def euclidian_dist(p1: tuple[float, float], p2=(0, 0)) -> float:
     """
-    Calculates the Eaclidian distance between two 2D points.
+    Calculates the Euclidian distance between two points.
 
     :param p1: coordinates of point_pix 1.
     :type p1: tuple[float, float]
@@ -142,4 +160,3 @@ def euclidian_dist_R2(p1: tuple[float, float], p2=(0, 0)) -> float:
     return math.sqrt(
         pow(p1[0] - p2[0], 2) + pow(p1[1] - p2[1], 2)
     )
-

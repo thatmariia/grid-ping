@@ -281,7 +281,7 @@ grid.</p>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="InputStimulus.InputStimulus._get_input_current">
-<span class="sig-name descname"><span class="pre">_get_input_current</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">circuits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">src.StimulusCircuit.StimulusCircuit</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intercept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_diam_rf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#InputStimulus.InputStimulus._get_input_current" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_get_input_current</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">circuits</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">src.StimulusCircuit.StimulusCircuit</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intercept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_diam_rf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#InputStimulus.InputStimulus._get_input_current" title="Permalink to this definition">#</a></dt>
 <dd><p>Performs all the necessary steps to transform luminance to current.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -296,7 +296,7 @@ grid.</p>
 <dd class="field-even"><p>list containing currents created by each circuit.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list[float]</p>
+<dd class="field-odd"><p>numpy.ndarray[int, float]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -317,6 +317,22 @@ grid.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>weight of a pixel with respect to a circuit.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="InputStimulus.InputStimulus._eccentricity_in_patch">
+<span class="sig-name descname"><span class="pre">_eccentricity_in_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#InputStimulus.InputStimulus._eccentricity_in_patch" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates eccentricity at the given point within the patch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>point</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – coordinates of the point within the patch.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>eccentricity in degrees.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>float</p>
@@ -427,6 +443,7 @@ grid.</p>
 <li><a class="reference internal" href="#InputStimulus.InputStimulus._assign_circuits">_assign_circuits</a></li>
 <li><a class="reference internal" href="#InputStimulus.InputStimulus._get_input_current">_get_input_current</a></li>
 <li><a class="reference internal" href="#InputStimulus.InputStimulus._get_weight">_get_weight</a></li>
+<li><a class="reference internal" href="#InputStimulus.InputStimulus._eccentricity_in_patch">_eccentricity_in_patch</a></li>
 <li><a class="reference internal" href="#InputStimulus.InputStimulus._compute_local_contrasts">_compute_local_contrasts</a></li>
 <li><a class="reference internal" href="#InputStimulus.InputStimulus._compute_frequencies">_compute_frequencies</a></li>
 <li><a class="reference internal" href="#InputStimulus.InputStimulus._compute_current">_compute_current</a></li>

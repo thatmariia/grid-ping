@@ -215,6 +215,8 @@ enum NeuronTypes {
 class StimulusCircuit {
   +center
   +pixels
+  +center_dg
+  +pixels_dg
 }
 
 class InputStimulus {
@@ -224,21 +226,21 @@ class InputStimulus {
   -_assign_circuits()
   -_get_input_current()
   -_get_weight()
+  -_eccentricity_in_patch()
   -_compute_local_contrasts()
   -_compute_frequencies()
   -_compute_current()
 }
 
 abstract class GaborLuminanceStimulus {
-  -_atopix
-  -_full_width
-  -_full_height
-  -_patch_start
+  #_atopix
+  #_full_width
+  #_full_height
+  #_patch_start
   +stimulus
   +stimulus_patch
 
   +plot_stimulus()
-  #_eccentricity_in_patch()
   -_get_grating()
   -_get_figure_coords()
   -_get_full_stimulus()
@@ -295,7 +297,7 @@ NeuronTypes .. OscillatoryNetwork
 NeuronTypes .. GridConnectivity
 
 
-@enduml' src="_images/plantuml-fc4eab00b9b8fdd569540fa2c246e3a3bcdb40ee.png"/>
+@enduml' src="_images/plantuml-89907756eff17617ea85dd437a3eaaa604b76c2f.png"/>
 </p>
 </section>
 

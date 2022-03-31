@@ -214,34 +214,37 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#misc.plot_binary_heatmap" title="misc.plot_binary_heatmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_binary_heatmap</span></code></a>(im: list[list[float]], path: str) → None</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#misc.plot_binary_heatmap" title="misc.plot_binary_heatmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_binary_heatmap</span></code></a>(im: numpy.ndarray[(int, int), float], path: str) → None</p></td>
 <td><p>Plots a heatmap with the binary color scheme</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#misc.neur_slice" title="misc.neur_slice"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neur_slice</span></code></a>(neuron_type: src.NeuronTypes.NeuronTypes, nr_ex: int, nr_in: int) → slice</p></td>
 <td><p>By design, we put excitatory neurons in lists before inhibitory. This function returns relevant slices.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#misc.neur_type" title="misc.neur_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">neur_type</span></code></a>(id: int, nr_ex: int) → src.NeuronTypes.NeuronTypes</p></td>
-<td><p>Returns the type of the neuron at a particular ID.</p></td>
+<td><p>By design, we put excitatory neurons in lists before inhibitory. Returns the type of the neuron at a particular ID.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#misc.add_points" title="misc.add_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_points</span></code></a>(points: tuple, coeffs=None) → tuple</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#misc.multiply_point" title="misc.multiply_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multiply_point</span></code></a>(point: tuple[float, Ellipsis], coef: float) → tuple[float, Ellipsis]</p></td>
+<td><p>Multiples each value in a given tuple by a coefficient.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#misc.add_points" title="misc.add_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_points</span></code></a>(points: list[tuple[float, Ellipsis]], coefs=None) → tuple[float, Ellipsis]</p></td>
 <td><p>Adds values in tuples (for adding coordinates).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#misc.point_ceil" title="misc.point_ceil"><code class="xref py py-obj docutils literal notranslate"><span class="pre">point_ceil</span></code></a>(p: tuple) → tuple</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#misc.point_ceil" title="misc.point_ceil"><code class="xref py py-obj docutils literal notranslate"><span class="pre">point_ceil</span></code></a>(p: tuple[float, Ellipsis]) → tuple[int, Ellipsis]</p></td>
 <td><p>Computes the ceiling of a tuple.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#misc.euclidian_dist_R2" title="misc.euclidian_dist_R2"><code class="xref py py-obj docutils literal notranslate"><span class="pre">euclidian_dist_R2</span></code></a>(p1: tuple[float, float], p2=(0, 0)) → float</p></td>
-<td><p>Calculates the Eaclidian distance between two 2D points.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#misc.euclidian_dist" title="misc.euclidian_dist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">euclidian_dist</span></code></a>(p1: tuple[float, float], p2=(0, 0)) → float</p></td>
+<td><p>Calculates the Euclidian distance between two points.</p></td>
 </tr>
 </tbody>
 </table></div>
 <dl class="py function">
 <dt class="sig sig-object py" id="misc.plot_binary_heatmap">
-<span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">plot_binary_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#misc.plot_binary_heatmap" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">plot_binary_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#misc.plot_binary_heatmap" title="Permalink to this definition">#</a></dt>
 <dd><p>Plots a heatmap with the binary color scheme</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>im</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>float</em><em>]</em><em>]</em>) – matrix to plot</p></li>
+<li><p><strong>im</strong> (<em>numpy.ndarray</em><em>[</em><em>(</em><em>int</em><em>, </em><em>int</em><em>)</em><em>, </em><em>float</em><em>]</em>) – matrix to plot</p></li>
 <li><p><strong>path</strong> (<em>str</em>) – path for saving the resulting plot</p></li>
 </ul>
 </dd>
@@ -273,7 +276,7 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="misc.neur_type">
 <span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">neur_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_ex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">src.NeuronTypes.NeuronTypes</span></span></span><a class="headerlink" href="#misc.neur_type" title="Permalink to this definition">#</a></dt>
-<dd><p>Returns the type of the neuron at a particular ID.</p>
+<dd><p>By design, we put excitatory neurons in lists before inhibitory. Returns the type of the neuron at a particular ID.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -290,14 +293,33 @@
 </dl>
 </dd></dl>
 <dl class="py function">
+<dt class="sig sig-object py" id="misc.multiply_point">
+<span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">multiply_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coef</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#misc.multiply_point" title="Permalink to this definition">#</a></dt>
+<dd><p>Multiples each value in a given tuple by a coefficient.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>...</em><em>]</em>) – the point to multiply.</p></li>
+<li><p><strong>coef</strong> (<em>float</em>) – the coefficient to multiply the points by.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the tuple, where each element is multiplied by the coefficient.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple[float]</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py function">
 <dt class="sig sig-object py" id="misc.add_points">
-<span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">add_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coeffs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#misc.add_points" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">add_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coefs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#misc.add_points" title="Permalink to this definition">#</a></dt>
 <dd><p>Adds values in tuples (for adding coordinates).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>points</strong> (<em>list</em><em>[</em><em>tuple</em><em>]</em>) – list of tuples to add together.</p></li>
-<li><p><strong>coeffs</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – coefficients before the tuples (all 1’s by default).</p></li>
+<li><p><strong>points</strong> (<em>list</em><em>[</em><em>tuple</em><em>[</em><em>float</em><em>, </em><em>...</em><em>]</em><em>]</em>) – list of tuples to add together.</p></li>
+<li><p><strong>coefs</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – coefficients before the tuples (all 1’s by default).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
@@ -310,30 +332,30 @@
 <dd class="field-even"><p>the sum of tuples.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>tuple</p>
+<dd class="field-odd"><p>tuple[float, …]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="misc.point_ceil">
-<span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">point_ceil</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#misc.point_ceil" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">point_ceil</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#misc.point_ceil" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the ceiling of a tuple.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>p</strong> (<em>tuple</em>) – a tuple.</p>
+<dd class="field-odd"><p><strong>p</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>...</em><em>]</em>) – a tuple.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>tuple of ceilings of all values in the given tuple.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>tuple</p>
+<dd class="field-odd"><p>tuple[int, …]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py function">
-<dt class="sig sig-object py" id="misc.euclidian_dist_R2">
-<span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">euclidian_dist_R2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#misc.euclidian_dist_R2" title="Permalink to this definition">#</a></dt>
-<dd><p>Calculates the Eaclidian distance between two 2D points.</p>
+<dt class="sig sig-object py" id="misc.euclidian_dist">
+<span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">euclidian_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0)</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#misc.euclidian_dist" title="Permalink to this definition">#</a></dt>
+<dd><p>Calculates the Euclidian distance between two points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -398,9 +420,10 @@
 <li><a class="reference internal" href="#misc.plot_binary_heatmap">plot_binary_heatmap</a></li>
 <li><a class="reference internal" href="#misc.neur_slice">neur_slice</a></li>
 <li><a class="reference internal" href="#misc.neur_type">neur_type</a></li>
+<li><a class="reference internal" href="#misc.multiply_point">multiply_point</a></li>
 <li><a class="reference internal" href="#misc.add_points">add_points</a></li>
 <li><a class="reference internal" href="#misc.point_ceil">point_ceil</a></li>
-<li><a class="reference internal" href="#misc.euclidian_dist_R2">euclidian_dist_R2</a></li>
+<li><a class="reference internal" href="#misc.euclidian_dist">euclidian_dist</a></li>
 </ul>
 </li>
 </ul>

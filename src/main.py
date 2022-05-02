@@ -24,8 +24,10 @@ if __name__ == "__main__":
         intercept=-0.25,
         min_diam_rf=1
     )
-    stimulus.plot_stimulus(stimulus.stimulus, filename="full-stimulus")
-    stimulus.plot_stimulus(stimulus.stimulus_patch, filename="stimulus-patch")
+    #stimulus.plot_stimulus(stimulus.stimulus, filename="full-stimulus")
+    #stimulus.plot_stimulus(stimulus.stimulus_patch, filename="stimulus-patch")
+
+    stimulus_locations = stimulus.extract_stimulus_location()
 
     oscillatory_network = OscillatoryNetwork(
         stimulus=stimulus.current,

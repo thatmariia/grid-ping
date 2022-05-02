@@ -1,5 +1,6 @@
 from src.GaborLuminanceStimulus import *
 from src.StimulusCircuit import *
+from src.StimulusLocations import *
 
 import numpy as np
 from math import sqrt, exp
@@ -77,6 +78,9 @@ class InputStimulus(GaborLuminanceStimulus):
     :ivar _nr_circuits: number of circuits created by applying the lattice.
     :type _nr_circuits: int
 
+    :ivar _circuits: list of info about circuits.
+    :type _circuits: list[StimulusCircuit]
+
     :ivar current: list of currents produced by respective circuits in the stimulus.
     :type current: numpy.ndarray[int, float]
     """
@@ -108,8 +112,8 @@ class InputStimulus(GaborLuminanceStimulus):
 
         self._nr_circuits = nr_circuits
 
-        circuits: list[StimulusCircuit] = self._assign_circuits()
-        self.current = self._get_input_current(circuits, slope, intercept, min_diam_rf)
+        self._circuits: list[StimulusCircuit] = self._assign_circuits()
+        self.current = self._get_input_current(slope, intercept, min_diam_rf)
 
     def _assign_circuits(self) -> list[StimulusCircuit]:
         """
@@ -119,7 +123,6 @@ class InputStimulus(GaborLuminanceStimulus):
         :rtype: list[StimulusCircuit]
         """
 
-        # assuming that circuits contain full pixels
         lattice_edges = np.linspace(
             0,
             np.shape(self.stimulus_patch)[0],
@@ -145,20 +148,47 @@ class InputStimulus(GaborLuminanceStimulus):
                 circuit = StimulusCircuit(
                     center=center,
                     pixels=pixels,
-                    atopix=self._atopix
+                    atopix=self._atopix,
+                    grid_index=(i, j)
                 )
                 circuits.append(circuit)
 
         return circuits
 
+    def extract_stimulus_location(self) -> StimulusLocations:
+        """
+        Computes the location info of the stimulus patch and, thus, the PING networks, namely eccentricity and
+        angle of each PING network.
+
+        :return: location info of the network.
+        :rtype: StimulusLocations
+        """
+
+        grid_side = int(math.sqrt(len(self._circuits)))
+        eccentricities = np.zeros((grid_side, grid_side))
+        angles = np.zeros((grid_side, grid_side))
+
+        for circuit in (pbar := tqdm(self._circuits)):
+            pbar.set_description("Coordinates conversion")
+
+            i = circuit.grid_index[0]
+            j = circuit.grid_index[1]
+
+            eccentricities[i, j] = self._eccentricity_in_patch(point=circuit.center_dg)
+            angles[i, j] = self._angle_in_patch(point=circuit.center_dg)
+
+        stim_locations = StimulusLocations(
+            eccentricities=eccentricities,
+            angles=angles
+        )
+
+        return stim_locations
+
     def _get_input_current(
-            self, circuits: list[StimulusCircuit], slope: float, intercept: float, min_diam_rf: float
+            self, slope: float, intercept: float, min_diam_rf: float
     ) -> np.ndarray[int, float]:
         """
         Performs all the necessary steps to transform luminance to current.
-
-        :param circuits: list of all circuits of the stimulus patch created by applying a lattice.
-        :type circuits: list[StimulusCircuit]
 
         :param slope: slope of the receptive field size.
         :type slope: float
@@ -173,7 +203,7 @@ class InputStimulus(GaborLuminanceStimulus):
         :rtype: numpy.ndarray[int, float]
         """
 
-        local_contrasts = self._compute_local_contrasts(circuits, slope, intercept, min_diam_rf)
+        local_contrasts = self._compute_local_contrasts(slope, intercept, min_diam_rf)
         frequencies = self._compute_frequencies(local_contrasts)
         current = self._compute_current(frequencies)
 
@@ -213,35 +243,71 @@ class InputStimulus(GaborLuminanceStimulus):
         std = diam_rf / 4.0
         return exp(-euclidian_dist(pixel, center) / (2 * std ** 2))
 
+    def _point_in_stimulus(self, point: tuple[float, float]) -> tuple[float, ...]:
+        """
+        Calculates the coordinate of a given point in the patch within the stimulus.
+
+        :param point: coordinates of the point within the patch in degrees.
+        :type point: tuple[float, float]
+
+        :return: coordinates of the point within the stimulus in degrees.
+        :rtype: tuple[float, float]
+        """
+
+        return add_points([
+            point,
+            (self._patch_start[0] / self._atopix, self._patch_start[1] / self._atopix)
+        ])
+
+    def _angle_in_patch(self, point: tuple[float, float]) -> float:
+        """
+        Calculates the angle between the horizontal axis and the line passing through the center of the stimulus and a
+        given point within the patch.
+
+        :param point: coordinates of the point within the patch in degrees.
+        :type point: tuple[float, float]
+
+        :return: angle of the point.
+        :rtype: float
+        """
+
+        point_in_stimulus = self._point_in_stimulus(point=point)
+        stimulus_center_dg = (0.5 * self._full_height / self._atopix, 0.5 * self._full_width / self._atopix)
+
+        new_point = add_points([
+            point_in_stimulus, stimulus_center_dg
+        ], [1, -1])
+
+        angle = np.arctan(
+            new_point[1] / new_point[0]
+        )
+        return angle
+
     def _eccentricity_in_patch(self, point: tuple[float, float]) -> float:
         """
         Calculates eccentricity at the given point within the patch.
 
-        :param point: coordinates of the point within the patch.
+        :param point: coordinates of the point within the patch in degrees.
         :type point: tuple[float, float]
 
         :return: eccentricity in degrees.
         :rtype: float
         """
 
-        point_in_stimulus = add_points([
-            point,
-            (self._patch_start[0] / self._atopix, self._patch_start[1] / self._atopix)
-        ])
+        point_in_stimulus = self._point_in_stimulus(point=point)
+        stimulus_center_dg = (0.5 * self._full_height / self._atopix, 0.5 * self._full_width / self._atopix)
+
         ecc = euclidian_dist(
-            (0.5 * self._full_height / self._atopix, 0.5 * self._full_width / self._atopix),
+            stimulus_center_dg,
             point_in_stimulus
         )
         return ecc
 
     def _compute_local_contrasts(
-            self, circuits: list[StimulusCircuit], slope: float, intercept: float, min_diam_rf: float
+            self, slope: float, intercept: float, min_diam_rf: float
     ) -> list[float]:
         """
         Computes local contrasts for each circuit.
-
-        :param circuits: list of all circuits of the stimulus patch created by applying a lattice.
-        :type circuits: list[StimulusCircuit]
 
         :param slope: slope of the receptive field size.
         :type slope: float
@@ -259,14 +325,14 @@ class InputStimulus(GaborLuminanceStimulus):
         mean_luminance = mean(np.array(self.stimulus).flatten())
         local_contrasts = []
 
-        for curr_circuit in (pbar := tqdm(circuits)):
+        for curr_circuit in (pbar := tqdm(self._circuits)):
             pbar.set_description("Local contrast computation")
 
             eccentricity = self._eccentricity_in_patch(point=curr_circuit.center_dg)
             num = 0
             denum = 0
 
-            for circuit in circuits:
+            for circuit in self._circuits:
                 for i in range(len(circuit.pixels)):
                     pix = circuit.pixels[i]
                     pix_dg = circuit.pixels_dg[i]

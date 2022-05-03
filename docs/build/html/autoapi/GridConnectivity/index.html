@@ -163,6 +163,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">constants</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../StimulusCircuit/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusCircuit</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../InputStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">InputStimulus</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../StimulusLocations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusLocations</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../GaborLuminanceStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaborLuminanceStimulus</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../main/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../OscillatoryNetwork/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OscillatoryNetwork</span></code></a></li>
@@ -221,7 +222,7 @@
 </table></div>
 <dl class="py class">
 <dt class="sig sig-object py" id="GridConnectivity.GridConnectivity">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">GridConnectivity.</span></span><span class="sig-name descname"><span class="pre">GridConnectivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nr_neurons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_ping_networks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridConnectivity.GridConnectivity" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">GridConnectivity.</span></span><span class="sig-name descname"><span class="pre">GridConnectivity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nr_neurons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_ping_networks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cortical_coords</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridConnectivity.GridConnectivity" title="Permalink to this definition">#</a></dt>
 <dd><p>This class constructs the connectivity matrix for the oscillatory network.</p>
 <p>The interaction strength of lateral connections is represented by a matrix <span class="math notranslate nohighlight">\(K\)</span> of pairwise coupling weights
 defined by an exponential function decaying by the Euclidean distance between the PING networks they belong to:</p>
@@ -241,6 +242,7 @@ of coupling weights.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>nr_neurons</strong> (<em>dict</em><em>[</em><a class="reference internal" href="../NeuronTypes/index.html#NeuronTypes.NeuronTypes" title="NeuronTypes.NeuronTypes"><em>NeuronTypes</em></a><em>, </em><em>int</em><em>]</em>) – number of neurons of each type in the network.</p></li>
 <li><p><strong>nr_ping_networks</strong> (<em>int</em>) – number of PING networks in the network.</p></li>
+<li><p><strong>cortical_coords</strong> (<em>list</em><em>[</em><em>list</em><em>[</em><em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em><em>]</em><em>]</em>) – locations of PING networks in the visual cortex.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
@@ -262,6 +264,7 @@ grid.</p>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>_nr_neurons</strong> – number of neurons of each type in the network.</p></li>
 <li><p><strong>_nr_ping_networks</strong> – number of ping_networks in the network.</p></li>
+<li><p><strong>_cortical_coords</strong> – locations of PING networks in the visual cortex.</p></li>
 <li><p><strong>coupling_weights</strong> – Matrix of all coupling weights.</p></li>
 </ul>
 </dd>

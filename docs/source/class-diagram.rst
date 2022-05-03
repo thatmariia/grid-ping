@@ -15,15 +15,26 @@ Class diagram
       +pixels
       +center_dg
       +pixels_dg
+      +grid_index
+    }
+
+    class StimulusLocations {
+      +cortical_coords
+
+      -_compute_coordinates()
     }
 
     class InputStimulus {
       -_nr_circuits
+      -_circuits
       +current
 
       -_assign_circuits()
+      +extract_stimulus_location()
       -_get_input_current()
       -_get_weight()
+      -_point_in_stimulus()
+      -_angle_in_patch()
       -_eccentricity_in_patch()
       -_compute_local_contrasts()
       -_compute_frequencies()
@@ -75,6 +86,7 @@ Class diagram
     class GridConnectivity {
       -_nr_neurons
       -_nr_ping_networks
+      -_cortical_coords
       +coupling_weights
 
       -_assign_ping_networks()
@@ -83,11 +95,14 @@ Class diagram
       -_compute_type_coupling_weights()
     }
 
-    OscillatoryNetwork "1" *-- "1" GridConnectivity
+    OscillatoryNetwork "1" *- "1" GridConnectivity
     GridConnectivity "1" *-- "1..*" PINGNetwork
 
     GaborLuminanceStimulus <|-- InputStimulus
     InputStimulus "1" *-- "1..*" StimulusCircuit
+    InputStimulus "1" *- "1" StimulusLocations
+
+    StimulusLocations "1" <-- "1" GridConnectivity
 
     OscillatoryNetwork "1" o-- "1" InputStimulus
 

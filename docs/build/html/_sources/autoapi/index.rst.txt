@@ -11,6 +11,7 @@ This page contains auto-generated API reference documentation [#f1]_.
    /autoapi/constants/index
    /autoapi/StimulusCircuit/index
    /autoapi/InputStimulus/index
+   /autoapi/StimulusLocations/index
    /autoapi/GaborLuminanceStimulus/index
    /autoapi/main/index
    /autoapi/OscillatoryNetwork/index

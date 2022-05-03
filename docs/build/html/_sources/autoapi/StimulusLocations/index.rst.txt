@@ -1,0 +1,48 @@
+:py:mod:`StimulusLocations`
+===========================
+
+.. py:module:: StimulusLocations
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   StimulusLocations.StimulusLocations
+
+
+
+
+.. py:class:: StimulusLocations(eccentricities: numpy.ndarray[int, float], angles: numpy.ndarray[int, float])
+
+   Contains information about PING locations in the visual cortex.
+
+   :param eccentricities: eccentricities of the points in visual degrees.
+   :type eccentricities: numpy.ndarray[int, float]
+
+   :param angles: angles of the points relative to horizontal axis.
+   :type angles: numpy.ndarray[int, float]
+
+   :ivar cortical_coords: coordinates of the points in the visual cortex.
+   :type cortical_coords: list[list[tuple[float, float]]]
+
+   .. py:method:: _compute_coordinates(self, eccentricities: numpy.ndarray[int, float], angles: numpy.ndarray[int, float]) -> list[list[tuple[float, float]]]
+
+      Computes the cortical coordinates given eccentricities and angles in the visual field.
+      TODO:: add refs
+
+      :param eccentricities: eccentricities of the points in visual degrees.
+      :type eccentricities: numpy.ndarray[int, float]
+
+      :param angles: angles of the points relative to horizontal axis.
+      :type angles: numpy.ndarray[int, float]
+
+      :return: coordinates of the points in the visual cortex.
+      :rtype: list[list[tuple[float, float]]]
+
+
+

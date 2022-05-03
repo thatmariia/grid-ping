@@ -134,12 +134,15 @@ class OscillatoryNetwork:
         )
         self._recovery = np.multiply(self._izhi_beta, self._potentials)
 
-    def run_simulation(self, simulation_time: int, dt: float) -> None:
+    def run_simulation(self, cortical_coords: list[list[tuple[float, float]]], simulation_time: int, dt: float) -> None:
         """
         Runs the simulation.
 
         Parts of the code in this function and its components are rewritten from MATLAB code listed in supplementary
         materials of :cite:p:`Lowet2015`.
+
+        :param cortical_coords: locations of PING networks in the visual cortex.
+        :type cortical_coords: list[list[tuple[float, float]]]
 
         :param simulation_time: number of epochs to run the simulation.
         :type simulation_time: int
@@ -159,7 +162,8 @@ class OscillatoryNetwork:
 
         coupling_weights = GridConnectivity(
             nr_neurons=self._nr_neurons,
-            nr_ping_networks=self._nr_ping_networks
+            nr_ping_networks=self._nr_ping_networks,
+            cortical_coords=cortical_coords
         ).coupling_weights
 
         for t in (pbar := tqdm(range(simulation_time))):

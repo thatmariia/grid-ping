@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: GridConnectivity(nr_neurons, nr_ping_networks)
+.. py:class:: GridConnectivity(nr_neurons, nr_ping_networks, cortical_coords)
 
    This class constructs the connectivity matrix for the oscillatory network.
 
@@ -45,6 +45,9 @@ Classes
    :param nr_ping_networks: number of PING networks in the network.
    :type nr_ping_networks: int
 
+   :param cortical_coords: locations of PING networks in the visual cortex.
+   :type cortical_coords: list[list[tuple[float, float]]]
+
 
    :raises:
        AssertionError: If the number of PING networks is smaller than 1.
@@ -64,6 +67,9 @@ Classes
 
    :ivar _nr_ping_networks: number of ping_networks in the network.
    :type _nr_ping_networks: int
+
+   :ivar _cortical_coords: locations of PING networks in the visual cortex.
+   :type _cortical_coords: list[list[tuple[float, float]]]
 
    :ivar coupling_weights: Matrix of all coupling weights.
    :type coupling_weights: np.ndarray[(int, int), float]

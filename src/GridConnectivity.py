@@ -34,6 +34,9 @@ class GridConnectivity:
     :param nr_ping_networks: number of PING networks in the network.
     :type nr_ping_networks: int
 
+    :param cortical_coords: locations of PING networks in the visual cortex.
+    :type cortical_coords: list[list[tuple[float, float]]]
+
 
     :raises:
         AssertionError: If the number of PING networks is smaller than 1.
@@ -54,11 +57,14 @@ class GridConnectivity:
     :ivar _nr_ping_networks: number of ping_networks in the network.
     :type _nr_ping_networks: int
 
+    :ivar _cortical_coords: locations of PING networks in the visual cortex.
+    :type _cortical_coords: list[list[tuple[float, float]]]
+
     :ivar coupling_weights: Matrix of all coupling weights.
     :type coupling_weights: np.ndarray[(int, int), float]
     """
 
-    def __init__(self, nr_neurons, nr_ping_networks):
+    def __init__(self, nr_neurons, nr_ping_networks, cortical_coords):
 
         assert nr_ping_networks >= 1, \
             "Number of PING networks cannot be smaller than 1."
@@ -74,6 +80,7 @@ class GridConnectivity:
 
         self._nr_neurons = nr_neurons
         self._nr_ping_networks = nr_ping_networks
+        self._cortical_coords = cortical_coords
 
         ping_networks, neuron_ping_map = self._assign_ping_networks()
 
@@ -224,11 +231,12 @@ class GridConnectivity:
 
                 # computing the distance between the found PING networks
                 # (which = the distance between neurons in those PING networks)
-                # FIXME:: assuming unit distance for now
+                cortical_coord1 = self._cortical_coords[ping_network1.location[0]][ping_network1.location[1]]
+                cortical_coord2 = self._cortical_coords[ping_network2.location[0]][ping_network2.location[1]]
                 dist[id1][id2] = euclidian_dist(
-                    p1=(ping_network1.location[0], ping_network1.location[1]),
-                    p2=(ping_network2.location[0], ping_network2.location[1])
+                    cortical_coord1, cortical_coord2
                 )
+
         return dist
 
     def _compute_type_coupling_weights(

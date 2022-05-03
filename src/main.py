@@ -36,6 +36,7 @@ if __name__ == "__main__":
         nr_ping_networks=nr_circuits
     )
     oscillatory_network.run_simulation(
+        cortical_coords=stimulus_locations.cortical_coords,
         simulation_time=8,
         dt=1
     )

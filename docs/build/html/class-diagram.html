@@ -163,6 +163,7 @@
 <li class="toctree-l2"><a class="reference internal" href="autoapi/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">constants</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/StimulusCircuit/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusCircuit</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/InputStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">InputStimulus</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/StimulusLocations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusLocations</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/GaborLuminanceStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaborLuminanceStimulus</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/main/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/OscillatoryNetwork/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OscillatoryNetwork</span></code></a></li>
@@ -217,15 +218,26 @@ class StimulusCircuit {
   +pixels
   +center_dg
   +pixels_dg
+  +grid_index
+}
+
+class StimulusLocations {
+  +cortical_coords
+
+  -_compute_coordinates()
 }
 
 class InputStimulus {
   -_nr_circuits
+  -_circuits
   +current
 
   -_assign_circuits()
+  +extract_stimulus_location()
   -_get_input_current()
   -_get_weight()
+  -_point_in_stimulus()
+  -_angle_in_patch()
   -_eccentricity_in_patch()
   -_compute_local_contrasts()
   -_compute_frequencies()
@@ -277,6 +289,7 @@ class PINGNetwork {
 class GridConnectivity {
   -_nr_neurons
   -_nr_ping_networks
+  -_cortical_coords
   +coupling_weights
 
   -_assign_ping_networks()
@@ -285,11 +298,14 @@ class GridConnectivity {
   -_compute_type_coupling_weights()
 }
 
-OscillatoryNetwork "1" *-- "1" GridConnectivity
+OscillatoryNetwork "1" *- "1" GridConnectivity
 GridConnectivity "1" *-- "1..*" PINGNetwork
 
 GaborLuminanceStimulus &lt;|-- InputStimulus
 InputStimulus "1" *-- "1..*" StimulusCircuit
+InputStimulus "1" *- "1" StimulusLocations
+
+StimulusLocations "1" &lt;-- "1" GridConnectivity
 
 OscillatoryNetwork "1" o-- "1" InputStimulus
 
@@ -297,7 +313,7 @@ NeuronTypes .. OscillatoryNetwork
 NeuronTypes .. GridConnectivity
 
 
-@enduml' src="_images/plantuml-89907756eff17617ea85dd437a3eaaa604b76c2f.png"/>
+@enduml' src="_images/plantuml-d35b6cf30f53224b96a93f7f4ed4f26839f3c683.png"/>
 </p>
 </section>
 

@@ -88,6 +88,9 @@ Classes
    :ivar _nr_circuits: number of circuits created by applying the lattice.
    :type _nr_circuits: int
 
+   :ivar _circuits: list of info about circuits.
+   :type _circuits: list[StimulusCircuit]
+
    :ivar current: list of currents produced by respective circuits in the stimulus.
    :type current: numpy.ndarray[int, float]
 
@@ -99,12 +102,18 @@ Classes
       :rtype: list[StimulusCircuit]
 
 
-   .. py:method:: _get_input_current(self, circuits: list[src.StimulusCircuit.StimulusCircuit], slope: float, intercept: float, min_diam_rf: float) -> numpy.ndarray[int, float]
+   .. py:method:: extract_stimulus_location(self) -> src.StimulusLocations.StimulusLocations
+
+      Computes the location info of the stimulus patch and, thus, the PING networks, namely eccentricity and
+      angle of each PING network.
+
+      :return: location info of the network.
+      :rtype: StimulusLocations
+
+
+   .. py:method:: _get_input_current(self, slope: float, intercept: float, min_diam_rf: float) -> numpy.ndarray[int, float]
 
       Performs all the necessary steps to transform luminance to current.
-
-      :param circuits: list of all circuits of the stimulus patch created by applying a lattice.
-      :type circuits: list[StimulusCircuit]
 
       :param slope: slope of the receptive field size.
       :type slope: float
@@ -145,23 +154,43 @@ Classes
       :rtype: float
 
 
+   .. py:method:: _point_in_stimulus(self, point: tuple[float, float]) -> tuple[float, Ellipsis]
+
+      Calculates the coordinate of a given point in the patch within the stimulus.
+
+      :param point: coordinates of the point within the patch in degrees.
+      :type point: tuple[float, float]
+
+      :return: coordinates of the point within the stimulus in degrees.
+      :rtype: tuple[float, float]
+
+
+   .. py:method:: _angle_in_patch(self, point: tuple[float, float]) -> float
+
+      Calculates the angle between the horizontal axis and the line passing through the center of the stimulus and a
+      given point within the patch.
+
+      :param point: coordinates of the point within the patch in degrees.
+      :type point: tuple[float, float]
+
+      :return: angle of the point.
+      :rtype: float
+
+
    .. py:method:: _eccentricity_in_patch(self, point: tuple[float, float]) -> float
 
       Calculates eccentricity at the given point within the patch.
 
-      :param point: coordinates of the point within the patch.
+      :param point: coordinates of the point within the patch in degrees.
       :type point: tuple[float, float]
 
       :return: eccentricity in degrees.
       :rtype: float
 
 
-   .. py:method:: _compute_local_contrasts(self, circuits: list[src.StimulusCircuit.StimulusCircuit], slope: float, intercept: float, min_diam_rf: float) -> list[float]
+   .. py:method:: _compute_local_contrasts(self, slope: float, intercept: float, min_diam_rf: float) -> list[float]
 
       Computes local contrasts for each circuit.
-
-      :param circuits: list of all circuits of the stimulus patch created by applying a lattice.
-      :type circuits: list[StimulusCircuit]
 
       :param slope: slope of the receptive field size.
       :type slope: float

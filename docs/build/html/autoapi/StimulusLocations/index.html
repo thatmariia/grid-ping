@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <meta name="generator" content="sphinx-4.4.0, furo 2022.03.04"/>
-        <title>StimulusCircuit - BEP documentation</title>
+        <title>StimulusLocations - BEP documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=935aa2abcc5c1da4283d1dc201fb1f0add16d23a" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -161,9 +161,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">misc</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../NeuronTypes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">constants</span></code></a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusCircuit</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../StimulusCircuit/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusCircuit</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../InputStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">InputStimulus</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="../StimulusLocations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusLocations</span></code></a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusLocations</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../GaborLuminanceStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaborLuminanceStimulus</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../main/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../OscillatoryNetwork/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OscillatoryNetwork</span></code></a></li>
@@ -203,8 +203,8 @@
           </label>
         </div>
         <article role="main">
-          <section id="module-StimulusCircuit">
-<span id="stimuluscircuit"></span><h1><a class="reference internal" href="#module-StimulusCircuit" title="StimulusCircuit"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusCircuit</span></code></a><a class="headerlink" href="#module-StimulusCircuit" title="Permalink to this headline">#</a></h1>
+          <section id="module-StimulusLocations">
+<span id="stimuluslocations"></span><h1><a class="reference internal" href="#module-StimulusLocations" title="StimulusLocations"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusLocations</span></code></a><a class="headerlink" href="#module-StimulusLocations" title="Permalink to this headline">#</a></h1>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">#</a></h2>
 <section id="classes">
@@ -215,34 +215,46 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#StimulusCircuit.StimulusCircuit" title="StimulusCircuit.StimulusCircuit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StimulusCircuit</span></code></a></p></td>
-<td><p>Class containing information about a single _stimulus patch circuit.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#StimulusLocations.StimulusLocations" title="StimulusLocations.StimulusLocations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StimulusLocations</span></code></a></p></td>
+<td><p>Contains information about PING locations in the visual cortex.</p></td>
 </tr>
 </tbody>
 </table></div>
 <dl class="py class">
-<dt class="sig sig-object py" id="StimulusCircuit.StimulusCircuit">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">StimulusCircuit.</span></span><span class="sig-name descname"><span class="pre">StimulusCircuit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixels</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atopix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#StimulusCircuit.StimulusCircuit" title="Permalink to this definition">#</a></dt>
-<dd><p>Class containing information about a single _stimulus patch circuit.</p>
+<dt class="sig sig-object py" id="StimulusLocations.StimulusLocations">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">StimulusLocations.</span></span><span class="sig-name descname"><span class="pre">StimulusLocations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eccentricities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#StimulusLocations.StimulusLocations" title="Permalink to this definition">#</a></dt>
+<dd><p>Contains information about PING locations in the visual cortex.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>center</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – coordinates of the center of the circuit within the _stimulus patch.</p></li>
-<li><p><strong>pixels</strong> (<em>list</em><em>[</em><em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em><em>]</em>) – list of pixel coordinates that belong to the circuit.</p></li>
-<li><p><strong>atopix</strong> (<em>float</em>) – conversion coefficient between pixels and visual degrees.</p></li>
-<li><p><strong>grid_index</strong> (<em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – index of the circuit in the grid.</p></li>
+<li><p><strong>eccentricities</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – eccentricities of the points in visual degrees.</p></li>
+<li><p><strong>angles</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – angles of the points relative to horizontal axis.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>center</strong> – coordinates of the center of the circuit within the stimulus patch (in pixels).</p></li>
-<li><p><strong>pixels</strong> – list of coordinates that belong to the circuit (in pixels).</p></li>
-<li><p><strong>center</strong> – coordinates of the center of the circuit within the stimulus patch (in degrees).</p></li>
-<li><p><strong>pixels</strong> – list of pixel coordinates that belong to the circuit (in degrees).</p></li>
-<li><p><strong>grid_index</strong> – index of the circuit in the grid.</p></li>
-</ul>
+<dd class="field-even"><p><strong>cortical_coords</strong> – coordinates of the points in the visual cortex.</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="StimulusLocations.StimulusLocations._compute_coordinates">
+<span class="sig-name descname"><span class="pre">_compute_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eccentricities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">angles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#StimulusLocations.StimulusLocations._compute_coordinates" title="Permalink to this definition">#</a></dt>
+<dd><p>Computes the cortical coordinates given eccentricities and angles in the visual field.
+TODO:: add refs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>eccentricities</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – eccentricities of the points in visual degrees.</p></li>
+<li><p><strong>angles</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – angles of the points relative to horizontal axis.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>coordinates of the points in the visual cortex.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list[list[tuple[float, float]]]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 </section>
 </section>
@@ -287,10 +299,13 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusCircuit</span></code></a><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusLocations</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
-<li><a class="reference internal" href="#StimulusCircuit.StimulusCircuit">StimulusCircuit</a></li>
+<li><a class="reference internal" href="#StimulusLocations.StimulusLocations">StimulusLocations</a><ul>
+<li><a class="reference internal" href="#StimulusLocations.StimulusLocations._compute_coordinates">_compute_coordinates</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

@@ -1,0 +1,46 @@
+:py:mod:`ContrastToFrequencyConverter`
+======================================
+
+.. py:module:: ContrastToFrequencyConverter
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   ContrastToFrequencyConverter.ContrastToFrequencyConverter
+
+
+
+
+.. py:class:: ContrastToFrequencyConverter
+
+   This class converts the local contrasts stimulus into the frequencies stimulus.
+
+   .. py:method:: convert(self, stimulus_contrast: list[float]) -> numpy.ndarray[int, float]
+
+      Converts the local contrasts stimulus into the frequencies stimulus.
+
+      :param stimulus_contrast: local contrasts stimulus.
+      :type stimulus_contrast: list[float]
+
+      :return: the stimulus converted to frequencies.
+      :rtype: numpy.ndarray[int, float]
+
+
+   .. py:method:: _compute_frequencies(self, stimulus_contrast: list[float]) -> numpy.ndarray[int, float]
+
+      Computes oscillation frequencies of the circuit through local contrasts.
+
+      :param stimulus_contrast: list containing local contrast values for each circuit.
+      :type stimulus_contrast: list[float]
+
+      :return: list containing oscillation frequencies for each circuit.
+      :rtype: numpy.ndarray[int, float]
+
+
+

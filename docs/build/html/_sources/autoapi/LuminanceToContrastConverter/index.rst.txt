@@ -1,0 +1,96 @@
+:py:mod:`LuminanceToContrastConverter`
+======================================
+
+.. py:module:: LuminanceToContrastConverter
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   LuminanceToContrastConverter.LuminanceToContrastConverter
+
+
+
+
+.. py:class:: LuminanceToContrastConverter
+
+   This class converts the luminance stimulus into the local contrasts stimulus.
+
+   .. py:method:: convert(self, slope: float, intercept: float, min_diam_rf: float, patch_geometry: src.PatchGeometry.PatchGeometry, stimulus_luminance: src.GaborLuminanceStimulus.GaborLuminanceStimulus) -> list[float]
+
+      Converts the luminance stimulus into the local contrasts stimulus.
+
+      :param slope: slope of the receptive field size.
+      :type slope: float
+
+      :param intercept: intercept of the receptive field size.
+      :type intercept: float
+
+      :param min_diam_rf: minimal size of the receptive field.
+      :type min_diam_rf: float
+
+      :param patch_geometry: information about the grid layout of the stimulus patch in correspondence with PING networks.
+      :type patch_geometry: PatchGeometry
+
+      :param stimulus_luminance: luminance stimulus container.
+      :type stimulus_luminance: GaborLuminanceStimulus
+
+      :return: the stimulus converted to local contrasts.
+      :rtype: list[float]
+
+
+   .. py:method:: _compute_local_contrasts(self, slope: float, intercept: float, min_diam_rf: float, patch_geometry: src.PatchGeometry.PatchGeometry, stimulus_luminance: src.GaborLuminanceStimulus.GaborLuminanceStimulus) -> list[float]
+
+      Computes local contrasts for each circuit.
+
+      :param patch_geometry: information about the grid layout of the stimulus patch in correspondence with PING networks.
+      :type patch_geometry: PatchGeometry
+
+      :param stimulus_luminance: luminance stimulus container.
+      :type stimulus_luminance: GaborLuminanceStimulus
+
+      :param slope: slope of the receptive field size.
+      :type slope: float
+
+      :param intercept: intercept of the receptive field size.
+      :type intercept: float
+
+      :param min_diam_rf: minimal size of the receptive field.
+      :type min_diam_rf: float
+
+      :return: list containing local contrast values for each circuit.
+      :rtype: list[float]
+
+
+   .. py:method:: _get_weight(self, center: tuple[float, float], pixel: tuple[int, int], eccentricity: float, slope: float, intercept: float, min_diam_rf: float) -> float
+
+      Computes weight of a pixel with respect to a circuit.
+
+      :param center: coordinate of the circuit center.
+      :type center: tuple[float, float]
+
+      :param pixel: coordinate of the pixel.
+      :type pixel: tuple[float, float]
+
+      :param eccentricity: eccentricity of the circuit center.
+      :type eccentricity: float
+
+      :param slope: slope of the receptive field size.
+      :type slope: float
+
+      :param intercept: intercept of the receptive field size.
+      :type intercept: float
+
+      :param min_diam_rf: minimal size of the receptive field.
+      :type min_diam_rf: float
+
+      :return: weight of a pixel with respect to a circuit.
+      :rtype: float
+
+
+

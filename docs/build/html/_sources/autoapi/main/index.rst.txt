@@ -7,7 +7,7 @@
 Module Contents
 ---------------
 
-.. py:data:: nr_circuits
+.. py:data:: nr_ping_networks
    :annotation: = 4
 
    

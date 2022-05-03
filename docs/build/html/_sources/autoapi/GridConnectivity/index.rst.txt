@@ -74,7 +74,7 @@ Classes
    :ivar coupling_weights: Matrix of all coupling weights.
    :type coupling_weights: np.ndarray[(int, int), float]
 
-   .. py:method:: _assign_ping_networks(self) -> tuple[list[src.PINGNetwork.PINGNetwork], dict[src.constants.NeuronTypes, dict[int, int]]]
+   .. py:method:: _assign_ping_networks(self) -> tuple[list[src.PINGNetworkNeurons.PINGNetworkNeurons], dict[src.constants.NeuronTypes, dict[int, int]]]
 
       Creates PING networks, assigns grid locations to them, and adds the same number of neurons of each neuron type
       to them.
@@ -83,17 +83,17 @@ Classes
 
       :return: list of PING networks in the network and a dictionary mapping a neuron to the PING network it belongs
           to.
-      :rtype: tuple[list[PINGNetwork], dict[NeuronTypes, dict[int, int]]]
+      :rtype: tuple[list[PINGNetworkNeurons], dict[NeuronTypes, dict[int, int]]]
 
 
-   .. py:method:: _compute_coupling_weights(self, ping_networks: list[src.PINGNetwork.PINGNetwork], neuron_ping_map: dict[src.constants.NeuronTypes, dict[int, int]]) -> src.misc.np.ndarray[(int, int), float]
+   .. py:method:: _compute_coupling_weights(self, ping_networks: list[src.PINGNetworkNeurons.PINGNetworkNeurons], neuron_ping_map: dict[src.constants.NeuronTypes, dict[int, int]]) -> src.misc.np.ndarray[(int, int), float]
 
       Computes the coupling weights between all neurons.
 
       Essentially, this method computes the full matrix :math:`K` of coupling weights.
 
       :param ping_networks: list of PING networks in the network.
-      :type ping_networks: list[PINGNetwork]
+      :type ping_networks: list[PINGNetworkNeurons]
 
       :param neuron_ping_map: a dictionary mapping a neuron to the PING network it belongs to.
       :type neuron_ping_map: dict[NeuronTypes, dict[int, int]]
@@ -102,7 +102,7 @@ Classes
       :rtype: numpy.ndarray[(int, int), float]
 
 
-   .. py:method:: _get_neurons_dist(self, neuron_type1: src.constants.NeuronTypes, neuron_type2: src.constants.NeuronTypes, nr1: int, nr2: int, ping_networks: list[src.PINGNetwork.PINGNetwork], neuron_ping_map: dict[src.constants.NeuronTypes, dict[int, int]]) -> src.misc.np.ndarray[(int, int), float]
+   .. py:method:: _get_neurons_dist(self, neuron_type1: src.constants.NeuronTypes, neuron_type2: src.constants.NeuronTypes, nr1: int, nr2: int, ping_networks: list[src.PINGNetworkNeurons.PINGNetworkNeurons], neuron_ping_map: dict[src.constants.NeuronTypes, dict[int, int]]) -> src.misc.np.ndarray[(int, int), float]
 
       Computes the matrix of Euclidian distances between two types of neurons.
 
@@ -122,7 +122,7 @@ Classes
       :type nr2: int
 
       :param ping_networks: list of PING networks in the network.
-      :type ping_networks: list[PINGNetwork]
+      :type ping_networks: list[PINGNetworkNeurons]
 
       :param neuron_ping_map: a dictionary mapping a neuron to the PING network it belongs to.
       :type neuron_ping_map: dict[NeuronTypes, dict[int, int]]

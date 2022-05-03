@@ -159,15 +159,22 @@
 <li class="toctree-l1"><a class="reference internal" href="sequence-diagram.html">Sequence diagram</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="autoapi/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">misc</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/GaborLuminanceStimulusFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaborLuminanceStimulusFactory</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/NeuronTypes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/StimulusFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusFactory</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/ContrastToFrequencyConverter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ContrastToFrequencyConverter</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/constants/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">constants</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="autoapi/StimulusCircuit/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusCircuit</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="autoapi/InputStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">InputStimulus</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/PatchGeometryFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PatchGeometryFactory</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/PINGNetworkNeurons/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PINGNetworkNeurons</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/Stimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Stimulus</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/LuminanceToContrastConverter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">LuminanceToContrastConverter</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/StimulusLocations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusLocations</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/GaborLuminanceStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaborLuminanceStimulus</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/PINGNetworkPixels/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PINGNetworkPixels</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/PatchGeometry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PatchGeometry</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/main/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/OscillatoryNetwork/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">OscillatoryNetwork</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="autoapi/PINGNetwork/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PINGNetwork</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/FrequencyToCurrentConverter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">FrequencyToCurrentConverter</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/GridConnectivity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GridConnectivity</span></code></a></li>
 </ul>
 </li>
@@ -206,14 +213,9 @@
           <section id="class-diagram">
 <h1>Class diagram<a class="headerlink" href="#class-diagram" title="Permalink to this headline">#</a></h1>
 <p class="plantuml">
-<img alt='@startuml
+<img alt="@startuml
 
-enum NeuronTypes {
-  excitatory
-  inhibitory
-}
-
-class StimulusCircuit {
+class PINGNetworkPixels {
   +center
   +pixels
   +center_dg
@@ -227,32 +229,63 @@ class StimulusLocations {
   -_compute_coordinates()
 }
 
-class InputStimulus {
-  -_nr_circuits
-  -_circuits
-  +current
+class Stimulus {
+  +stimulus_currents
+  -_patch_geometry
 
-  -_assign_circuits()
   +extract_stimulus_location()
-  -_get_input_current()
-  -_get_weight()
-  -_point_in_stimulus()
-  -_angle_in_patch()
-  -_eccentricity_in_patch()
-  -_compute_local_contrasts()
-  -_compute_frequencies()
-  -_compute_current()
 }
 
-abstract class GaborLuminanceStimulus {
-  #_atopix
-  #_full_width
-  #_full_height
-  #_patch_start
+class StimulusFactory {
+  +create()
+}
+
+class FrequencyToCurrentConverter {
+  +convert()
+  -_some_conversion_functions_TODO()
+}
+
+class ContrastToFrequencyConverter {
+  +convert()
+  -_compute_frequencies()
+}
+
+class LuminanceToContrastConverter {
+  +convert()
+  -_get_weight()
+  -_compute_local_contrasts()
+}
+
+class PatchGeometry {
+  +ping_networks_pixels
+  -_atopix
+  -_patch_start
+  -_stimulus_center
+
+  +angle_in_patch()
+  +eccentricity_in_patch()
+  +point_in_stimulus()
+}
+
+class PatchGeometryFactory {
+  +create()
+  -_assign_circuits()
+}
+
+class GaborLuminanceStimulus {
+  +atopix
   +stimulus
+  +stimulus_center
   +stimulus_patch
+  +patch_start
 
   +plot_stimulus()
+  +plot_patch()
+  -_plot()
+}
+
+class GaborLuminanceStimulusFactory {
+  +create()
   -_get_grating()
   -_get_figure_coords()
   -_get_full_stimulus()
@@ -260,60 +293,18 @@ abstract class GaborLuminanceStimulus {
   -_select_stimulus_patch()
 }
 
-class OscillatoryNetwork {
-  -_nr_neurons
-  -_nr_ping_networks
-  -_stimulus
-  -_currents
-  -_potentials
-  -_recovery
-  -_izhi_alpha
-  -_izhi_beta
-  -_izhi_gamma
-  -_izhi_zeta
+GaborLuminanceStimulus &lt;|.. GaborLuminanceStimulusFactory
+PatchGeometry &lt;|.. PatchGeometryFactory
+GaborLuminanceStimulus *-- StimulusFactory
+PatchGeometry *-- StimulusFactory
+LuminanceToContrastConverter *-- StimulusFactory
+ContrastToFrequencyConverter *-- StimulusFactory
+FrequencyToCurrentConverter *-- StimulusFactory
+Stimulus &lt;|.. StimulusFactory
+StimulusLocations &lt;|.. Stimulus
+PINGNetworkPixels *-- PatchGeometryFactory
 
-  +run_simulation()
-  -_get_change_in_recovery()
-  -_get_change_in_potentials()
-  -_get_change_in_gatings()
-  -_get_synaptic_currents()
-  -_get_thalamic_input()
-  -_create_main_input_stimulus()
-}
-
-class PINGNetwork {
-  +location
-  +ids
-}
-
-class GridConnectivity {
-  -_nr_neurons
-  -_nr_ping_networks
-  -_cortical_coords
-  +coupling_weights
-
-  -_assign_ping_networks()
-  -_compute_coupling_weights()
-  -_get_neurons_dist()
-  -_compute_type_coupling_weights()
-}
-
-OscillatoryNetwork "1" *- "1" GridConnectivity
-GridConnectivity "1" *-- "1..*" PINGNetwork
-
-GaborLuminanceStimulus &lt;|-- InputStimulus
-InputStimulus "1" *-- "1..*" StimulusCircuit
-InputStimulus "1" *- "1" StimulusLocations
-
-StimulusLocations "1" &lt;-- "1" GridConnectivity
-
-OscillatoryNetwork "1" o-- "1" InputStimulus
-
-NeuronTypes .. OscillatoryNetwork
-NeuronTypes .. GridConnectivity
-
-
-@enduml' src="_images/plantuml-d35b6cf30f53224b96a93f7f4ed4f26839f3c683.png"/>
+@enduml" src="_images/plantuml-a2add313f5fadbc9d07a21a3b13bb6498ef5bea8.png"/>
 </p>
 </section>
 

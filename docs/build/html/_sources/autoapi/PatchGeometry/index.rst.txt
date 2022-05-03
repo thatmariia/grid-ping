@@ -1,0 +1,76 @@
+:py:mod:`PatchGeometry`
+=======================
+
+.. py:module:: PatchGeometry
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   PatchGeometry.PatchGeometry
+
+
+
+
+.. py:class:: PatchGeometry(ping_networks_pixels: list[src.PINGNetworkPixels.PINGNetworkPixels], atopix: float, patch_start: tuple[int, int], stimulus_center: tuple[float, float])
+
+   This class contains information about the grid layout of the stimulus patch in correspondence with PING networks.
+
+   :param ping_networks_pixels: list of all PING networks of the stimulus patch created by applying a lattice.
+   :type ping_networks_pixels: list[PINGNetworkPixels]
+
+   :param atopix: conversion coefficient between pixels and visual degrees.
+   :type atopix: float
+
+   :param patch_start: top left coordinate of the patch.
+   :type patch_start: tuple[int, int]
+
+   :param stimulus_center: the center of the full stimulus.
+   :type stimulus_center: tuple[float, float]
+
+
+   :ivar ping_networks_pixels: list of all PING networks of the stimulus patch created by applying a lattice.
+   :ivar _atopix: conversion coefficient between pixels and visual degrees.
+   :ivar _patch_start: top left coordinate of the patch.
+   :ivar _stimulus_center: the center of the full stimulus.
+
+   .. py:method:: angle_in_patch(self, point: tuple[float, float]) -> float
+
+      Calculates the angle between the horizontal axis and the line passing through the center of the stimulus and a
+      given point within the patch.
+
+      :param point: coordinates of the point within the patch in degrees.
+      :type point: tuple[float, float]
+
+      :return: angle of the point.
+      :rtype: float
+
+
+   .. py:method:: eccentricity_in_patch(self, point: tuple[float, float]) -> float
+
+      Calculates eccentricity at the given point within the patch.
+
+      :param point: coordinates of the point within the patch in degrees.
+      :type point: tuple[float, float]
+
+      :return: eccentricity in degrees.
+      :rtype: float
+
+
+   .. py:method:: point_in_stimulus(self, point: tuple[float, float]) -> tuple[float, Ellipsis]
+
+      Calculates the coordinate of a given point in the patch within the stimulus.
+
+      :param point: coordinates of the point within the patch in degrees.
+      :type point: tuple[float, float]
+
+      :return: coordinates of the point within the stimulus in degrees.
+      :rtype: tuple[float, float]
+
+
+

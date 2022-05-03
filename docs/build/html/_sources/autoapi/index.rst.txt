@@ -7,15 +7,22 @@ This page contains auto-generated API reference documentation [#f1]_.
    :titlesonly:
 
    /autoapi/misc/index
+   /autoapi/GaborLuminanceStimulusFactory/index
    /autoapi/NeuronTypes/index
+   /autoapi/StimulusFactory/index
+   /autoapi/ContrastToFrequencyConverter/index
    /autoapi/constants/index
-   /autoapi/StimulusCircuit/index
-   /autoapi/InputStimulus/index
+   /autoapi/PatchGeometryFactory/index
+   /autoapi/PINGNetworkNeurons/index
+   /autoapi/Stimulus/index
+   /autoapi/LuminanceToContrastConverter/index
    /autoapi/StimulusLocations/index
    /autoapi/GaborLuminanceStimulus/index
+   /autoapi/PINGNetworkPixels/index
+   /autoapi/PatchGeometry/index
    /autoapi/main/index
    /autoapi/OscillatoryNetwork/index
-   /autoapi/PINGNetwork/index
+   /autoapi/FrequencyToCurrentConverter/index
    /autoapi/GridConnectivity/index
 
 .. [#f1] Created with `sphinx-autoapi <https://github.com/readthedocs/sphinx-autoapi>`_

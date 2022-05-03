@@ -1,5 +1,5 @@
 from src.GridConnectivity import *
-from src.PINGNetwork import *
+from src.PINGNetworkNeurons import *
 from src.NeuronTypes import *
 from src.constants import *
 
@@ -28,7 +28,7 @@ class TestGridConnectivity:
     def test_assign_ping_networks(self):
         ping_networks1, neuron_ping_map1 = self.connectivity1._assign_ping_networks()
         ping_networks1_expected = [
-            PINGNetwork((0, 0), [0, 1], [0, 1])
+            PINGNetworkNeurons((0, 0), [0, 1], [0, 1])
         ]
         neuron_ping_map1_expected = {
             NeuronTypes.E: {0: 0, 1: 0},
@@ -41,10 +41,10 @@ class TestGridConnectivity:
 
         ping_networks2, neuron_ping_map2 = self.connectivity2._assign_ping_networks()
         ping_networks2_expected = [
-            PINGNetwork((0, 0), [0, 1], [0]),
-            PINGNetwork((0, 1), [2, 3], [1]),
-            PINGNetwork((1, 0), [4, 5], [2]),
-            PINGNetwork((1, 1), [6, 7], [3]),
+            PINGNetworkNeurons((0, 0), [0, 1], [0]),
+            PINGNetworkNeurons((0, 1), [2, 3], [1]),
+            PINGNetworkNeurons((1, 0), [4, 5], [2]),
+            PINGNetworkNeurons((1, 1), [6, 7], [3]),
         ]
         neuron_ping_map2_expected = {
             NeuronTypes.E: {0: 0, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2, 6: 3, 7: 3},

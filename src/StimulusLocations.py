@@ -16,7 +16,7 @@ class StimulusLocations:
     """
 
     def __init__(self, eccentricities: np.ndarray[int, float], angles: np.ndarray[int, float]):
-        self.cortical_coords = self._compute_coordinates(eccentricities, angles)
+        self.cortical_coords: list[list[tuple[float, float]]] = self._compute_coordinates(eccentricities, angles)
 
     def _compute_coordinates(
             self, eccentricities: np.ndarray[int, float], angles: np.ndarray[int, float]

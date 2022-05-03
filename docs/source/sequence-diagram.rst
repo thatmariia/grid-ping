@@ -10,14 +10,14 @@ Sequence diagram
     user -> InputStimulus : <<creates>>
     activate InputStimulus
 
-    InputStimulus -> GaborLuminanceStimulus : super()
-    activate GaborLuminanceStimulus
+    InputStimulus -> GaborLuminanceStimulusOld : super()
+    activate GaborLuminanceStimulusOld
 
-    GaborLuminanceStimulus -> GaborLuminanceStimulus: composes figure and ground
-    GaborLuminanceStimulus -> GaborLuminanceStimulus: creates luminance stimulus
-    GaborLuminanceStimulus -> GaborLuminanceStimulus: selects patch from figure
+    GaborLuminanceStimulusOld -> GaborLuminanceStimulusOld: composes figure and ground
+    GaborLuminanceStimulusOld -> GaborLuminanceStimulusOld: creates luminance stimulus
+    GaborLuminanceStimulusOld -> GaborLuminanceStimulusOld: selects patch from figure
 
-    GaborLuminanceStimulus --> InputStimulus
+    GaborLuminanceStimulusOld --> InputStimulus
 
     InputStimulus -> InputStimulus: creates circuits from luminance stimulus
     InputStimulus -> InputStimulus: converts luminance to local contrast
@@ -26,7 +26,7 @@ Sequence diagram
 
     InputStimulus --> user : initialized stimulus
 
-    deactivate GaborLuminanceStimulus
+    deactivate GaborLuminanceStimulusOld
     deactivate InputStimulus
 
     activate OscillatoryNetwork

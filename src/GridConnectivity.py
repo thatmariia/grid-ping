@@ -1,4 +1,4 @@
-from src.PINGNetwork import *
+from src.PINGNetworkNeurons import *
 from src.NeuronTypes import *
 from src.misc import *
 from src.constants import *
@@ -89,7 +89,7 @@ class GridConnectivity:
             neuron_ping_map=neuron_ping_map
         )
 
-    def _assign_ping_networks(self) -> tuple[list[PINGNetwork], dict[NeuronTypes, dict[int, int]]]:
+    def _assign_ping_networks(self) -> tuple[list[PINGNetworkNeurons], dict[NeuronTypes, dict[int, int]]]:
         """
         Creates PING networks, assigns grid locations to them, and adds the same number of neurons of each neuron type
         to them.
@@ -98,7 +98,7 @@ class GridConnectivity:
 
         :return: list of PING networks in the network and a dictionary mapping a neuron to the PING network it belongs
             to.
-        :rtype: tuple[list[PINGNetwork], dict[NeuronTypes, dict[int, int]]]
+        :rtype: tuple[list[PINGNetworkNeurons], dict[NeuronTypes, dict[int, int]]]
         """
 
         ping_networks = []
@@ -127,7 +127,7 @@ class GridConnectivity:
                 in_ids.append(neuron_id)
                 neuron_ping_map[NeuronTypes.I][neuron_id] = i
 
-            ping_network = PINGNetwork(
+            ping_network = PINGNetworkNeurons(
                 location=(x, y),
                 excit_ids=ex_ids,
                 inhibit_ids=in_ids
@@ -139,7 +139,7 @@ class GridConnectivity:
 
     def _compute_coupling_weights(
             self,
-            ping_networks: list[PINGNetwork], neuron_ping_map: dict[NeuronTypes, dict[int, int]]
+            ping_networks: list[PINGNetworkNeurons], neuron_ping_map: dict[NeuronTypes, dict[int, int]]
     ) -> np.ndarray[(int, int), float]:
         """
         Computes the coupling weights between all neurons.
@@ -147,7 +147,7 @@ class GridConnectivity:
         Essentially, this method computes the full matrix :math:`K` of coupling weights.
 
         :param ping_networks: list of PING networks in the network.
-        :type ping_networks: list[PINGNetwork]
+        :type ping_networks: list[PINGNetworkNeurons]
 
         :param neuron_ping_map: a dictionary mapping a neuron to the PING network it belongs to.
         :type neuron_ping_map: dict[NeuronTypes, dict[int, int]]
@@ -190,7 +190,7 @@ class GridConnectivity:
     def _get_neurons_dist(
             self,
             neuron_type1: NeuronTypes, neuron_type2: NeuronTypes, nr1: int, nr2: int,
-            ping_networks: list[PINGNetwork], neuron_ping_map: dict[NeuronTypes, dict[int, int]]
+            ping_networks: list[PINGNetworkNeurons], neuron_ping_map: dict[NeuronTypes, dict[int, int]]
     ) -> np.ndarray[(int, int), float]:
         """
         Computes the matrix of Euclidian distances between two types of neurons.
@@ -211,7 +211,7 @@ class GridConnectivity:
         :type nr2: int
 
         :param ping_networks: list of PING networks in the network.
-        :type ping_networks: list[PINGNetwork]
+        :type ping_networks: list[PINGNetworkNeurons]
 
         :param neuron_ping_map: a dictionary mapping a neuron to the PING network it belongs to.
         :type neuron_ping_map: dict[NeuronTypes, dict[int, int]]

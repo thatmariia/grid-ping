@@ -1,12 +1,12 @@
 from src.OscillatoryNetwork import *
-from src.InputStimulus import *
+from src.StimulusFactory import *
 
 
 if __name__ == "__main__":
 
-    nr_circuits = 4
+    nr_ping_networks = 4
 
-    stimulus = InputStimulus(
+    stimulus = CurrentStimulusFactory().create(
         spatial_freq=5.7,
         vlum=0.5,
         diameter_dg=0.7,
@@ -19,21 +19,19 @@ if __name__ == "__main__":
         figure_height_dg=5,
         figure_ecc_dg=7,
         patch_size_dg=4.9,
-        nr_circuits=nr_circuits,
+        nr_ping_networks=nr_ping_networks,
         slope=0.172,
         intercept=-0.25,
         min_diam_rf=1
     )
-    #stimulus.plot_stimulus(stimulus.stimulus, filename="full-stimulus")
-    #stimulus.plot_stimulus(stimulus.stimulus_patch, filename="stimulus-patch")
 
     stimulus_locations = stimulus.extract_stimulus_location()
 
     oscillatory_network = OscillatoryNetwork(
-        stimulus=stimulus.current,
+        stimulus=stimulus.stimulus_currents,
         nr_excitatory=4,
         nr_inhibitory=4,
-        nr_ping_networks=nr_circuits
+        nr_ping_networks=nr_ping_networks
     )
     oscillatory_network.run_simulation(
         cortical_coords=stimulus_locations.cortical_coords,

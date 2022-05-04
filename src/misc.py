@@ -38,47 +38,6 @@ def plot_binary_heatmap(im: np.ndarray[(int, int), float], path: str) -> None:
     fig.savefig(path, bbox_inches='tight', pad_inches=0)
 
 
-def neur_slice(neuron_type: NeuronTypes, nr_ex: int, nr_in: int) -> slice:
-    """
-    By design, we put excitatory neurons in lists before inhibitory. This function returns relevant slices.
-
-    :param neuron_type: the type of neuron we need indices for.
-    :type neuron_type: NeuronTypes
-
-    :param nr_ex: number of excitatory neurons.
-    :type nr_ex: int
-
-    :param nr_in: number of inhibitory neurons.
-    :type nr_in: int
-
-    :return: a slice for the neurons of given type.
-    :rtype: slice
-    """
-
-    if neuron_type == NeuronTypes.E:
-        return slice(nr_ex)
-    return slice(nr_ex, nr_ex + nr_in)
-
-
-def neur_type(id: int, nr_ex: int) -> NeuronTypes:
-    """
-    By design, we put excitatory neurons in lists before inhibitory. Returns the type of the neuron at a particular ID.
-
-    :param id: the ID of the neuron.
-    :type id: int
-
-    :param nr_ex: number of excitatory neurons in a network, where the neuron is located.
-    :type nr_ex: int
-
-    :return: the neuron type.
-    :rtype: NeuronTypes
-    """
-
-    if id < nr_ex:
-        return NeuronTypes.E
-    return NeuronTypes.I
-
-
 def multiply_point(point: tuple[float, ...], coef: float) -> tuple[float, ...]:
     """
     Multiples each value in a given tuple by a coefficient.

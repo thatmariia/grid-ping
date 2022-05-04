@@ -24,6 +24,8 @@ class LuminanceToContrastConverter:
         """
         Converts the luminance stimulus into the local contrasts stimulus.
 
+        The approach is derived from :cite:p:`MaryamPLACEHOLDER`.
+
         :param slope: slope of the receptive field size.
         :type slope: float
 

@@ -10,6 +10,8 @@ class ContrastToFrequencyConverter:
         """
         Converts the local contrasts stimulus into the frequencies stimulus.
 
+        The approach is derived from :cite:p:`MaryamPLACEHOLDER`.
+
         :param stimulus_contrast: local contrasts stimulus.
         :type stimulus_contrast: list[float]
 

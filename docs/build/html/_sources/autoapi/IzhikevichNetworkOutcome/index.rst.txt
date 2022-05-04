@@ -1,0 +1,27 @@
+:py:mod:`IzhikevichNetworkOutcome`
+==================================
+
+.. py:module:: IzhikevichNetworkOutcome
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   IzhikevichNetworkOutcome.IzhikevichNetworkOutcome
+
+
+
+
+.. py:class:: IzhikevichNetworkOutcome(firing_times)
+
+   This class contains the collected information from the simulation of the Izhikevich network.
+
+   :param firing_times: indices of spikes.
+   :type firing_times: TODO
+
+

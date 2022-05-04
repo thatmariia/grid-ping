@@ -11,7 +11,14 @@ class GaborLuminanceStimulusFactory:
     """
     This class constructs the Gabor texture stimulus (and a patch from it).
 
-    TODO:: more elaborate explanation + ref.
+    The external stimulus represents a rectangular grid of non-overlapping equispaced grating annuli -
+    circular Gabor wavelets :cite:p:`MaryamPLACEHOLDER`. The luminance of the stimuli varies between 0 (black) and
+    1 (white). All annuli have equal diameters but vary in contrast. The grid includes a figure - a rectangular subgrid
+    in the bottom right quadrant of the stimulus, where all annuli share similar contrasts, and a background that
+    constitutes the rest of the grid. There, annuli vary in contrast significantly. The contrast of every annulus is
+    selected at random, depending on the location of the annulus. All areas in the stimulus uncovered by annuli (void)
+    share the same luminance. A square-shaped patch of the stimulus' figure is selected as an input to the Izhikevich
+    oscillatory network (see :obj:`IzhikevichNetworkSimulator`).
     """
 
     def create(

@@ -18,7 +18,7 @@ SPATIAL_CONST = {
 
 """Izhikevich neuron params"""
 
-THRESHOLD_POTENTIAL = 30
+PEAK_POTENTIAL = 30
 
 # for timescale of _recovery variable _recovery
 IZHI_ALPHA = {

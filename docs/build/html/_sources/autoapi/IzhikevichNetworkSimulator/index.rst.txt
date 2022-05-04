@@ -1,0 +1,123 @@
+:py:mod:`IzhikevichNetworkSimulator`
+====================================
+
+.. py:module:: IzhikevichNetworkSimulator
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   IzhikevichNetworkSimulator.IzhikevichNetworkSimulator
+
+
+
+
+.. py:class:: IzhikevichNetworkSimulator(current_components: src.CurrentComponents.CurrentComponents)
+
+   This class runs the simulation of the network of neurons.
+
+   Every neuron in the system can be described with a 2D system of ODEs:
+
+   :math:`dp_v / dt = 0.04 p_v^2 + 5 p_v + 140 - r_v + I_v`,
+
+   :math:`dr_v / dt = \alpha_{\mathsf{type}(v)} \cdot (\beta_{\mathsf{type}(v)} p_v - r_v)`,
+   if :math:`p_v \geq 30` mV, then :math:`\begin{cases} p_v \leftarrow \gamma_{\mathsf{type}(v)} \\ r_v \leftarrow r_v + \zeta_{\mathsf{type}(v)} \end{cases}`,
+
+   where
+   * :math:`v` is a neuron,
+   * :math:`\mathsf{type}(v)` maps a neuron to its type (see :obj:`NeuronTypes`),
+   * :math:`p` represents the membrane potential of the neuron,
+   * :math:`r` represents a membrane recovery variable; provides negative feedback to :math:`p`,
+   * :math:`\alpha` describes the timescale of :math:`r` (see :obj:`constants.IZHI_ALPHA`),
+   * :math:`\beta` describes the sensitivity of :math:`r` to the subthreshold fluctuations of :math:`p` (see :obj:`constants.IZHI_BETA`),
+   * :math:`\gamma` describes the after-spike reset value of :math:`p` (see :obj:`constants.IZHI_GAMMA`),
+   * :math:`\zeta` describes the after-spike reset of :math:`r` (see :obj:`constants.IZHI_ZETA`),
+   * :math:`I` describes the current (see :obj:`CurrentComponents`).
+
+   This neural dynamics model is introduced in :cite:p:`Izhikevich2003`.
+
+   :param current_components: contains methods of computing the neural network current components.
+   :type current_components: CurrentComponents
+
+   :ivar _current_components: contains methods of computing the neural network current components.
+
+   .. py:method:: simulate(self, simulation_time: int, dt: float) -> src.IzhikevichNetworkOutcome.IzhikevichNetworkOutcome
+
+      Runs the simulation.
+
+      Parts of the code in this function and its components are rewritten from MATLAB code listed in supplementary
+      materials of :cite:p:`Lowet2015`.
+
+      :param simulation_time: number of epochs to run the simulation.
+      :type simulation_time: int
+
+      :param dt: time interval
+      :type dt: float
+
+      :return: collected information from the simulation.
+      :rtype: IzhikevichNetworkOutcome
+
+
+   .. py:method:: _get_izhi_parameters(self) -> tuple[numpy.ndarray[int, float], numpy.ndarray[int, float], numpy.ndarray[int, float], numpy.ndarray[int, float]]
+
+      Allocates Izhikevich parameters :math:`\alpha, \beta, \gamma, \zeta` to all neurons.
+
+      :return: Izhikevich parameters.
+      :rtype: tuple[numpy.ndarray[int, float], numpy.ndarray[int, float], numpy.ndarray[int, float], numpy.ndarray[int, float]]
+
+
+   .. py:method:: _get_initial_values(self, izhi_beta: numpy.ndarray[int, float]) -> tuple[numpy.ndarray[int, float], numpy.ndarray[int, float]]
+
+      Creates initial values for the membrane potential and recovery variable.
+
+      :param izhi_beta: Izhikevich parameter :math:`\beta` for all neurons.
+      :type izhi_beta: numpy.ndarray[int, float]
+
+      :return: initial values for the membrane potential and recovery variable.
+      :rtype: tuple[numpy.ndarray[int, float], numpy.ndarray[int, float]]
+
+
+   .. py:method:: _get_change_in_recovery(self, potentials: numpy.ndarray[int, float], recovery: numpy.ndarray[int, float], izhi_alpha: numpy.ndarray[int, float], izhi_beta: numpy.ndarray[int, float]) -> numpy.ndarray[int, float]
+
+      Computes the change in membrane recovery.
+
+      Computes :math:`dr_v / dt = \alpha_{\mathsf{type}(v)} \cdot (\beta_{\mathsf{type}(v)} p_v - r_v)`.
+
+      :param potentials: neurons' membrane potentials.
+      :type potentials: numpy.ndarray[int, float]
+
+      :param recovery: recovery variables.
+      :type recovery: numpy.ndarray[int, float]
+
+      :param izhi_alpha: Izhikevich parameter :math:`\alpha` for all neurons.
+      :type izhi_alpha: numpy.ndarray[int, float]
+
+      :param izhi_beta: Izhikevich parameter :math:`\beta` for all neurons.
+      :type izhi_beta: numpy.ndarray[int, float]
+
+      :return: change in membrane recovery.
+      :rtype: numpy.ndarray[int, float]
+
+
+   .. py:method:: _get_change_in_potentials(self, potentials: numpy.ndarray[int, float], recovery: numpy.ndarray[int, float]) -> numpy.ndarray[int, float]
+
+      Computes the change in membrane potentials.
+
+      Computes :math:`dp_v / dt = 0.04 p_v^2 + 5 p_v + 140 - r_v + I_v`.
+
+      :param potentials: neurons' membrane potentials.
+      :type potentials: numpy.ndarray[int, float]
+
+      :param recovery: recovery variables.
+      :type recovery: numpy.ndarray[int, float]
+
+      :return: change in membrane potentials.
+      :rtype: numpy.ndarray[int, float]
+
+
+

@@ -11,6 +11,8 @@ class FrequencyToCurrentConverter:
         """
         Converts the frequencies stimulus into the currents stimulus.
 
+        TODO:: how do I cite this?
+
         :param stimulus_frequencies: frequencies stimulus.
         :type stimulus_frequencies: numpy.ndarray[int, float]
 

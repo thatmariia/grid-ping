@@ -18,7 +18,7 @@ Module Contents
    Izhikevich neuron params
 
 
-.. py:data:: THRESHOLD_POTENTIAL
+.. py:data:: PEAK_POTENTIAL
    :annotation: = 30
 
    

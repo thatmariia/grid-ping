@@ -14,8 +14,6 @@ Functions
 .. autoapisummary::
 
    misc.plot_binary_heatmap
-   misc.neur_slice
-   misc.neur_type
    misc.multiply_point
    misc.add_points
    misc.point_ceil
@@ -34,37 +32,6 @@ Functions
    :type path: str
 
    :rtype: None
-
-
-.. py:function:: neur_slice(neuron_type: src.NeuronTypes.NeuronTypes, nr_ex: int, nr_in: int) -> slice
-
-   By design, we put excitatory neurons in lists before inhibitory. This function returns relevant slices.
-
-   :param neuron_type: the type of neuron we need indices for.
-   :type neuron_type: NeuronTypes
-
-   :param nr_ex: number of excitatory neurons.
-   :type nr_ex: int
-
-   :param nr_in: number of inhibitory neurons.
-   :type nr_in: int
-
-   :return: a slice for the neurons of given type.
-   :rtype: slice
-
-
-.. py:function:: neur_type(id: int, nr_ex: int) -> src.NeuronTypes.NeuronTypes
-
-   By design, we put excitatory neurons in lists before inhibitory. Returns the type of the neuron at a particular ID.
-
-   :param id: the ID of the neuron.
-   :type id: int
-
-   :param nr_ex: number of excitatory neurons in a network, where the neuron is located.
-   :type nr_ex: int
-
-   :return: the neuron type.
-   :rtype: NeuronTypes
 
 
 .. py:function:: multiply_point(point: tuple[float, Ellipsis], coef: float) -> tuple[float, Ellipsis]

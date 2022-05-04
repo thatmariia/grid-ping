@@ -1,0 +1,145 @@
+:py:mod:`ConnectivityGridPINGFactory`
+=====================================
+
+.. py:module:: ConnectivityGridPINGFactory
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   ConnectivityGridPINGFactory.ConnectivityGridPINGFactory
+
+
+
+
+.. py:class:: ConnectivityGridPINGFactory
+
+   This class determines the connectivity between neurons in the oscillatory network.
+
+   .. py:method:: create(self, nr_excitatory: int, nr_inhibitory: int, nr_ping_networks: int, cortical_coords: list[list[tuple[float, float]]]) -> src.Connectivity.Connectivity
+
+      Determines the connectivity between neurons in the oscillatory network.
+
+      :param nr_excitatory: number of excitatory neurons in the network.
+      :type nr_excitatory: int
+
+      :param nr_inhibitory: number of inhibitory neurons in the network.
+      :type nr_inhibitory: int
+
+      :param nr_ping_networks: number of PING networks in the network.
+      :type nr_ping_networks: int
+
+      :param cortical_coords: coordinates of the points in the visual cortex.
+      :type cortical_coords: list[list[tuple[float, float]]]
+
+      :raises:
+          AssertionError: if the number of excitatory neurons is smaller than 2.
+      :raises:
+          AssertionError: if the number of inhibitory neurons is smaller than 2.
+
+      :return: connectivity between neurons in the oscillatory network.
+      :rtype: Connectivity
+
+
+   .. py:method:: _assign_ping_networks(self, nr_neurons: dict[src.Connectivity.Any, int], nr_ping_networks: int) -> tuple[list[src.PINGNetworkNeurons.PINGNetworkNeurons], dict[src.constants.NeuronTypes, dict[int, int]]]
+
+      Creates PING networks, assigns grid locations to them, and adds the same number of neurons of each neuron type
+      to them.
+
+      In other words, this function creates a map that can be used as function :math:`\mathsf{loc}`.
+
+      :param nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
+      :type nr_neurons: dict[Any, int]
+
+      :param nr_ping_networks: number of PING networks.
+      :type nr_ping_networks: int
+
+      :return: list of PING networks in the network and a dictionary mapping a neuron to the PING network it belongs to.
+      :rtype: tuple[list[PINGNetworkNeurons], dict[NeuronTypes, dict[int, int]]]
+
+
+   .. py:method:: _compute_coupling_weights(self, nr_neurons: dict[src.Connectivity.Any, int], neur_slice: dict[src.constants.NeuronTypes, slice], ping_networks: list[src.PINGNetworkNeurons.PINGNetworkNeurons], neuron_ping_map: dict[src.constants.NeuronTypes, dict[int, int]], cortical_coords: list[list[tuple[float, float]]]) -> src.misc.np.ndarray[(int, int), float]
+
+      Computes the coupling weights between all neurons.
+
+      Essentially, this method computes the full matrix :math:`K` of coupling weights.
+      The approach is derived from :cite:p:`Lowet2015`.
+
+      :param nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
+      :type nr_neurons: dict[Any, int]
+
+      :param neur_slice: indices of each type of neurons.
+      :type neur_slice: dict[NeuronType, slice]
+
+      :param ping_networks: list of PING networks in the network.
+      :type ping_networks: list[PINGNetworkNeurons]
+
+      :param neuron_ping_map: a dictionary mapping a neuron to the PING network it belongs to.
+      :type neuron_ping_map: dict[NeuronTypes, dict[int, int]]
+
+      :param cortical_coords: coordinates of the points in the visual cortex.
+      :type cortical_coords: list[list[tuple[float, float]]]
+
+      :return: matrix of all coupling weights.
+      :rtype: numpy.ndarray[(int, int), float]
+
+
+   .. py:method:: _get_neurons_dist(self, neuron_type1: src.constants.NeuronTypes, neuron_type2: src.constants.NeuronTypes, nr1: int, nr2: int, ping_networks: list[src.PINGNetworkNeurons.PINGNetworkNeurons], neuron_ping_map: dict[src.constants.NeuronTypes, dict[int, int]], cortical_coords: list[list[tuple[float, float]]]) -> src.misc.np.ndarray[(int, int), float]
+
+      Computes the matrix of Euclidian distances between two types of neurons.
+
+      This method computes a matrix of :math:`\| \mathsf{loc}(v), \mathsf{loc}(w) \|` between neurons :math:`v` and
+      :math:`w` of given types.
+
+      :param neuron_type1: neurons neuron_type 1
+      :type neuron_type1: NeuronTypes
+
+      :param neuron_type2: neurons neuron_type 2
+      :type neuron_type2: NeuronTypes
+
+      :param nr1: number of neurons of neuron_type 1
+      :type nr1: int
+
+      :param nr2: number of neurons of neuron_type 2
+      :type nr2: int
+
+      :param ping_networks: list of PING networks in the network.
+      :type ping_networks: list[PINGNetworkNeurons]
+
+      :param neuron_ping_map: a dictionary mapping a neuron to the PING network it belongs to.
+      :type neuron_ping_map: dict[NeuronTypes, dict[int, int]]
+
+      :param cortical_coords: coordinates of the points in the visual cortex.
+      :type cortical_coords: list[list[tuple[float, float]]]
+
+      :return: The matrix nr1 x nr2 of pairwise distances between neurons.
+      :rtype: numpy.ndarray[(int, int), float]
+
+
+   .. py:method:: _compute_type_coupling_weights(self, dist: src.misc.np.ndarray[(int, int), float], max_connect_strength: float, spatial_const: float) -> src.misc.np.ndarray[(int, int), float]
+
+      Computes the coupling weights for connections between two types of neurons.
+
+      This method computes a matrix of :math:`K_{v, w}` between neurons :math:`v` and
+      :math:`w` of given types.
+
+      :param dist: distance matrix with pairwise distances between neurons.
+      :type dist: numpy.ndarray[(int, int), float]
+
+      :param max_connect_strength: max connection strength between neuron types.
+      :type max_connect_strength: float
+
+      :param spatial_const: spatial constant for the neuron types.
+      :type spatial_const: float
+
+      :return: the matrix of coupling weights of size nr1 x nr2, where n1 and nr2 - number of neurons of
+          each neuron_type in the coupling of interest.
+      :rtype: numpy.ndarray[(int, int), float]
+
+
+

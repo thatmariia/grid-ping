@@ -3,11 +3,14 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-BEP documentation!
+grid-ping documentation!
 =========================================
 
 .. note::
    This project is under active development.
+
+Relevant links
+---------------
 
 .. button:: thesis document (draft)
     :class: button
@@ -30,8 +33,7 @@ Contents
    :maxdepth: 3
 
    usage
-   class-diagram
-   sequence-diagram
+   diagrams
 
 References
 ----------

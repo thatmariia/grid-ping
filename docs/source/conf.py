@@ -21,9 +21,9 @@ autoapi_dirs = ['../../src']
 
 # -- Project information -----------------------------------------------------
 
-project = 'BEP'
-copyright = '2022, <authors>'
-author = '<authors>'
+project = 'grid-ping'
+copyright = '2022, Mariia Turchina'
+author = 'Mariia Turchina'
 
 
 # -- General configuration ---------------------------------------------------

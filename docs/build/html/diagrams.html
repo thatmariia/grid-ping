@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="prev" title="Usage" href="usage.html" />
 
     <meta name="generator" content="sphinx-4.4.0, furo 2022.03.04"/>
-        <title>Sequence diagram - grid-ping documentation</title>
+        <title>UML Diagrams - grid-ping documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=935aa2abcc5c1da4283d1dc201fb1f0add16d23a" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css" />
@@ -153,9 +153,9 @@
   <input type="hidden" name="area" value="default">
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul>
+  <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="diagrams.html">UML Diagrams</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">UML Diagrams</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="autoapi/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">misc</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/Connectivity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Connectivity</span></code></a></li>
@@ -213,58 +213,10 @@
           </label>
         </div>
         <article role="main">
-          <section id="sequence-diagram">
-<h1>Sequence diagram<a class="headerlink" href="#sequence-diagram" title="Permalink to this headline">#</a></h1>
-<p class="plantuml">
-<img alt="@startuml
-actor user
-activate user
-
-user -&gt; InputStimulus : &lt;&lt;creates&gt;&gt;
-activate InputStimulus
-
-InputStimulus -&gt; GaborLuminanceStimulusOld : super()
-activate GaborLuminanceStimulusOld
-
-GaborLuminanceStimulusOld -&gt; GaborLuminanceStimulusOld: composes figure and ground
-GaborLuminanceStimulusOld -&gt; GaborLuminanceStimulusOld: creates luminance stimulus
-GaborLuminanceStimulusOld -&gt; GaborLuminanceStimulusOld: selects patch from figure
-
-GaborLuminanceStimulusOld --&gt; InputStimulus
-
-InputStimulus -&gt; InputStimulus: creates circuits from luminance stimulus
-InputStimulus -&gt; InputStimulus: converts luminance to local contrast
-InputStimulus -&gt; InputStimulus: converts local contrast to frequencies (TODO)
-InputStimulus -&gt; InputStimulus: converts frequencies to current (TODO)
-
-InputStimulus --&gt; user : initialized stimulus
-
-deactivate GaborLuminanceStimulusOld
-deactivate InputStimulus
-
-activate OscillatoryNetwork
-user -&gt; OscillatoryNetwork: run_simulation()
-note right
-  uses the stimulus
-end note
-
-OscillatoryNetwork -&gt; GridConnectivity: &lt;&lt;creates&gt;&gt;
-activate GridConnectivity
-
-GridConnectivity -&gt; GridConnectivity: assigns neurons to PING networks in a grid
-GridConnectivity -&gt; GridConnectivity: computes coupling weights between neurons
-
-GridConnectivity --&gt; OscillatoryNetwork: initialized grid connectivity
-deactivate GridConnectivity
-
-OscillatoryNetwork -&gt; OscillatoryNetwork: simulates neural network (Eurler-forward)
-
-OscillatoryNetwork --&gt; user: ended simulation
-deactivate OscillatoryNetwork
-deactivate user
-
-@enduml" src="_images/plantuml-f3d32d25deaabb3ac44154beecb848a8eda42e38.png"/>
-</p>
+          <section id="uml-diagrams">
+<h1>UML Diagrams<a class="headerlink" href="#uml-diagrams" title="Permalink to this headline">#</a></h1>
+<p>The documentation for the classes on the diagrams can be accessed by pressing on the corresponding classes.</p>
+<a href="https://lucid.app/publicSegments/view/875babda-a8a1-4189-884d-f4c470bb3bca"><button class="button">download as PDF</button></a><p><div style="width: 960px; height: 720px; margin: 10px; position: relative;"><iframe allowfullscreen="" frameborder="0" id="2kjdF7WDE~3_" src="https://lucid.app/documents/embeddedchart/3da47ec0-a68a-43f4-a982-7935adac2313" style="width:960px; height:720px"></iframe></div></p>
 </section>
 
         </article>
@@ -273,7 +225,17 @@ deactivate user
         
         <div class="related-pages">
           
-          
+          <a class="prev-page" href="usage.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Usage</div>
+                
+              </div>
+            </a>
         </div>
         <div class="bottom-of-page">
           <div class="left-details">

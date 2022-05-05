@@ -5,7 +5,6 @@ from src.PINGNetworkNeurons import *
 from src.NeuronTypes import *
 from src.Connectivity import *
 from src.misc import *
-from src.constants import *
 
 from itertools import product
 import numpy as np

@@ -1,6 +1,5 @@
 from src.ParamsSynaptic import *
 
-from src.constants import *
 from src.CurrentComponents import *
 from src.NeuronTypes import *
 from src.Connectivity import *

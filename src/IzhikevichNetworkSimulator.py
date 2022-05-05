@@ -1,6 +1,5 @@
 from src.ParamsIzhikevich import *
 
-from src.constants import *
 from src.CurrentComponents import *
 from src.NeuronTypes import *
 from src.IzhikevichNetworkOutcome import *
@@ -101,40 +100,25 @@ class IzhikevichNetworkSimulator:
         return outcome
 
     def _get_izhi_parameters(self) \
-            -> tuple[np.ndarray[int, float], np.ndarray[int, float], np.ndarray[int, float], np.ndarray[int, float]]:
+            -> tuple[np.ndarray[int, float], ...]:
         """
         Allocates Izhikevich parameters :math:`\\alpha, \\beta, \\gamma, \\zeta` to all neurons.
 
         :return: Izhikevich parameters.
-        :rtype: tuple[numpy.ndarray[int, float], numpy.ndarray[int, float], numpy.ndarray[int, float], numpy.ndarray[int, float]]
+        :rtype: tuple[np.ndarray[int, float], ...]
         """
 
-        izhi_alpha = np.array(
-            [self._params_izhi.alpha[NeuronTypes.E]
-             for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.E])] +
-            [self._params_izhi.alpha[NeuronTypes.I]
-             for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.I])]
-        )
-        izhi_beta = np.array(
-            [self._params_izhi.beta[NeuronTypes.E]
-             for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.E])] +
-            [self._params_izhi.beta[NeuronTypes.I]
-             for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.I])]
-        )
-        izhi_gamma = np.array(
-            [self._params_izhi.gamma[NeuronTypes.E]
-             for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.E])] +
-            [self._params_izhi.gamma[NeuronTypes.I]
-             for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.I])]
-        )
-        izhi_zeta = np.array(
-            [self._params_izhi.zeta[NeuronTypes.E]
-             for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.E])] +
-            [self._params_izhi.zeta[NeuronTypes.I]
-             for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.I])]
-        )
+        params_per_neuron = []
+        for param in [self._params_izhi.alpha, self._params_izhi.beta, self._params_izhi.gamma, self._params_izhi.zeta]:
+            param_per_neuron = np.array(
+                [param[NeuronTypes.E]
+                 for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.E])] +
+                [param[NeuronTypes.I]
+                 for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.I])]
+            )
+            params_per_neuron.append(param_per_neuron)
 
-        return izhi_alpha, izhi_beta, izhi_gamma, izhi_zeta
+        return tuple(params_per_neuron)
 
     def _get_initial_values(
             self, izhi_beta: np.ndarray[int, float]

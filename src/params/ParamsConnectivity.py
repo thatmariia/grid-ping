@@ -36,15 +36,15 @@ class ParamsConnectivity(Params):
             spatial_consts_II: float=0.3
     ):
         self.max_connect_strength: dict[tuple[NeuronTypes, NeuronTypes], float] = {
-            (NeuronTypes.E, NeuronTypes.E): max_connect_strength_EE,
-            (NeuronTypes.E, NeuronTypes.I): max_connect_strength_EI,
-            (NeuronTypes.I, NeuronTypes.E): max_connect_strength_IE,
-            (NeuronTypes.I, NeuronTypes.I): max_connect_strength_II
+            (NeuronTypes.EX, NeuronTypes.EX): max_connect_strength_EE,
+            (NeuronTypes.EX, NeuronTypes.IN): max_connect_strength_EI,
+            (NeuronTypes.IN, NeuronTypes.EX): max_connect_strength_IE,
+            (NeuronTypes.IN, NeuronTypes.IN): max_connect_strength_II
         }
 
         self.spatial_consts: dict[tuple[NeuronTypes, NeuronTypes], float] = {
-            (NeuronTypes.E, NeuronTypes.E): spatial_consts_EE,
-            (NeuronTypes.E, NeuronTypes.I): spatial_consts_EI,
-            (NeuronTypes.I, NeuronTypes.E): spatial_consts_IE,
-            (NeuronTypes.I, NeuronTypes.I): spatial_consts_II
+            (NeuronTypes.EX, NeuronTypes.EX): spatial_consts_EE,
+            (NeuronTypes.EX, NeuronTypes.IN): spatial_consts_EI,
+            (NeuronTypes.IN, NeuronTypes.EX): spatial_consts_IE,
+            (NeuronTypes.IN, NeuronTypes.IN): spatial_consts_II
         }

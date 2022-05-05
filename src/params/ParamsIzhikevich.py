@@ -34,19 +34,19 @@ class ParamsIzhikevich(Params):
 
         self.peak_potential = peak_potential
         self.alpha = {
-            NeuronTypes.E: alpha_E,
-            NeuronTypes.I: alpha_I
+            NeuronTypes.EX: alpha_E,
+            NeuronTypes.IN: alpha_I
         }
         self.beta = {
-            NeuronTypes.E: beta_E,
-            NeuronTypes.I: beta_I
+            NeuronTypes.EX: beta_E,
+            NeuronTypes.IN: beta_I
         }
         self.gamma = {
-            NeuronTypes.E: gamma_E,
-            NeuronTypes.I: gamma_I
+            NeuronTypes.EX: gamma_E,
+            NeuronTypes.IN: gamma_I
         }
         self.zeta = {
-            NeuronTypes.E: zeta_E,
-            NeuronTypes.I: zeta_I
+            NeuronTypes.EX: zeta_E,
+            NeuronTypes.IN: zeta_I
         }
 

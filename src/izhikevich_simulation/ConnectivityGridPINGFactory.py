@@ -66,15 +66,15 @@ class ConnectivityGridPINGFactory:
 
         ping_networks = []
         neuron_ping_map = {
-            NeuronTypes.E: {},
-            NeuronTypes.I: {}
+            NeuronTypes.EX: {},
+            NeuronTypes.IN: {}
         }
 
         grid_size = int(math.sqrt(params_ping.nr_ping_networks))  # now assuming the grid is square
 
         #  number of neurons of each neuron_type in each PING network
-        nr_ex_per_ping_network = params_ping.nr_neurons[NeuronTypes.E] // params_ping.nr_ping_networks
-        nr_in_per_ping_network = params_ping.nr_neurons[NeuronTypes.I] // params_ping.nr_ping_networks
+        nr_ex_per_ping_network = params_ping.nr_neurons[NeuronTypes.EX] // params_ping.nr_ping_networks
+        nr_in_per_ping_network = params_ping.nr_neurons[NeuronTypes.IN] // params_ping.nr_ping_networks
 
         for i in range(params_ping.nr_ping_networks):
             x = i // grid_size
@@ -83,15 +83,15 @@ class ConnectivityGridPINGFactory:
             ex_ids = []
             for neuron_id in range(i * nr_ex_per_ping_network, (i + 1) * nr_ex_per_ping_network):
                 ex_ids.append(neuron_id)
-                neuron_ping_map[NeuronTypes.E][neuron_id] = i
+                neuron_ping_map[NeuronTypes.EX][neuron_id] = i
 
             in_ids = []
             for neuron_id in range(i * nr_in_per_ping_network, (i + 1) * nr_in_per_ping_network):
                 in_ids.append(neuron_id)
-                neuron_ping_map[NeuronTypes.I][neuron_id] = i
+                neuron_ping_map[NeuronTypes.IN][neuron_id] = i
 
             ping_network = PINGNetworkNeurons(
-                location=(x, y),
+                grid_location=(x, y),
                 excit_ids=ex_ids,
                 inhibit_ids=in_ids
             )
@@ -133,7 +133,7 @@ class ConnectivityGridPINGFactory:
 
         coupling_weights = np.zeros((params_ping.nr_neurons["total"], params_ping.nr_neurons["total"]))
 
-        for nts in list(product([NeuronTypes.E, NeuronTypes.I], repeat=2)):
+        for nts in list(product([NeuronTypes.EX, NeuronTypes.IN], repeat=2)):
             dist = self._get_neurons_dist(
                 neuron_type1=nts[0],
                 neuron_type2=nts[1],
@@ -205,8 +205,8 @@ class ConnectivityGridPINGFactory:
 
                 # computing the distance between the found PING networks
                 # (which = the distance between neurons in those PING networks)
-                cortical_coord1 = cortical_coords[ping_network1.location[0]][ping_network1.location[1]]
-                cortical_coord2 = cortical_coords[ping_network2.location[0]][ping_network2.location[1]]
+                cortical_coord1 = cortical_coords[ping_network1.grid_location[0]][ping_network1.grid_location[1]]
+                cortical_coord2 = cortical_coords[ping_network2.grid_location[0]][ping_network2.grid_location[1]]
                 dist[id1][id2] = euclidian_dist(
                     cortical_coord1, cortical_coord2
                 )

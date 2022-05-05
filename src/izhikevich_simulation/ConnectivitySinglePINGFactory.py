@@ -26,10 +26,10 @@ class ConnectivitySinglePINGFactory:
 
         coupling_weights = np.zeros((params_ping.nr_neurons["total"], params_ping.nr_neurons["total"]))
 
-        for nts in list(product([NeuronTypes.E, NeuronTypes.I], repeat=2)):
+        for nts in list(product([NeuronTypes.EX, NeuronTypes.IN], repeat=2)):
             types_coupling_weights = params_connectivity.max_connect_strength[(nts[1], nts[0])] * \
                                      np.random.rand(params_ping.nr_neurons[nts[0]], params_ping.nr_neurons[nts[1]])
-            if nts[1] == NeuronTypes.I:
+            if nts[1] == NeuronTypes.IN:
                 types_coupling_weights *= -1
             coupling_weights[params_ping.neur_slice[nts[0]], params_ping.neur_slice[nts[1]]] = types_coupling_weights
 

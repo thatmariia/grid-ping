@@ -26,10 +26,10 @@ class Stimulus:
 
     def extract_stimulus_location(self) -> StimulusLocations:
         """
-        Computes the location info of the stimulus patch and, thus, the PING networks, namely eccentricity and
+        Computes the grid_location info of the stimulus patch and, thus, the PING networks, namely eccentricity and
         angle of each PING network.
 
-        :return: location info of the network.
+        :return: grid_location info of the network.
         :rtype: StimulusLocations
         """
 
@@ -40,8 +40,8 @@ class Stimulus:
         for circuit in (pbar := tqdm(self._patch_geometry.ping_networks_pixels)):
             pbar.set_description("Coordinates conversion")
 
-            i = circuit.grid_index[0]
-            j = circuit.grid_index[1]
+            i = circuit.grid_location[0]
+            j = circuit.grid_location[1]
 
             eccentricities[i, j] = self._patch_geometry.eccentricity_in_patch(point=circuit.center_dg)
             angles[i, j] = self._patch_geometry.angle_in_patch(point=circuit.center_dg)

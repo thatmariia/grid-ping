@@ -17,7 +17,7 @@ class GaborLuminanceStimulusFactory:
     1 (white). All annuli have equal diameters but vary in contrast. The grid includes a figure - a rectangular subgrid
     in the bottom right quadrant of the stimulus, where all annuli share similar contrasts, and a background that
     constitutes the rest of the grid. There, annuli vary in contrast significantly. The contrast of every annulus is
-    selected at random, depending on the location of the annulus. All areas in the stimulus uncovered by annuli (void)
+    selected at random, depending on the grid_location of the annulus. All areas in the stimulus uncovered by annuli (void)
     share the same luminance. A square-shaped patch of the stimulus' figure is selected as an input to the Izhikevich
     oscillatory network (see :obj:`IzhikevichNetworkSimulator`).
     """
@@ -97,7 +97,7 @@ class GaborLuminanceStimulusFactory:
             self, full_width: int, full_height: int, figure_width: int, figure_height: int, figure_ecc: float
     ) -> tuple[tuple[int, int], tuple[int, int], tuple[float, float]]:
         """
-        Determines the location of the figure within the stimulus.
+        Determines the grid_location of the figure within the stimulus.
 
         :param full_width: width of the full stimulus.
         :type full_width: int

@@ -28,7 +28,7 @@ class FrequencyToCurrentConverter:
         """
         Converts the frequencies stimulus into the currents stimulus.
 
-        TODO:: how do I cite this?
+        TODO:: how do IN cite this?
 
         :param stimulus_frequencies: frequencies stimulus.
         :type stimulus_frequencies: numpy.ndarray[int, float]
@@ -54,8 +54,8 @@ class FrequencyToCurrentConverter:
 
             # indices when excitatory neurons fired
             spikes_ex_indices = np.argwhere(
-                (spikes_T[1] >= params_ping.neur_slice[NeuronTypes.E].start) &
-                (spikes_T[1] < params_ping.neur_slice[NeuronTypes.E].stop)
+                (spikes_T[1] >= params_ping.neur_slice[NeuronTypes.EX].start) &
+                (spikes_T[1] < params_ping.neur_slice[NeuronTypes.EX].stop)
             ).flatten()
             # times when excitatory neurons fired
             spikes_ex_times = spikes_T[0][spikes_ex_indices]

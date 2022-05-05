@@ -44,20 +44,20 @@ class ParamsSynaptic(Params):
     ):
 
         self.rise: dict[NeuronTypes, float] = {
-            NeuronTypes.E: rise_E,
-            NeuronTypes.I: rise_I,
+            NeuronTypes.EX: rise_E,
+            NeuronTypes.IN: rise_I,
         }
         self.decay: dict[NeuronTypes, float] = {
-            NeuronTypes.E: decay_E,
-            NeuronTypes.I: decay_I,
+            NeuronTypes.EX: decay_E,
+            NeuronTypes.IN: decay_I,
         }
         self.conductance: dict[tuple[NeuronTypes, NeuronTypes], float] = {
-            (NeuronTypes.E, NeuronTypes.E): conductance_EE,
-            (NeuronTypes.E, NeuronTypes.I): conductance_EI,
-            (NeuronTypes.I, NeuronTypes.E): conductance_IE,
-            (NeuronTypes.I, NeuronTypes.I): conductance_II
+            (NeuronTypes.EX, NeuronTypes.EX): conductance_EE,
+            (NeuronTypes.EX, NeuronTypes.IN): conductance_EI,
+            (NeuronTypes.IN, NeuronTypes.EX): conductance_IE,
+            (NeuronTypes.IN, NeuronTypes.IN): conductance_II
         }
         self.reversal_potential: dict[NeuronTypes, float] = {
-            NeuronTypes.E: reversal_potential_E,
-            NeuronTypes.I: reversal_potential_I
+            NeuronTypes.EX: reversal_potential_E,
+            NeuronTypes.IN: reversal_potential_I
         }

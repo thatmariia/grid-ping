@@ -24,7 +24,7 @@ class IzhikevichNetworkSimulator:
     * :math:`p` represents the membrane potential of the neuron,
     * :math:`r` represents a membrane recovery variable; provides negative feedback to :math:`p`,
     * :math: `\\alpha, \\beta, \\gamma, \\zeta` are Izhikevich parameters (see :obj:`ParamsIzhikevich`),
-    * :math:`I` describes the current (see :obj:`CurrentComponents`).
+    * :math:`IN` describes the current (see :obj:`CurrentComponents`).
 
     This neural dynamics model is introduced in :cite:p:`Izhikevich2003`.
 
@@ -111,10 +111,10 @@ class IzhikevichNetworkSimulator:
         params_per_neuron = []
         for param in [self._params_izhi.alpha, self._params_izhi.beta, self._params_izhi.gamma, self._params_izhi.zeta]:
             param_per_neuron = np.array(
-                [param[NeuronTypes.E]
-                 for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.E])] +
-                [param[NeuronTypes.I]
-                 for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.I])]
+                [param[NeuronTypes.EX]
+                 for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.EX])] +
+                [param[NeuronTypes.IN]
+                 for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.IN])]
             )
             params_per_neuron.append(param_per_neuron)
 

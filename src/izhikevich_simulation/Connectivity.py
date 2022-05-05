@@ -14,7 +14,7 @@ class Connectivity:
     where
     * :math:`v, w` are two arbitrary neurons in the network,
     * :math:`\mathsf{type}(v)` maps a neuron to its type (see :obj:`NeuronTypes`),
-    * :math:`\mathsf{cmap}(v)` maps a neuron to its location in the visual cortex (see :obj:`StimulusLocations`),
+    * :math:`\mathsf{cmap}(v)` maps a neuron to its grid_location in the visual cortex (see :obj:`StimulusLocations`),
     * :math:`s_{v, w}` is the spatial constant (see :obj:`constants.SPATIAL_CONST`).
 
     This equation was introduced in :cite:p:`Izhikevich2003`.

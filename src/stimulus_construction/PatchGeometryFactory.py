@@ -97,7 +97,7 @@ class PatchGeometryFactory:
                     center=center,
                     pixels=pixels,
                     atopix=atopix,
-                    grid_index=(i, j)
+                    grid_location=(i, j)
                 )
                 ping_networks_pixels.append(circuit)
 

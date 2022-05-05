@@ -66,7 +66,7 @@ class CurrentComponentsSinglePING(CurrentComponents):
 
         new_currents = np.zeros(self.connectivity.params_ping.nr_neurons["total"])
 
-        for nt in [NeuronTypes.E, NeuronTypes.I]:
+        for nt in [NeuronTypes.EX, NeuronTypes.IN]:
             transmission_concs = 1 + np.tanh(potentials[self.connectivity.params_ping.neur_slice[nt]] / 10 + 2)
             # ampa or gaba
             curr = self._synaptic_currents[self.connectivity.params_ping.neur_slice[nt]]
@@ -92,11 +92,11 @@ class CurrentComponentsSinglePING(CurrentComponents):
 
         input_excitatory = [
             self._var_ex * np.random.randn() + self._mean_ex
-            for _ in range(self.connectivity.params_ping.nr_neurons[NeuronTypes.E])
+            for _ in range(self.connectivity.params_ping.nr_neurons[NeuronTypes.EX])
         ]
         input_inhibitory = [
             self._var_in * np.random.randn() + self._mean_in
-            for _ in range(self.connectivity.params_ping.nr_neurons[NeuronTypes.I])
+            for _ in range(self.connectivity.params_ping.nr_neurons[NeuronTypes.IN])
         ]
 
         return np.array(input_excitatory + input_inhibitory)

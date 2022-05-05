@@ -54,7 +54,7 @@ class CurrentComponentsGridPING(CurrentComponents):
         new_gatings = self._get_gatings(dt, potentials)
         new_currents = np.zeros(self.connectivity.params_ping.nr_neurons["total"])
 
-        for postsyn_nt, presyn_nt in list(product([NeuronTypes.E, NeuronTypes.I], repeat=2)):
+        for postsyn_nt, presyn_nt in list(product([NeuronTypes.EX, NeuronTypes.IN], repeat=2)):
 
             # conductance calculation between neurons (synapse)
             conductances = self._params_synaptic.conductance[(presyn_nt, postsyn_nt)] * \
@@ -89,7 +89,7 @@ class CurrentComponentsGridPING(CurrentComponents):
 
         new_gatings = np.zeros(self.connectivity.params_ping.nr_neurons["total"])
 
-        for nt in [NeuronTypes.E, NeuronTypes.I]:
+        for nt in [NeuronTypes.EX, NeuronTypes.IN]:
             transmission_concs = 1 + np.tanh(potentials[self.connectivity.params_ping.neur_slice[nt]] / 4)
             change_gatings = (
                     self._params_synaptic.rise[nt] * transmission_concs *
@@ -125,8 +125,8 @@ class CurrentComponentsGridPING(CurrentComponents):
 
         # TODO:: what is this exactly?
         return np.append(
-            1.5 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.E]),
-            1.5 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.I])
+            1.5 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.EX]),
+            1.5 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.IN])
         )
 
     def _create_main_input_stimulus(self, stimulus_currents) -> list[float]:
@@ -154,12 +154,12 @@ class CurrentComponentsGridPING(CurrentComponents):
         # amplitude = 1
         # # mean input level to RS cells
         # mean_input_lvl_RS = 7
-        # step = 2 * pi / (self._nr_neurons[NeuronTypes.E] - 1)
+        # step = 2 * pi / (self._nr_neurons[NeuronTypes.EX] - 1)
         # stim_input = mean_input_lvl_RS + amplitude * np.sin(
         #     crange(-pi, pi, step)
         # )
         # # additional mean input to FS cells
-        # stim_input = np.append(stim_input, 3.5 * np.ones(self._nr_neurons[NeuronTypes.I]))
+        # stim_input = np.append(stim_input, 3.5 * np.ones(self._nr_neurons[NeuronTypes.IN]))
         #
         # print("stim input\n", stim_input)
         #

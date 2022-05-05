@@ -57,13 +57,13 @@ class ParamsPING(Params):
             "perfect square."
 
         self.nr_neurons: dict[Union[NeuronTypes, str], int] = {
-            NeuronTypes.E: nr_excitatory,
-            NeuronTypes.I: nr_inhibitory,
+            NeuronTypes.EX: nr_excitatory,
+            NeuronTypes.IN: nr_inhibitory,
             "total": nr_excitatory + nr_inhibitory
         }
         self.neur_slice: dict[NeuronTypes, slice] = {
-            NeuronTypes.E: slice(0, nr_excitatory),
-            NeuronTypes.I: slice(nr_excitatory, nr_excitatory + nr_inhibitory),
+            NeuronTypes.EX: slice(0, nr_excitatory),
+            NeuronTypes.IN: slice(nr_excitatory, nr_excitatory + nr_inhibitory),
         }
         self.nr_ping_networks: int = nr_ping_networks
         self.grid_size: int = int(sqrt(nr_ping_networks))

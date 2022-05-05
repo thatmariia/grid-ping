@@ -1,3 +1,5 @@
+from src.ParamsSynaptic import *
+
 from src.CurrentComponents import *
 from src.Connectivity import *
 
@@ -11,11 +13,8 @@ class CurrentComponentsSinglePING(CurrentComponents):
     :param connectivity: information about connectivity between neurons in the oscillatory network.
     :type connectivity: Connectivity
 
-    :param synaptic_rise: synaptic rise constants.
-    :type synaptic_rise: dict[NeuronTypes, float]
-
-    :param synaptic_decay: synaptic decay constants.
-    :type synaptic_decay: dict[NeuronTypes, float]
+    :param params_synaptic: contains synaptic parameters.
+    :type params_synaptic: ParamsSynaptic
 
     :param mean_ex: mean of input strength to excitatory neurons.
     :type mean_ex: float
@@ -30,20 +29,18 @@ class CurrentComponentsSinglePING(CurrentComponents):
     :type var_in: float
 
 
-    :ivar _synaptic_rise: synaptic rise constants.
-    :ivar _synaptic_decay: synaptic decay constants.
+    :ivar _params_synaptic: contains synaptic parameters.
     :ivar _synaptic_currents: keeps track of intermediate synaptic currents.
     """
 
     def __init__(
             self, connectivity: Connectivity,
-            synaptic_rise: dict[NeuronTypes, float], synaptic_decay: dict[NeuronTypes, float],
+            params_synaptic: ParamsSynaptic,
             mean_ex: float = 20, var_ex: float = 0, mean_in: float = 4, var_in: float = 0
     ):
         super().__init__(connectivity)
 
-        self._synaptic_rise: dict[NeuronTypes, float] = synaptic_rise
-        self._synaptic_decay: dict[NeuronTypes, float] = synaptic_decay
+        self._params_synaptic = params_synaptic
         self._synaptic_currents: np.ndarray[int, float] = np.zeros(self.connectivity.params_ping.nr_neurons["total"])
 
         self._mean_ex = mean_ex
@@ -74,7 +71,8 @@ class CurrentComponentsSinglePING(CurrentComponents):
             # ampa or gaba
             curr = self._synaptic_currents[self.connectivity.params_ping.neur_slice[nt]]
             new_currents[self.connectivity.params_ping.neur_slice[nt]] = curr + dt * 0.3 * (
-                (transmission_concs / 2) * (1 - curr) / self._synaptic_rise[nt] - curr / self._synaptic_decay[nt]
+                (transmission_concs / 2) * (1 - curr) / self._params_synaptic.rise[nt] -
+                curr / self._params_synaptic.decay[nt]
             )
         self._synaptic_currents = new_currents
 

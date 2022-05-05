@@ -1,3 +1,5 @@
+from src.ParamsSynaptic import *
+
 from src.constants import *
 from src.CurrentComponents import *
 from src.NeuronTypes import *
@@ -14,16 +16,22 @@ class CurrentComponentsGridPING(CurrentComponents):
     :param connectivity: information about connectivity between neurons in the oscillatory network.
     :type connectivity: Connectivity
 
+    :param params_synaptic: contains synaptic parameters.
+    :type params_synaptic: ParamsSynaptic
+
     :param stimulus_currents: currents stimulus.
     :type stimulus_currents: numpy.ndarray[int, float]
 
-
+    :ivar _params_synaptic: contains synaptic parameters.
     :ivar _stimulus_currents: currents from stimulus.
     :ivar _gatings: keeps track of gating values.
     """
 
-    def __init__(self, connectivity: Connectivity, stimulus_currents: np.ndarray[int, float]):
+    def __init__(
+            self, connectivity: Connectivity, params_synaptic: ParamsSynaptic, stimulus_currents: np.ndarray[int, float]
+    ):
         super().__init__(connectivity)
+        self._params_synaptic = params_synaptic
         self._stimulus_currents: np.ndarray[int, float] = stimulus_currents
         self._gatings: np.ndarray[int, float] = np.zeros(self.connectivity.params_ping.nr_neurons["total"])
 
@@ -51,13 +59,14 @@ class CurrentComponentsGridPING(CurrentComponents):
         for postsyn_nt, presyn_nt in list(product([NeuronTypes.E, NeuronTypes.I], repeat=2)):
 
             # conductance calculation between neurons (synapse)
-            conductances = SYNAPTIC_CONDUCTANCE[(presyn_nt, postsyn_nt)] * \
+            conductances = self._params_synaptic.conductance[(presyn_nt, postsyn_nt)] * \
                            new_gatings[self.connectivity.params_ping.neur_slice[presyn_nt]]
 
             # synaptic current calculation of a postsynaptic neuron
             new_currents[self.connectivity.params_ping.neur_slice[postsyn_nt]] += \
                 sum(conductances) * (
-                        potentials[self.connectivity.params_ping.neur_slice[postsyn_nt]] - REVERSAL_POTENTIAL[presyn_nt]
+                        potentials[self.connectivity.params_ping.neur_slice[postsyn_nt]] -
+                        self._params_synaptic.reversal_potential[presyn_nt]
                 )
 
         self._gatings = new_gatings
@@ -85,9 +94,9 @@ class CurrentComponentsGridPING(CurrentComponents):
         for nt in [NeuronTypes.E, NeuronTypes.I]:
             transmission_concs = 1 + np.tanh(potentials[self.connectivity.params_ping.neur_slice[nt]] / 4)
             change_gatings = (
-                    SYNAPTIC_RISE[nt] * transmission_concs *
+                    self._params_synaptic.rise[nt] * transmission_concs *
                     (1 - self._gatings[self.connectivity.params_ping.neur_slice[nt]]) -
-                    self._gatings[self.connectivity.params_ping.neur_slice[nt]] / SYNAPTIC_DECAY[nt]
+                    self._gatings[self.connectivity.params_ping.neur_slice[nt]] / self._params_synaptic.decay[nt]
             )
             new_gatings[self.connectivity.params_ping.neur_slice[nt]] = \
                 self._gatings[self.connectivity.params_ping.neur_slice[nt]] + dt * change_gatings

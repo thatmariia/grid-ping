@@ -39,7 +39,7 @@ class IzhikevichNetworkSimulator:
     :type pb_off: Bool
 
 
-    :ivar params_izhi: contains Izhikevich parameters.
+    :ivar _params_izhi: contains Izhikevich parameters.
     :ivar _current_components: contains methods of computing the neural network current components.
     :ivar _pb_off: indicates whether the progress bar should be off.
     """

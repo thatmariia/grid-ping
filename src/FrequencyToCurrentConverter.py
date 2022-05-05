@@ -1,6 +1,7 @@
 from src.ParamsPING import *
 from src.ParamsConnectivity import *
 from src.ParamsIzhikevich import *
+from src.ParamsSynaptic import *
 
 from src.ConnectivitySinglePINGFactory import *
 from src.CurrentComponentsSinglePING import *
@@ -145,18 +146,15 @@ class FrequencyToCurrentConverter:
             params_ping=params_single_ping,
             params_connectivity=params_connectivity
         )
-        synaptic_rise = {
-            NeuronTypes.E: 0.15,
-            NeuronTypes.I: 0.2
-        }
-        synaptic_decay = {
-            NeuronTypes.E: 1,
-            NeuronTypes.I: 7
-        }
+        params_synaptic = ParamsSynaptic(
+            rise_E=0.15,
+            decay_E=1,
+            rise_I=0.2,
+            decay_I=7,
+        )
         current_components = CurrentComponentsSinglePING(
             connectivity=connectivity,
-            synaptic_rise=synaptic_rise,
-            synaptic_decay=synaptic_decay,
+            params_synaptic=params_synaptic,
             mean_ex=mean_ex,
             var_ex=0,
             mean_in=4,

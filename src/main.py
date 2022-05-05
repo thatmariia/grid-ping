@@ -3,6 +3,7 @@ from src.ParamsGaborStimulus import *
 from src.ParamsReceptiveField import *
 from src.ParamsConnectivity import *
 from src.ParamsIzhikevich import *
+from src.ParamsSynaptic import *
 
 from src.StimulusFactory import *
 from src.ConnectivityGridPINGFactory import *
@@ -58,6 +59,18 @@ if __name__ == "__main__":
         gamma_I=-65,
         zeta_I=2
     )
+    params_synaptic = ParamsSynaptic(
+        rise_E=1,
+        decay_E=2.4,
+        rise_I=2,
+        decay_I=20,
+        conductance_EE=0.6,
+        conductance_EI=0.06,
+        conductance_IE=0.8,
+        conductance_II=0.5,
+        reversal_potential_E=-80,
+        reversal_potential_I=0
+    )
 
     stimulus = StimulusFactory().create(params_gabor, params_rf, params_ping, params_izhi)
 
@@ -70,6 +83,7 @@ if __name__ == "__main__":
     )
     neural_model = CurrentComponentsGridPING(
         connectivity=connectivity,
+        params_synaptic=params_synaptic,
         stimulus_currents=stimulus.stimulus_currents
     )
     simulation_outcome = IzhikevichNetworkSimulator(

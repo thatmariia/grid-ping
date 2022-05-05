@@ -25,6 +25,8 @@ project = 'grid-ping'
 copyright = '2022, Mariia Turchina'
 author = 'Mariia Turchina'
 
+extlinks = {'blah': 'https://git.mariia.me/bthesis-latex/doc.pdf'}
+
 
 # -- General configuration ---------------------------------------------------
 
@@ -61,6 +63,26 @@ exclude_patterns = []
 # a list of builtin themes.
 #
 html_theme = 'furo'
+html_theme_options = {
+    "light_css_variables": {
+        "color-brand-primary": "#46A9E5",
+        "color-brand-content": "#46A9E5",
+        "color-background-hover": "#FCEA88",
+        "color-background-hover--transparent": "#FCEA88",
+        "color-link-underline--hover": "#FFA3AF",
+        "font-stack": "Avenir Next, sans-serif",
+        "font-stack--monospace": "Source Code Pro, monospace",
+    },
+    "dark_css_variables": {
+        "color-brand-primary": "#46A9E5",
+        "color-brand-content": "#46A9E5",
+        "color-background-hover": "#FCEA88",
+        "color-background-hover--transparent": "#FCEA88",
+        "color-link-underline--hover": "#FFA3AF",
+        "font-stack": "Avenir Next, sans-serif",
+        "font-stack--monospace": "Source Code Pro, monospace",
+    },
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

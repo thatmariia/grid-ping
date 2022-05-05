@@ -3,34 +3,23 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-grid-ping documentation!
-=========================================
+grid-ping
+==========
 
 .. note::
-   This project is under active development.
+   This project is under active development. Last change: |today|.
 
 Relevant links
 ---------------
 
-.. button:: thesis document (draft)
-    :class: button
-    :link: https://git.mariia.me/bthesis-latex/doc.pdf
-
-.. |br| raw:: html
-
-  <div style="line-height: 0; padding: 0; margin: 0"></div>
-
-|br|
-
-.. button:: git repository
-    :class: button
-    :link: https://github.com/thatmariia/grid-ping
+* `Git repository <https://git.mariia.me/bthesis-latex/doc.pdf>`_
+* `Thesis document (draft) <https://github.com/thatmariia/grid-ping>`_
 
 Contents
 --------
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
 
    usage
    diagrams

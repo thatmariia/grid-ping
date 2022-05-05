@@ -1,3 +1,5 @@
+from src.ParamsGaborStimulus import *
+
 from src.misc import *
 from src.GaborLuminanceStimulus import *
 
@@ -21,124 +23,34 @@ class GaborLuminanceStimulusFactory:
     oscillatory network (see :obj:`IzhikevichNetworkSimulator`).
     """
 
-    def create(
-            self,
-            spatial_freq: float, vlum: float, diameter_dg: float, diameter: int,
-            dist_scale: float, full_width_dg: float, full_height_dg: float,
-            contrast_range: float, figure_width_dg: float, figure_height_dg: float, figure_ecc_dg: float,
-            patch_size_dg: float
-    ) -> GaborLuminanceStimulus:
+    def create(self, params_gabor: ParamsGaborStimulus) -> GaborLuminanceStimulus:
         """
         Goes through the steps to construct the luminance stimulus.
 
-        :param spatial_freq: spatial frequency of the grating (cycles / degree).
-        :type spatial_freq: float
-
-        :param vlum: luminance of the void.
-        :type vlum: float
-
-        :param diameter_dg: annulus' diameter in degrees.
-        :type diameter_dg: float
-
-        :param diameter: resolution (number of pixels in a single row) of single grating.
-        :type diameter: int
-
-        :param dist_scale: how far the circles are from each other.
-        :type dist_scale: float
-
-        :param full_width_dg: width of the full stimulus in degrees.
-        :type full_width_dg: float
-
-        :param full_height_dg: height of the full stimulus in degrees.
-        :type full_height_dg: float
-
-        :param contrast_range: contrast range for the figure.
-        :type contrast_range: float
-
-        :param figure_width_dg: width of the figure in degrees.
-        :type figure_width_dg: float
-
-        :param figure_height_dg: height of the figure in degrees.
-        :type figure_height_dg: float
-
-        :param figure_ecc_dg: distance between the center of the stimulus and the center of the figure in degrees.
-        :type figure_ecc_dg: float
-
-        :param patch_size_dg: side length of the stimulus patch in degrees.
-        :type patch_size_dg: float
-
-        :raises:
-            AssertionError: spatial frequency is not greater than 0.
-        :raises:
-            AssertionError: void luminance does not fall in range :math:`[0, 1]`.
-        :raises:
-            AssertionError: annulus diameter is not larger than 0 degrees.
-        :raises:
-            AssertionError: annulus diameter is smaller than 1 pixel.
-        :raises:
-            AssertionError: the distance between neighbouring annuli is less than 1 diameter.
-        :raises:
-            AssertionError: stimulus is less wide than annulus.
-        :raises:
-            AssertionError: stimulus is less tall than annulus.
-        :raises:
-            AssertionError: contrast range does not fall in range :math:`(0, 1]`.
-        :raises:
-            AssertionError: figure width is larger than half the width of the stimulus or is not larger than 0.
-        :raises:
-            AssertionError: figure height is larger than half the height of the stimulus or is not larger than 0.
-        :raises:
-            AssertionError: figure cannot be positioned so that it is contained within the stimulus quadrant.
-        :raises:
-            AssertionError: size of the patch is smaller than one of the figure sides.
+        :param params_gabor: parameters for creating a Gabor luminance stimulus.
+        :type params_gabor: ParamsGaborStimulus
 
         :return: the luminance stimulus.
         :rtype: GaborLuminanceStimulus
         """
 
-        figure_half_diag_dg = euclidian_dist((0.5 * figure_width_dg, 0.5 * figure_height_dg))
-        stim_half_diag_dg = euclidian_dist((0.5 * full_width_dg, 0.5 * full_height_dg))
+        atopix = params_gabor.diameter / params_gabor.diameter_dg  # conversion between pixels and degrees
 
-        assert spatial_freq > 0, \
-            "Spatial frequency must be greater than 0."
-        assert (vlum >= 0) and (vlum <= 1), \
-            "Void luminance must fall in range :math:`[0, 1]`."
-        assert diameter_dg > 0, \
-            "Annulus diameter must be larger than 0 degrees."
-        assert diameter >= 1, \
-            "Annulus diameter must be at least 1 pixel."
-        assert dist_scale >= 1, \
-            "The distance between neighbouring annuli must be at least 1 diameter."
-        assert full_width_dg >= diameter_dg, \
-            "The stimulus must be at least as wide as an annulus."
-        assert full_height_dg >= diameter_dg, \
-            "The stimulus must be at least as tall as an annulus."
-        assert (contrast_range > 0) and (contrast_range <= 1), \
-            "Contrast range must fall in range :math:`(0, 1]`."
-        assert (figure_width_dg > 0) and (figure_width_dg <= 0.5 * full_width_dg), \
-            "Figure width cannot be larger than half the width of the stimulus and must be larger than 0."
-        assert (figure_height_dg > 0) and (figure_height_dg <= 0.5 * full_height_dg), \
-            "Figure height cannot be larger than half the height of the stimulus and must be larger than 0."
-        assert (figure_ecc_dg >= figure_half_diag_dg) and (figure_ecc_dg <= stim_half_diag_dg - figure_half_diag_dg), \
-            "Figure must be positioned so that it is contained within the stimulus quadrant."
-        assert (patch_size_dg > 0) and (patch_size_dg <= min(figure_width_dg, figure_height_dg)), \
-            "The size of the patch cannot be smaller than either of the figure sides."
+        full_width: int = ceil(atopix * params_gabor.full_width_dg)
+        full_height: int = ceil(atopix * params_gabor.full_height_dg)
+        figure_width: int = ceil(atopix * params_gabor.figure_width_dg)
+        figure_height: int = ceil(atopix * params_gabor.figure_height_dg)
+        figure_ecc: float = atopix * params_gabor.figure_ecc_dg
+        patch_size: int = ceil(atopix * params_gabor.patch_size_dg)
 
-        atopix = diameter / diameter_dg  # conversion between pixels and degrees
-
-        full_width: int = ceil(atopix * full_width_dg)
-        full_height: int = ceil(atopix * full_height_dg)
-        figure_width: int = ceil(atopix * figure_width_dg)
-        figure_height: int = ceil(atopix * figure_height_dg)
-        figure_ecc: float = atopix * figure_ecc_dg
-        patch_size: int = ceil(atopix * patch_size_dg)
-
-        grating = self._get_grating(spatial_freq, diameter_dg, diameter)
+        grating = self._get_grating(params_gabor.spatial_freq, params_gabor.diameter_dg, params_gabor.diameter)
         figure_start, figure_end, figure_center = self._get_figure_coords(
             full_width, full_height, figure_width, figure_height, figure_ecc
         )
         stimulus = self._get_full_stimulus(
-            full_width, full_height, grating, diameter, contrast_range, dist_scale, figure_start, figure_end
+            full_width, full_height, grating,
+            params_gabor.diameter, params_gabor.contrast_range, params_gabor.dist_scale,
+            figure_start, figure_end
         )
         patch_start, stimulus_patch = self._select_stimulus_patch(stimulus, figure_center, patch_size)
 

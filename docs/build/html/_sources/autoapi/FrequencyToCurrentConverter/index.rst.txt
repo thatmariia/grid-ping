@@ -21,7 +21,7 @@ Classes
 
    This class converts the frequencies stimulus into the currents stimulus.
 
-   .. py:method:: convert(self, stimulus_frequencies: numpy.ndarray[int, float], nr_neurons: dict[Any, int], neur_slice: dict[src.NeuronTypes.NeuronTypes, slice]) -> numpy.ndarray[int, float]
+   .. py:method:: convert(self, stimulus_frequencies: numpy.ndarray[int, float], params_ping: src.IzhikevichNetworkSimulator.ParamsPING) -> numpy.ndarray[int, float]
 
       Converts the frequencies stimulus into the currents stimulus.
 
@@ -30,11 +30,8 @@ Classes
       :param stimulus_frequencies: frequencies stimulus.
       :type stimulus_frequencies: numpy.ndarray[int, float]
 
-      :param nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
-      :type nr_neurons: dict[Any, int]
-
-      :param neur_slice: indices of each type of neurons.
-      :type neur_slice: dict[NeuronTypes, slice]
+      :param params_ping: parameters describing PING networks and their composition.
+      :type params_ping: ParamsPING
 
       :return: the stimulus converted to currents.
       :rtype: numpy.ndarray[int, float]
@@ -54,15 +51,15 @@ Classes
       :rtype: TheilSenRegressor
 
 
-   .. py:method:: _simulate(self, simulation_time: int, nr_neurons: dict[Any, int], mean_ex: float) -> src.IzhikevichNetworkOutcome.IzhikevichNetworkOutcome
+   .. py:method:: _simulate(self, simulation_time: int, params_ping: src.IzhikevichNetworkSimulator.ParamsPING, mean_ex: float) -> src.IzhikevichNetworkOutcome.IzhikevichNetworkOutcome
 
       Simulates an Izhikevich network with a single PING.
 
       :param simulation_time: number of epochs to run the simulation.
       :type simulation_time: int
 
-      :param nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
-      :type nr_neurons: dict[Any, int]
+      :param params_ping: parameters describing PING networks and their composition.
+      :type params_ping: ParamsPING
 
       :param mean_ex: mean of input strength to excitatory neurons.
       :type mean_ex: float

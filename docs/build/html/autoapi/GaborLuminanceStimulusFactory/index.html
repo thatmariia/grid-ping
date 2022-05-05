@@ -179,6 +179,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../diagrams.html">UML Diagrams</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">misc</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ParamsGaborStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ParamsGaborStimulus</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Params/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Params</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Connectivity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Connectivity</span></code></a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaborLuminanceStimulusFactory</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../NeuronTypes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a></li>
@@ -194,6 +196,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../ConnectivitySinglePINGFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ConnectivitySinglePINGFactory</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../StimulusLocations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusLocations</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../GaborLuminanceStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaborLuminanceStimulus</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ParamsReceptiveField/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ParamsReceptiveField</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../IzhikevichNetworkSimulator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IzhikevichNetworkSimulator</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../CurrentComponentsSinglePING/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponentsSinglePING</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../PINGNetworkPixels/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PINGNetworkPixels</span></code></a></li>
@@ -202,6 +205,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../IzhikevichNetworkOutcome/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IzhikevichNetworkOutcome</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../main/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../FrequencyToCurrentConverter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">FrequencyToCurrentConverter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ParamsPING/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ParamsPING</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -267,60 +271,11 @@ share the same luminance. A square-shaped patch of the stimulus’ figure is sel
 oscillatory network (see <a class="reference internal" href="../IzhikevichNetworkSimulator/index.html#module-IzhikevichNetworkSimulator" title="IzhikevichNetworkSimulator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IzhikevichNetworkSimulator</span></code></a>).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory.create">
-<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_freq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vlum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_width_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_height_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contrast_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_width_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_height_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_ecc_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_size_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">src.GaborLuminanceStimulus.GaborLuminanceStimulus</span></span></span><a class="headerlink" href="#GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory.create" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_gabor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">src.ParamsGaborStimulus.ParamsGaborStimulus</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">src.GaborLuminanceStimulus.GaborLuminanceStimulus</span></span></span><a class="headerlink" href="#GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory.create" title="Permalink to this definition">#</a></dt>
 <dd><p>Goes through the steps to construct the luminance stimulus.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>spatial_freq</strong> (<em>float</em>) – spatial frequency of the grating (cycles / degree).</p></li>
-<li><p><strong>vlum</strong> (<em>float</em>) – luminance of the void.</p></li>
-<li><p><strong>diameter_dg</strong> (<em>float</em>) – annulus’ diameter in degrees.</p></li>
-<li><p><strong>diameter</strong> (<em>int</em>) – resolution (number of pixels in a single row) of single grating.</p></li>
-<li><p><strong>dist_scale</strong> (<em>float</em>) – how far the circles are from each other.</p></li>
-<li><p><strong>full_width_dg</strong> (<em>float</em>) – width of the full stimulus in degrees.</p></li>
-<li><p><strong>full_height_dg</strong> (<em>float</em>) – height of the full stimulus in degrees.</p></li>
-<li><p><strong>contrast_range</strong> (<em>float</em>) – contrast range for the figure.</p></li>
-<li><p><strong>figure_width_dg</strong> (<em>float</em>) – width of the figure in degrees.</p></li>
-<li><p><strong>figure_height_dg</strong> (<em>float</em>) – height of the figure in degrees.</p></li>
-<li><p><strong>figure_ecc_dg</strong> (<em>float</em>) – distance between the center of the stimulus and the center of the figure in degrees.</p></li>
-<li><p><strong>patch_size_dg</strong> (<em>float</em>) – side length of the stimulus patch in degrees.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p>AssertionError: spatial frequency is not greater than 0.</p>
-</dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p>AssertionError: void luminance does not fall in range <span class="math notranslate nohighlight">\([0, 1]\)</span>.</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p>AssertionError: annulus diameter is not larger than 0 degrees.</p>
-</dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p>AssertionError: annulus diameter is smaller than 1 pixel.</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p>AssertionError: the distance between neighbouring annuli is less than 1 diameter.</p>
-</dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p>AssertionError: stimulus is less wide than annulus.</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p>AssertionError: stimulus is less tall than annulus.</p>
-</dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p>AssertionError: contrast range does not fall in range <span class="math notranslate nohighlight">\((0, 1]\)</span>.</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p>AssertionError: figure width is larger than half the width of the stimulus or is not larger than 0.</p>
-</dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p>AssertionError: figure height is larger than half the height of the stimulus or is not larger than 0.</p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p>AssertionError: figure cannot be positioned so that it is contained within the stimulus quadrant.</p>
-</dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p>AssertionError: size of the patch is smaller than one of the figure sides.</p>
+<dd class="field-odd"><p><strong>params_gabor</strong> (<a class="reference internal" href="../ParamsGaborStimulus/index.html#ParamsGaborStimulus.ParamsGaborStimulus" title="ParamsGaborStimulus.ParamsGaborStimulus"><em>ParamsGaborStimulus</em></a>) – parameters for creating a Gabor luminance stimulus.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the luminance stimulus.</p>
@@ -519,6 +474,5 @@ oscillatory network (see <a class="reference internal" href="../IzhikevichNetwor
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
-    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>

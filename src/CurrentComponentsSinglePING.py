@@ -44,7 +44,7 @@ class CurrentComponentsSinglePING(CurrentComponents):
 
         self._synaptic_rise: dict[NeuronTypes, float] = synaptic_rise
         self._synaptic_decay: dict[NeuronTypes, float] = synaptic_decay
-        self._synaptic_currents: np.ndarray[int, float] = np.zeros(self.connectivity.nr_neurons["total"])
+        self._synaptic_currents: np.ndarray[int, float] = np.zeros(self.connectivity.params_ping.nr_neurons["total"])
 
         self._mean_ex = mean_ex
         self._var_ex = var_ex
@@ -67,13 +67,13 @@ class CurrentComponentsSinglePING(CurrentComponents):
         :rtype: numpy.ndarray[int, float]
         """
 
-        new_currents = np.zeros(self.connectivity.nr_neurons["total"])
+        new_currents = np.zeros(self.connectivity.params_ping.nr_neurons["total"])
 
         for nt in [NeuronTypes.E, NeuronTypes.I]:
-            transmission_concs = 1 + np.tanh(potentials[self.connectivity.neur_slice[nt]] / 10 + 2)
+            transmission_concs = 1 + np.tanh(potentials[self.connectivity.params_ping.neur_slice[nt]] / 10 + 2)
             # ampa or gaba
-            curr = self._synaptic_currents[self.connectivity.neur_slice[nt]]
-            new_currents[self.connectivity.neur_slice[nt]] = curr + dt * 0.3 * (
+            curr = self._synaptic_currents[self.connectivity.params_ping.neur_slice[nt]]
+            new_currents[self.connectivity.params_ping.neur_slice[nt]] = curr + dt * 0.3 * (
                 (transmission_concs / 2) * (1 - curr) / self._synaptic_rise[nt] - curr / self._synaptic_decay[nt]
             )
         self._synaptic_currents = new_currents
@@ -93,10 +93,12 @@ class CurrentComponentsSinglePING(CurrentComponents):
         """
 
         input_excitatory = [
-            self._var_ex * np.random.randn() + self._mean_ex for _ in range(self.connectivity.nr_neurons[NeuronTypes.E])
+            self._var_ex * np.random.randn() + self._mean_ex
+            for _ in range(self.connectivity.params_ping.nr_neurons[NeuronTypes.E])
         ]
         input_inhibitory = [
-            self._var_in * np.random.randn() + self._mean_in for _ in range(self.connectivity.nr_neurons[NeuronTypes.I])
+            self._var_in * np.random.randn() + self._mean_in
+            for _ in range(self.connectivity.params_ping.nr_neurons[NeuronTypes.I])
         ]
 
         return np.array(input_excitatory + input_inhibitory)

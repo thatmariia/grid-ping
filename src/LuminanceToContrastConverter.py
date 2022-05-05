@@ -1,3 +1,5 @@
+from src.ParamsReceptiveField import *
+
 from src.misc import *
 from src.PatchGeometry import *
 from src.GaborLuminanceStimulus import *
@@ -15,25 +17,15 @@ class LuminanceToContrastConverter:
 
     def convert(
             self,
-            slope: float,
-            intercept: float,
-            min_diam_rf: float,
-            patch_geometry: PatchGeometry,
-            stimulus_luminance: GaborLuminanceStimulus
+            params_rf: ParamsReceptiveField, patch_geometry: PatchGeometry, stimulus_luminance: GaborLuminanceStimulus
     ) -> list[float]:
         """
         Converts the luminance stimulus into the local contrasts stimulus.
 
         The approach is derived from :cite:p:`MaryamPLACEHOLDER`.
 
-        :param slope: slope of the receptive field size.
-        :type slope: float
-
-        :param intercept: intercept of the receptive field size.
-        :type intercept: float
-
-        :param min_diam_rf: minimal size of the receptive field.
-        :type min_diam_rf: float
+        :param params_rf: parameters for the receptive field.
+        :type params_rf: ParamsReceptiveField
 
         :param patch_geometry: information about the grid layout of the stimulus patch in correspondence with PING networks.
         :type patch_geometry: PatchGeometry
@@ -45,11 +37,11 @@ class LuminanceToContrastConverter:
         :rtype: list[float]
         """
 
-        return self._compute_local_contrasts(slope, intercept, min_diam_rf, patch_geometry, stimulus_luminance)
+        return self._compute_local_contrasts(params_rf, patch_geometry, stimulus_luminance)
 
     def _compute_local_contrasts(
-            self, slope: float, intercept: float, min_diam_rf: float,
-            patch_geometry: PatchGeometry, stimulus_luminance: GaborLuminanceStimulus
+            self,
+            params_rf: ParamsReceptiveField, patch_geometry: PatchGeometry, stimulus_luminance: GaborLuminanceStimulus
     ) -> list[float]:
         """
         Computes local contrasts for each circuit.
@@ -60,14 +52,8 @@ class LuminanceToContrastConverter:
         :param stimulus_luminance: luminance stimulus container.
         :type stimulus_luminance: GaborLuminanceStimulus
 
-        :param slope: slope of the receptive field size.
-        :type slope: float
-
-        :param intercept: intercept of the receptive field size.
-        :type intercept: float
-
-        :param min_diam_rf: minimal size of the receptive field.
-        :type min_diam_rf: float
+        :param params_rf: parameters for the receptive field.
+        :type params_rf: ParamsReceptiveField
 
         :return: list containing local contrast values for each circuit.
         :rtype: list[float]
@@ -92,9 +78,7 @@ class LuminanceToContrastConverter:
                         center=curr_circuit.center_dg,
                         pixel=pix_dg,
                         eccentricity=eccentricity,
-                        slope=slope,
-                        intercept=intercept,
-                        min_diam_rf=min_diam_rf
+                        params_rf=params_rf
                     )
 
                     num += weight * (stimulus_luminance.stimulus_patch[pix[0]][pix[1]] - mean_luminance) ** 2 / mean_luminance
@@ -108,7 +92,7 @@ class LuminanceToContrastConverter:
     def _get_weight(
             self,
             center: tuple[float, float], pixel: tuple[int, int], eccentricity: float,
-            slope: float, intercept: float, min_diam_rf: float
+            params_rf: ParamsReceptiveField
     ) -> float:
         """
         Computes weight of a pixel with respect to a circuit.
@@ -122,19 +106,13 @@ class LuminanceToContrastConverter:
         :param eccentricity: eccentricity of the circuit center.
         :type eccentricity: float
 
-        :param slope: slope of the receptive field size.
-        :type slope: float
-
-        :param intercept: intercept of the receptive field size.
-        :type intercept: float
-
-        :param min_diam_rf: minimal size of the receptive field.
-        :type min_diam_rf: float
+        :param params_rf: parameters for the receptive field.
+        :type params_rf: ParamsReceptiveField
 
         :return: weight of a pixel with respect to a circuit.
         :rtype: float
         """
 
-        diam_rf = max(slope * eccentricity + intercept, min_diam_rf)
+        diam_rf = max(params_rf.slope * eccentricity + params_rf.intercept, params_rf.min_diam_rf)
         std = diam_rf / 4.0
         return exp(-euclidian_dist(pixel, center) / (2 * std ** 2))

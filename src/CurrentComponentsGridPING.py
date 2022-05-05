@@ -25,7 +25,7 @@ class CurrentComponentsGridPING(CurrentComponents):
     def __init__(self, connectivity: Connectivity, stimulus_currents: np.ndarray[int, float]):
         super().__init__(connectivity)
         self._stimulus_currents: np.ndarray[int, float] = stimulus_currents
-        self._gatings: np.ndarray[int, float] = np.zeros(self.connectivity.nr_neurons["total"])
+        self._gatings: np.ndarray[int, float] = np.zeros(self.connectivity.params_ping.nr_neurons["total"])
 
     def get_synaptic_currents(
             self, dt: float, potentials: np.ndarray[int, float]
@@ -46,19 +46,18 @@ class CurrentComponentsGridPING(CurrentComponents):
         """
 
         new_gatings = self._get_gatings(dt, potentials)
-        new_currents = np.zeros(self.connectivity.nr_neurons["total"])
+        new_currents = np.zeros(self.connectivity.params_ping.nr_neurons["total"])
 
         for postsyn_nt, presyn_nt in list(product([NeuronTypes.E, NeuronTypes.I], repeat=2)):
 
             # conductance calculation between neurons (synapse)
-            conductances = SYNAPTIC_CONDUCTANCE[
-                               (presyn_nt, postsyn_nt)] * new_gatings[self.connectivity.neur_slice[presyn_nt]
-            ]
+            conductances = SYNAPTIC_CONDUCTANCE[(presyn_nt, postsyn_nt)] * \
+                           new_gatings[self.connectivity.params_ping.neur_slice[presyn_nt]]
 
             # synaptic current calculation of a postsynaptic neuron
-            new_currents[self.connectivity.neur_slice[postsyn_nt]] += \
+            new_currents[self.connectivity.params_ping.neur_slice[postsyn_nt]] += \
                 sum(conductances) * (
-                        potentials[self.connectivity.neur_slice[postsyn_nt]] - REVERSAL_POTENTIAL[presyn_nt]
+                        potentials[self.connectivity.params_ping.neur_slice[postsyn_nt]] - REVERSAL_POTENTIAL[presyn_nt]
                 )
 
         self._gatings = new_gatings
@@ -81,16 +80,17 @@ class CurrentComponentsGridPING(CurrentComponents):
         :rtype: numpy.ndarray[int, float]
         """
 
-        new_gatings = np.zeros(self.connectivity.nr_neurons["total"])
+        new_gatings = np.zeros(self.connectivity.params_ping.nr_neurons["total"])
 
         for nt in [NeuronTypes.E, NeuronTypes.I]:
-            transmission_concs = 1 + np.tanh(potentials[self.connectivity.neur_slice[nt]] / 4)
+            transmission_concs = 1 + np.tanh(potentials[self.connectivity.params_ping.neur_slice[nt]] / 4)
             change_gatings = (
-                    SYNAPTIC_RISE[nt] * transmission_concs * (1 - self._gatings[self.connectivity.neur_slice[nt]]) -
-                    self._gatings[self.connectivity.neur_slice[nt]] / SYNAPTIC_DECAY[nt]
+                    SYNAPTIC_RISE[nt] * transmission_concs *
+                    (1 - self._gatings[self.connectivity.params_ping.neur_slice[nt]]) -
+                    self._gatings[self.connectivity.params_ping.neur_slice[nt]] / SYNAPTIC_DECAY[nt]
             )
-            new_gatings[self.connectivity.neur_slice[nt]] = \
-                self._gatings[self.connectivity.neur_slice[nt]] + dt * change_gatings
+            new_gatings[self.connectivity.params_ping.neur_slice[nt]] = \
+                self._gatings[self.connectivity.params_ping.neur_slice[nt]] + dt * change_gatings
 
         return new_gatings
 
@@ -118,8 +118,8 @@ class CurrentComponentsGridPING(CurrentComponents):
 
         # TODO:: what is this exactly?
         return np.append(
-            GAUSSIAN_INPUT[NeuronTypes.E] * np.random.randn(self.connectivity.nr_neurons[NeuronTypes.E]),
-            GAUSSIAN_INPUT[NeuronTypes.I] * np.random.randn(self.connectivity.nr_neurons[NeuronTypes.I])
+            GAUSSIAN_INPUT[NeuronTypes.E] * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.E]),
+            GAUSSIAN_INPUT[NeuronTypes.I] * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.I])
         )
 
     def _create_main_input_stimulus(self, stimulus_currents) -> list[float]:
@@ -133,13 +133,12 @@ class CurrentComponentsGridPING(CurrentComponents):
         """
 
         # TODO:: implement the real strategy
-        # TODO:: change 4 to nr ping networks
 
         stim_input = []
         for i in stimulus_currents:
             stim_input += [i] * \
-                          ((self.connectivity.nr_neurons[NeuronTypes.E] +
-                            self.connectivity.nr_neurons[NeuronTypes.I]) // self.connectivity.nr_ping_networks)
+                          (self.connectivity.params_ping.nr_neurons["total"]
+                           // self.connectivity.params_ping.nr_ping_networks)
 
         return stim_input
 

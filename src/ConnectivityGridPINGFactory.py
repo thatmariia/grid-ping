@@ -1,3 +1,5 @@
+from src.ParamsPING import *
+
 from src.PINGNetworkNeurons import *
 from src.NeuronTypes import *
 from src.Connectivity import *
@@ -17,63 +19,36 @@ class ConnectivityGridPINGFactory:
         pass
 
     def create(
-            self,
-            nr_excitatory: int, nr_inhibitory: int, nr_ping_networks: int,
+            self, params_ping: ParamsPING,
             cortical_coords: list[list[tuple[float, float]]]
     ) -> Connectivity:
         """
         Determines the connectivity between neurons in the oscillatory network.
 
-        :param nr_excitatory: number of excitatory neurons in the network.
-        :type nr_excitatory: int
-
-        :param nr_inhibitory: number of inhibitory neurons in the network.
-        :type nr_inhibitory: int
-
-        :param nr_ping_networks: number of PING networks in the network.
-        :type nr_ping_networks: int
+        :param params_ping: parameters describing PING networks and their composition.
+        :type params_ping: ParamsPING
 
         :param cortical_coords: coordinates of the points in the visual cortex.
         :type cortical_coords: list[list[tuple[float, float]]]
-
-        :raises:
-            AssertionError: if the number of excitatory neurons is smaller than 2.
-        :raises:
-            AssertionError: if the number of inhibitory neurons is smaller than 2.
 
         :return: connectivity between neurons in the oscillatory network.
         :rtype: Connectivity
         """
 
-        # FIXME:: this assertions are only there because of the stim_input?
-        assert nr_excitatory >= 2, "Number of excitatory neurons cannot be smaller than 2."
-        assert nr_inhibitory >= 2, "Number of inhibitory neurons cannot be smaller than 2."
-
-        nr_neurons = {
-            NeuronTypes.E: nr_excitatory,
-            NeuronTypes.I: nr_inhibitory,
-            "total": nr_excitatory + nr_inhibitory
-        }
-        neur_slice = {
-            NeuronTypes.E: slice(nr_excitatory),
-            NeuronTypes.I: slice(nr_excitatory, nr_excitatory + nr_inhibitory),
-        }
-        ping_networks, neuron_ping_map = self._assign_ping_networks(nr_neurons, nr_ping_networks)
+        ping_networks, neuron_ping_map = self._assign_ping_networks(params_ping)
         coupling_weights = self._compute_coupling_weights(
-            nr_neurons, neur_slice, ping_networks, neuron_ping_map, cortical_coords
+            params_ping, ping_networks, neuron_ping_map, cortical_coords
         )
 
         connectivity = Connectivity(
-            nr_neurons=nr_neurons,
-            neur_slice=neur_slice,
-            nr_ping_networks=nr_ping_networks,
+            params_ping=params_ping,
             coupling_weights=coupling_weights
         )
 
         return connectivity
 
     def _assign_ping_networks(
-            self, nr_neurons: dict[Any, int], nr_ping_networks: int
+            self, params_ping: ParamsPING,
     ) -> tuple[list[PINGNetworkNeurons], dict[NeuronTypes, dict[int, int]]]:
         """
         Creates PING networks, assigns grid locations to them, and adds the same number of neurons of each neuron type
@@ -81,11 +56,8 @@ class ConnectivityGridPINGFactory:
 
         In other words, this function creates a map that can be used as function :math:`\mathsf{loc}`.
 
-        :param nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
-        :type nr_neurons: dict[Any, int]
-
-        :param nr_ping_networks: number of PING networks.
-        :type nr_ping_networks: int
+        :param params_ping: parameters describing PING networks and their composition.
+        :type params_ping: ParamsPING
 
         :return: list of PING networks in the network and a dictionary mapping a neuron to the PING network it belongs to.
         :rtype: tuple[list[PINGNetworkNeurons], dict[NeuronTypes, dict[int, int]]]
@@ -97,13 +69,13 @@ class ConnectivityGridPINGFactory:
             NeuronTypes.I: {}
         }
 
-        grid_size = int(math.sqrt(nr_ping_networks))  # now assuming the grid is square
+        grid_size = int(math.sqrt(params_ping.nr_ping_networks))  # now assuming the grid is square
 
         #  number of neurons of each neuron_type in each PING network
-        nr_ex_per_ping_network = nr_neurons[NeuronTypes.E] // nr_ping_networks
-        nr_in_per_ping_network = nr_neurons[NeuronTypes.I] // nr_ping_networks
+        nr_ex_per_ping_network = params_ping.nr_neurons[NeuronTypes.E] // params_ping.nr_ping_networks
+        nr_in_per_ping_network = params_ping.nr_neurons[NeuronTypes.I] // params_ping.nr_ping_networks
 
-        for i in range(nr_ping_networks):
+        for i in range(params_ping.nr_ping_networks):
             x = i // grid_size
             y = i % grid_size
 
@@ -129,7 +101,7 @@ class ConnectivityGridPINGFactory:
 
     def _compute_coupling_weights(
             self,
-            nr_neurons: dict[Any, int], neur_slice: dict[NeuronTypes, slice],
+            params_ping: ParamsPING,
             ping_networks: list[PINGNetworkNeurons], neuron_ping_map: dict[NeuronTypes, dict[int, int]],
             cortical_coords: list[list[tuple[float, float]]]
     ) -> np.ndarray[(int, int), float]:
@@ -139,11 +111,8 @@ class ConnectivityGridPINGFactory:
         Essentially, this method computes the full matrix :math:`K` of coupling weights.
         The approach is derived from :cite:p:`Lowet2015`.
 
-        :param nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
-        :type nr_neurons: dict[Any, int]
-
-        :param neur_slice: indices of each type of neurons.
-        :type neur_slice: dict[NeuronType, slice]
+        :param params_ping: parameters describing PING networks and their composition.
+        :type params_ping: ParamsPING
 
         :param ping_networks: list of PING networks in the network.
         :type ping_networks: list[PINGNetworkNeurons]
@@ -158,14 +127,14 @@ class ConnectivityGridPINGFactory:
         :rtype: numpy.ndarray[(int, int), float]
         """
 
-        coupling_weights = np.zeros((nr_neurons["total"], nr_neurons["total"]))
+        coupling_weights = np.zeros((params_ping.nr_neurons["total"], params_ping.nr_neurons["total"]))
 
         for nts in list(product([NeuronTypes.E, NeuronTypes.I], repeat=2)):
             dist = self._get_neurons_dist(
                 neuron_type1=nts[0],
                 neuron_type2=nts[1],
-                nr1=nr_neurons[nts[0]],
-                nr2=nr_neurons[nts[1]],
+                nr1=params_ping.nr_neurons[nts[0]],
+                nr2=params_ping.nr_neurons[nts[1]],
                 ping_networks=ping_networks,
                 neuron_ping_map=neuron_ping_map,
                 cortical_coords=cortical_coords
@@ -176,9 +145,11 @@ class ConnectivityGridPINGFactory:
                 spatial_const=SPATIAL_CONST[(nts[0], nts[1])]
             )
             if nts[0] == nts[1]:
-                coupling_weights[neur_slice[nts[0]], neur_slice[nts[1]]] = types_coupling_weights
+                coupling_weights[params_ping.neur_slice[nts[0]], params_ping.neur_slice[nts[1]]] = \
+                    types_coupling_weights
             else:
-                coupling_weights[neur_slice[nts[1]], neur_slice[nts[0]]] = types_coupling_weights.T
+                coupling_weights[params_ping.neur_slice[nts[1]], params_ping.neur_slice[nts[0]]] = \
+                    types_coupling_weights.T
 
         return np.nan_to_num(coupling_weights)
 

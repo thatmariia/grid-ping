@@ -179,6 +179,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../diagrams.html">UML Diagrams</a></li>
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">misc</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ParamsGaborStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ParamsGaborStimulus</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Params/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Params</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Connectivity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Connectivity</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../GaborLuminanceStimulusFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaborLuminanceStimulusFactory</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../NeuronTypes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a></li>
@@ -194,6 +196,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../ConnectivitySinglePINGFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ConnectivitySinglePINGFactory</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../StimulusLocations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusLocations</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../GaborLuminanceStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaborLuminanceStimulus</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ParamsReceptiveField/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ParamsReceptiveField</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../IzhikevichNetworkSimulator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IzhikevichNetworkSimulator</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../CurrentComponentsSinglePING/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponentsSinglePING</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../PINGNetworkPixels/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PINGNetworkPixels</span></code></a></li>
@@ -202,6 +205,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../IzhikevichNetworkOutcome/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IzhikevichNetworkOutcome</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../main/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../FrequencyToCurrentConverter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">FrequencyToCurrentConverter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ParamsPING/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ParamsPING</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -248,48 +252,26 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#StimulusFactory.CurrentStimulusFactory" title="StimulusFactory.CurrentStimulusFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CurrentStimulusFactory</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#StimulusFactory.StimulusFactory" title="StimulusFactory.StimulusFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StimulusFactory</span></code></a></p></td>
 <td><p>This class creates an external stimulus (Gabor texture) and prepares for the neural network input.</p></td>
 </tr>
 </tbody>
 </table></div>
 <dl class="py class">
-<dt class="sig sig-object py" id="StimulusFactory.CurrentStimulusFactory">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">StimulusFactory.</span></span><span class="sig-name descname"><span class="pre">CurrentStimulusFactory</span></span><a class="headerlink" href="#StimulusFactory.CurrentStimulusFactory" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="StimulusFactory.StimulusFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">StimulusFactory.</span></span><span class="sig-name descname"><span class="pre">StimulusFactory</span></span><a class="headerlink" href="#StimulusFactory.StimulusFactory" title="Permalink to this definition">#</a></dt>
 <dd><p>This class creates an external stimulus (Gabor texture) and prepares for the neural network input.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="StimulusFactory.CurrentStimulusFactory.create">
-<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_freq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vlum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diameter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dist_scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_width_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_height_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">contrast_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_width_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_height_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_ecc_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_size_dg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_ping_networks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intercept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_diam_rf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_neurons</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neur_slice</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">src.Stimulus.NeuronTypes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">slice</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">src.Stimulus.Stimulus</span></span></span><a class="headerlink" href="#StimulusFactory.CurrentStimulusFactory.create" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="StimulusFactory.StimulusFactory.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_gabor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">src.GaborLuminanceStimulusFactory.ParamsGaborStimulus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_rf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">src.LuminanceToContrastConverter.ParamsReceptiveField</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_ping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">src.FrequencyToCurrentConverter.ParamsPING</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">src.Stimulus.Stimulus</span></span></span><a class="headerlink" href="#StimulusFactory.StimulusFactory.create" title="Permalink to this definition">#</a></dt>
 <dd><p>Creates an external stimulus (Gabor texture) and prepares for the neural network input.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>spatial_freq</strong> (<em>float</em>) – spatial frequency of the grating (cycles / degree).</p></li>
-<li><p><strong>vlum</strong> (<em>float</em>) – luminance of the void.</p></li>
-<li><p><strong>diameter_dg</strong> (<em>float</em>) – annulus’ diameter in degrees.</p></li>
-<li><p><strong>diameter</strong> (<em>int</em>) – resolution (number of pixels in a single row) of single grating.</p></li>
-<li><p><strong>dist_scale</strong> (<em>float</em>) – how far the circles are from each other.</p></li>
-<li><p><strong>full_width_dg</strong> (<em>float</em>) – width of the full stimulus in degrees.</p></li>
-<li><p><strong>full_height_dg</strong> (<em>float</em>) – height of the full stimulus in degrees.</p></li>
-<li><p><strong>contrast_range</strong> (<em>float</em>) – contrast range for the figure.</p></li>
-<li><p><strong>figure_width_dg</strong> (<em>float</em>) – width of the figure in degrees.</p></li>
-<li><p><strong>figure_height_dg</strong> (<em>float</em>) – height of the figure in degrees.</p></li>
-<li><p><strong>figure_ecc_dg</strong> (<em>float</em>) – distance between the center of the stimulus and the center of the figure in degrees.</p></li>
-<li><p><strong>patch_size_dg</strong> (<em>float</em>) – side length of the stimulus patch in degrees.</p></li>
-<li><p><strong>nr_ping_networks</strong> (<em>int</em>) – number of circuits created by applying the lattice.</p></li>
-<li><p><strong>slope</strong> (<em>float</em>) – slope of the receptive field size.</p></li>
-<li><p><strong>intercept</strong> (<em>float</em>) – intercept of the receptive field size.</p></li>
-<li><p><strong>min_diam_rf</strong> (<em>float</em>) – minimal size of the receptive field.</p></li>
-<li><p><strong>nr_neurons</strong> (<em>dict</em><em>[</em><em>Any</em><em>, </em><em>int</em><em>]</em>) – dictionary of number of neurons of each type and the total number of neurons.</p></li>
-<li><p><strong>neur_slice</strong> (<em>dict</em><em>[</em><a class="reference internal" href="../NeuronTypes/index.html#NeuronTypes.NeuronTypes" title="NeuronTypes.NeuronTypes"><em>NeuronTypes</em></a><em>, </em><em>slice</em><em>]</em>) – indices of each type of neurons.</p></li>
+<li><p><strong>params_gabor</strong> (<a class="reference internal" href="../ParamsGaborStimulus/index.html#ParamsGaborStimulus.ParamsGaborStimulus" title="ParamsGaborStimulus.ParamsGaborStimulus"><em>ParamsGaborStimulus</em></a>) – parameters for creating a Gabor luminance stimulus.</p></li>
+<li><p><strong>params_rf</strong> (<a class="reference internal" href="../ParamsReceptiveField/index.html#ParamsReceptiveField.ParamsReceptiveField" title="ParamsReceptiveField.ParamsReceptiveField"><em>ParamsReceptiveField</em></a>) – parameters for the receptive field.</p></li>
+<li><p><strong>params_ping</strong> (<a class="reference internal" href="../ParamsPING/index.html#ParamsPING.ParamsPING" title="ParamsPING.ParamsPING"><em>ParamsPING</em></a>) – parameters describing PING networks and their composition.</p></li>
 </ul>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><p>AssertionError: if the minimal diameter of the receptive field is not larger than 0.</p>
-</dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p>AssertionError: if the number of circuits is not a square as these circuits should be arranged in a square
-grid.</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><p>AssertionError: if vertical lines of lattice cut through pixels.</p>
@@ -352,8 +334,8 @@ grid.</p>
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusFactory</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
-<li><a class="reference internal" href="#StimulusFactory.CurrentStimulusFactory">CurrentStimulusFactory</a><ul>
-<li><a class="reference internal" href="#StimulusFactory.CurrentStimulusFactory.create">create</a></li>
+<li><a class="reference internal" href="#StimulusFactory.StimulusFactory">StimulusFactory</a><ul>
+<li><a class="reference internal" href="#StimulusFactory.StimulusFactory.create">create</a></li>
 </ul>
 </li>
 </ul>

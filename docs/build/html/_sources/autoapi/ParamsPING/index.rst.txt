@@ -1,0 +1,56 @@
+:py:mod:`ParamsPING`
+====================
+
+.. py:module:: ParamsPING
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   ParamsPING.ParamsPING
+
+
+
+
+.. py:class:: ParamsPING(nr_excitatory: int, nr_inhibitory: int, nr_ping_networks: int = 1)
+
+   Bases: :py:obj:`src.Params.Params`
+
+   This class contains parameters describing PING networks and their composition.
+
+   :param nr_excitatory: number of excitatory neurons in the network.
+   :type nr_excitatory: int
+
+   :param nr_inhibitory: number of inhibitory neurons in the network.
+   :type nr_inhibitory: int
+
+   :param nr_ping_networks: number of PING networks in the network.
+   :type nr_ping_networks: int
+
+   :raises:
+       AssertionError: if the number of excitatory neurons is smaller than 2.
+   :raises:
+       AssertionError: if the number of inhibitory neurons is smaller than 2.
+   :raises:
+       AssertionError: If the number of PING networks is smaller than 1.
+   :raises:
+       AssertionError: if number of excitatory neurons doesn't divide the number of PING networks as there should be
+       an equal number of excitatory neurons in each PING network.
+   :raises:
+       AssertionError: if number of inhibitory neurons doesn't divide the number of PING networks as there should be
+       an equal number of inhibitory neurons in each PING network.
+   :raises:
+       AssertionError: if the number of PING networks is not a square as PING networks should be arranged in a square
+       grid.
+
+
+   :ivar nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
+   :ivar neur_slice: indices of each type of neurons.
+   :ivar nr_ping_networks: number of PING networks in the network.
+
+

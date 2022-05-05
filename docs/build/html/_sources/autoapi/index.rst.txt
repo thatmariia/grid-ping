@@ -7,6 +7,8 @@ This page contains auto-generated API reference documentation [#f1]_.
    :titlesonly:
 
    /autoapi/misc/index
+   /autoapi/ParamsGaborStimulus/index
+   /autoapi/Params/index
    /autoapi/Connectivity/index
    /autoapi/GaborLuminanceStimulusFactory/index
    /autoapi/NeuronTypes/index
@@ -22,6 +24,7 @@ This page contains auto-generated API reference documentation [#f1]_.
    /autoapi/ConnectivitySinglePINGFactory/index
    /autoapi/StimulusLocations/index
    /autoapi/GaborLuminanceStimulus/index
+   /autoapi/ParamsReceptiveField/index
    /autoapi/IzhikevichNetworkSimulator/index
    /autoapi/CurrentComponentsSinglePING/index
    /autoapi/PINGNetworkPixels/index
@@ -30,5 +33,6 @@ This page contains auto-generated API reference documentation [#f1]_.
    /autoapi/IzhikevichNetworkOutcome/index
    /autoapi/main/index
    /autoapi/FrequencyToCurrentConverter/index
+   /autoapi/ParamsPING/index
 
 .. [#f1] Created with `sphinx-autoapi <https://github.com/readthedocs/sphinx-autoapi>`_

@@ -7,8 +7,8 @@
 Module Contents
 ---------------
 
-.. py:data:: nr_ping_networks
-   :annotation: = 25
+.. py:data:: params_ping
+   
 
    
 

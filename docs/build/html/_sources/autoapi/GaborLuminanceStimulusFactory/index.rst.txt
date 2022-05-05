@@ -30,70 +30,12 @@ Classes
    share the same luminance. A square-shaped patch of the stimulus' figure is selected as an input to the Izhikevich
    oscillatory network (see :obj:`IzhikevichNetworkSimulator`).
 
-   .. py:method:: create(self, spatial_freq: float, vlum: float, diameter_dg: float, diameter: int, dist_scale: float, full_width_dg: float, full_height_dg: float, contrast_range: float, figure_width_dg: float, figure_height_dg: float, figure_ecc_dg: float, patch_size_dg: float) -> src.GaborLuminanceStimulus.GaborLuminanceStimulus
+   .. py:method:: create(self, params_gabor: src.ParamsGaborStimulus.ParamsGaborStimulus) -> src.GaborLuminanceStimulus.GaborLuminanceStimulus
 
       Goes through the steps to construct the luminance stimulus.
 
-      :param spatial_freq: spatial frequency of the grating (cycles / degree).
-      :type spatial_freq: float
-
-      :param vlum: luminance of the void.
-      :type vlum: float
-
-      :param diameter_dg: annulus' diameter in degrees.
-      :type diameter_dg: float
-
-      :param diameter: resolution (number of pixels in a single row) of single grating.
-      :type diameter: int
-
-      :param dist_scale: how far the circles are from each other.
-      :type dist_scale: float
-
-      :param full_width_dg: width of the full stimulus in degrees.
-      :type full_width_dg: float
-
-      :param full_height_dg: height of the full stimulus in degrees.
-      :type full_height_dg: float
-
-      :param contrast_range: contrast range for the figure.
-      :type contrast_range: float
-
-      :param figure_width_dg: width of the figure in degrees.
-      :type figure_width_dg: float
-
-      :param figure_height_dg: height of the figure in degrees.
-      :type figure_height_dg: float
-
-      :param figure_ecc_dg: distance between the center of the stimulus and the center of the figure in degrees.
-      :type figure_ecc_dg: float
-
-      :param patch_size_dg: side length of the stimulus patch in degrees.
-      :type patch_size_dg: float
-
-      :raises:
-          AssertionError: spatial frequency is not greater than 0.
-      :raises:
-          AssertionError: void luminance does not fall in range :math:`[0, 1]`.
-      :raises:
-          AssertionError: annulus diameter is not larger than 0 degrees.
-      :raises:
-          AssertionError: annulus diameter is smaller than 1 pixel.
-      :raises:
-          AssertionError: the distance between neighbouring annuli is less than 1 diameter.
-      :raises:
-          AssertionError: stimulus is less wide than annulus.
-      :raises:
-          AssertionError: stimulus is less tall than annulus.
-      :raises:
-          AssertionError: contrast range does not fall in range :math:`(0, 1]`.
-      :raises:
-          AssertionError: figure width is larger than half the width of the stimulus or is not larger than 0.
-      :raises:
-          AssertionError: figure height is larger than half the height of the stimulus or is not larger than 0.
-      :raises:
-          AssertionError: figure cannot be positioned so that it is contained within the stimulus quadrant.
-      :raises:
-          AssertionError: size of the patch is smaller than one of the figure sides.
+      :param params_gabor: parameters for creating a Gabor luminance stimulus.
+      :type params_gabor: ParamsGaborStimulus
 
       :return: the luminance stimulus.
       :rtype: GaborLuminanceStimulus

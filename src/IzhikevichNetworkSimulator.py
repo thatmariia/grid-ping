@@ -105,20 +105,28 @@ class IzhikevichNetworkSimulator:
         """
 
         izhi_alpha = np.array(
-            [IZHI_ALPHA[NeuronTypes.E] for _ in range(self._current_components.connectivity.nr_neurons[NeuronTypes.E])] +
-            [IZHI_ALPHA[NeuronTypes.I] for _ in range(self._current_components.connectivity.nr_neurons[NeuronTypes.I])]
+            [IZHI_ALPHA[NeuronTypes.E]
+             for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.E])] +
+            [IZHI_ALPHA[NeuronTypes.I]
+             for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.I])]
         )
         izhi_beta = np.array(
-            [IZHI_BETA[NeuronTypes.E] for _ in range(self._current_components.connectivity.nr_neurons[NeuronTypes.E])] +
-            [IZHI_BETA[NeuronTypes.I] for _ in range(self._current_components.connectivity.nr_neurons[NeuronTypes.I])]
+            [IZHI_BETA[NeuronTypes.E]
+             for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.E])] +
+            [IZHI_BETA[NeuronTypes.I]
+             for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.I])]
         )
         izhi_gamma = np.array(
-            [IZHI_GAMMA[NeuronTypes.E] for _ in range(self._current_components.connectivity.nr_neurons[NeuronTypes.E])] +
-            [IZHI_GAMMA[NeuronTypes.I] for _ in range(self._current_components.connectivity.nr_neurons[NeuronTypes.I])]
+            [IZHI_GAMMA[NeuronTypes.E]
+             for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.E])] +
+            [IZHI_GAMMA[NeuronTypes.I]
+             for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.I])]
         )
         izhi_zeta = np.array(
-            [IZHI_ZETA[NeuronTypes.E] for _ in range(self._current_components.connectivity.nr_neurons[NeuronTypes.E])] +
-            [IZHI_ZETA[NeuronTypes.I] for _ in range(self._current_components.connectivity.nr_neurons[NeuronTypes.I])]
+            [IZHI_ZETA[NeuronTypes.E]
+             for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.E])] +
+            [IZHI_ZETA[NeuronTypes.I]
+             for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.I])]
         )
 
         return izhi_alpha, izhi_beta, izhi_gamma, izhi_zeta
@@ -136,9 +144,10 @@ class IzhikevichNetworkSimulator:
         :rtype: tuple[numpy.ndarray[int, float], numpy.ndarray[int, float]]
         """
 
-        potentials = np.array(
-            [INIT_MEMBRANE_POTENTIAL for _ in range(self._current_components.connectivity.nr_neurons["total"])]
-        )
+        potentials = np.array([
+                INIT_MEMBRANE_POTENTIAL
+                for _ in range(self._current_components.connectivity.params_ping.nr_neurons["total"])
+        ])
         recovery = np.multiply(izhi_beta, potentials)
         return potentials, recovery
 

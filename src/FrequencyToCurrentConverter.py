@@ -1,3 +1,5 @@
+from src.ParamsPING import *
+
 from src.ConnectivitySinglePINGFactory import *
 from src.CurrentComponentsSinglePING import *
 from src.IzhikevichNetworkSimulator import *
@@ -14,6 +16,7 @@ from sklearn.linear_model import TheilSenRegressor
 from sklearn.model_selection import RepeatedKFold, cross_val_score
 
 from typing import Any
+from copy import deepcopy
 import warnings
 
 class FrequencyToCurrentConverter:
@@ -22,8 +25,7 @@ class FrequencyToCurrentConverter:
     """
 
     def convert(
-            self, stimulus_frequencies: np.ndarray[int, float],
-            nr_neurons: dict[Any, int], neur_slice: dict[NeuronTypes, slice]
+            self, stimulus_frequencies: np.ndarray[int, float], params_ping: ParamsPING
     ) -> np.ndarray[int, float]:
         """
         Converts the frequencies stimulus into the currents stimulus.
@@ -33,11 +35,8 @@ class FrequencyToCurrentConverter:
         :param stimulus_frequencies: frequencies stimulus.
         :type stimulus_frequencies: numpy.ndarray[int, float]
 
-        :param nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
-        :type nr_neurons: dict[Any, int]
-
-        :param neur_slice: indices of each type of neurons.
-        :type neur_slice: dict[NeuronTypes, slice]
+        :param params_ping: parameters describing PING networks and their composition.
+        :type params_ping: ParamsPING
 
         :return: the stimulus converted to currents.
         :rtype: numpy.ndarray[int, float]
@@ -49,12 +48,13 @@ class FrequencyToCurrentConverter:
 
         for i in (pbar := tqdm(range(len(inputs)))):
             pbar.set_description("Stimulus conversion to current")
-            simulation_outcome = self._simulate(simulation_time, nr_neurons, inputs[i])
+            simulation_outcome = self._simulate(simulation_time, params_ping, inputs[i])
             spikes_T = np.array(simulation_outcome.spikes).T
 
             # indices when excitatory neurons fired
             spikes_ex_indices = np.argwhere(
-                (spikes_T[1] >= neur_slice[NeuronTypes.E].start) & (spikes_T[1] < neur_slice[NeuronTypes.E].stop)
+                (spikes_T[1] >= params_ping.neur_slice[NeuronTypes.E].start) &
+                (spikes_T[1] < params_ping.neur_slice[NeuronTypes.E].stop)
             ).flatten()
             # times when excitatory neurons fired
             spikes_ex_times = spikes_T[0][spikes_ex_indices]
@@ -106,15 +106,15 @@ class FrequencyToCurrentConverter:
 
         return model
 
-    def _simulate(self, simulation_time: int, nr_neurons: dict[Any, int], mean_ex: float) -> IzhikevichNetworkOutcome:
+    def _simulate(self, simulation_time: int, params_ping: ParamsPING, mean_ex: float) -> IzhikevichNetworkOutcome:
         """
         Simulates an Izhikevich network with a single PING.
 
         :param simulation_time: number of epochs to run the simulation.
         :type simulation_time: int
 
-        :param nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
-        :type nr_neurons: dict[Any, int]
+        :param params_ping: parameters describing PING networks and their composition.
+        :type params_ping: ParamsPING
 
         :param mean_ex: mean of input strength to excitatory neurons.
         :type mean_ex: float
@@ -129,9 +129,10 @@ class FrequencyToCurrentConverter:
             (NeuronTypes.I, NeuronTypes.E): 0.3,
             (NeuronTypes.I, NeuronTypes.I): 0.2
         }
+        params_single_ping = deepcopy(params_ping)
+        params_single_ping.nr_ping_networks = 1
         connectivity = ConnectivitySinglePINGFactory().create(
-            nr_excitatory=nr_neurons[NeuronTypes.E],
-            nr_inhibitory=nr_neurons[NeuronTypes.I],
+            params_ping=params_single_ping,
             max_connect_strength=max_connect_strength
         )
         synaptic_rise = {

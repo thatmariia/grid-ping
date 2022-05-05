@@ -1,3 +1,5 @@
+from src.ParamsPING import *
+
 from typing import Any
 from src.NeuronTypes import *
 
@@ -23,31 +25,17 @@ class Connectivity:
     This class performs the assignment of neurons to relevant PING networks arranged in a grid and computes the matrix
     of coupling weights.
 
-    :param nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
-    :type nr_neurons: dict[Any, int]
-
-    :param neur_slice: indices of each type of neurons.
-    :type neur_slice: dict[NeuronTypes, slice]
-
-    :param nr_ping_networks: number of PING networks.
-    :type nr_ping_networks: int
+    :param params_ping: parameters describing PING networks and their composition.
+    :type params_ping: ParamsPING
 
     :param coupling_weights: coupling weights between all pairs of neurons.
     :type coupling_weights: numpy.ndarray[(int, int), float]
 
-
-    :ivar nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
-    :ivar neur_slice: indices of each type of neurons.
-    :ivar nr_ping_networks: number of PING networks.
+    :ivar params_ping: parameters describing PING networks and their composition.
     :ivar coupling_weights: coupling weights between all pairs of neurons.
     """
 
-    def __init__(
-            self, nr_neurons: dict[Any, int], neur_slice: dict[NeuronTypes, slice], nr_ping_networks: int,
-            coupling_weights: np.ndarray[(int, int), float]
-    ):
-        self.nr_neurons: dict[Any, int] = nr_neurons
-        self.neur_slice: dict[NeuronTypes, slice] = neur_slice
-        self.nr_ping_networks: int = nr_ping_networks
+    def __init__(self, params_ping: ParamsPING, coupling_weights: np.ndarray[(int, int), float]):
+        self.params_ping = params_ping
         self.coupling_weights: np.ndarray[(int, int), float] = coupling_weights
 

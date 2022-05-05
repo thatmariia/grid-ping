@@ -8,7 +8,7 @@ Module Contents
 ---------------
 
 .. py:data:: nr_ping_networks
-   :annotation: = 4
+   :annotation: = 25
 
    
 

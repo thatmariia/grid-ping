@@ -19,9 +19,11 @@ This page contains auto-generated API reference documentation [#f1]_.
    /autoapi/PINGNetworkNeurons/index
    /autoapi/Stimulus/index
    /autoapi/LuminanceToContrastConverter/index
+   /autoapi/ConnectivitySinglePINGFactory/index
    /autoapi/StimulusLocations/index
    /autoapi/GaborLuminanceStimulus/index
    /autoapi/IzhikevichNetworkSimulator/index
+   /autoapi/CurrentComponentsSinglePING/index
    /autoapi/PINGNetworkPixels/index
    /autoapi/PatchGeometry/index
    /autoapi/CurrentComponentsGridPING/index

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: IzhikevichNetworkSimulator(current_components: src.CurrentComponents.CurrentComponents)
+.. py:class:: IzhikevichNetworkSimulator(current_components: src.CurrentComponents.CurrentComponents, pb_off=True)
 
    This class runs the simulation of the network of neurons.
 
@@ -44,7 +44,11 @@ Classes
    :param current_components: contains methods of computing the neural network current components.
    :type current_components: CurrentComponents
 
+   :param pb_off: indicates whether the progress bar should be off, default is True.
+   :type pb_off: Bool
+
    :ivar _current_components: contains methods of computing the neural network current components.
+   :param _pb_off: indicates whether the progress bar should be off.
 
    .. py:method:: simulate(self, simulation_time: int, dt: float) -> src.IzhikevichNetworkOutcome.IzhikevichNetworkOutcome
 
@@ -104,7 +108,7 @@ Classes
       :rtype: numpy.ndarray[int, float]
 
 
-   .. py:method:: _get_change_in_potentials(self, potentials: numpy.ndarray[int, float], recovery: numpy.ndarray[int, float]) -> numpy.ndarray[int, float]
+   .. py:method:: _get_change_in_potentials(self, potentials: numpy.ndarray[int, float], recovery: numpy.ndarray[int, float], currents: numpy.ndarray[int, float]) -> numpy.ndarray[int, float]
 
       Computes the change in membrane potentials.
 
@@ -115,6 +119,9 @@ Classes
 
       :param recovery: recovery variables.
       :type recovery: numpy.ndarray[int, float]
+
+      :param currents: currents.
+      :type currents: numpy.ndarray[int, float]
 
       :return: change in membrane potentials.
       :rtype: numpy.ndarray[int, float]

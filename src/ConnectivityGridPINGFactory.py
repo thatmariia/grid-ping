@@ -5,6 +5,7 @@ from src.misc import *
 from src.constants import *
 
 from itertools import product
+import numpy as np
 
 
 class ConnectivityGridPINGFactory:
@@ -157,7 +158,7 @@ class ConnectivityGridPINGFactory:
         :rtype: numpy.ndarray[(int, int), float]
         """
 
-        all_coupling_weights = np.zeros((nr_neurons["total"], nr_neurons["total"]))
+        coupling_weights = np.zeros((nr_neurons["total"], nr_neurons["total"]))
 
         for nts in list(product([NeuronTypes.E, NeuronTypes.I], repeat=2)):
             dist = self._get_neurons_dist(
@@ -174,13 +175,12 @@ class ConnectivityGridPINGFactory:
                 max_connect_strength=MAX_CONNECT_STRENGTH[(nts[0], nts[1])],
                 spatial_const=SPATIAL_CONST[(nts[0], nts[1])]
             )
-            # TODO:: why is this?
             if nts[0] == nts[1]:
-                all_coupling_weights[neur_slice[nts[0]], neur_slice[nts[1]]] = types_coupling_weights
+                coupling_weights[neur_slice[nts[0]], neur_slice[nts[1]]] = types_coupling_weights
             else:
-                all_coupling_weights[neur_slice[nts[1]], neur_slice[nts[0]]] = types_coupling_weights.T
+                coupling_weights[neur_slice[nts[1]], neur_slice[nts[0]]] = types_coupling_weights.T
 
-        return np.nan_to_num(all_coupling_weights)
+        return np.nan_to_num(coupling_weights)
 
     def _get_neurons_dist(
             self,

@@ -1,0 +1,78 @@
+:py:mod:`CurrentComponentsSinglePING`
+=====================================
+
+.. py:module:: CurrentComponentsSinglePING
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   CurrentComponentsSinglePING.CurrentComponentsSinglePING
+
+
+
+
+.. py:class:: CurrentComponentsSinglePING(connectivity: src.Connectivity.Connectivity, synaptic_rise: dict[src.Connectivity.NeuronTypes, float], synaptic_decay: dict[src.Connectivity.NeuronTypes, float], mean_ex: float = 20, var_ex: float = 0, mean_in: float = 4, var_in: float = 0)
+
+   Bases: :py:obj:`src.CurrentComponents.CurrentComponents`
+
+   This lass contains methods of computing the current components for the network of a single PING network.
+
+   :param connectivity: information about connectivity between neurons in the oscillatory network.
+   :type connectivity: Connectivity
+
+   :param synaptic_rise: synaptic rise constants.
+   :type synaptic_rise: dict[NeuronTypes, float]
+
+   :param synaptic_decay: synaptic decay constants.
+   :type synaptic_decay: dict[NeuronTypes, float]
+
+   :param mean_ex: mean of input strength to excitatory neurons.
+   :type mean_ex: float
+
+   :param var_ex: variance of input strength to excitatory neurons.
+   :type var_ex: float
+
+   :param mean_in: mean of input strength to inhibitory neurons.
+   :type mean_in: float
+
+   :param var_in: variance of input strength to inhibitory neurons.
+   :type var_in: float
+
+
+   :ivar _synaptic_rise: synaptic rise constants.
+   :ivar _synaptic_decay: synaptic decay constants.
+   :ivar _synaptic_currents: keeps track of intermediate synaptic currents.
+
+   .. py:method:: get_synaptic_currents(self, dt, potentials) -> numpy.ndarray[int, float]
+
+      Computes the new synaptic currents for postsynaptic neurons.
+
+      Computes :math:`I_{\mathrm{syn}}`.
+
+      :param dt: time interval
+      :type dt: float
+
+      :param potentials: neurons' membrane potentials.
+      :type potentials: numpy.ndarray[int, float]
+
+      :return: the change in synaptic currents for a unit of time.
+      :rtype: numpy.ndarray[int, float]
+
+
+   .. py:method:: get_current_input(self) -> numpy.ndarray[int, float]
+
+      Computes the input current to each neuron.
+
+      Computes :math:`I_{\mathrm{stim}}`.
+
+      :return: input strength to each neuron.
+      :rtype: numpy.ndarray[int, float]
+
+
+

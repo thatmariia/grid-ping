@@ -18,23 +18,22 @@ class CurrentComponentsGridPING(CurrentComponents):
     :type stimulus_currents: numpy.ndarray[int, float]
 
 
-    :ivar _stimulus_currents: currents stimulus.
+    :ivar _stimulus_currents: currents from stimulus.
+    :ivar _gatings: keeps track of gating values.
     """
 
     def __init__(self, connectivity: Connectivity, stimulus_currents: np.ndarray[int, float]):
         super().__init__(connectivity)
         self._stimulus_currents: np.ndarray[int, float] = stimulus_currents
+        self._gatings: np.ndarray[int, float] = np.zeros(self.connectivity.nr_neurons["total"])
 
     def get_synaptic_currents(
-            self, gatings: np.ndarray[(int, int), float], dt: float, potentials: np.ndarray[int, float]
-    ) -> tuple[np.ndarray[int, float], np.ndarray[int, float]]:
+            self, dt: float, potentials: np.ndarray[int, float]
+    ) -> np.ndarray[int, float]:
         """
         Computes the new synaptic currents for postsynaptic neurons.
 
-        Computes the :math:`I_{syn}`. The approach is derived from :cite:p:`Jensen2005`.
-
-        :param gatings: synaptic gating values
-        :type gatings: numpy.ndarray[int, float]
+        Computes :math:`I_{\mathrm{syn}}`. The approach is derived from :cite:p:`Jensen2005`.
 
         :param dt: time interval
         :type dt: float
@@ -42,11 +41,11 @@ class CurrentComponentsGridPING(CurrentComponents):
         :param potentials: neurons' membrane potentials.
         :type potentials: numpy.ndarray[int, float]
 
-        :return: change in synaptic gates for excitatory postsynaptic neurons.
-        :rtype: numpy.ndarray[(int, int), float]
+        :return: the change in synaptic currents for a unit of time.
+        :rtype: numpy.ndarray[int, float]
         """
 
-        new_gatings = self._get_gatings(gatings, dt, potentials)
+        new_gatings = self._get_gatings(dt, potentials)
         new_currents = np.zeros(self.connectivity.nr_neurons["total"])
 
         for postsyn_nt, presyn_nt in list(product([NeuronTypes.E, NeuronTypes.I], repeat=2)):
@@ -62,16 +61,15 @@ class CurrentComponentsGridPING(CurrentComponents):
                         potentials[self.connectivity.neur_slice[postsyn_nt]] - REVERSAL_POTENTIAL[presyn_nt]
                 )
 
-        return new_currents, new_gatings
+        self._gatings = new_gatings
+
+        return new_currents
 
     def _get_gatings(
-            self, gatings: np.ndarray[int, float], dt: float, potentials: np.ndarray[int, float]
+            self, dt: float, potentials: np.ndarray[int, float]
     ) -> np.ndarray[int, float]:
         """
         Computes the gating values for synapses of given types.
-
-        :param gatings: current gating values.
-        :type gatings: numpy.ndarray[int, float]
 
         :param dt: time interval.
         :type dt: float
@@ -79,7 +77,7 @@ class CurrentComponentsGridPING(CurrentComponents):
         :param potentials: neurons' membrane potentials.
         :type potentials: numpy.ndarray[int, float]
 
-        :return: the change in synaptic values for a unit of time.
+        :return: change in synaptic gates for excitatory postsynaptic neurons.
         :rtype: numpy.ndarray[int, float]
         """
 
@@ -88,17 +86,19 @@ class CurrentComponentsGridPING(CurrentComponents):
         for nt in [NeuronTypes.E, NeuronTypes.I]:
             transmission_concs = 1 + np.tanh(potentials[self.connectivity.neur_slice[nt]] / 4)
             change_gatings = (
-                    SYNAPTIC_RISE[nt] * transmission_concs * (1 - gatings[self.connectivity.neur_slice[nt]]) -
-                    gatings[self.connectivity.neur_slice[nt]] / SYNAPTIC_DECAY[nt]
+                    SYNAPTIC_RISE[nt] * transmission_concs * (1 - self._gatings[self.connectivity.neur_slice[nt]]) -
+                    self._gatings[self.connectivity.neur_slice[nt]] / SYNAPTIC_DECAY[nt]
             )
             new_gatings[self.connectivity.neur_slice[nt]] = \
-                gatings[self.connectivity.neur_slice[nt]] + dt * change_gatings
+                self._gatings[self.connectivity.neur_slice[nt]] + dt * change_gatings
 
         return new_gatings
 
     def get_current_input(self) -> np.ndarray[int, float]:
         """
         Computes the input current to each neuron.
+
+        Computes :math:`I_{\mathrm{stim}}`.
 
         :return: input current to each neuron.
         :rtype: numpy.ndarray[int, float]

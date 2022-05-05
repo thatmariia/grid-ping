@@ -63,7 +63,7 @@ Classes
       :rtype: tuple[list[PINGNetworkNeurons], dict[NeuronTypes, dict[int, int]]]
 
 
-   .. py:method:: _compute_coupling_weights(self, nr_neurons: dict[src.Connectivity.Any, int], neur_slice: dict[src.constants.NeuronTypes, slice], ping_networks: list[src.PINGNetworkNeurons.PINGNetworkNeurons], neuron_ping_map: dict[src.constants.NeuronTypes, dict[int, int]], cortical_coords: list[list[tuple[float, float]]]) -> src.misc.np.ndarray[(int, int), float]
+   .. py:method:: _compute_coupling_weights(self, nr_neurons: dict[src.Connectivity.Any, int], neur_slice: dict[src.constants.NeuronTypes, slice], ping_networks: list[src.PINGNetworkNeurons.PINGNetworkNeurons], neuron_ping_map: dict[src.constants.NeuronTypes, dict[int, int]], cortical_coords: list[list[tuple[float, float]]]) -> numpy.ndarray[(int, int), float]
 
       Computes the coupling weights between all neurons.
 
@@ -89,7 +89,7 @@ Classes
       :rtype: numpy.ndarray[(int, int), float]
 
 
-   .. py:method:: _get_neurons_dist(self, neuron_type1: src.constants.NeuronTypes, neuron_type2: src.constants.NeuronTypes, nr1: int, nr2: int, ping_networks: list[src.PINGNetworkNeurons.PINGNetworkNeurons], neuron_ping_map: dict[src.constants.NeuronTypes, dict[int, int]], cortical_coords: list[list[tuple[float, float]]]) -> src.misc.np.ndarray[(int, int), float]
+   .. py:method:: _get_neurons_dist(self, neuron_type1: src.constants.NeuronTypes, neuron_type2: src.constants.NeuronTypes, nr1: int, nr2: int, ping_networks: list[src.PINGNetworkNeurons.PINGNetworkNeurons], neuron_ping_map: dict[src.constants.NeuronTypes, dict[int, int]], cortical_coords: list[list[tuple[float, float]]]) -> numpy.ndarray[(int, int), float]
 
       Computes the matrix of Euclidian distances between two types of neurons.
 
@@ -121,7 +121,7 @@ Classes
       :rtype: numpy.ndarray[(int, int), float]
 
 
-   .. py:method:: _compute_type_coupling_weights(self, dist: src.misc.np.ndarray[(int, int), float], max_connect_strength: float, spatial_const: float) -> src.misc.np.ndarray[(int, int), float]
+   .. py:method:: _compute_type_coupling_weights(self, dist: numpy.ndarray[(int, int), float], max_connect_strength: float, spatial_const: float) -> numpy.ndarray[(int, int), float]
 
       Computes the coupling weights for connections between two types of neurons.
 

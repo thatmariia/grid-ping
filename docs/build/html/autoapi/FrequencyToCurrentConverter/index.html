@@ -191,9 +191,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../PINGNetworkNeurons/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PINGNetworkNeurons</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Stimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Stimulus</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../LuminanceToContrastConverter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">LuminanceToContrastConverter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ConnectivitySinglePINGFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ConnectivitySinglePINGFactory</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../StimulusLocations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusLocations</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../GaborLuminanceStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaborLuminanceStimulus</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../IzhikevichNetworkSimulator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IzhikevichNetworkSimulator</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../CurrentComponentsSinglePING/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponentsSinglePING</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../PINGNetworkPixels/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PINGNetworkPixels</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../PatchGeometry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PatchGeometry</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../CurrentComponentsGridPING/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponentsGridPING</span></code></a></li>
@@ -254,16 +256,19 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="FrequencyToCurrentConverter.FrequencyToCurrentConverter">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">FrequencyToCurrentConverter.</span></span><span class="sig-name descname"><span class="pre">FrequencyToCurrentConverter</span></span><a class="headerlink" href="#FrequencyToCurrentConverter.FrequencyToCurrentConverter" title="Permalink to this definition">#</a></dt>
-<dd><p>This class converts the frequencies stimulus into the currents stimulus.
-TODO:: implement</p>
+<dd><p>This class converts the frequencies stimulus into the currents stimulus.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="FrequencyToCurrentConverter.FrequencyToCurrentConverter.convert">
-<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stimulus_frequencies</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#FrequencyToCurrentConverter.FrequencyToCurrentConverter.convert" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stimulus_frequencies</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_neurons</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neur_slice</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">src.NeuronTypes.NeuronTypes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">slice</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#FrequencyToCurrentConverter.FrequencyToCurrentConverter.convert" title="Permalink to this definition">#</a></dt>
 <dd><p>Converts the frequencies stimulus into the currents stimulus.</p>
 <p>TODO:: how do I cite this?</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>stimulus_frequencies</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – frequencies stimulus.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>stimulus_frequencies</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – frequencies stimulus.</p></li>
+<li><p><strong>nr_neurons</strong> (<em>dict</em><em>[</em><em>Any</em><em>, </em><em>int</em><em>]</em>) – dictionary of number of neurons of each type and the total number of neurons.</p></li>
+<li><p><strong>neur_slice</strong> (<em>dict</em><em>[</em><a class="reference internal" href="../NeuronTypes/index.html#NeuronTypes.NeuronTypes" title="NeuronTypes.NeuronTypes"><em>NeuronTypes</em></a><em>, </em><em>slice</em><em>]</em>) – indices of each type of neurons.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the stimulus converted to currents.</p>
@@ -274,18 +279,78 @@ TODO:: implement</p>
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="FrequencyToCurrentConverter.FrequencyToCurrentConverter._compute_current">
-<span class="sig-name descname"><span class="pre">_compute_current</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stimulus_frequencies</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#FrequencyToCurrentConverter.FrequencyToCurrentConverter._compute_current" title="Permalink to this definition">#</a></dt>
-<dd><p>Computes _currents through oscillation frequencies. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.</p>
+<dt class="sig sig-object py" id="FrequencyToCurrentConverter.FrequencyToCurrentConverter._fit_line_robust">
+<span class="sig-name descname"><span class="pre">_fit_line_robust</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">sklearn.linear_model.TheilSenRegressor</span></span></span><a class="headerlink" href="#FrequencyToCurrentConverter.FrequencyToCurrentConverter._fit_line_robust" title="Permalink to this definition">#</a></dt>
+<dd><p>Creates a model that fits a line to the data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>stimulus_frequencies</strong> (<em>list</em><em>[</em><em>float</em><em>]</em>) – list containing oscillation frequencies for each circuit.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – values to predict (target).</p></li>
+<li><p><strong>y</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – values used for prediction.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>TODO</p>
+<dd class="field-even"><p>a fitted regression model.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray[int, float]</p>
+<dd class="field-odd"><p>TheilSenRegressor</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="FrequencyToCurrentConverter.FrequencyToCurrentConverter._simulate">
+<span class="sig-name descname"><span class="pre">_simulate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulation_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nr_neurons</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_ex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">src.IzhikevichNetworkOutcome.IzhikevichNetworkOutcome</span></span></span><a class="headerlink" href="#FrequencyToCurrentConverter.FrequencyToCurrentConverter._simulate" title="Permalink to this definition">#</a></dt>
+<dd><p>Simulates an Izhikevich network with a single PING.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>simulation_time</strong> (<em>int</em>) – number of epochs to run the simulation.</p></li>
+<li><p><strong>nr_neurons</strong> (<em>dict</em><em>[</em><em>Any</em><em>, </em><em>int</em><em>]</em>) – dictionary of number of neurons of each type and the total number of neurons.</p></li>
+<li><p><strong>mean_ex</strong> (<em>float</em>) – mean of input strength to excitatory neurons.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>collected information from the simulation.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../IzhikevichNetworkOutcome/index.html#IzhikevichNetworkOutcome.IzhikevichNetworkOutcome" title="IzhikevichNetworkOutcome.IzhikevichNetworkOutcome">IzhikevichNetworkOutcome</a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="FrequencyToCurrentConverter.FrequencyToCurrentConverter._make_tfr">
+<span class="sig-name descname"><span class="pre">_make_tfr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">simulation_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signal</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#FrequencyToCurrentConverter.FrequencyToCurrentConverter._make_tfr" title="Permalink to this definition">#</a></dt>
+<dd><p>TODO:: Determines most prominent frequency??</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>simulation_time</strong> (<em>int</em>) – number of epochs to run the simulation.</p></li>
+<li><p><strong>signal</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – number of excitatory neurons fired at relevant epochs of the simulation.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>TODO:: most prominent frequency?</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="FrequencyToCurrentConverter.FrequencyToCurrentConverter._plot_relationship">
+<span class="sig-name descname"><span class="pre">_plot_relationship</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freqs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">currents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freqs_line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">currents_line</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#FrequencyToCurrentConverter.FrequencyToCurrentConverter._plot_relationship" title="Permalink to this definition">#</a></dt>
+<dd><p>Plots the relationship between frequency and current.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>freqs</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – frequencies from simulated data.</p></li>
+<li><p><strong>currents</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – currents from simulated data.</p></li>
+<li><p><strong>freqs_line</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – frequencies from fitted line.</p></li>
+<li><p><strong>currents_line</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – currents from fitted line.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -338,7 +403,10 @@ TODO:: implement</p>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
 <li><a class="reference internal" href="#FrequencyToCurrentConverter.FrequencyToCurrentConverter">FrequencyToCurrentConverter</a><ul>
 <li><a class="reference internal" href="#FrequencyToCurrentConverter.FrequencyToCurrentConverter.convert">convert</a></li>
-<li><a class="reference internal" href="#FrequencyToCurrentConverter.FrequencyToCurrentConverter._compute_current">_compute_current</a></li>
+<li><a class="reference internal" href="#FrequencyToCurrentConverter.FrequencyToCurrentConverter._fit_line_robust">_fit_line_robust</a></li>
+<li><a class="reference internal" href="#FrequencyToCurrentConverter.FrequencyToCurrentConverter._simulate">_simulate</a></li>
+<li><a class="reference internal" href="#FrequencyToCurrentConverter.FrequencyToCurrentConverter._make_tfr">_make_tfr</a></li>
+<li><a class="reference internal" href="#FrequencyToCurrentConverter.FrequencyToCurrentConverter._plot_relationship">_plot_relationship</a></li>
 </ul>
 </li>
 </ul>

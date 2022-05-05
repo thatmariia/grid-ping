@@ -20,9 +20,8 @@ Classes
 .. py:class:: FrequencyToCurrentConverter
 
    This class converts the frequencies stimulus into the currents stimulus.
-   TODO:: implement
 
-   .. py:method:: convert(self, stimulus_frequencies: numpy.ndarray[int, float]) -> numpy.ndarray[int, float]
+   .. py:method:: convert(self, stimulus_frequencies: numpy.ndarray[int, float], nr_neurons: dict[Any, int], neur_slice: dict[src.NeuronTypes.NeuronTypes, slice]) -> numpy.ndarray[int, float]
 
       Converts the frequencies stimulus into the currents stimulus.
 
@@ -31,19 +30,78 @@ Classes
       :param stimulus_frequencies: frequencies stimulus.
       :type stimulus_frequencies: numpy.ndarray[int, float]
 
+      :param nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
+      :type nr_neurons: dict[Any, int]
+
+      :param neur_slice: indices of each type of neurons.
+      :type neur_slice: dict[NeuronTypes, slice]
+
       :return: the stimulus converted to currents.
       :rtype: numpy.ndarray[int, float]
 
 
-   .. py:method:: _compute_current(self, stimulus_frequencies: numpy.ndarray[int, float]) -> numpy.ndarray[int, float]
+   .. py:method:: _fit_line_robust(self, x: numpy.ndarray[int, float], y: numpy.ndarray[int, float]) -> sklearn.linear_model.TheilSenRegressor
 
-      Computes _currents through oscillation frequencies. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.
+      Creates a model that fits a line to the data.
 
-      :param stimulus_frequencies: list containing oscillation frequencies for each circuit.
-      :type stimulus_frequencies: list[float]
+      :param x: values to predict (target).
+      :type x: numpy.ndarray[int, float]
 
-      :return: TODO
-      :rtype: numpy.ndarray[int, float]
+      :param y: values used for prediction.
+      :type y: numpy.ndarray[int, float]
+
+      :return: a fitted regression model.
+      :rtype: TheilSenRegressor
+
+
+   .. py:method:: _simulate(self, simulation_time: int, nr_neurons: dict[Any, int], mean_ex: float) -> src.IzhikevichNetworkOutcome.IzhikevichNetworkOutcome
+
+      Simulates an Izhikevich network with a single PING.
+
+      :param simulation_time: number of epochs to run the simulation.
+      :type simulation_time: int
+
+      :param nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
+      :type nr_neurons: dict[Any, int]
+
+      :param mean_ex: mean of input strength to excitatory neurons.
+      :type mean_ex: float
+
+      :return: collected information from the simulation.
+      :rtype: IzhikevichNetworkOutcome
+
+
+   .. py:method:: _make_tfr(self, simulation_time: int, signal: list[int]) -> int
+
+      TODO:: Determines most prominent frequency??
+
+      :param simulation_time: number of epochs to run the simulation.
+      :type simulation_time: int
+
+      :param signal: number of excitatory neurons fired at relevant epochs of the simulation.
+      :type signal: list[int]
+
+      :return: TODO:: most prominent frequency?
+      :rtype: int
+
+
+   .. py:method:: _plot_relationship(self, freqs: numpy.ndarray[int, float], currents: numpy.ndarray[int, float], freqs_line: numpy.ndarray[int, float], currents_line: numpy.ndarray[int, float]) -> None
+
+      Plots the relationship between frequency and current.
+
+      :param freqs: frequencies from simulated data.
+      :type freqs: numpy.ndarray[int, float]
+
+      :param currents: currents from simulated data.
+      :type currents: numpy.ndarray[int, float]
+
+      :param freqs_line: frequencies from fitted line.
+      :type freqs_line: numpy.ndarray[int, float]
+
+      :param currents_line: currents from fitted line.
+      :type currents_line: numpy.ndarray[int, float]
+
+      :rtype: None
 
 
 

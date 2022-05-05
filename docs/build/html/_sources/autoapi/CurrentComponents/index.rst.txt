@@ -38,16 +38,16 @@ Classes
 
    :ivar connectivity: information about connectivity between neurons in the oscillatory network.
 
-   .. py:method:: get_synaptic_currents(self, gatings, dt, potentials)
+   .. py:method:: get_synaptic_currents(self, dt, potentials) -> src.Connectivity.np.ndarray[int, float]
       :abstractmethod:
 
-      Computes :math:`I_{syn}`.
+      Computes :math:`I_{\mathrm{syn}}`.
 
 
-   .. py:method:: get_current_input(self)
+   .. py:method:: get_current_input(self) -> src.Connectivity.np.ndarray[int, float]
       :abstractmethod:
 
-      Computes :math:`I_{stim}`.
+      Computes :math:`I_{\mathrm{stim}}`.
 
 
 

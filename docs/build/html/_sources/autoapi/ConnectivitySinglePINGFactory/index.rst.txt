@@ -1,0 +1,39 @@
+:py:mod:`ConnectivitySinglePINGFactory`
+=======================================
+
+.. py:module:: ConnectivitySinglePINGFactory
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   ConnectivitySinglePINGFactory.ConnectivitySinglePINGFactory
+
+
+
+
+.. py:class:: ConnectivitySinglePINGFactory
+
+   .. py:method:: create(self, nr_excitatory: int, nr_inhibitory: int, max_connect_strength: dict[tuple[src.Connectivity.NeuronTypes, src.Connectivity.NeuronTypes], float]) -> src.Connectivity.Connectivity
+
+      Determines the connectivity between neurons in the oscillatory network.
+
+      :param nr_excitatory: number of excitatory neurons in the network.
+      :type nr_excitatory: int
+
+      :param nr_inhibitory: number of inhibitory neurons in the network.
+      :type nr_inhibitory: int
+
+      :param max_connect_strength: maximum connection strength between types of neurons.
+      :type max_connect_strength: dict[tuple[NeuronTypes, NeuronTypes], float]
+
+      :return: connectivity between neurons in the oscillatory network.
+      :rtype: Connectivity
+
+
+

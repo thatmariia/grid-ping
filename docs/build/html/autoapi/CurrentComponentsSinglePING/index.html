@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <meta name="generator" content="sphinx-4.4.0, furo 2022.03.04"/>
-        <title>LuminanceToContrastConverter - grid-ping documentation</title>
+        <title>CurrentComponentsSinglePING - grid-ping documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=935aa2abcc5c1da4283d1dc201fb1f0add16d23a" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -190,12 +190,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../ConnectivityGridPINGFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ConnectivityGridPINGFactory</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../PINGNetworkNeurons/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PINGNetworkNeurons</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Stimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Stimulus</span></code></a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">LuminanceToContrastConverter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../LuminanceToContrastConverter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">LuminanceToContrastConverter</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ConnectivitySinglePINGFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ConnectivitySinglePINGFactory</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../StimulusLocations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusLocations</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../GaborLuminanceStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaborLuminanceStimulus</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../IzhikevichNetworkSimulator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IzhikevichNetworkSimulator</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="../CurrentComponentsSinglePING/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponentsSinglePING</span></code></a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponentsSinglePING</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../PINGNetworkPixels/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PINGNetworkPixels</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../PatchGeometry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PatchGeometry</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../CurrentComponentsGridPING/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponentsGridPING</span></code></a></li>
@@ -236,8 +236,8 @@
           </label>
         </div>
         <article role="main">
-          <section id="module-LuminanceToContrastConverter">
-<span id="luminancetocontrastconverter"></span><h1><a class="reference internal" href="#module-LuminanceToContrastConverter" title="LuminanceToContrastConverter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">LuminanceToContrastConverter</span></code></a><a class="headerlink" href="#module-LuminanceToContrastConverter" title="Permalink to this headline">#</a></h1>
+          <section id="module-CurrentComponentsSinglePING">
+<span id="currentcomponentssingleping"></span><h1><a class="reference internal" href="#module-CurrentComponentsSinglePING" title="CurrentComponentsSinglePING"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponentsSinglePING</span></code></a><a class="headerlink" href="#module-CurrentComponentsSinglePING" title="Permalink to this headline">#</a></h1>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">#</a></h2>
 <section id="classes">
@@ -248,80 +248,67 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#LuminanceToContrastConverter.LuminanceToContrastConverter" title="LuminanceToContrastConverter.LuminanceToContrastConverter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LuminanceToContrastConverter</span></code></a></p></td>
-<td><p>This class converts the luminance stimulus into the local contrasts stimulus.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#CurrentComponentsSinglePING.CurrentComponentsSinglePING" title="CurrentComponentsSinglePING.CurrentComponentsSinglePING"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CurrentComponentsSinglePING</span></code></a></p></td>
+<td><p>This lass contains methods of computing the current components for the network of a single PING network.</p></td>
 </tr>
 </tbody>
 </table></div>
 <dl class="py class">
-<dt class="sig sig-object py" id="LuminanceToContrastConverter.LuminanceToContrastConverter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">LuminanceToContrastConverter.</span></span><span class="sig-name descname"><span class="pre">LuminanceToContrastConverter</span></span><a class="headerlink" href="#LuminanceToContrastConverter.LuminanceToContrastConverter" title="Permalink to this definition">#</a></dt>
-<dd><p>This class converts the luminance stimulus into the local contrasts stimulus.</p>
-<dl class="py method">
-<dt class="sig sig-object py" id="LuminanceToContrastConverter.LuminanceToContrastConverter.convert">
-<span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intercept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_diam_rf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">src.PatchGeometry.PatchGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stimulus_luminance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">src.GaborLuminanceStimulus.GaborLuminanceStimulus</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#LuminanceToContrastConverter.LuminanceToContrastConverter.convert" title="Permalink to this definition">#</a></dt>
-<dd><p>Converts the luminance stimulus into the local contrasts stimulus.</p>
-<p>The approach is derived from <span id="id1">[<a class="reference internal" href="../../index.html#id2" title="missing note in MaryamPLACEHOLDER">Karimian, n.d.</a>]</span>.</p>
+<dt class="sig sig-object py" id="CurrentComponentsSinglePING.CurrentComponentsSinglePING">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">CurrentComponentsSinglePING.</span></span><span class="sig-name descname"><span class="pre">CurrentComponentsSinglePING</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connectivity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">src.Connectivity.Connectivity</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synaptic_rise</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">src.Connectivity.NeuronTypes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synaptic_decay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">src.Connectivity.NeuronTypes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_ex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_ex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_in</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">var_in</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CurrentComponentsSinglePING.CurrentComponentsSinglePING" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">src.CurrentComponents.CurrentComponents</span></code></p>
+<p>This lass contains methods of computing the current components for the network of a single PING network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>slope</strong> (<em>float</em>) – slope of the receptive field size.</p></li>
-<li><p><strong>intercept</strong> (<em>float</em>) – intercept of the receptive field size.</p></li>
-<li><p><strong>min_diam_rf</strong> (<em>float</em>) – minimal size of the receptive field.</p></li>
-<li><p><strong>patch_geometry</strong> (<a class="reference internal" href="../PatchGeometry/index.html#PatchGeometry.PatchGeometry" title="PatchGeometry.PatchGeometry"><em>PatchGeometry</em></a>) – information about the grid layout of the stimulus patch in correspondence with PING networks.</p></li>
-<li><p><strong>stimulus_luminance</strong> (<a class="reference internal" href="../GaborLuminanceStimulus/index.html#GaborLuminanceStimulus.GaborLuminanceStimulus" title="GaborLuminanceStimulus.GaborLuminanceStimulus"><em>GaborLuminanceStimulus</em></a>) – luminance stimulus container.</p></li>
+<li><p><strong>connectivity</strong> (<a class="reference internal" href="../Connectivity/index.html#Connectivity.Connectivity" title="Connectivity.Connectivity"><em>Connectivity</em></a>) – information about connectivity between neurons in the oscillatory network.</p></li>
+<li><p><strong>synaptic_rise</strong> (<em>dict</em><em>[</em><a class="reference internal" href="../NeuronTypes/index.html#NeuronTypes.NeuronTypes" title="NeuronTypes.NeuronTypes"><em>NeuronTypes</em></a><em>, </em><em>float</em><em>]</em>) – synaptic rise constants.</p></li>
+<li><p><strong>synaptic_decay</strong> (<em>dict</em><em>[</em><a class="reference internal" href="../NeuronTypes/index.html#NeuronTypes.NeuronTypes" title="NeuronTypes.NeuronTypes"><em>NeuronTypes</em></a><em>, </em><em>float</em><em>]</em>) – synaptic decay constants.</p></li>
+<li><p><strong>mean_ex</strong> (<em>float</em>) – mean of input strength to excitatory neurons.</p></li>
+<li><p><strong>var_ex</strong> (<em>float</em>) – variance of input strength to excitatory neurons.</p></li>
+<li><p><strong>mean_in</strong> (<em>float</em>) – mean of input strength to inhibitory neurons.</p></li>
+<li><p><strong>var_in</strong> (<em>float</em>) – variance of input strength to inhibitory neurons.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>_synaptic_rise</strong> – synaptic rise constants.</p></li>
+<li><p><strong>_synaptic_decay</strong> – synaptic decay constants.</p></li>
+<li><p><strong>_synaptic_currents</strong> – keeps track of intermediate synaptic currents.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="CurrentComponentsSinglePING.CurrentComponentsSinglePING.get_synaptic_currents">
+<span class="sig-name descname"><span class="pre">get_synaptic_currents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">potentials</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#CurrentComponentsSinglePING.CurrentComponentsSinglePING.get_synaptic_currents" title="Permalink to this definition">#</a></dt>
+<dd><p>Computes the new synaptic currents for postsynaptic neurons.</p>
+<p>Computes <span class="math notranslate nohighlight">\(I_{\mathrm{syn}}\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dt</strong> (<em>float</em>) – time interval</p></li>
+<li><p><strong>potentials</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – neurons’ membrane potentials.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the stimulus converted to local contrasts.</p>
+<dd class="field-even"><p>the change in synaptic currents for a unit of time.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list[float]</p>
+<dd class="field-odd"><p>numpy.ndarray[int, float]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="LuminanceToContrastConverter.LuminanceToContrastConverter._compute_local_contrasts">
-<span class="sig-name descname"><span class="pre">_compute_local_contrasts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intercept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_diam_rf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_geometry</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">src.PatchGeometry.PatchGeometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stimulus_luminance</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">src.GaborLuminanceStimulus.GaborLuminanceStimulus</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#LuminanceToContrastConverter.LuminanceToContrastConverter._compute_local_contrasts" title="Permalink to this definition">#</a></dt>
-<dd><p>Computes local contrasts for each circuit.</p>
+<dt class="sig sig-object py" id="CurrentComponentsSinglePING.CurrentComponentsSinglePING.get_current_input">
+<span class="sig-name descname"><span class="pre">get_current_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#CurrentComponentsSinglePING.CurrentComponentsSinglePING.get_current_input" title="Permalink to this definition">#</a></dt>
+<dd><p>Computes the input current to each neuron.</p>
+<p>Computes <span class="math notranslate nohighlight">\(I_{\mathrm{stim}}\)</span>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>patch_geometry</strong> (<a class="reference internal" href="../PatchGeometry/index.html#PatchGeometry.PatchGeometry" title="PatchGeometry.PatchGeometry"><em>PatchGeometry</em></a>) – information about the grid layout of the stimulus patch in correspondence with PING networks.</p></li>
-<li><p><strong>stimulus_luminance</strong> (<a class="reference internal" href="../GaborLuminanceStimulus/index.html#GaborLuminanceStimulus.GaborLuminanceStimulus" title="GaborLuminanceStimulus.GaborLuminanceStimulus"><em>GaborLuminanceStimulus</em></a>) – luminance stimulus container.</p></li>
-<li><p><strong>slope</strong> (<em>float</em>) – slope of the receptive field size.</p></li>
-<li><p><strong>intercept</strong> (<em>float</em>) – intercept of the receptive field size.</p></li>
-<li><p><strong>min_diam_rf</strong> (<em>float</em>) – minimal size of the receptive field.</p></li>
-</ul>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>input strength to each neuron.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>list containing local contrast values for each circuit.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>list[float]</p>
-</dd>
-</dl>
-</dd></dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="LuminanceToContrastConverter.LuminanceToContrastConverter._get_weight">
-<span class="sig-name descname"><span class="pre">_get_weight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eccentricity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">slope</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intercept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_diam_rf</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#LuminanceToContrastConverter.LuminanceToContrastConverter._get_weight" title="Permalink to this definition">#</a></dt>
-<dd><p>Computes weight of a pixel with respect to a circuit.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>center</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – coordinate of the circuit center.</p></li>
-<li><p><strong>pixel</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – coordinate of the pixel.</p></li>
-<li><p><strong>eccentricity</strong> (<em>float</em>) – eccentricity of the circuit center.</p></li>
-<li><p><strong>slope</strong> (<em>float</em>) – slope of the receptive field size.</p></li>
-<li><p><strong>intercept</strong> (<em>float</em>) – intercept of the receptive field size.</p></li>
-<li><p><strong>min_diam_rf</strong> (<em>float</em>) – minimal size of the receptive field.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>weight of a pixel with respect to a circuit.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>float</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy.ndarray[int, float]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -369,13 +356,12 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">LuminanceToContrastConverter</span></code></a><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponentsSinglePING</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
-<li><a class="reference internal" href="#LuminanceToContrastConverter.LuminanceToContrastConverter">LuminanceToContrastConverter</a><ul>
-<li><a class="reference internal" href="#LuminanceToContrastConverter.LuminanceToContrastConverter.convert">convert</a></li>
-<li><a class="reference internal" href="#LuminanceToContrastConverter.LuminanceToContrastConverter._compute_local_contrasts">_compute_local_contrasts</a></li>
-<li><a class="reference internal" href="#LuminanceToContrastConverter.LuminanceToContrastConverter._get_weight">_get_weight</a></li>
+<li><a class="reference internal" href="#CurrentComponentsSinglePING.CurrentComponentsSinglePING">CurrentComponentsSinglePING</a><ul>
+<li><a class="reference internal" href="#CurrentComponentsSinglePING.CurrentComponentsSinglePING.get_synaptic_currents">get_synaptic_currents</a></li>
+<li><a class="reference internal" href="#CurrentComponentsSinglePING.CurrentComponentsSinglePING.get_current_input">get_current_input</a></li>
 </ul>
 </li>
 </ul>
@@ -398,5 +384,6 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>

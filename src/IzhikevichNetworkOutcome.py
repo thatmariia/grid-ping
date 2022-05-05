@@ -5,9 +5,9 @@ class IzhikevichNetworkOutcome:
     """
     This class contains the collected information from the simulation of the Izhikevich network.
 
-    :param firing_times: indices of spikes.
-    :type firing_times: TODO
+    :param spikes: indices of spikes.
+    :type spikes: list[tuple[int, int]]
     """
 
-    def __init__(self, firing_times):
-        self.firing_times = firing_times
+    def __init__(self, spikes):
+        self.spikes = spikes

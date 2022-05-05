@@ -30,16 +30,14 @@ Classes
    :type stimulus_currents: numpy.ndarray[int, float]
 
 
-   :ivar _stimulus_currents: currents stimulus.
+   :ivar _stimulus_currents: currents from stimulus.
+   :ivar _gatings: keeps track of gating values.
 
-   .. py:method:: get_synaptic_currents(self, gatings: numpy.ndarray[(int, int), float], dt: float, potentials: numpy.ndarray[int, float]) -> tuple[numpy.ndarray[int, float], numpy.ndarray[int, float]]
+   .. py:method:: get_synaptic_currents(self, dt: float, potentials: numpy.ndarray[int, float]) -> numpy.ndarray[int, float]
 
       Computes the new synaptic currents for postsynaptic neurons.
 
-      Computes the :math:`I_{syn}`. The approach is derived from :cite:p:`Jensen2005`.
-
-      :param gatings: synaptic gating values
-      :type gatings: numpy.ndarray[int, float]
+      Computes :math:`I_{\mathrm{syn}}`. The approach is derived from :cite:p:`Jensen2005`.
 
       :param dt: time interval
       :type dt: float
@@ -47,16 +45,13 @@ Classes
       :param potentials: neurons' membrane potentials.
       :type potentials: numpy.ndarray[int, float]
 
-      :return: change in synaptic gates for excitatory postsynaptic neurons.
-      :rtype: numpy.ndarray[(int, int), float]
+      :return: the change in synaptic currents for a unit of time.
+      :rtype: numpy.ndarray[int, float]
 
 
-   .. py:method:: _get_gatings(self, gatings: numpy.ndarray[int, float], dt: float, potentials: numpy.ndarray[int, float]) -> numpy.ndarray[int, float]
+   .. py:method:: _get_gatings(self, dt: float, potentials: numpy.ndarray[int, float]) -> numpy.ndarray[int, float]
 
       Computes the gating values for synapses of given types.
-
-      :param gatings: current gating values.
-      :type gatings: numpy.ndarray[int, float]
 
       :param dt: time interval.
       :type dt: float
@@ -64,13 +59,15 @@ Classes
       :param potentials: neurons' membrane potentials.
       :type potentials: numpy.ndarray[int, float]
 
-      :return: the change in synaptic values for a unit of time.
+      :return: change in synaptic gates for excitatory postsynaptic neurons.
       :rtype: numpy.ndarray[int, float]
 
 
    .. py:method:: get_current_input(self) -> numpy.ndarray[int, float]
 
       Computes the input current to each neuron.
+
+      Computes :math:`I_{\mathrm{stim}}`.
 
       :return: input current to each neuron.
       :rtype: numpy.ndarray[int, float]

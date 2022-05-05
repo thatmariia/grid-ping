@@ -191,9 +191,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../PINGNetworkNeurons/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PINGNetworkNeurons</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Stimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Stimulus</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../LuminanceToContrastConverter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">LuminanceToContrastConverter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ConnectivitySinglePINGFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ConnectivitySinglePINGFactory</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../StimulusLocations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusLocations</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../GaborLuminanceStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaborLuminanceStimulus</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../IzhikevichNetworkSimulator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IzhikevichNetworkSimulator</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../CurrentComponentsSinglePING/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponentsSinglePING</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../PINGNetworkPixels/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PINGNetworkPixels</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../PatchGeometry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PatchGeometry</span></code></a></li>
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponentsGridPING</span></code></a></li>
@@ -264,44 +266,45 @@
 </ul>
 </dd>
 <dt class="field-even">Variables</dt>
-<dd class="field-even"><p><strong>_stimulus_currents</strong> – currents stimulus.</p>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>_stimulus_currents</strong> – currents from stimulus.</p></li>
+<li><p><strong>_gatings</strong> – keeps track of gating values.</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="CurrentComponentsGridPING.CurrentComponentsGridPING.get_synaptic_currents">
-<span class="sig-name descname"><span class="pre">get_synaptic_currents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gatings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">potentials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#CurrentComponentsGridPING.CurrentComponentsGridPING.get_synaptic_currents" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">get_synaptic_currents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">potentials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#CurrentComponentsGridPING.CurrentComponentsGridPING.get_synaptic_currents" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the new synaptic currents for postsynaptic neurons.</p>
-<p>Computes the <span class="math notranslate nohighlight">\(I_{syn}\)</span>. The approach is derived from <span id="id1">[<a class="reference internal" href="../../index.html#id15" title="O Jensen, P Goel, N Kopell, M Pohja, R Hari, and B Ermentrout. On the human sensorimotor-cortex beta rhythm: sources and modeling. Neuroimage, 26(2):347–355, 6 2005. URL: https://www.sciencedirect.com/science/article/pii/S1053811905001060?via%3Dihub, doi:10.1016/j.neuroimage.2005.02.008.">Jensen <em>et al.</em>, 2005</a>]</span>.</p>
+<p>Computes <span class="math notranslate nohighlight">\(I_{\mathrm{syn}}\)</span>. The approach is derived from <span id="id1">[<a class="reference internal" href="../../index.html#id15" title="O Jensen, P Goel, N Kopell, M Pohja, R Hari, and B Ermentrout. On the human sensorimotor-cortex beta rhythm: sources and modeling. Neuroimage, 26(2):347–355, 6 2005. URL: https://www.sciencedirect.com/science/article/pii/S1053811905001060?via%3Dihub, doi:10.1016/j.neuroimage.2005.02.008.">Jensen <em>et al.</em>, 2005</a>]</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>gatings</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – synaptic gating values</p></li>
 <li><p><strong>dt</strong> (<em>float</em>) – time interval</p></li>
 <li><p><strong>potentials</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – neurons’ membrane potentials.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>change in synaptic gates for excitatory postsynaptic neurons.</p>
+<dd class="field-even"><p>the change in synaptic currents for a unit of time.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>numpy.ndarray[(int, int), float]</p>
+<dd class="field-odd"><p>numpy.ndarray[int, float]</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="CurrentComponentsGridPING.CurrentComponentsGridPING._get_gatings">
-<span class="sig-name descname"><span class="pre">_get_gatings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gatings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">potentials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#CurrentComponentsGridPING.CurrentComponentsGridPING._get_gatings" title="Permalink to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">_get_gatings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">potentials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#CurrentComponentsGridPING.CurrentComponentsGridPING._get_gatings" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the gating values for synapses of given types.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>gatings</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – current gating values.</p></li>
 <li><p><strong>dt</strong> (<em>float</em>) – time interval.</p></li>
 <li><p><strong>potentials</strong> (<em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>float</em><em>]</em>) – neurons’ membrane potentials.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the change in synaptic values for a unit of time.</p>
+<dd class="field-even"><p>change in synaptic gates for excitatory postsynaptic neurons.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>numpy.ndarray[int, float]</p>
@@ -312,6 +315,7 @@
 <dt class="sig sig-object py" id="CurrentComponentsGridPING.CurrentComponentsGridPING.get_current_input">
 <span class="sig-name descname"><span class="pre">get_current_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#CurrentComponentsGridPING.CurrentComponentsGridPING.get_current_input" title="Permalink to this definition">#</a></dt>
 <dd><p>Computes the input current to each neuron.</p>
+<p>Computes <span class="math notranslate nohighlight">\(I_{\mathrm{stim}}\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>input current to each neuron.</p>

@@ -9,3 +9,5 @@ pytest
 seaborn
 matplotlib
 coverage
+scipy
+sklearn

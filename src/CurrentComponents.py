@@ -28,17 +28,17 @@ class CurrentComponents(ABC):
         self.connectivity: Connectivity = connectivity
 
     @abstractmethod
-    def get_synaptic_currents(self, gatings, dt, potentials):
+    def get_synaptic_currents(self, dt, potentials) -> np.ndarray[int, float]:
         """
-        Computes :math:`I_{syn}`.
+        Computes :math:`I_{\mathrm{syn}}`.
         """
 
         pass
 
     @abstractmethod
-    def get_current_input(self):
+    def get_current_input(self) -> np.ndarray[int, float]:
         """
-        Computes :math:`I_{stim}`.
+        Computes :math:`I_{\mathrm{stim}}`.
         """
 
         pass

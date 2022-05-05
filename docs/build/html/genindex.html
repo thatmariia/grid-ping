@@ -189,9 +189,11 @@
 <li class="toctree-l2"><a class="reference internal" href="autoapi/PINGNetworkNeurons/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PINGNetworkNeurons</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/Stimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Stimulus</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/LuminanceToContrastConverter/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">LuminanceToContrastConverter</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/ConnectivitySinglePINGFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ConnectivitySinglePINGFactory</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/StimulusLocations/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">StimulusLocations</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/GaborLuminanceStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GaborLuminanceStimulus</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/IzhikevichNetworkSimulator/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IzhikevichNetworkSimulator</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/CurrentComponentsSinglePING/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponentsSinglePING</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/PINGNetworkPixels/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PINGNetworkPixels</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/PatchGeometry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">PatchGeometry</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/CurrentComponentsGridPING/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponentsGridPING</span></code></a></li>
@@ -251,8 +253,6 @@
 </li>
         <li><a href="autoapi/ConnectivityGridPINGFactory/index.html#ConnectivityGridPINGFactory.ConnectivityGridPINGFactory._compute_coupling_weights">_compute_coupling_weights() (ConnectivityGridPINGFactory.ConnectivityGridPINGFactory method)</a>
 </li>
-        <li><a href="autoapi/FrequencyToCurrentConverter/index.html#FrequencyToCurrentConverter.FrequencyToCurrentConverter._compute_current">_compute_current() (FrequencyToCurrentConverter.FrequencyToCurrentConverter method)</a>
-</li>
         <li><a href="autoapi/ContrastToFrequencyConverter/index.html#ContrastToFrequencyConverter.ContrastToFrequencyConverter._compute_frequencies">_compute_frequencies() (ContrastToFrequencyConverter.ContrastToFrequencyConverter method)</a>
 </li>
         <li><a href="autoapi/LuminanceToContrastConverter/index.html#LuminanceToContrastConverter.LuminanceToContrastConverter._compute_local_contrasts">_compute_local_contrasts() (LuminanceToContrastConverter.LuminanceToContrastConverter method)</a>
@@ -261,14 +261,16 @@
 </li>
         <li><a href="autoapi/CurrentComponentsGridPING/index.html#CurrentComponentsGridPING.CurrentComponentsGridPING._create_main_input_stimulus">_create_main_input_stimulus() (CurrentComponentsGridPING.CurrentComponentsGridPING method)</a>
 </li>
+        <li><a href="autoapi/FrequencyToCurrentConverter/index.html#FrequencyToCurrentConverter.FrequencyToCurrentConverter._fit_line_robust">_fit_line_robust() (FrequencyToCurrentConverter.FrequencyToCurrentConverter method)</a>
+</li>
         <li><a href="autoapi/IzhikevichNetworkSimulator/index.html#IzhikevichNetworkSimulator.IzhikevichNetworkSimulator._get_change_in_potentials">_get_change_in_potentials() (IzhikevichNetworkSimulator.IzhikevichNetworkSimulator method)</a>
 </li>
         <li><a href="autoapi/IzhikevichNetworkSimulator/index.html#IzhikevichNetworkSimulator.IzhikevichNetworkSimulator._get_change_in_recovery">_get_change_in_recovery() (IzhikevichNetworkSimulator.IzhikevichNetworkSimulator method)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="autoapi/GaborLuminanceStimulusFactory/index.html#GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory._get_figure_coords">_get_figure_coords() (GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="autoapi/GaborLuminanceStimulusFactory/index.html#GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory._get_full_stimulus">_get_full_stimulus() (GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory method)</a>
 </li>
         <li><a href="autoapi/CurrentComponentsGridPING/index.html#CurrentComponentsGridPING.CurrentComponentsGridPING._get_gatings">_get_gatings() (CurrentComponentsGridPING.CurrentComponentsGridPING method)</a>
@@ -287,9 +289,15 @@
 </li>
         <li><a href="autoapi/GaborLuminanceStimulusFactory/index.html#GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory._is_annulus_in_figure">_is_annulus_in_figure() (GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory method)</a>
 </li>
+        <li><a href="autoapi/FrequencyToCurrentConverter/index.html#FrequencyToCurrentConverter.FrequencyToCurrentConverter._make_tfr">_make_tfr() (FrequencyToCurrentConverter.FrequencyToCurrentConverter method)</a>
+</li>
         <li><a href="autoapi/GaborLuminanceStimulus/index.html#GaborLuminanceStimulus.GaborLuminanceStimulus._plot">_plot() (GaborLuminanceStimulus.GaborLuminanceStimulus method)</a>
 </li>
+        <li><a href="autoapi/FrequencyToCurrentConverter/index.html#FrequencyToCurrentConverter.FrequencyToCurrentConverter._plot_relationship">_plot_relationship() (FrequencyToCurrentConverter.FrequencyToCurrentConverter method)</a>
+</li>
         <li><a href="autoapi/GaborLuminanceStimulusFactory/index.html#GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory._select_stimulus_patch">_select_stimulus_patch() (GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory method)</a>
+</li>
+        <li><a href="autoapi/FrequencyToCurrentConverter/index.html#FrequencyToCurrentConverter.FrequencyToCurrentConverter._simulate">_simulate() (FrequencyToCurrentConverter.FrequencyToCurrentConverter method)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -332,6 +340,15 @@
         <li><a href="autoapi/ConnectivityGridPINGFactory/index.html#ConnectivityGridPINGFactory.ConnectivityGridPINGFactory">ConnectivityGridPINGFactory (class in ConnectivityGridPINGFactory)</a>
 </li>
         <li>
+    ConnectivitySinglePINGFactory
+
+        <ul>
+          <li><a href="autoapi/ConnectivitySinglePINGFactory/index.html#module-ConnectivitySinglePINGFactory">module</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/ConnectivitySinglePINGFactory/index.html#ConnectivitySinglePINGFactory.ConnectivitySinglePINGFactory">ConnectivitySinglePINGFactory (class in ConnectivitySinglePINGFactory)</a>
+</li>
+        <li>
     constants
 
         <ul>
@@ -360,6 +377,8 @@
         <li><a href="autoapi/ConnectivityGridPINGFactory/index.html#ConnectivityGridPINGFactory.ConnectivityGridPINGFactory.create">create() (ConnectivityGridPINGFactory.ConnectivityGridPINGFactory method)</a>
 
         <ul>
+          <li><a href="autoapi/ConnectivitySinglePINGFactory/index.html#ConnectivitySinglePINGFactory.ConnectivitySinglePINGFactory.create">(ConnectivitySinglePINGFactory.ConnectivitySinglePINGFactory method)</a>
+</li>
           <li><a href="autoapi/GaborLuminanceStimulusFactory/index.html#GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory.create">(GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory method)</a>
 </li>
           <li><a href="autoapi/PatchGeometryFactory/index.html#PatchGeometryFactory.PatchGeometryFactory.create">(PatchGeometryFactory.PatchGeometryFactory method)</a>
@@ -384,6 +403,15 @@
 </li>
         </ul></li>
         <li><a href="autoapi/CurrentComponentsGridPING/index.html#CurrentComponentsGridPING.CurrentComponentsGridPING">CurrentComponentsGridPING (class in CurrentComponentsGridPING)</a>
+</li>
+        <li>
+    CurrentComponentsSinglePING
+
+        <ul>
+          <li><a href="autoapi/CurrentComponentsSinglePING/index.html#module-CurrentComponentsSinglePING">module</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/CurrentComponentsSinglePING/index.html#CurrentComponentsSinglePING.CurrentComponentsSinglePING">CurrentComponentsSinglePING (class in CurrentComponentsSinglePING)</a>
 </li>
         <li><a href="autoapi/StimulusFactory/index.html#StimulusFactory.CurrentStimulusFactory">CurrentStimulusFactory (class in StimulusFactory)</a>
 </li>
@@ -448,10 +476,10 @@
           <li><a href="autoapi/GaborLuminanceStimulusFactory/index.html#module-GaborLuminanceStimulusFactory">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="autoapi/GaborLuminanceStimulusFactory/index.html#GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory">GaborLuminanceStimulusFactory (class in GaborLuminanceStimulusFactory)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="autoapi/constants/index.html#constants.GAUSSIAN_INPUT">GAUSSIAN_INPUT (in module constants)</a>
 </li>
         <li><a href="autoapi/CurrentComponents/index.html#CurrentComponents.CurrentComponents.get_current_input">get_current_input() (CurrentComponents.CurrentComponents method)</a>
@@ -459,11 +487,15 @@
         <ul>
           <li><a href="autoapi/CurrentComponentsGridPING/index.html#CurrentComponentsGridPING.CurrentComponentsGridPING.get_current_input">(CurrentComponentsGridPING.CurrentComponentsGridPING method)</a>
 </li>
+          <li><a href="autoapi/CurrentComponentsSinglePING/index.html#CurrentComponentsSinglePING.CurrentComponentsSinglePING.get_current_input">(CurrentComponentsSinglePING.CurrentComponentsSinglePING method)</a>
+</li>
         </ul></li>
         <li><a href="autoapi/CurrentComponents/index.html#CurrentComponents.CurrentComponents.get_synaptic_currents">get_synaptic_currents() (CurrentComponents.CurrentComponents method)</a>
 
         <ul>
           <li><a href="autoapi/CurrentComponentsGridPING/index.html#CurrentComponentsGridPING.CurrentComponentsGridPING.get_synaptic_currents">(CurrentComponentsGridPING.CurrentComponentsGridPING method)</a>
+</li>
+          <li><a href="autoapi/CurrentComponentsSinglePING/index.html#CurrentComponentsSinglePING.CurrentComponentsSinglePING.get_synaptic_currents">(CurrentComponentsSinglePING.CurrentComponentsSinglePING method)</a>
 </li>
         </ul></li>
     </ul></td>
@@ -557,6 +589,8 @@
 </li>
           <li><a href="autoapi/ConnectivityGridPINGFactory/index.html#module-ConnectivityGridPINGFactory">ConnectivityGridPINGFactory</a>
 </li>
+          <li><a href="autoapi/ConnectivitySinglePINGFactory/index.html#module-ConnectivitySinglePINGFactory">ConnectivitySinglePINGFactory</a>
+</li>
           <li><a href="autoapi/constants/index.html#module-constants">constants</a>
 </li>
           <li><a href="autoapi/ContrastToFrequencyConverter/index.html#module-ContrastToFrequencyConverter">ContrastToFrequencyConverter</a>
@@ -564,6 +598,8 @@
           <li><a href="autoapi/CurrentComponents/index.html#module-CurrentComponents">CurrentComponents</a>
 </li>
           <li><a href="autoapi/CurrentComponentsGridPING/index.html#module-CurrentComponentsGridPING">CurrentComponentsGridPING</a>
+</li>
+          <li><a href="autoapi/CurrentComponentsSinglePING/index.html#module-CurrentComponentsSinglePING">CurrentComponentsSinglePING</a>
 </li>
           <li><a href="autoapi/FrequencyToCurrentConverter/index.html#module-FrequencyToCurrentConverter">FrequencyToCurrentConverter</a>
 </li>

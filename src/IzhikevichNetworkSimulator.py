@@ -6,7 +6,6 @@ from src.IzhikevichNetworkOutcome import *
 from tqdm import tqdm
 import numpy as np
 
-
 class IzhikevichNetworkSimulator:
     """
     This class runs the simulation of the network of neurons.
@@ -34,11 +33,16 @@ class IzhikevichNetworkSimulator:
     :param current_components: contains methods of computing the neural network current components.
     :type current_components: CurrentComponents
 
+    :param pb_off: indicates whether the progress bar should be off, default is True.
+    :type pb_off: Bool
+
     :ivar _current_components: contains methods of computing the neural network current components.
+    :param _pb_off: indicates whether the progress bar should be off.
     """
 
-    def __init__(self, current_components: CurrentComponents):
+    def __init__(self, current_components: CurrentComponents, pb_off=True):
         self._current_components: CurrentComponents = current_components
+        self._pb_off = pb_off
 
     def simulate(self, simulation_time: int, dt: float) -> IzhikevichNetworkOutcome:
         """
@@ -59,37 +63,34 @@ class IzhikevichNetworkSimulator:
 
         izhi_alpha, izhi_beta, izhi_gamma, izhi_zeta = self._get_izhi_parameters()
         potentials, recovery = self._get_initial_values(izhi_beta)
-        gatings = np.zeros(self._current_components.connectivity.nr_neurons["total"])
 
         # spike timings
-        firing_times = []
+        spikes: list[tuple[int, int]] = []
 
-        for t in (pbar := tqdm(range(simulation_time))):
+        for t in (pbar := tqdm(range(simulation_time), disable=self._pb_off)):
             pbar.set_description("Network simulation")
 
             # spiking
-            fired = np.argwhere(potentials > PEAK_POTENTIAL).flatten()  # indices of spikes
-            # firing times will be used later
-            # TODO:: wtf is going on here?
-            firing_times = [firing_times, [t for _ in range(len(fired))] + fired]
-            for f in fired:
-                potentials[f] = izhi_gamma[f]
-                recovery[f] += izhi_zeta[f]
+            fired_neurons_ids = np.argwhere(potentials >= PEAK_POTENTIAL).flatten()  # indices of spikes
+            for id in fired_neurons_ids:
+                spikes.append((t, id))
 
-            # synaptic current
-            syn_currents, gatings = self._current_components.get_synaptic_currents(gatings, dt, potentials)
-            # total current
-            self._currents = self._current_components.get_current_input() + np.matmul(
-                self._current_components.connectivity.coupling_weights, syn_currents
+                potentials[id] = izhi_gamma[id]
+                recovery[id] += izhi_zeta[id]
+
+            # current
+            currents = self._current_components.get_current_input() + np.matmul(
+                self._current_components.connectivity.coupling_weights,
+                self._current_components.get_synaptic_currents(dt, potentials)
             )
 
             # updating potential and recovery
-            potentials = potentials + self._get_change_in_potentials(potentials, recovery)
-            potentials = potentials + self._get_change_in_potentials(potentials, recovery)
+            potentials = potentials + 0.5 * self._get_change_in_potentials(potentials, recovery, currents)
+            potentials = potentials + 0.5 * self._get_change_in_potentials(potentials, recovery, currents)
             recovery = recovery + self._get_change_in_recovery(potentials, recovery, izhi_alpha, izhi_beta)
 
         outcome = IzhikevichNetworkOutcome(
-            firing_times=firing_times
+            spikes=spikes
         )
 
         return outcome
@@ -166,13 +167,11 @@ class IzhikevichNetworkSimulator:
         :rtype: numpy.ndarray[int, float]
         """
 
-        return np.multiply(
-            izhi_alpha,
-            np.multiply(izhi_beta, potentials) - recovery
-        )
+        return izhi_alpha * (izhi_beta * potentials - recovery)
+
 
     def _get_change_in_potentials(
-            self, potentials: np.ndarray[int, float], recovery: np.ndarray[int, float]
+            self, potentials: np.ndarray[int, float], recovery: np.ndarray[int, float], currents: np.ndarray[int, float]
     ) -> np.ndarray[int, float]:
         """
         Computes the change in membrane potentials.
@@ -185,12 +184,15 @@ class IzhikevichNetworkSimulator:
         :param recovery: recovery variables.
         :type recovery: numpy.ndarray[int, float]
 
+        :param currents: currents.
+        :type currents: numpy.ndarray[int, float]
+
         :return: change in membrane potentials.
         :rtype: numpy.ndarray[int, float]
         """
 
         # TODO:: why do we multiply the equation for dv/dt with 0.5 and then call this function twice in run_simulation?
-        return 0.5 * (0.04 * potentials ** 2 + 5 * potentials + 140 - recovery + self._currents)
+        return 0.04 * np.power(potentials, 2) + 5 * potentials + 140 - recovery + currents
 
 
 

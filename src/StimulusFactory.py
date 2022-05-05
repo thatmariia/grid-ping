@@ -6,6 +6,7 @@ from src.FrequencyToCurrentConverter import *
 from src.Stimulus import *
 
 import numpy as np
+from typing import Any
 
 
 class CurrentStimulusFactory:
@@ -19,7 +20,8 @@ class CurrentStimulusFactory:
             dist_scale: float, full_width_dg: float, full_height_dg: float,
             contrast_range: float, figure_width_dg: float, figure_height_dg: float, figure_ecc_dg: float,
             patch_size_dg: float,
-            nr_ping_networks: int, slope: float, intercept: float, min_diam_rf: float
+            nr_ping_networks: int, slope: float, intercept: float, min_diam_rf: float,
+            nr_neurons: dict[Any, int], neur_slice: dict[NeuronTypes, slice]
     ) -> Stimulus:
         """
         Creates an external stimulus (Gabor texture) and prepares for the neural network input.
@@ -72,6 +74,12 @@ class CurrentStimulusFactory:
         :param min_diam_rf: minimal size of the receptive field.
         :type min_diam_rf: float
 
+        :param nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
+        :type nr_neurons: dict[Any, int]
+
+        :param neur_slice: indices of each type of neurons.
+        :type neur_slice: dict[NeuronTypes, slice]
+
         :raises:
             AssertionError: if the minimal diameter of the receptive field is not larger than 0.
         :raises:
@@ -122,7 +130,7 @@ class CurrentStimulusFactory:
             stimulus_contrasts
         )
         stimulus_currents = FrequencyToCurrentConverter().convert(
-            stimulus_frequencies
+            stimulus_frequencies, nr_neurons, neur_slice
         )
 
         stimulus = Stimulus(

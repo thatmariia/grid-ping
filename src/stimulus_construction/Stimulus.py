@@ -1,5 +1,5 @@
-from src.StimulusLocations import *
-from src.PatchGeometry import *
+from src.stimulus_construction.StimulusLocations import *
+from src.stimulus_construction.PatchGeometry import *
 
 import numpy as np
 from math import sqrt

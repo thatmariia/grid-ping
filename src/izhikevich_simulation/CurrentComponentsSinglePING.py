@@ -1,7 +1,7 @@
-from src.ParamsSynaptic import *
+from src.params.ParamsSynaptic import *
 
-from src.CurrentComponents import *
-from src.Connectivity import *
+from src.izhikevich_simulation.CurrentComponents import *
+from src.izhikevich_simulation.Connectivity import *
 
 import numpy as np
 

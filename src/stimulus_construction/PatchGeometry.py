@@ -1,5 +1,5 @@
 from src.misc import *
-from src.PINGNetworkPixels import *
+from src.stimulus_construction.PINGNetworkPixels import *
 
 
 class PatchGeometry:

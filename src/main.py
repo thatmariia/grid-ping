@@ -1,8 +1,8 @@
-from src.ParamsInitializer import *
-from src.StimulusFactory import *
-from src.ConnectivityGridPINGFactory import *
-from src.CurrentComponentsGridPING import *
-from src.IzhikevichNetworkSimulator import *
+from src.params.ParamsInitializer import *
+from src.stimulus_construction.StimulusFactory import *
+from src.izhikevich_simulation.ConnectivityGridPINGFactory import *
+from src.izhikevich_simulation.CurrentComponentsGridPING import *
+from src.izhikevich_simulation.IzhikevichNetworkSimulator import *
 
 
 if __name__ == "__main__":

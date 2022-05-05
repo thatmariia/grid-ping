@@ -1,5 +1,4 @@
-from src.NeuronTypes import *
-from src.Connectivity import *
+from src.izhikevich_simulation.Connectivity import *
 
 from abc import ABC, abstractmethod
 

@@ -1,5 +1,5 @@
-from src.PINGNetworkPixels import *
-from src.PatchGeometry import *
+from src.stimulus_construction.PINGNetworkPixels import *
+from src.stimulus_construction.PatchGeometry import *
 
 import numpy as np
 from math import sqrt

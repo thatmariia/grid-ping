@@ -1,8 +1,8 @@
-from src.ParamsIzhikevich import *
+from src.params.ParamsIzhikevich import *
 
-from src.CurrentComponents import *
+from src.izhikevich_simulation.CurrentComponents import *
 from src.NeuronTypes import *
-from src.IzhikevichNetworkOutcome import *
+from src.izhikevich_simulation.IzhikevichNetworkOutcome import *
 
 from tqdm import tqdm
 import numpy as np

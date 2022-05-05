@@ -1,9 +1,7 @@
-from src.ParamsPING import *
-from src.ParamsConnectivity import *
+from src.params.ParamsConnectivity import *
 
-from src.PINGNetworkNeurons import *
-from src.NeuronTypes import *
-from src.Connectivity import *
+from src.izhikevich_simulation.PINGNetworkNeurons import *
+from src.izhikevich_simulation.Connectivity import *
 from src.misc import *
 
 from itertools import product

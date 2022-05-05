@@ -1,12 +1,7 @@
-from src.ParamsPING import *
-from src.ParamsConnectivity import *
-from src.ParamsIzhikevich import *
-from src.ParamsSynaptic import *
-
-from src.ConnectivitySinglePINGFactory import *
-from src.CurrentComponentsSinglePING import *
-from src.IzhikevichNetworkSimulator import *
-from src.IzhikevichNetworkOutcome import *
+from src.izhikevich_simulation.ConnectivitySinglePINGFactory import *
+from src.izhikevich_simulation.CurrentComponentsSinglePING import *
+from src.izhikevich_simulation.IzhikevichNetworkSimulator import *
+from src.izhikevich_simulation.IzhikevichNetworkOutcome import *
 from src.NeuronTypes import *
 
 import numpy as np
@@ -19,7 +14,6 @@ from tqdm import tqdm
 from sklearn.linear_model import TheilSenRegressor
 from sklearn.model_selection import RepeatedKFold, cross_val_score
 
-from typing import Any
 from copy import deepcopy
 import warnings
 

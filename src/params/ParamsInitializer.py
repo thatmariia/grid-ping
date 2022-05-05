@@ -1,9 +1,9 @@
-from src.ParamsPING import *
-from src.ParamsGaborStimulus import *
-from src.ParamsReceptiveField import *
-from src.ParamsConnectivity import *
-from src.ParamsIzhikevich import *
-from src.ParamsSynaptic import *
+from src.params.ParamsPING import *
+from src.params.ParamsGaborStimulus import *
+from src.params.ParamsReceptiveField import *
+from src.params.ParamsConnectivity import *
+from src.params.ParamsIzhikevich import *
+from src.params.ParamsSynaptic import *
 
 class ParamsInitializer:
     """

@@ -1,17 +1,11 @@
-from src.ParamsPING import *
-from src.ParamsGaborStimulus import *
-from src.ParamsReceptiveField import *
-from src.ParamsIzhikevich import *
-
-from src.GaborLuminanceStimulusFactory import *
-from src.PatchGeometryFactory import *
-from src.LuminanceToContrastConverter import *
-from src.ContrastToFrequencyConverter import *
-from src.FrequencyToCurrentConverter import *
-from src.Stimulus import *
+from src.stimulus_construction.GaborLuminanceStimulusFactory import *
+from src.stimulus_construction.PatchGeometryFactory import *
+from src.stimulus_construction.LuminanceToContrastConverter import *
+from src.stimulus_construction.ContrastToFrequencyConverter import *
+from src.stimulus_construction.FrequencyToCurrentConverter import *
+from src.stimulus_construction.Stimulus import *
 
 import numpy as np
-from typing import Any
 
 
 class StimulusFactory:

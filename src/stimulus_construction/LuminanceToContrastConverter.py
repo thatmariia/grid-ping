@@ -1,8 +1,7 @@
-from src.ParamsReceptiveField import *
+from src.params.ParamsReceptiveField import *
 
-from src.misc import *
-from src.PatchGeometry import *
-from src.GaborLuminanceStimulus import *
+from src.stimulus_construction.PatchGeometry import *
+from src.stimulus_construction.GaborLuminanceStimulus import *
 
 import numpy as np
 from math import sqrt, exp

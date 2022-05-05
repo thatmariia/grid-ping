@@ -1,7 +1,4 @@
-from src.ParamsPING import *
-
-from typing import Any
-from src.NeuronTypes import *
+from src.params.ParamsPING import *
 
 import numpy as np
 

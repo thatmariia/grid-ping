@@ -1,7 +1,6 @@
-from src.ParamsGaborStimulus import *
+from src.params.ParamsGaborStimulus import *
 
-from src.misc import *
-from src.GaborLuminanceStimulus import *
+from src.stimulus_construction.GaborLuminanceStimulus import *
 
 import numpy as np
 from math import pi, ceil

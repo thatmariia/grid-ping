@@ -1,4 +1,4 @@
-from src.Params import *
+from src.params.Params import *
 from src.misc import *
 
 

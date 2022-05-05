@@ -1,13 +1,5 @@
 from src.NeuronTypes import *
 
-
-"""Gaussian input"""
-
-GAUSSIAN_INPUT = {
-    NeuronTypes.E: 1.5,
-    NeuronTypes.I: 1.5
-}
-
 """Synaptic constants"""
 
 # rise time

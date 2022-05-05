@@ -118,8 +118,8 @@ class CurrentComponentsGridPING(CurrentComponents):
 
         # TODO:: what is this exactly?
         return np.append(
-            GAUSSIAN_INPUT[NeuronTypes.E] * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.E]),
-            GAUSSIAN_INPUT[NeuronTypes.I] * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.I])
+            1.5 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.E]),
+            1.5 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.I])
         )
 
     def _create_main_input_stimulus(self, stimulus_currents) -> list[float]:

@@ -1,3 +1,5 @@
+from src.ParamsIzhikevich import *
+
 from src.constants import *
 from src.CurrentComponents import *
 from src.NeuronTypes import *
@@ -22,13 +24,13 @@ class IzhikevichNetworkSimulator:
     * :math:`\mathsf{type}(v)` maps a neuron to its type (see :obj:`NeuronTypes`),
     * :math:`p` represents the membrane potential of the neuron,
     * :math:`r` represents a membrane recovery variable; provides negative feedback to :math:`p`,
-    * :math:`\\alpha` describes the timescale of :math:`r` (see :obj:`constants.IZHI_ALPHA`),
-    * :math:`\\beta` describes the sensitivity of :math:`r` to the subthreshold fluctuations of :math:`p` (see :obj:`constants.IZHI_BETA`),
-    * :math:`\\gamma` describes the after-spike reset value of :math:`p` (see :obj:`constants.IZHI_GAMMA`),
-    * :math:`\\zeta` describes the after-spike reset of :math:`r` (see :obj:`constants.IZHI_ZETA`),
+    * :math: `\\alpha, \\beta, \\gamma, \\zeta` are Izhikevich parameters (see :obj:`ParamsIzhikevich`),
     * :math:`I` describes the current (see :obj:`CurrentComponents`).
 
     This neural dynamics model is introduced in :cite:p:`Izhikevich2003`.
+
+    :param params_izhi: contains Izhikevich parameters.
+    :type params_izhi: ParamsIzhikevich
 
     :param current_components: contains methods of computing the neural network current components.
     :type current_components: CurrentComponents
@@ -36,11 +38,14 @@ class IzhikevichNetworkSimulator:
     :param pb_off: indicates whether the progress bar should be off, default is True.
     :type pb_off: Bool
 
+
+    :ivar params_izhi: contains Izhikevich parameters.
     :ivar _current_components: contains methods of computing the neural network current components.
-    :param _pb_off: indicates whether the progress bar should be off.
+    :ivar _pb_off: indicates whether the progress bar should be off.
     """
 
-    def __init__(self, current_components: CurrentComponents, pb_off=True):
+    def __init__(self, params_izhi: ParamsIzhikevich, current_components: CurrentComponents, pb_off=True):
+        self._params_izhi = params_izhi
         self._current_components: CurrentComponents = current_components
         self._pb_off = pb_off
 
@@ -71,7 +76,7 @@ class IzhikevichNetworkSimulator:
             pbar.set_description("Network simulation")
 
             # spiking
-            fired_neurons_ids = np.argwhere(potentials >= PEAK_POTENTIAL).flatten()  # indices of spikes
+            fired_neurons_ids = np.argwhere(potentials >= self._params_izhi.peak_potential).flatten()  # indices of spikes
             for id in fired_neurons_ids:
                 spikes.append((t, id))
 
@@ -105,27 +110,27 @@ class IzhikevichNetworkSimulator:
         """
 
         izhi_alpha = np.array(
-            [IZHI_ALPHA[NeuronTypes.E]
+            [self._params_izhi.alpha[NeuronTypes.E]
              for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.E])] +
-            [IZHI_ALPHA[NeuronTypes.I]
+            [self._params_izhi.alpha[NeuronTypes.I]
              for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.I])]
         )
         izhi_beta = np.array(
-            [IZHI_BETA[NeuronTypes.E]
+            [self._params_izhi.beta[NeuronTypes.E]
              for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.E])] +
-            [IZHI_BETA[NeuronTypes.I]
+            [self._params_izhi.beta[NeuronTypes.I]
              for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.I])]
         )
         izhi_gamma = np.array(
-            [IZHI_GAMMA[NeuronTypes.E]
+            [self._params_izhi.gamma[NeuronTypes.E]
              for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.E])] +
-            [IZHI_GAMMA[NeuronTypes.I]
+            [self._params_izhi.gamma[NeuronTypes.I]
              for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.I])]
         )
         izhi_zeta = np.array(
-            [IZHI_ZETA[NeuronTypes.E]
+            [self._params_izhi.zeta[NeuronTypes.E]
              for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.E])] +
-            [IZHI_ZETA[NeuronTypes.I]
+            [self._params_izhi.zeta[NeuronTypes.I]
              for _ in range(self._current_components.connectivity.params_ping.nr_neurons[NeuronTypes.I])]
         )
 
@@ -145,8 +150,7 @@ class IzhikevichNetworkSimulator:
         """
 
         potentials = np.array([
-                INIT_MEMBRANE_POTENTIAL
-                for _ in range(self._current_components.connectivity.params_ping.nr_neurons["total"])
+                -65 for _ in range(self._current_components.connectivity.params_ping.nr_neurons["total"])
         ])
         recovery = np.multiply(izhi_beta, potentials)
         return potentials, recovery

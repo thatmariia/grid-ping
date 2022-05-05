@@ -2,6 +2,7 @@ from src.ParamsPING import *
 from src.ParamsGaborStimulus import *
 from src.ParamsReceptiveField import *
 from src.ParamsConnectivity import *
+from src.ParamsIzhikevich import *
 
 from src.StimulusFactory import *
 from src.ConnectivityGridPINGFactory import *
@@ -46,8 +47,19 @@ if __name__ == "__main__":
         spatial_consts_IE=0.3,
         spatial_consts_II=0.3
     )
+    params_izhi = ParamsIzhikevich(
+        peak_potential=30,
+        alpha_E=0.02,
+        beta_E=0.2,
+        gamma_E=-65,
+        zeta_E=8,
+        alpha_I=0.1,
+        beta_I=0.2,
+        gamma_I=-65,
+        zeta_I=2
+    )
 
-    stimulus = StimulusFactory().create(params_gabor, params_rf, params_ping)
+    stimulus = StimulusFactory().create(params_gabor, params_rf, params_ping, params_izhi)
 
     stimulus_locations = stimulus.extract_stimulus_location()
 
@@ -61,6 +73,7 @@ if __name__ == "__main__":
         stimulus_currents=stimulus.stimulus_currents
     )
     simulation_outcome = IzhikevichNetworkSimulator(
+        params_izhi=params_izhi,
         current_components=neural_model,
         pb_off=False
     ).simulate(

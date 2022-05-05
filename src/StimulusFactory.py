@@ -1,6 +1,7 @@
 from src.ParamsPING import *
 from src.ParamsGaborStimulus import *
 from src.ParamsReceptiveField import *
+from src.ParamsIzhikevich import *
 
 from src.GaborLuminanceStimulusFactory import *
 from src.PatchGeometryFactory import *
@@ -21,7 +22,8 @@ class StimulusFactory:
     def create(
             self, params_gabor: ParamsGaborStimulus,
             params_rf: ParamsReceptiveField,
-            params_ping: ParamsPING
+            params_ping: ParamsPING,
+            params_izhi: ParamsIzhikevich
     ) -> Stimulus:
         """
         Creates an external stimulus (Gabor texture) and prepares for the neural network input.
@@ -34,6 +36,9 @@ class StimulusFactory:
 
         :param params_ping: parameters describing PING networks and their composition.
         :type params_ping: ParamsPING
+
+        :param params_izhi: contains Izhikevich parameters.
+        :type params_izhi: ParamsIzhikevich
 
         :raises:
             AssertionError: if vertical lines of lattice cut through pixels.
@@ -69,7 +74,7 @@ class StimulusFactory:
             stimulus_contrasts
         )
         stimulus_currents = FrequencyToCurrentConverter().convert(
-            stimulus_frequencies, params_ping
+            stimulus_frequencies, params_ping, params_izhi
         )
 
         stimulus = Stimulus(

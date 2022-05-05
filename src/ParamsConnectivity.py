@@ -19,6 +19,9 @@ class ParamsConnectivity(Params):
      :type spatial_consts_EI: float
      :type spatial_consts_IE: float
      :type spatial_consts_II: float
+
+     :ivar max_connect_strength: maximum connectivity strengths.
+     :iver spatial_consts: spatial constants.
     """
 
     def __init__(

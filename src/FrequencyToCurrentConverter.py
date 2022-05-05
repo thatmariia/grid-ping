@@ -1,5 +1,6 @@
 from src.ParamsPING import *
 from src.ParamsConnectivity import *
+from src.ParamsIzhikevich import *
 
 from src.ConnectivitySinglePINGFactory import *
 from src.CurrentComponentsSinglePING import *
@@ -26,7 +27,7 @@ class FrequencyToCurrentConverter:
     """
 
     def convert(
-            self, stimulus_frequencies: np.ndarray[int, float], params_ping: ParamsPING
+            self, stimulus_frequencies: np.ndarray[int, float], params_ping: ParamsPING, params_izhi: ParamsIzhikevich
     ) -> np.ndarray[int, float]:
         """
         Converts the frequencies stimulus into the currents stimulus.
@@ -39,6 +40,9 @@ class FrequencyToCurrentConverter:
         :param params_ping: parameters describing PING networks and their composition.
         :type params_ping: ParamsPING
 
+        :param params_izhi: contains Izhikevich parameters.
+        :type params_izhi: ParamsIzhikevich
+
         :return: the stimulus converted to currents.
         :rtype: numpy.ndarray[int, float]
         """
@@ -49,7 +53,7 @@ class FrequencyToCurrentConverter:
 
         for i in (pbar := tqdm(range(len(inputs)))):
             pbar.set_description("Stimulus conversion to current")
-            simulation_outcome = self._simulate(simulation_time, params_ping, inputs[i])
+            simulation_outcome = self._simulate(simulation_time, params_ping, params_izhi, inputs[i])
             spikes_T = np.array(simulation_outcome.spikes).T
 
             # indices when excitatory neurons fired
@@ -107,7 +111,9 @@ class FrequencyToCurrentConverter:
 
         return model
 
-    def _simulate(self, simulation_time: int, params_ping: ParamsPING, mean_ex: float) -> IzhikevichNetworkOutcome:
+    def _simulate(
+            self, simulation_time: int, params_ping: ParamsPING, params_izhi: ParamsIzhikevich, mean_ex: float
+    ) -> IzhikevichNetworkOutcome:
         """
         Simulates an Izhikevich network with a single PING.
 
@@ -116,6 +122,9 @@ class FrequencyToCurrentConverter:
 
         :param params_ping: parameters describing PING networks and their composition.
         :type params_ping: ParamsPING
+
+        :param params_izhi: contains Izhikevich parameters.
+        :type params_izhi: ParamsIzhikevich
 
         :param mean_ex: mean of input strength to excitatory neurons.
         :type mean_ex: float
@@ -153,7 +162,7 @@ class FrequencyToCurrentConverter:
             mean_in=4,
             var_in=0
         )
-        simulation_outcome = IzhikevichNetworkSimulator(current_components).simulate(
+        simulation_outcome = IzhikevichNetworkSimulator(params_izhi, current_components).simulate(
             simulation_time=simulation_time,
             dt=1
         )

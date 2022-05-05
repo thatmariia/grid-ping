@@ -21,7 +21,7 @@ Classes
 
    This class converts the luminance stimulus into the local contrasts stimulus.
 
-   .. py:method:: convert(self, params_rf: src.ParamsReceptiveField.ParamsReceptiveField, patch_geometry: src.PatchGeometry.PatchGeometry, stimulus_luminance: src.GaborLuminanceStimulus.GaborLuminanceStimulus) -> list[float]
+   .. py:method:: convert(self, params_rf: src.params.ParamsReceptiveField.ParamsReceptiveField, patch_geometry: src.stimulus_construction.PatchGeometry.PatchGeometry, stimulus_luminance: src.stimulus_construction.GaborLuminanceStimulus.GaborLuminanceStimulus) -> numpy.ndarray[int, float]
 
       Converts the luminance stimulus into the local contrasts stimulus.
 
@@ -37,10 +37,10 @@ Classes
       :type stimulus_luminance: GaborLuminanceStimulus
 
       :return: the stimulus converted to local contrasts.
-      :rtype: list[float]
+      :rtype: numpy.ndarray[int, float]
 
 
-   .. py:method:: _compute_local_contrasts(self, params_rf: src.ParamsReceptiveField.ParamsReceptiveField, patch_geometry: src.PatchGeometry.PatchGeometry, stimulus_luminance: src.GaborLuminanceStimulus.GaborLuminanceStimulus) -> list[float]
+   .. py:method:: _compute_local_contrasts(self, params_rf: src.params.ParamsReceptiveField.ParamsReceptiveField, patch_geometry: src.stimulus_construction.PatchGeometry.PatchGeometry, stimulus_luminance: src.stimulus_construction.GaborLuminanceStimulus.GaborLuminanceStimulus) -> numpy.ndarray[int, float]
 
       Computes local contrasts for each circuit.
 
@@ -54,10 +54,10 @@ Classes
       :type params_rf: ParamsReceptiveField
 
       :return: list containing local contrast values for each circuit.
-      :rtype: list[float]
+      :rtype: numpy.ndarray[int, float]
 
 
-   .. py:method:: _get_weight(self, center: tuple[float, float], pixel: tuple[int, int], eccentricity: float, params_rf: src.ParamsReceptiveField.ParamsReceptiveField) -> float
+   .. py:method:: _get_weight(self, center: tuple[float, float], pixel: tuple[int, int], eccentricity: float, params_rf: src.params.ParamsReceptiveField.ParamsReceptiveField) -> float
 
       Computes weight of a pixel with respect to a circuit.
 
@@ -75,6 +75,19 @@ Classes
 
       :return: weight of a pixel with respect to a circuit.
       :rtype: float
+
+
+   .. py:method:: plot_local_contrasts(self, local_contrasts: numpy.ndarray[(int, int), float], filename: str) -> None
+
+      Plots the binary heatmap of local contrasts.
+
+      :param filename: name of the file for the plot (excluding extension).
+      :type filename: str
+
+      :param local_contrasts: a local_contrasts matrix to plot.
+      :type local_contrasts: np.ndarray[(int, int), float]
+
+      :rtype: None
 
 
 

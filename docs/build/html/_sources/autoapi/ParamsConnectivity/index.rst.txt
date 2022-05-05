@@ -1,0 +1,42 @@
+:py:mod:`ParamsConnectivity`
+============================
+
+.. py:module:: ParamsConnectivity
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   ParamsConnectivity.ParamsConnectivity
+
+
+
+
+.. py:class:: ParamsConnectivity(max_connect_strength_EE: float, max_connect_strength_EI: float, max_connect_strength_IE: float, max_connect_strength_II: float, spatial_consts_EE: float = 0.4, spatial_consts_EI: float = 0.3, spatial_consts_IE: float = 0.3, spatial_consts_II: float = 0.3)
+
+   Bases: :py:obj:`src.params.Params.Params`
+
+   This class contains parameters of the network connectivity.
+
+   * max_connect_strength - maximum connection strength between neuron types;
+   * spatial_consts - spatial constant between neuron types;
+
+   :type max_connect_strength_EE: float
+   :type max_connect_strength_EI: float
+   :type max_connect_strength_IE: float
+   :type max_connect_strength_II: float
+
+   :type spatial_consts_EE: float
+   :type spatial_consts_EI: float
+   :type spatial_consts_IE: float
+   :type spatial_consts_II: float
+
+   :ivar max_connect_strength: maximum connectivity strengths.
+   :iver spatial_consts: spatial constants.
+
+

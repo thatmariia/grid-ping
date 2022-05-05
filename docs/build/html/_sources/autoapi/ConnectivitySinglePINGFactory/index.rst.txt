@@ -19,15 +19,15 @@ Classes
 
 .. py:class:: ConnectivitySinglePINGFactory
 
-   .. py:method:: create(self, params_ping: src.Connectivity.ParamsPING, max_connect_strength: dict[tuple[src.Connectivity.NeuronTypes, src.Connectivity.NeuronTypes], float]) -> src.Connectivity.Connectivity
+   .. py:method:: create(self, params_ping: src.izhikevich_simulation.Connectivity.ParamsPING, params_connectivity: src.params.ParamsConnectivity.ParamsConnectivity) -> src.izhikevich_simulation.Connectivity.Connectivity
 
       Determines the connectivity between neurons in the oscillatory network.
 
       :param params_ping: parameters describing PING networks and their composition.
       :type params_ping: ParamsPING
 
-      :param max_connect_strength: maximum connection strength between types of neurons.
-      :type max_connect_strength: dict[tuple[NeuronTypes, NeuronTypes], float]
+      :param params_connectivity: parameters of the network connectivity.
+      :type params_connectivity: ParamsConnectivity
 
       :return: connectivity between neurons in the oscillatory network.
       :rtype: Connectivity

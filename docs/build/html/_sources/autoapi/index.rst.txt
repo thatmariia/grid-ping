@@ -7,32 +7,35 @@ This page contains auto-generated API reference documentation [#f1]_.
    :titlesonly:
 
    /autoapi/misc/index
-   /autoapi/ParamsGaborStimulus/index
-   /autoapi/Params/index
-   /autoapi/Connectivity/index
-   /autoapi/GaborLuminanceStimulusFactory/index
    /autoapi/NeuronTypes/index
-   /autoapi/StimulusFactory/index
-   /autoapi/ContrastToFrequencyConverter/index
+   /autoapi/main/index
+   /autoapi/Connectivity/index
    /autoapi/CurrentComponents/index
-   /autoapi/constants/index
-   /autoapi/PatchGeometryFactory/index
    /autoapi/ConnectivityGridPINGFactory/index
    /autoapi/PINGNetworkNeurons/index
-   /autoapi/Stimulus/index
-   /autoapi/LuminanceToContrastConverter/index
    /autoapi/ConnectivitySinglePINGFactory/index
-   /autoapi/StimulusLocations/index
-   /autoapi/GaborLuminanceStimulus/index
-   /autoapi/ParamsReceptiveField/index
    /autoapi/IzhikevichNetworkSimulator/index
    /autoapi/CurrentComponentsSinglePING/index
-   /autoapi/PINGNetworkPixels/index
-   /autoapi/PatchGeometry/index
    /autoapi/CurrentComponentsGridPING/index
    /autoapi/IzhikevichNetworkOutcome/index
-   /autoapi/main/index
-   /autoapi/FrequencyToCurrentConverter/index
+   /autoapi/ParamsConnectivity/index
+   /autoapi/ParamsGaborStimulus/index
+   /autoapi/Params/index
+   /autoapi/ParamsIzhikevich/index
+   /autoapi/ParamsInitializer/index
+   /autoapi/ParamsSynaptic/index
+   /autoapi/ParamsReceptiveField/index
    /autoapi/ParamsPING/index
+   /autoapi/GaborLuminanceStimulusFactory/index
+   /autoapi/StimulusFactory/index
+   /autoapi/ContrastToFrequencyConverter/index
+   /autoapi/PatchGeometryFactory/index
+   /autoapi/Stimulus/index
+   /autoapi/LuminanceToContrastConverter/index
+   /autoapi/StimulusLocations/index
+   /autoapi/GaborLuminanceStimulus/index
+   /autoapi/PINGNetworkPixels/index
+   /autoapi/PatchGeometry/index
+   /autoapi/FrequencyToCurrentConverter/index
 
 .. [#f1] Created with `sphinx-autoapi <https://github.com/readthedocs/sphinx-autoapi>`_

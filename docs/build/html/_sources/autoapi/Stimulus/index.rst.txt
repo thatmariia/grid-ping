@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Stimulus(stimulus_currents: numpy.ndarray[int, float], patch_geometry: src.PatchGeometry.PatchGeometry)
+.. py:class:: Stimulus(stimulus_currents: numpy.ndarray[int, float], patch_geometry: src.stimulus_construction.PatchGeometry.PatchGeometry)
 
    This class contains information about the external stimulus for the usage in a neural network.
 
@@ -30,12 +30,12 @@ Classes
    :ivar stimulus_currents: currents stimulus.
    :ivar _patch_geometry: information about the grid layout of the stimulus patch in correspondence with PING networks.
 
-   .. py:method:: extract_stimulus_location(self) -> src.StimulusLocations.StimulusLocations
+   .. py:method:: extract_stimulus_location(self) -> src.stimulus_construction.StimulusLocations.StimulusLocations
 
-      Computes the location info of the stimulus patch and, thus, the PING networks, namely eccentricity and
+      Computes the grid_location info of the stimulus patch and, thus, the PING networks, namely eccentricity and
       angle of each PING network.
 
-      :return: location info of the network.
+      :return: grid_location info of the network.
       :rtype: StimulusLocations
 
 

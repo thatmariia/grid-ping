@@ -19,7 +19,7 @@ Classes
 
 .. py:class:: ParamsGaborStimulus(spatial_freq: float, vlum: float, diameter_dg: float, diameter: int, dist_scale: float, full_width_dg: float, full_height_dg: float, contrast_range: float, figure_width_dg: float, figure_height_dg: float, figure_ecc_dg: float, patch_size_dg: float)
 
-   Bases: :py:obj:`src.Params.Params`
+   Bases: :py:obj:`src.params.Params.Params`
 
    This class contains parameters for creating a Gabor luminance stimulus.
 

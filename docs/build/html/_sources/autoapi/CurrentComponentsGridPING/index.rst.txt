@@ -17,19 +17,22 @@ Classes
 
 
 
-.. py:class:: CurrentComponentsGridPING(connectivity: src.Connectivity.Connectivity, stimulus_currents: numpy.ndarray[int, float])
+.. py:class:: CurrentComponentsGridPING(connectivity: src.izhikevich_simulation.Connectivity.Connectivity, params_synaptic: src.params.ParamsSynaptic.ParamsSynaptic, stimulus_currents: numpy.ndarray[int, float])
 
-   Bases: :py:obj:`src.CurrentComponents.CurrentComponents`
+   Bases: :py:obj:`src.izhikevich_simulation.CurrentComponents.CurrentComponents`
 
    This lass contains methods of computing the current components for the network of PING networks arranged in a grid.
 
    :param connectivity: information about connectivity between neurons in the oscillatory network.
    :type connectivity: Connectivity
 
+   :param params_synaptic: contains synaptic parameters.
+   :type params_synaptic: ParamsSynaptic
+
    :param stimulus_currents: currents stimulus.
    :type stimulus_currents: numpy.ndarray[int, float]
 
-
+   :ivar _params_synaptic: contains synaptic parameters.
    :ivar _stimulus_currents: currents from stimulus.
    :ivar _gatings: keeps track of gating values.
 

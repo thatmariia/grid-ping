@@ -8,4 +8,3 @@ class NeuronTypes(Enum):
 
     EX = "excitatory"
     IN = "inhibitory"
-    

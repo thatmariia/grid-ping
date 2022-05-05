@@ -17,20 +17,17 @@ Classes
 
 
 
-.. py:class:: CurrentComponentsSinglePING(connectivity: src.Connectivity.Connectivity, synaptic_rise: dict[src.Connectivity.NeuronTypes, float], synaptic_decay: dict[src.Connectivity.NeuronTypes, float], mean_ex: float = 20, var_ex: float = 0, mean_in: float = 4, var_in: float = 0)
+.. py:class:: CurrentComponentsSinglePING(connectivity: src.izhikevich_simulation.Connectivity.Connectivity, params_synaptic: src.params.ParamsSynaptic.ParamsSynaptic, mean_ex: float = 20, var_ex: float = 0, mean_in: float = 4, var_in: float = 0)
 
-   Bases: :py:obj:`src.CurrentComponents.CurrentComponents`
+   Bases: :py:obj:`src.izhikevich_simulation.CurrentComponents.CurrentComponents`
 
    This lass contains methods of computing the current components for the network of a single PING network.
 
    :param connectivity: information about connectivity between neurons in the oscillatory network.
    :type connectivity: Connectivity
 
-   :param synaptic_rise: synaptic rise constants.
-   :type synaptic_rise: dict[NeuronTypes, float]
-
-   :param synaptic_decay: synaptic decay constants.
-   :type synaptic_decay: dict[NeuronTypes, float]
+   :param params_synaptic: contains synaptic parameters.
+   :type params_synaptic: ParamsSynaptic
 
    :param mean_ex: mean of input strength to excitatory neurons.
    :type mean_ex: float
@@ -45,8 +42,7 @@ Classes
    :type var_in: float
 
 
-   :ivar _synaptic_rise: synaptic rise constants.
-   :ivar _synaptic_decay: synaptic decay constants.
+   :ivar _params_synaptic: contains synaptic parameters.
    :ivar _synaptic_currents: keeps track of intermediate synaptic currents.
 
    .. py:method:: get_synaptic_currents(self, dt, potentials) -> numpy.ndarray[int, float]

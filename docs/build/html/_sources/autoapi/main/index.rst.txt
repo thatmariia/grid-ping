@@ -7,7 +7,7 @@
 Module Contents
 ---------------
 
-.. py:data:: params_ping
+.. py:data:: params_initializer
    
 
    

@@ -21,7 +21,7 @@ Classes
 
    This class creates an external stimulus (Gabor texture) and prepares for the neural network input.
 
-   .. py:method:: create(self, params_gabor: src.GaborLuminanceStimulusFactory.ParamsGaborStimulus, params_rf: src.LuminanceToContrastConverter.ParamsReceptiveField, params_ping: src.FrequencyToCurrentConverter.ParamsPING) -> src.Stimulus.Stimulus
+   .. py:method:: create(self, params_gabor: src.stimulus_construction.GaborLuminanceStimulusFactory.ParamsGaborStimulus, params_rf: src.stimulus_construction.LuminanceToContrastConverter.ParamsReceptiveField, params_ping: src.stimulus_construction.FrequencyToCurrentConverter.ParamsPING, params_izhi: src.stimulus_construction.FrequencyToCurrentConverter.ParamsIzhikevich) -> src.stimulus_construction.Stimulus.Stimulus
 
       Creates an external stimulus (Gabor texture) and prepares for the neural network input.
 
@@ -33,6 +33,9 @@ Classes
 
       :param params_ping: parameters describing PING networks and their composition.
       :type params_ping: ParamsPING
+
+      :param params_izhi: contains Izhikevich parameters.
+      :type params_izhi: ParamsIzhikevich
 
       :raises:
           AssertionError: if vertical lines of lattice cut through pixels.

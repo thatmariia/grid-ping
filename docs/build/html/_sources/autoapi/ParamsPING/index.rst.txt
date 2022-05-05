@@ -19,7 +19,7 @@ Classes
 
 .. py:class:: ParamsPING(nr_excitatory: int, nr_inhibitory: int, nr_ping_networks: int = 1)
 
-   Bases: :py:obj:`src.Params.Params`
+   Bases: :py:obj:`src.params.Params.Params`
 
    This class contains parameters describing PING networks and their composition.
 
@@ -52,5 +52,6 @@ Classes
    :ivar nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
    :ivar neur_slice: indices of each type of neurons.
    :ivar nr_ping_networks: number of PING networks in the network.
+   :ivar grid_size: number of PING networks in each row and column.
 
 

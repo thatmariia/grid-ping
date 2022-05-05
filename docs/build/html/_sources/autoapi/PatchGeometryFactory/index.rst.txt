@@ -22,7 +22,7 @@ Classes
    This class constructs the grid layout of the stimulus patch in correspondence with PING networks by applying the
    lattice.
 
-   .. py:method:: create(self, nr_ping_networks: int, stimulus_patch: numpy.ndarray[(int, int), float], patch_start: tuple[int, int], stimulus_center: tuple[float, float], atopix: float) -> src.PatchGeometry.PatchGeometry
+   .. py:method:: create(self, nr_ping_networks: int, stimulus_patch: numpy.ndarray[(int, int), float], patch_start: tuple[int, int], stimulus_center: tuple[float, float], atopix: float) -> src.stimulus_construction.PatchGeometry.PatchGeometry
 
       Goes through the steps to construct a PING grid out of the stimulus.
 
@@ -45,7 +45,7 @@ Classes
       :rtype: PatchGeometry
 
 
-   .. py:method:: _assign_circuits(self, nr_ping_networks: int, stimulus_patch: numpy.ndarray[(int, int), float], atopix: float) -> list[src.PatchGeometry.PINGNetworkPixels]
+   .. py:method:: _assign_circuits(self, nr_ping_networks: int, stimulus_patch: numpy.ndarray[(int, int), float], atopix: float) -> list[src.stimulus_construction.PatchGeometry.PINGNetworkPixels]
 
       Creates circuits and assigns centers and pixels of the stimulus patch to them.
 

@@ -1,0 +1,27 @@
+:py:mod:`ParamsInitializer`
+===========================
+
+.. py:module:: ParamsInitializer
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   ParamsInitializer.ParamsInitializer
+
+
+
+
+.. py:class:: ParamsInitializer
+
+   This class initializes user-defined parameters.
+
+   .. py:method:: initialize(self)
+
+
+

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: IzhikevichNetworkSimulator(current_components: src.CurrentComponents.CurrentComponents, pb_off=True)
+.. py:class:: IzhikevichNetworkSimulator(params_izhi: src.params.ParamsIzhikevich.ParamsIzhikevich, current_components: src.izhikevich_simulation.CurrentComponents.CurrentComponents, pb_off=True)
 
    This class runs the simulation of the network of neurons.
 
@@ -33,13 +33,13 @@ Classes
    * :math:`\mathsf{type}(v)` maps a neuron to its type (see :obj:`NeuronTypes`),
    * :math:`p` represents the membrane potential of the neuron,
    * :math:`r` represents a membrane recovery variable; provides negative feedback to :math:`p`,
-   * :math:`\alpha` describes the timescale of :math:`r` (see :obj:`constants.IZHI_ALPHA`),
-   * :math:`\beta` describes the sensitivity of :math:`r` to the subthreshold fluctuations of :math:`p` (see :obj:`constants.IZHI_BETA`),
-   * :math:`\gamma` describes the after-spike reset value of :math:`p` (see :obj:`constants.IZHI_GAMMA`),
-   * :math:`\zeta` describes the after-spike reset of :math:`r` (see :obj:`constants.IZHI_ZETA`),
-   * :math:`I` describes the current (see :obj:`CurrentComponents`).
+   * :math: `\alpha, \beta, \gamma, \zeta` are Izhikevich parameters (see :obj:`ParamsIzhikevich`),
+   * :math:`IN` describes the current (see :obj:`CurrentComponents`).
 
    This neural dynamics model is introduced in :cite:p:`Izhikevich2003`.
+
+   :param params_izhi: contains Izhikevich parameters.
+   :type params_izhi: ParamsIzhikevich
 
    :param current_components: contains methods of computing the neural network current components.
    :type current_components: CurrentComponents
@@ -47,10 +47,12 @@ Classes
    :param pb_off: indicates whether the progress bar should be off, default is True.
    :type pb_off: Bool
 
-   :ivar _current_components: contains methods of computing the neural network current components.
-   :param _pb_off: indicates whether the progress bar should be off.
 
-   .. py:method:: simulate(self, simulation_time: int, dt: float) -> src.IzhikevichNetworkOutcome.IzhikevichNetworkOutcome
+   :ivar _params_izhi: contains Izhikevich parameters.
+   :ivar _current_components: contains methods of computing the neural network current components.
+   :ivar _pb_off: indicates whether the progress bar should be off.
+
+   .. py:method:: simulate(self, simulation_time: int, dt: float) -> src.izhikevich_simulation.IzhikevichNetworkOutcome.IzhikevichNetworkOutcome
 
       Runs the simulation.
 
@@ -67,12 +69,12 @@ Classes
       :rtype: IzhikevichNetworkOutcome
 
 
-   .. py:method:: _get_izhi_parameters(self) -> tuple[numpy.ndarray[int, float], numpy.ndarray[int, float], numpy.ndarray[int, float], numpy.ndarray[int, float]]
+   .. py:method:: _get_izhi_parameters(self) -> tuple[numpy.ndarray[int, float], Ellipsis]
 
       Allocates Izhikevich parameters :math:`\alpha, \beta, \gamma, \zeta` to all neurons.
 
       :return: Izhikevich parameters.
-      :rtype: tuple[numpy.ndarray[int, float], numpy.ndarray[int, float], numpy.ndarray[int, float], numpy.ndarray[int, float]]
+      :rtype: tuple[np.ndarray[int, float], ...]
 
 
    .. py:method:: _get_initial_values(self, izhi_beta: numpy.ndarray[int, float]) -> tuple[numpy.ndarray[int, float], numpy.ndarray[int, float]]

@@ -1,0 +1,47 @@
+:py:mod:`ParamsSynaptic`
+========================
+
+.. py:module:: ParamsSynaptic
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   ParamsSynaptic.ParamsSynaptic
+
+
+
+
+.. py:class:: ParamsSynaptic(rise_E: float, decay_E: float, rise_I: float, decay_I: float, conductance_EE: float = 0.6, conductance_EI: float = 0.06, conductance_IE: float = 0.8, conductance_II: float = 0.5, reversal_potential_E: float = -80, reversal_potential_I: float = 0)
+
+   Bases: :py:obj:`src.params.Params.Params`
+
+   This class contains synaptic parameters.
+
+   * rise - rise time;
+   * decay - decay time;
+   * conductance - synaptic conductance density;
+   * reversal_potential - reversal (equilibrium) potentials.
+
+   :type rise_E: float
+   :type decay_E: float
+   :type rise_I: float
+   :type decay_I: float
+   :type conductance_EE: float
+   :type conductance_EI: float
+   :type conductance_IE: float
+   :type conductance_II: float
+   :type reversal_potential_E: float
+   :type reversal_potential_I: float
+
+   :ivar rise: rise time.
+   :ivar decay: decay time.
+   :ivar conductance: synaptic conductance density.
+   :ivar reversal_potential: reversal (equilibrium) potentials.
+
+

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: PatchGeometry(ping_networks_pixels: list[src.PINGNetworkPixels.PINGNetworkPixels], atopix: float, patch_start: tuple[int, int], stimulus_center: tuple[float, float])
+.. py:class:: PatchGeometry(ping_networks_pixels: list[src.stimulus_construction.PINGNetworkPixels.PINGNetworkPixels], atopix: float, patch_start: tuple[int, int], stimulus_center: tuple[float, float])
 
    This class contains information about the grid layout of the stimulus patch in correspondence with PING networks.
 

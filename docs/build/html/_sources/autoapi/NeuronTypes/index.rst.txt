@@ -23,12 +23,12 @@ Classes
 
    Enum class containing neuron types: excitatory and inhibitory.
 
-   .. py:attribute:: E
+   .. py:attribute:: EX
       :annotation: = excitatory
 
       
 
-   .. py:attribute:: I
+   .. py:attribute:: IN
       :annotation: = inhibitory
 
       

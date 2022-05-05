@@ -21,17 +21,20 @@ Classes
 
    This class converts the frequencies stimulus into the currents stimulus.
 
-   .. py:method:: convert(self, stimulus_frequencies: numpy.ndarray[int, float], params_ping: src.IzhikevichNetworkSimulator.ParamsPING) -> numpy.ndarray[int, float]
+   .. py:method:: convert(self, stimulus_frequencies: numpy.ndarray[int, float], params_ping: src.izhikevich_simulation.IzhikevichNetworkSimulator.ParamsPING, params_izhi: src.izhikevich_simulation.IzhikevichNetworkSimulator.ParamsIzhikevich) -> numpy.ndarray[int, float]
 
       Converts the frequencies stimulus into the currents stimulus.
 
-      TODO:: how do I cite this?
+      TODO:: how do IN cite this?
 
       :param stimulus_frequencies: frequencies stimulus.
       :type stimulus_frequencies: numpy.ndarray[int, float]
 
       :param params_ping: parameters describing PING networks and their composition.
       :type params_ping: ParamsPING
+
+      :param params_izhi: contains Izhikevich parameters.
+      :type params_izhi: ParamsIzhikevich
 
       :return: the stimulus converted to currents.
       :rtype: numpy.ndarray[int, float]
@@ -51,7 +54,7 @@ Classes
       :rtype: TheilSenRegressor
 
 
-   .. py:method:: _simulate(self, simulation_time: int, params_ping: src.IzhikevichNetworkSimulator.ParamsPING, mean_ex: float) -> src.IzhikevichNetworkOutcome.IzhikevichNetworkOutcome
+   .. py:method:: _simulate(self, simulation_time: int, params_ping: src.izhikevich_simulation.IzhikevichNetworkSimulator.ParamsPING, params_izhi: src.izhikevich_simulation.IzhikevichNetworkSimulator.ParamsIzhikevich, mean_ex: float) -> src.izhikevich_simulation.IzhikevichNetworkOutcome.IzhikevichNetworkOutcome
 
       Simulates an Izhikevich network with a single PING.
 
@@ -60,6 +63,9 @@ Classes
 
       :param params_ping: parameters describing PING networks and their composition.
       :type params_ping: ParamsPING
+
+      :param params_izhi: contains Izhikevich parameters.
+      :type params_izhi: ParamsIzhikevich
 
       :param mean_ex: mean of input strength to excitatory neurons.
       :type mean_ex: float

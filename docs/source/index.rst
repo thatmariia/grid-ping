@@ -12,8 +12,8 @@ grid-ping
 Relevant links
 ---------------
 
-* `Git repository <https://git.mariia.me/bthesis-latex/doc.pdf>`_
-* `Thesis document (draft) <https://github.com/thatmariia/grid-ping>`_
+* `Git repository <https://github.com/thatmariia/grid-ping>`_
+* `Thesis document (draft) <https://git.mariia.me/bthesis-latex/doc.pdf>`_
 
 Contents
 --------

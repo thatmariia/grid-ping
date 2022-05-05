@@ -67,9 +67,14 @@ class StimulusFactory:
             atopix=stimulus_luminance.atopix
         )
 
-        stimulus_contrasts = LuminanceToContrastConverter().convert(
+        luminance_to_contrast_converter = LuminanceToContrastConverter()
+        stimulus_contrasts = luminance_to_contrast_converter.convert(
             params_rf, patch_geometry, stimulus_luminance
         )
+        luminance_to_contrast_converter.plot_local_contrasts(
+            stimulus_contrasts.reshape(params_ping.grid_size, params_ping.grid_size), filename="test-local-contrast"
+        )
+
         stimulus_frequencies = ContrastToFrequencyConverter().convert(
             stimulus_contrasts
         )

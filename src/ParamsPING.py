@@ -37,6 +37,7 @@ class ParamsPING(Params):
     :ivar nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
     :ivar neur_slice: indices of each type of neurons.
     :ivar nr_ping_networks: number of PING networks in the network.
+    :ivar grid_size: number of PING networks in each row and column.
     """
 
     def __init__(self, nr_excitatory: int, nr_inhibitory: int, nr_ping_networks: int=1):
@@ -65,3 +66,4 @@ class ParamsPING(Params):
             NeuronTypes.I: slice(nr_excitatory, nr_excitatory + nr_inhibitory),
         }
         self.nr_ping_networks: int = nr_ping_networks
+        self.grid_size: int = int(sqrt(nr_ping_networks))

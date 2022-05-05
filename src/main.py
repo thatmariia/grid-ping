@@ -4,7 +4,6 @@ from src.ConnectivityGridPINGFactory import *
 from src.CurrentComponentsGridPING import *
 from src.IzhikevichNetworkSimulator import *
 
-# TODO:: plot lc
 
 if __name__ == "__main__":
 

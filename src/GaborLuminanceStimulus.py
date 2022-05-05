@@ -43,9 +43,11 @@ class GaborLuminanceStimulus:
         self.patch_start: tuple[int, int] = patch_start
 
     def plot_stimulus(self, filename: str) -> None:
+        print("Plotting stimulus.....", end="")
         self._plot(self.stimulus, filename)
 
     def plot_patch(self, filename: str) -> None:
+        print("Plotting patch.....", end="")
         self._plot(self.stimulus_patch, filename)
 
     def _plot(self, stimulus: np.ndarray[(int, int), float], filename: str) -> None:
@@ -62,7 +64,22 @@ class GaborLuminanceStimulus:
         """
 
         path = f"../plots/{filename}.png"
-        print("Plotting.....", end="")
-        plot_binary_heatmap(im=stimulus, path=path)
+
+        fig, ax = plt.subplots(figsize=(30, 30))
+        sns.heatmap(
+            stimulus,
+            annot=False,
+            vmin=0,
+            vmax=1,
+            cmap="gist_gray",
+            cbar=False,
+            square=True,
+            xticklabels=False,
+            yticklabels=False,
+            ax=ax
+        )
+
+        fig.savefig(path, bbox_inches='tight', pad_inches=0)
+
         print(end="\r", flush=True)
         print(f"Plotting ended, result: {path[3:]}")

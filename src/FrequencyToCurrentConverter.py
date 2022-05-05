@@ -13,6 +13,7 @@ import numpy as np
 from math import floor, pi
 from scipy import fft
 import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties
 from tqdm import tqdm
 
 from sklearn.linear_model import TheilSenRegressor
@@ -76,7 +77,7 @@ class FrequencyToCurrentConverter:
         fitted_model = self._fit_line_robust(x=inputs, y=g_power.reshape((-1, 1)))
 
         # plot
-        freqs_line = np.arange(g_power.min(), inputs.max(), 0.01)
+        freqs_line = np.arange(g_power.min(), g_power.max(), 0.01)
         currents_line = fitted_model.predict(freqs_line.reshape((len(freqs_line), 1)))
         self._plot_relationship(g_power, inputs, freqs_line, currents_line)
 
@@ -194,7 +195,7 @@ class FrequencyToCurrentConverter:
         tfr = np.zeros((len(freq_of_interest), len(t)), dtype="complex_") * np.nan
 
         # set the width of the Gaussian
-        sd = .05
+        sd = 0.05
         for freq in freq_of_interest:
             g = np.exp(-np.power(wt, 2) / (2 * sd ** 2))
             complex_sine = np.exp(1j * 2 * pi * freq * wt)
@@ -236,12 +237,26 @@ class FrequencyToCurrentConverter:
 
         # TODO:: make pretty
 
+        print("Plotting current-frequency.....", end="")
+        path = "../plots/test-freq-current-relationship.png"
+
+        font = FontProperties()
+        font.set_family('serif')
+        font.set_name('Avenir')
+        font.set_weight('ultralight')
+
         fig, ax = plt.subplots(figsize=(30, 30))
-        ax.tick_params(axis='both', which='major', labelsize=20)
+        ax.tick_params(axis='both', which='major', labelsize=50)
 
         # simulation data
-        plt.scatter(currents, freqs, linewidths=20)
+        plt.scatter(currents, freqs, linewidths=30, s=300, c="#ACDDE7")
         # fitted line
-        plt.plot(currents_line, freqs_line, color='r')
+        plt.plot(currents_line, freqs_line, solid_capstyle='round', color="#FFA3AF", lw=10)
 
-        fig.savefig("../plots/test-freq-current-relationship.png", bbox_inches='tight', pad_inches=0)
+        plt.xlabel("Current", fontsize=70, fontproperties=font, labelpad=50)
+        plt.ylabel("Frequency", fontsize=70, fontproperties=font, labelpad=50)
+
+        fig.savefig(path, bbox_inches='tight')
+
+        print(end="\r", flush=True)
+        print(f"Plotting ended, result: {path[3:]}")

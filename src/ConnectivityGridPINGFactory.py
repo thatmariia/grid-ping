@@ -1,4 +1,5 @@
 from src.ParamsPING import *
+from src.ParamsConnectivity import *
 
 from src.PINGNetworkNeurons import *
 from src.NeuronTypes import *
@@ -19,7 +20,7 @@ class ConnectivityGridPINGFactory:
         pass
 
     def create(
-            self, params_ping: ParamsPING,
+            self, params_ping: ParamsPING, params_connectivity: ParamsConnectivity,
             cortical_coords: list[list[tuple[float, float]]]
     ) -> Connectivity:
         """
@@ -27,6 +28,9 @@ class ConnectivityGridPINGFactory:
 
         :param params_ping: parameters describing PING networks and their composition.
         :type params_ping: ParamsPING
+
+        :param params_connectivity: parameters of the network connectivity.
+        :type params_connectivity: ParamsConnectivity
 
         :param cortical_coords: coordinates of the points in the visual cortex.
         :type cortical_coords: list[list[tuple[float, float]]]
@@ -37,7 +41,7 @@ class ConnectivityGridPINGFactory:
 
         ping_networks, neuron_ping_map = self._assign_ping_networks(params_ping)
         coupling_weights = self._compute_coupling_weights(
-            params_ping, ping_networks, neuron_ping_map, cortical_coords
+            params_ping, params_connectivity, ping_networks, neuron_ping_map, cortical_coords
         )
 
         connectivity = Connectivity(
@@ -101,7 +105,7 @@ class ConnectivityGridPINGFactory:
 
     def _compute_coupling_weights(
             self,
-            params_ping: ParamsPING,
+            params_ping: ParamsPING, params_connectivity: ParamsConnectivity,
             ping_networks: list[PINGNetworkNeurons], neuron_ping_map: dict[NeuronTypes, dict[int, int]],
             cortical_coords: list[list[tuple[float, float]]]
     ) -> np.ndarray[(int, int), float]:
@@ -113,6 +117,9 @@ class ConnectivityGridPINGFactory:
 
         :param params_ping: parameters describing PING networks and their composition.
         :type params_ping: ParamsPING
+
+        :param params_connectivity: parameters of the network connectivity.
+        :type params_connectivity: ParamsConnectivity
 
         :param ping_networks: list of PING networks in the network.
         :type ping_networks: list[PINGNetworkNeurons]
@@ -141,8 +148,8 @@ class ConnectivityGridPINGFactory:
             )
             types_coupling_weights = self._compute_type_coupling_weights(
                 dist=dist,
-                max_connect_strength=MAX_CONNECT_STRENGTH[(nts[0], nts[1])],
-                spatial_const=SPATIAL_CONST[(nts[0], nts[1])]
+                max_connect_strength=params_connectivity.max_connect_strength[(nts[0], nts[1])],
+                spatial_const=params_connectivity.spatial_consts[(nts[0], nts[1])]
             )
             if nts[0] == nts[1]:
                 coupling_weights[params_ping.neur_slice[nts[0]], params_ping.neur_slice[nts[1]]] = \

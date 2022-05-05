@@ -1,4 +1,5 @@
 from src.ParamsPING import *
+from src.ParamsConnectivity import *
 
 from src.ConnectivitySinglePINGFactory import *
 from src.CurrentComponentsSinglePING import *
@@ -123,17 +124,17 @@ class FrequencyToCurrentConverter:
         :rtype: IzhikevichNetworkOutcome
         """
 
-        max_connect_strength = {
-            (NeuronTypes.E, NeuronTypes.E): 0.05,
-            (NeuronTypes.E, NeuronTypes.I): 0.4,
-            (NeuronTypes.I, NeuronTypes.E): 0.3,
-            (NeuronTypes.I, NeuronTypes.I): 0.2
-        }
+        params_connectivity = ParamsConnectivity(
+            max_connect_strength_EE=0.05,
+            max_connect_strength_EI=0.4,
+            max_connect_strength_IE=0.3,
+            max_connect_strength_II=0.2
+        )
         params_single_ping = deepcopy(params_ping)
         params_single_ping.nr_ping_networks = 1
         connectivity = ConnectivitySinglePINGFactory().create(
             params_ping=params_single_ping,
-            max_connect_strength=max_connect_strength
+            params_connectivity=params_connectivity
         )
         synaptic_rise = {
             NeuronTypes.E: 0.15,

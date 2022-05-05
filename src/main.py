@@ -1,6 +1,7 @@
 from src.ParamsPING import *
 from src.ParamsGaborStimulus import *
 from src.ParamsReceptiveField import *
+from src.ParamsConnectivity import *
 
 from src.StimulusFactory import *
 from src.ConnectivityGridPINGFactory import *
@@ -35,6 +36,16 @@ if __name__ == "__main__":
         intercept=-0.25,
         min_diam_rf=1
     )
+    params_connectivity = ParamsConnectivity(
+        max_connect_strength_EE=0.04,
+        max_connect_strength_EI=0.07,
+        max_connect_strength_IE=-0.04,
+        max_connect_strength_II=-0.015,
+        spatial_consts_EE=0.4,
+        spatial_consts_EI=0.3,
+        spatial_consts_IE=0.3,
+        spatial_consts_II=0.3
+    )
 
     stimulus = StimulusFactory().create(params_gabor, params_rf, params_ping)
 
@@ -42,6 +53,7 @@ if __name__ == "__main__":
 
     connectivity = ConnectivityGridPINGFactory().create(
         params_ping=params_ping,
+        params_connectivity=params_connectivity,
         cortical_coords=stimulus_locations.cortical_coords
     )
     neural_model = CurrentComponentsGridPING(

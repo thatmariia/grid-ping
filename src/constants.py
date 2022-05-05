@@ -1,21 +1,5 @@
 from src.NeuronTypes import *
 
-"""Network connectivity constants"""
-
-MAX_CONNECT_STRENGTH = {
-    (NeuronTypes.E, NeuronTypes.E): 0.004,
-    (NeuronTypes.E, NeuronTypes.I): 0.07,
-    (NeuronTypes.I, NeuronTypes.E): -0.04,
-    (NeuronTypes.I, NeuronTypes.I): -0.015
-}
-
-SPATIAL_CONST = {
-    (NeuronTypes.E, NeuronTypes.E): 0.4,
-    (NeuronTypes.E, NeuronTypes.I): 0.3,
-    (NeuronTypes.I, NeuronTypes.E): 0.3,
-    (NeuronTypes.I, NeuronTypes.I): 0.3
-}
-
 """Izhikevich neuron params"""
 
 PEAK_POTENTIAL = 30

@@ -1,4 +1,5 @@
 from src.ParamsPING import *
+from src.ParamsConnectivity import *
 
 from src.NeuronTypes import *
 from src.Connectivity import *
@@ -10,8 +11,7 @@ import numpy as np
 class ConnectivitySinglePINGFactory:
 
     def create(
-            self, params_ping: ParamsPING,
-            max_connect_strength: dict[tuple[NeuronTypes, NeuronTypes], float]
+            self, params_ping: ParamsPING, params_connectivity: ParamsConnectivity
     ) -> Connectivity:
         """
         Determines the connectivity between neurons in the oscillatory network.
@@ -19,8 +19,8 @@ class ConnectivitySinglePINGFactory:
         :param params_ping: parameters describing PING networks and their composition.
         :type params_ping: ParamsPING
 
-        :param max_connect_strength: maximum connection strength between types of neurons.
-        :type max_connect_strength: dict[tuple[NeuronTypes, NeuronTypes], float]
+        :param params_connectivity: parameters of the network connectivity.
+        :type params_connectivity: ParamsConnectivity
 
         :return: connectivity between neurons in the oscillatory network.
         :rtype: Connectivity
@@ -29,7 +29,7 @@ class ConnectivitySinglePINGFactory:
         coupling_weights = np.zeros((params_ping.nr_neurons["total"], params_ping.nr_neurons["total"]))
 
         for nts in list(product([NeuronTypes.E, NeuronTypes.I], repeat=2)):
-            types_coupling_weights = max_connect_strength[(nts[1], nts[0])] * \
+            types_coupling_weights = params_connectivity.max_connect_strength[(nts[1], nts[0])] * \
                                      np.random.rand(params_ping.nr_neurons[nts[0]], params_ping.nr_neurons[nts[1]])
             if nts[1] == NeuronTypes.I:
                 types_coupling_weights *= -1

@@ -85,7 +85,7 @@ Classes
       :type filename: str
 
       :param local_contrasts: a local_contrasts matrix to plot.
-      :type local_contrasts: np.ndarray[(int, int), float]
+      :type local_contrasts: numpy.ndarray[(int, int), float]
 
       :rtype: None
 

@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: GaborLuminanceStimulus(atopix: float, stimulus: src.misc.np.ndarray[(int, int), float], stimulus_center: tuple[float, float], stimulus_patch: src.misc.np.ndarray[(int, int), float], patch_start: tuple[int, int])
+.. py:class:: GaborLuminanceStimulus(atopix: float, stimulus: numpy.ndarray[(int, int), float], stimulus_center: tuple[float, float], stimulus_patch: numpy.ndarray[(int, int), float], patch_start: tuple[int, int])
 
    This class contains information about the full stimulus and a patch.
 
@@ -49,7 +49,7 @@ Classes
    .. py:method:: plot_patch(self, filename: str) -> None
 
 
-   .. py:method:: _plot(self, stimulus: src.misc.np.ndarray[(int, int), float], filename: str) -> None
+   .. py:method:: _plot(self, stimulus: numpy.ndarray[(int, int), float], filename: str) -> None
 
       Plots the binary heatmap of a given stimulus.
 
@@ -57,7 +57,7 @@ Classes
       :type filename: str
 
       :param stimulus: a luminance matrix to plot.
-      :type stimulus: np.ndarray[(int, int), float]
+      :type stimulus: numpy.ndarray[(int, int), float]
 
       :rtype: None
 

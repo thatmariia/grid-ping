@@ -19,6 +19,7 @@
   body {
     --color-code-background: #f8f8f8;
   --color-code-foreground: black;
+  --color-problematic: #F27E92;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -32,6 +33,7 @@
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-problematic: #FFA3AF;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -45,6 +47,7 @@
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-problematic: #FFA3AF;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -263,12 +266,6 @@
 <dt class="sig sig-object py" id="ParamsSynaptic.ParamsSynaptic">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ParamsSynaptic.</span></span><span class="sig-name descname"><span class="pre">ParamsSynaptic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rise_E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decay_E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rise_I</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decay_I</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conductance_EE</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conductance_EI</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conductance_IE</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conductance_II</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reversal_potential_E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-</span> <span class="pre">80</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reversal_potential_I</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ParamsSynaptic.ParamsSynaptic" title="Permalink to this definition">#</a></dt>
 <dd><p>This class contains synaptic parameters.</p>
-<ul class="simple">
-<li><p>rise - rise time;</p></li>
-<li><p>decay - decay time;</p></li>
-<li><p>conductance - synaptic conductance density;</p></li>
-<li><p>reversal_potential - reversal (equilibrium) potentials.</p></li>
-</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">

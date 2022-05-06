@@ -19,6 +19,7 @@
   body {
     --color-code-background: #f8f8f8;
   --color-code-foreground: black;
+  --color-problematic: #F27E92;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -32,6 +33,7 @@
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-problematic: #FFA3AF;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -45,6 +47,7 @@
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-problematic: #FFA3AF;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -261,14 +264,14 @@
 </table></div>
 <dl class="py class">
 <dt class="sig sig-object py" id="PINGNetworkNeurons.PINGNetworkNeurons">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PINGNetworkNeurons.</span></span><span class="sig-name descname"><span class="pre">PINGNetworkNeurons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid_location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">excit_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inhibit_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PINGNetworkNeurons.PINGNetworkNeurons" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">PINGNetworkNeurons.</span></span><span class="sig-name descname"><span class="pre">PINGNetworkNeurons</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">grid_location</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids_ex</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids_in</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#PINGNetworkNeurons.PINGNetworkNeurons" title="Permalink to this definition">#</a></dt>
 <dd><p>Class containing neural locational information about a single PING network oscillator.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>grid_location</strong> (<em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em>) – coordinates of this oscillator within the grid.</p></li>
-<li><p><strong>excit_ids</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – id’s of excitatory neurons located in this oscillator.</p></li>
-<li><p><strong>inhibit_ids</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – id’s of inhibitory neurons located in this oscillator.</p></li>
+<li><p><strong>ids_ex</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – id’s of excitatory neurons located in this oscillator.</p></li>
+<li><p><strong>ids_in</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – id’s of inhibitory neurons located in this oscillator.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Variables</dt>

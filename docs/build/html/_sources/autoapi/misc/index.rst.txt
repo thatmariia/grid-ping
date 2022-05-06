@@ -13,25 +13,11 @@ Functions
 
 .. autoapisummary::
 
-   misc.plot_binary_heatmap
    misc.multiply_point
    misc.add_points
    misc.point_ceil
    misc.euclidian_dist
 
-
-
-.. py:function:: plot_binary_heatmap(im: numpy.ndarray[(int, int), float], path: str) -> None
-
-   Plots a heatmap with the binary color scheme
-
-   :param im: matrix to plot
-   :type im: numpy.ndarray[(int, int), float]
-
-   :param path: path for saving the resulting plot
-   :type path: str
-
-   :rtype: None
 
 
 .. py:function:: multiply_point(point: tuple[float, Ellipsis], coef: float) -> tuple[float, Ellipsis]
@@ -82,10 +68,10 @@ Functions
 
    Calculates the Euclidian distance between two points.
 
-   :param p1: coordinates of point_pix 1.
+   :param p1: coordinates of point 1.
    :type p1: tuple[float, float]
 
-   :param p2: coordinates of point_pix 2.
+   :param p2: coordinates of point 2.
    :type p2: tuple[float, float]
 
    :return: the Euclidean distance between two 2D points.

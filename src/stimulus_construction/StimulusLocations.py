@@ -3,7 +3,7 @@ import numpy as np
 
 class StimulusLocations:
     """
-    Contains information about PING locations in the visual cortex.
+    This class contains information about PING locations in the visual cortex.
 
     :param eccentricities: eccentricities of the points in visual degrees.
     :type eccentricities: numpy.ndarray[int, float]

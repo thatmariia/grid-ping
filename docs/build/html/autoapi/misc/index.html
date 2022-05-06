@@ -19,6 +19,7 @@
   body {
     --color-code-background: #f8f8f8;
   --color-code-foreground: black;
+  --color-problematic: #F27E92;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -32,6 +33,7 @@
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-problematic: #FFA3AF;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -45,6 +47,7 @@
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-problematic: #FFA3AF;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -254,39 +257,20 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#misc.plot_binary_heatmap" title="misc.plot_binary_heatmap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_binary_heatmap</span></code></a>(im: numpy.ndarray[(int, int), float], path: str) → None</p></td>
-<td><p>Plots a heatmap with the binary color scheme</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#misc.multiply_point" title="misc.multiply_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multiply_point</span></code></a>(point: tuple[float, Ellipsis], coef: float) → tuple[float, Ellipsis]</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#misc.multiply_point" title="misc.multiply_point"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multiply_point</span></code></a>(point: tuple[float, Ellipsis], coef: float) → tuple[float, Ellipsis]</p></td>
 <td><p>Multiples each value in a given tuple by a coefficient.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#misc.add_points" title="misc.add_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_points</span></code></a>(points: list[tuple[float, Ellipsis]], coefs=None) → tuple[float, Ellipsis]</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#misc.add_points" title="misc.add_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_points</span></code></a>(points: list[tuple[float, Ellipsis]], coefs=None) → tuple[float, Ellipsis]</p></td>
 <td><p>Adds values in tuples (for adding coordinates).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#misc.point_ceil" title="misc.point_ceil"><code class="xref py py-obj docutils literal notranslate"><span class="pre">point_ceil</span></code></a>(p: tuple[float, Ellipsis]) → tuple[int, Ellipsis]</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#misc.point_ceil" title="misc.point_ceil"><code class="xref py py-obj docutils literal notranslate"><span class="pre">point_ceil</span></code></a>(p: tuple[float, Ellipsis]) → tuple[int, Ellipsis]</p></td>
 <td><p>Computes the ceiling of a tuple.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#misc.euclidian_dist" title="misc.euclidian_dist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">euclidian_dist</span></code></a>(p1: tuple[float, float], p2=(0, 0)) → float</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#misc.euclidian_dist" title="misc.euclidian_dist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">euclidian_dist</span></code></a>(p1: tuple[float, float], p2=(0, 0)) → float</p></td>
 <td><p>Calculates the Euclidian distance between two points.</p></td>
 </tr>
 </tbody>
 </table></div>
-<dl class="py function">
-<dt class="sig sig-object py" id="misc.plot_binary_heatmap">
-<span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">plot_binary_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#misc.plot_binary_heatmap" title="Permalink to this definition">#</a></dt>
-<dd><p>Plots a heatmap with the binary color scheme</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>im</strong> (<em>numpy.ndarray</em><em>[</em><em>(</em><em>int</em><em>, </em><em>int</em><em>)</em><em>, </em><em>float</em><em>]</em>) – matrix to plot</p></li>
-<li><p><strong>path</strong> (<em>str</em>) – path for saving the resulting plot</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="misc.multiply_point">
 <span class="sig-prename descclassname"><span class="pre">misc.</span></span><span class="sig-name descname"><span class="pre">multiply_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coef</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ellipsis</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#misc.multiply_point" title="Permalink to this definition">#</a></dt>
@@ -354,8 +338,8 @@
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>p1</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – coordinates of point_pix 1.</p></li>
-<li><p><strong>p2</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – coordinates of point_pix 2.</p></li>
+<li><p><strong>p1</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – coordinates of point 1.</p></li>
+<li><p><strong>p2</strong> (<em>tuple</em><em>[</em><em>float</em><em>, </em><em>float</em><em>]</em>) – coordinates of point 2.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -412,7 +396,6 @@
 <li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">misc</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#functions">Functions</a><ul>
-<li><a class="reference internal" href="#misc.plot_binary_heatmap">plot_binary_heatmap</a></li>
 <li><a class="reference internal" href="#misc.multiply_point">multiply_point</a></li>
 <li><a class="reference internal" href="#misc.add_points">add_points</a></li>
 <li><a class="reference internal" href="#misc.point_ceil">point_ceil</a></li>

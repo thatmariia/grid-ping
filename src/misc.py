@@ -1,41 +1,5 @@
-from src.NeuronTypes import *
-
-import numpy as np
 import math
-import seaborn as sns
-import matplotlib.pyplot as plt
 from math import ceil
-
-
-def plot_binary_heatmap(im: np.ndarray[(int, int), float], path: str) -> None:
-    """
-    Plots a heatmap with the binary color scheme
-
-    :param im: matrix to plot
-    :type im: numpy.ndarray[(int, int), float]
-
-    :param path: path for saving the resulting plot
-    :type path: str
-
-    :rtype: None
-    """
-
-    fig, ax = plt.subplots(figsize=(30, 30))
-
-    sns.heatmap(
-        im,
-        annot=False,
-        vmin=0,
-        vmax=1,
-        cmap="gist_gray",
-        cbar=False,
-        square=True,
-        xticklabels=False,
-        yticklabels=False,
-        ax=ax
-    )
-
-    fig.savefig(path, bbox_inches='tight', pad_inches=0)
 
 
 def multiply_point(point: tuple[float, ...], coef: float) -> tuple[float, ...]:
@@ -106,10 +70,10 @@ def euclidian_dist(p1: tuple[float, float], p2=(0, 0)) -> float:
     """
     Calculates the Euclidian distance between two points.
 
-    :param p1: coordinates of point_pix 1.
+    :param p1: coordinates of point 1.
     :type p1: tuple[float, float]
 
-    :param p2: coordinates of point_pix 2.
+    :param p2: coordinates of point 2.
     :type p2: tuple[float, float]
 
     :return: the Euclidean distance between two 2D points.

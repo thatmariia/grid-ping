@@ -17,18 +17,18 @@ Classes
 
 
 
-.. py:class:: PINGNetworkNeurons(grid_location: tuple[int, int], excit_ids: list[int], inhibit_ids: list[int])
+.. py:class:: PINGNetworkNeurons(grid_location: tuple[int, int], ids_ex: list[int], ids_in: list[int])
 
    Class containing neural locational information about a single PING network oscillator.
 
    :param grid_location: coordinates of this oscillator within the grid.
    :type grid_location: tuple[int, int]
 
-   :param excit_ids: id's of excitatory neurons located in this oscillator.
-   :type excit_ids: list[int]
+   :param ids_ex: id's of excitatory neurons located in this oscillator.
+   :type ids_ex: list[int]
 
-   :param inhibit_ids: id's of inhibitory neurons located in this oscillator.
-   :type inhibit_ids: list[int]
+   :param ids_in: id's of inhibitory neurons located in this oscillator.
+   :type ids_in: list[int]
 
 
    :ivar grid_location: coordinates of this oscillator within the grid.

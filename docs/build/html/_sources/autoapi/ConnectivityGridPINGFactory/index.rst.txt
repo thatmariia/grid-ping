@@ -38,7 +38,7 @@ Classes
       :rtype: Connectivity
 
 
-   .. py:method:: _assign_ping_networks(self, params_ping: src.izhikevich_simulation.Connectivity.ParamsPING) -> tuple[list[src.izhikevich_simulation.PINGNetworkNeurons.PINGNetworkNeurons], dict[src.misc.NeuronTypes, dict[int, int]]]
+   .. py:method:: _assign_ping_networks(self, params_ping: src.izhikevich_simulation.Connectivity.ParamsPING) -> tuple[list[src.izhikevich_simulation.PINGNetworkNeurons.PINGNetworkNeurons], dict[src.izhikevich_simulation.Connectivity.NeuronTypes, dict[int, int]]]
 
       Creates PING networks, assigns grid locations to them, and adds the same number of neurons of each neuron type
       to them.
@@ -52,7 +52,7 @@ Classes
       :rtype: tuple[list[PINGNetworkNeurons], dict[NeuronTypes, dict[int, int]]]
 
 
-   .. py:method:: _compute_coupling_weights(self, params_ping: src.izhikevich_simulation.Connectivity.ParamsPING, params_connectivity: src.params.ParamsConnectivity.ParamsConnectivity, ping_networks: list[src.izhikevich_simulation.PINGNetworkNeurons.PINGNetworkNeurons], neuron_ping_map: dict[src.misc.NeuronTypes, dict[int, int]], cortical_coords: list[list[tuple[float, float]]]) -> numpy.ndarray[(int, int), float]
+   .. py:method:: _compute_coupling_weights(self, params_ping: src.izhikevich_simulation.Connectivity.ParamsPING, params_connectivity: src.params.ParamsConnectivity.ParamsConnectivity, ping_networks: list[src.izhikevich_simulation.PINGNetworkNeurons.PINGNetworkNeurons], neuron_ping_map: dict[src.izhikevich_simulation.Connectivity.NeuronTypes, dict[int, int]], cortical_coords: list[list[tuple[float, float]]]) -> numpy.ndarray[(int, int), float]
 
       Computes the coupling weights between all neurons.
 
@@ -78,7 +78,7 @@ Classes
       :rtype: numpy.ndarray[(int, int), float]
 
 
-   .. py:method:: _get_neurons_dist(self, neuron_type1: src.misc.NeuronTypes, neuron_type2: src.misc.NeuronTypes, nr1: int, nr2: int, ping_networks: list[src.izhikevich_simulation.PINGNetworkNeurons.PINGNetworkNeurons], neuron_ping_map: dict[src.misc.NeuronTypes, dict[int, int]], cortical_coords: list[list[tuple[float, float]]]) -> numpy.ndarray[(int, int), float]
+   .. py:method:: _get_neurons_dist(self, neuron_type1: src.izhikevich_simulation.Connectivity.NeuronTypes, neuron_type2: src.izhikevich_simulation.Connectivity.NeuronTypes, nr1: int, nr2: int, ping_networks: list[src.izhikevich_simulation.PINGNetworkNeurons.PINGNetworkNeurons], neuron_ping_map: dict[src.izhikevich_simulation.Connectivity.NeuronTypes, dict[int, int]], cortical_coords: list[list[tuple[float, float]]]) -> numpy.ndarray[(int, int), float]
 
       Computes the matrix of Euclidian distances between two types of neurons.
 

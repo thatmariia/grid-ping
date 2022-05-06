@@ -27,14 +27,14 @@ Classes
    :math:`K_{v, w} = C_{ \mathsf{type}(v), \mathsf{type}(w)} \exp (-\| \mathsf{cmap}(v), \mathsf{cmap}(w) \| / s_{v, w}),`
 
    where
+
    * :math:`v, w` are two arbitrary neurons in the network,
    * :math:`\mathsf{type}(v)` maps a neuron to its type (see :obj:`NeuronTypes`),
    * :math:`\mathsf{cmap}(v)` maps a neuron to its grid_location in the visual cortex (see :obj:`StimulusLocations`),
-   * :math:`s_{v, w}` is the spatial constant (see :obj:`constants.SPATIAL_CONST`).
+   * :math:`s_{v, w}` is the spatial constant (see :obj:`ParamsConnectivity`).
 
-   This equation was introduced in :cite:p:`Izhikevich2003`.
-
-   This class performs the assignment of neurons to relevant PING networks arranged in a grid and computes the matrix
+   The coupling weights are a part of current (see :obj:`CurrentComponents`).
+   This equation was introduced in :cite:p:`Izhikevich2003`. This class performs the assignment of neurons to relevant PING networks arranged in a grid and computes the matrix
    of coupling weights.
 
    :param params_ping: parameters describing PING networks and their composition.

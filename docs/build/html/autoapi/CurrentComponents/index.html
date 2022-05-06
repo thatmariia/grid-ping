@@ -19,6 +19,7 @@
   body {
     --color-code-background: #f8f8f8;
   --color-code-foreground: black;
+  --color-problematic: #F27E92;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -32,6 +33,7 @@
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-problematic: #FFA3AF;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -45,6 +47,7 @@
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-problematic: #FFA3AF;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -264,13 +267,15 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">CurrentComponents.</span></span><span class="sig-name descname"><span class="pre">CurrentComponents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connectivity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">src.izhikevich_simulation.Connectivity.Connectivity</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CurrentComponents.CurrentComponents" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
 <p>This lass contains methods of computing the neural network current components.</p>
-<p>In the network, neurons are not isolated, and the current involves the accumulated effect of interactions
+<p>In the network (see <a class="reference internal" href="../IzhikevichNetworkSimulator/index.html#module-IzhikevichNetworkSimulator" title="IzhikevichNetworkSimulator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IzhikevichNetworkSimulator</span></code></a>), neurons are not isolated, and the current involves the accumulated effect of interactions
 with other neurons:</p>
 <p><span class="math notranslate nohighlight">\(I_v = \sum_{w \in V} K_{v, w} I_{\mathrm{syn}, w} + I_{\mathrm{stim}, v} \mathbb{1} \{ \mathsf{type}(v) = \mathrm{ex} \}\)</span>,</p>
-<p>where
-* <span class="math notranslate nohighlight">\(K\)</span> is the coupling weights (see <a class="reference internal" href="../Connectivity/index.html#module-Connectivity" title="Connectivity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Connectivity</span></code></a>),
-* <span class="math notranslate nohighlight">\(I_{syn}\)</span> represents the effect of synaptic potentials,
-* <span class="math notranslate nohighlight">\(I_{stim}\)</span> is the current caused by external stimuli.</p>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(K\)</span> is the coupling weights (see <a class="reference internal" href="../Connectivity/index.html#module-Connectivity" title="Connectivity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Connectivity</span></code></a>),</p></li>
+<li><p><span class="math notranslate nohighlight">\(I_{syn}\)</span> represents the effect of synaptic potentials,</p></li>
+<li><p><span class="math notranslate nohighlight">\(I_{stim}\)</span> is the current caused by external stimuli.</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>connectivity</strong> (<a class="reference internal" href="../Connectivity/index.html#Connectivity.Connectivity" title="Connectivity.Connectivity"><em>Connectivity</em></a>) – information about connectivity between neurons in the oscillatory network.</p>

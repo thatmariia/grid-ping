@@ -19,6 +19,7 @@
   body {
     --color-code-background: #f8f8f8;
   --color-code-foreground: black;
+  --color-problematic: #F27E92;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -32,6 +33,7 @@
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-problematic: #FFA3AF;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -45,6 +47,7 @@
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-problematic: #FFA3AF;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -267,13 +270,15 @@
 <p><span class="math notranslate nohighlight">\(dp_v / dt = 0.04 p_v^2 + 5 p_v + 140 - r_v + I_v\)</span>,</p>
 <p><span class="math notranslate nohighlight">\(dr_v / dt = \alpha_{\mathsf{type}(v)} \cdot (\beta_{\mathsf{type}(v)} p_v - r_v)\)</span>,
 if <span class="math notranslate nohighlight">\(p_v \geq 30\)</span> mV, then <span class="math notranslate nohighlight">\(\begin{cases} p_v \leftarrow \gamma_{\mathsf{type}(v)} \\ r_v \leftarrow r_v + \zeta_{\mathsf{type}(v)} \end{cases}\)</span>,</p>
-<p>where
-* <span class="math notranslate nohighlight">\(v\)</span> is a neuron,
-* <span class="math notranslate nohighlight">\(\mathsf{type}(v)\)</span> maps a neuron to its type (see <a class="reference internal" href="../NeuronTypes/index.html#module-NeuronTypes" title="NeuronTypes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a>),
-* <span class="math notranslate nohighlight">\(p\)</span> represents the membrane potential of the neuron,
-* <span class="math notranslate nohighlight">\(r\)</span> represents a membrane recovery variable; provides negative feedback to <span class="math notranslate nohighlight">\(p\)</span>,
-* :math: <cite>alpha, beta, gamma, zeta</cite> are Izhikevich parameters (see <a class="reference internal" href="../ParamsIzhikevich/index.html#module-ParamsIzhikevich" title="ParamsIzhikevich"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParamsIzhikevich</span></code></a>),
-* <span class="math notranslate nohighlight">\(IN\)</span> describes the current (see <a class="reference internal" href="../CurrentComponents/index.html#module-CurrentComponents" title="CurrentComponents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CurrentComponents</span></code></a>).</p>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(v\)</span> is a neuron,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathsf{type}(v)\)</span> maps a neuron to its type (see <a class="reference internal" href="../NeuronTypes/index.html#module-NeuronTypes" title="NeuronTypes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a>),</p></li>
+<li><p><span class="math notranslate nohighlight">\(p\)</span> represents the membrane potential of the neuron,</p></li>
+<li><p><span class="math notranslate nohighlight">\(r\)</span> represents a membrane recovery variable; provides negative feedback to <span class="math notranslate nohighlight">\(p\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\alpha, \beta, \gamma, \zeta\)</span> are Izhikevich parameters (see <a class="reference internal" href="../ParamsIzhikevich/index.html#module-ParamsIzhikevich" title="ParamsIzhikevich"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParamsIzhikevich</span></code></a>),</p></li>
+<li><p><span class="math notranslate nohighlight">\(I\)</span> describes the current (see <a class="reference internal" href="../CurrentComponents/index.html#module-CurrentComponents" title="CurrentComponents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CurrentComponents</span></code></a>).</p></li>
+</ul>
 <p>This neural dynamics model is introduced in <span id="id1">[<a class="reference internal" href="../../index.html#id18" title="EX M Izhikevich. Simple model of spiking neurons. IEEE Transactions on Neural Networks, 14(6):1569–1572, 2003. URL: https://ieeexplore.ieee.org/document/1257420, doi:10.1109/TNN.2003.820440.">Izhikevich, 2003</a>]</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

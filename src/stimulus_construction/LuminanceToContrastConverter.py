@@ -6,6 +6,8 @@ from src.stimulus_construction.GaborLuminanceStimulus import *
 import numpy as np
 from math import sqrt, exp
 from statistics import mean
+import matplotlib.pyplot as plt
+import seaborn as sns
 from tqdm import tqdm
 
 
@@ -124,7 +126,7 @@ class LuminanceToContrastConverter:
         :type filename: str
 
         :param local_contrasts: a local_contrasts matrix to plot.
-        :type local_contrasts: np.ndarray[(int, int), float]
+        :type local_contrasts: numpy.ndarray[(int, int), float]
 
         :rtype: None
         """

@@ -1,5 +1,9 @@
 from src.misc import *
 
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 
 class GaborLuminanceStimulus:
     """
@@ -58,7 +62,7 @@ class GaborLuminanceStimulus:
         :type filename: str
 
         :param stimulus: a luminance matrix to plot.
-        :type stimulus: np.ndarray[(int, int), float]
+        :type stimulus: numpy.ndarray[(int, int), float]
 
         :rtype: None
         """

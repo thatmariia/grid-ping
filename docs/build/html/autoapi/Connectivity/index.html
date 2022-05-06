@@ -19,6 +19,7 @@
   body {
     --color-code-background: #f8f8f8;
   --color-code-foreground: black;
+  --color-problematic: #F27E92;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -32,6 +33,7 @@
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-problematic: #FFA3AF;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -45,6 +47,7 @@
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-problematic: #FFA3AF;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -266,13 +269,15 @@
 <p>The interaction strength of lateral connections is represented by a matrix <span class="math notranslate nohighlight">\(K\)</span> of pairwise coupling weights
 defined by an exponential function decaying by the Euclidean distance between the PING networks they belong to:</p>
 <p><span class="math notranslate nohighlight">\(K_{v, w} = C_{ \mathsf{type}(v), \mathsf{type}(w)} \exp (-\| \mathsf{cmap}(v), \mathsf{cmap}(w) \| / s_{v, w}),\)</span></p>
-<p>where
-* <span class="math notranslate nohighlight">\(v, w\)</span> are two arbitrary neurons in the network,
-* <span class="math notranslate nohighlight">\(\mathsf{type}(v)\)</span> maps a neuron to its type (see <a class="reference internal" href="../NeuronTypes/index.html#module-NeuronTypes" title="NeuronTypes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a>),
-* <span class="math notranslate nohighlight">\(\mathsf{cmap}(v)\)</span> maps a neuron to its grid_location in the visual cortex (see <a class="reference internal" href="../StimulusLocations/index.html#module-StimulusLocations" title="StimulusLocations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StimulusLocations</span></code></a>),
-* <span class="math notranslate nohighlight">\(s_{v, w}\)</span> is the spatial constant (see <code class="xref py py-obj docutils literal notranslate"><span class="pre">constants.SPATIAL_CONST</span></code>).</p>
-<p>This equation was introduced in <span id="id1">[<a class="reference internal" href="../../index.html#id18" title="EX M Izhikevich. Simple model of spiking neurons. IEEE Transactions on Neural Networks, 14(6):1569–1572, 2003. URL: https://ieeexplore.ieee.org/document/1257420, doi:10.1109/TNN.2003.820440.">Izhikevich, 2003</a>]</span>.</p>
-<p>This class performs the assignment of neurons to relevant PING networks arranged in a grid and computes the matrix
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(v, w\)</span> are two arbitrary neurons in the network,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathsf{type}(v)\)</span> maps a neuron to its type (see <a class="reference internal" href="../NeuronTypes/index.html#module-NeuronTypes" title="NeuronTypes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a>),</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathsf{cmap}(v)\)</span> maps a neuron to its grid_location in the visual cortex (see <a class="reference internal" href="../StimulusLocations/index.html#module-StimulusLocations" title="StimulusLocations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StimulusLocations</span></code></a>),</p></li>
+<li><p><span class="math notranslate nohighlight">\(s_{v, w}\)</span> is the spatial constant (see <a class="reference internal" href="../ParamsConnectivity/index.html#module-ParamsConnectivity" title="ParamsConnectivity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParamsConnectivity</span></code></a>).</p></li>
+</ul>
+<p>The coupling weights are a part of current (see <a class="reference internal" href="../CurrentComponents/index.html#module-CurrentComponents" title="CurrentComponents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CurrentComponents</span></code></a>).
+This equation was introduced in <span id="id1">[<a class="reference internal" href="../../index.html#id18" title="EX M Izhikevich. Simple model of spiking neurons. IEEE Transactions on Neural Networks, 14(6):1569–1572, 2003. URL: https://ieeexplore.ieee.org/document/1257420, doi:10.1109/TNN.2003.820440.">Izhikevich, 2003</a>]</span>. This class performs the assignment of neurons to relevant PING networks arranged in a grid and computes the matrix
 of coupling weights.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>

@@ -7,12 +7,13 @@ class CurrentComponents(ABC):
     """
     This lass contains methods of computing the neural network current components.
 
-    In the network, neurons are not isolated, and the current involves the accumulated effect of interactions
+    In the network (see :obj:`IzhikevichNetworkSimulator`), neurons are not isolated, and the current involves the accumulated effect of interactions
     with other neurons:
 
     :math:`I_v = \\sum_{w \in V} K_{v, w} I_{\mathrm{syn}, w} + I_{\mathrm{stim}, v} \\mathbb{1} \{ \mathsf{type}(v) = \mathrm{ex} \}`,
 
     where
+
     * :math:`K` is the coupling weights (see :obj:`Connectivity`),
     * :math:`I_{syn}` represents the effect of synaptic potentials,
     * :math:`I_{stim}` is the current caused by external stimuli.

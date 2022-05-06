@@ -25,7 +25,7 @@ Classes
 
       Converts the frequencies stimulus into the currents stimulus.
 
-      TODO:: how do IN cite this?
+      TODO:: how do I cite this?
 
       :param stimulus_frequencies: frequencies stimulus.
       :type stimulus_frequencies: numpy.ndarray[int, float]
@@ -51,7 +51,7 @@ Classes
       :type y: numpy.ndarray[int, float]
 
       :return: a fitted regression model.
-      :rtype: TheilSenRegressor
+      :rtype: sklearn.linear_model.TheilSenRegressor
 
 
    .. py:method:: _simulate(self, simulation_time: int, params_ping: src.izhikevich_simulation.IzhikevichNetworkSimulator.ParamsPING, params_izhi: src.izhikevich_simulation.IzhikevichNetworkSimulator.ParamsIzhikevich, mean_ex: float) -> src.izhikevich_simulation.IzhikevichNetworkOutcome.IzhikevichNetworkOutcome

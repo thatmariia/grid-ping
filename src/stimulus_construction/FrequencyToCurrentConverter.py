@@ -28,7 +28,7 @@ class FrequencyToCurrentConverter:
         """
         Converts the frequencies stimulus into the currents stimulus.
 
-        TODO:: how do IN cite this?
+        TODO:: how do I cite this?
 
         :param stimulus_frequencies: frequencies stimulus.
         :type stimulus_frequencies: numpy.ndarray[int, float]
@@ -91,7 +91,7 @@ class FrequencyToCurrentConverter:
         :type y: numpy.ndarray[int, float]
 
         :return: a fitted regression model.
-        :rtype: TheilSenRegressor
+        :rtype: sklearn.linear_model.TheilSenRegressor
         """
 
         # define the model

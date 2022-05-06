@@ -65,6 +65,7 @@ exclude_patterns = []
 html_theme = 'furo'
 html_theme_options = {
     "light_css_variables": {
+        "color-problematic": "#F27E92",
         "color-brand-primary": "#46A9E5",
         "color-brand-content": "#46A9E5",
         "color-background-hover": "#FCEA88",
@@ -74,6 +75,7 @@ html_theme_options = {
         "font-stack--monospace": "Source Code Pro, monospace",
     },
     "dark_css_variables": {
+        "color-problematic": "#FFA3AF",
         "color-brand-primary": "#46A9E5",
         "color-brand-content": "#46A9E5",
         "color-background-hover": "#FCEA88",

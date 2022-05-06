@@ -19,6 +19,7 @@
   body {
     --color-code-background: #f8f8f8;
   --color-code-foreground: black;
+  --color-problematic: #F27E92;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -32,6 +33,7 @@
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-problematic: #FFA3AF;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -45,6 +47,7 @@
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-problematic: #FFA3AF;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -267,7 +270,7 @@
 <dt class="sig sig-object py" id="FrequencyToCurrentConverter.FrequencyToCurrentConverter.convert">
 <span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stimulus_frequencies</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_ping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">src.izhikevich_simulation.IzhikevichNetworkSimulator.ParamsPING</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_izhi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">src.izhikevich_simulation.IzhikevichNetworkSimulator.ParamsIzhikevich</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#FrequencyToCurrentConverter.FrequencyToCurrentConverter.convert" title="Permalink to this definition">#</a></dt>
 <dd><p>Converts the frequencies stimulus into the currents stimulus.</p>
-<p>TODO:: how do IN cite this?</p>
+<p>TODO:: how do I cite this?</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -299,7 +302,7 @@
 <dd class="field-even"><p>a fitted regression model.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>TheilSenRegressor</p>
+<dd class="field-odd"><p>sklearn.linear_model.TheilSenRegressor</p>
 </dd>
 </dl>
 </dd></dl>

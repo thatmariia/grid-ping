@@ -5,11 +5,6 @@ class ParamsSynaptic:
     """
     This class contains synaptic parameters.
 
-    * rise - rise time;
-    * decay - decay time;
-    * conductance - synaptic conductance density;
-    * reversal_potential - reversal (equilibrium) potentials.
-
     :param rise_E: rise time for excitatory presynaptic neurons.
     :type rise_E: float
 

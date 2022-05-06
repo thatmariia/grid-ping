@@ -89,8 +89,8 @@ class ConnectivityGridPINGFactory:
 
             ping_network = PINGNetworkNeurons(
                 grid_location=(x, y),
-                excit_ids=ex_ids,
-                inhibit_ids=in_ids
+                ids_ex=ex_ids,
+                ids_in=in_ids
             )
 
             ping_networks.append(ping_network)

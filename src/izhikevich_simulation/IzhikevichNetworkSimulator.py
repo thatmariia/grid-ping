@@ -19,12 +19,13 @@ class IzhikevichNetworkSimulator:
     if :math:`p_v \geq 30` mV, then :math:`\\begin{cases} p_v \leftarrow \gamma_{\mathsf{type}(v)} \\\ r_v \leftarrow r_v + \zeta_{\mathsf{type}(v)} \\end{cases}`,
 
     where
+
     * :math:`v` is a neuron,
     * :math:`\mathsf{type}(v)` maps a neuron to its type (see :obj:`NeuronTypes`),
     * :math:`p` represents the membrane potential of the neuron,
     * :math:`r` represents a membrane recovery variable; provides negative feedback to :math:`p`,
-    * :math: `\\alpha, \\beta, \\gamma, \\zeta` are Izhikevich parameters (see :obj:`ParamsIzhikevich`),
-    * :math:`IN` describes the current (see :obj:`CurrentComponents`).
+    * :math:`\\alpha, \\beta, \\gamma, \\zeta` are Izhikevich parameters (see :obj:`ParamsIzhikevich`),
+    * :math:`I` describes the current (see :obj:`CurrentComponents`).
 
     This neural dynamics model is introduced in :cite:p:`Izhikevich2003`.
 

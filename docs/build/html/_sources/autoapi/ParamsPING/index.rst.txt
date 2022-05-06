@@ -19,8 +19,6 @@ Classes
 
 .. py:class:: ParamsPING(nr_excitatory: int, nr_inhibitory: int, nr_ping_networks: int = 1)
 
-   Bases: :py:obj:`src.params.Params.Params`
-
    This class contains parameters describing PING networks and their composition.
 
    :param nr_excitatory: number of excitatory neurons in the network.

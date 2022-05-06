@@ -20,7 +20,6 @@ This page contains auto-generated API reference documentation [#f1]_.
    /autoapi/IzhikevichNetworkOutcome/index
    /autoapi/ParamsConnectivity/index
    /autoapi/ParamsGaborStimulus/index
-   /autoapi/Params/index
    /autoapi/ParamsIzhikevich/index
    /autoapi/ParamsInitializer/index
    /autoapi/ParamsSynaptic/index

@@ -19,8 +19,6 @@ Classes
 
 .. py:class:: ParamsConnectivity(max_connect_strength_EE: float, max_connect_strength_EI: float, max_connect_strength_IE: float, max_connect_strength_II: float, spatial_consts_EE: float = 0.4, spatial_consts_EI: float = 0.3, spatial_consts_IE: float = 0.3, spatial_consts_II: float = 0.3)
 
-   Bases: :py:obj:`src.params.Params.Params`
-
    This class contains parameters of the network connectivity.
 
    * max_connect_strength - maximum connection strength between neuron types;

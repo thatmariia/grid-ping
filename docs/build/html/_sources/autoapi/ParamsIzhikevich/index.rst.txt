@@ -19,8 +19,6 @@ Classes
 
 .. py:class:: ParamsIzhikevich(peak_potential: float, alpha_E: float, beta_E: float, gamma_E: float, zeta_E: float, alpha_I: float, beta_I: float, gamma_I: float, zeta_I: float)
 
-   Bases: :py:obj:`src.params.Params.Params`
-
    This class contains Izhikevich parameters.
 
    * alpha describes the timescale of recovery;

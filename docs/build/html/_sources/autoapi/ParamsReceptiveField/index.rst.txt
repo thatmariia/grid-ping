@@ -19,8 +19,6 @@ Classes
 
 .. py:class:: ParamsReceptiveField(slope: float, intercept: float, min_diam_rf: float)
 
-   Bases: :py:obj:`src.params.Params.Params`
-
    This class contains parameters for the receptive field.
 
    :param slope: slope of the receptive field size.

@@ -7,6 +7,8 @@ class IzhikevichNetworkOutcome:
 
     :param spikes: indices of spikes.
     :type spikes: list[tuple[int, int]]
+
+    :ivar spikes: indices of spikes.
     """
 
     def __init__(self, spikes):

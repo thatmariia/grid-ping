@@ -24,4 +24,6 @@ Classes
    :param spikes: indices of spikes.
    :type spikes: list[tuple[int, int]]
 
+   :ivar spikes: indices of spikes.
+
 

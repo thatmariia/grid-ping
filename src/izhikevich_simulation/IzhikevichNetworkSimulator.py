@@ -44,7 +44,7 @@ class IzhikevichNetworkSimulator:
     """
 
     def __init__(self, params_izhi: ParamsIzhikevich, current_components: CurrentComponents, pb_off=True):
-        self._params_izhi = params_izhi
+        self._params_izhi: ParamsIzhikevich = params_izhi
         self._current_components: CurrentComponents = current_components
         self._pb_off = pb_off
 

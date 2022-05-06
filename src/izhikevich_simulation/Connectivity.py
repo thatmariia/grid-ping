@@ -33,6 +33,6 @@ class Connectivity:
     """
 
     def __init__(self, params_ping: ParamsPING, coupling_weights: np.ndarray[(int, int), float]):
-        self.params_ping = params_ping
+        self.params_ping: ParamsPING = params_ping
         self.coupling_weights: np.ndarray[(int, int), float] = coupling_weights
 

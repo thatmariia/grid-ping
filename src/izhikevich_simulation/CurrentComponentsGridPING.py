@@ -29,7 +29,7 @@ class CurrentComponentsGridPING(CurrentComponents):
             self, connectivity: Connectivity, params_synaptic: ParamsSynaptic, stimulus_currents: np.ndarray[int, float]
     ):
         super().__init__(connectivity)
-        self._params_synaptic = params_synaptic
+        self._params_synaptic: ParamsSynaptic = params_synaptic
         self._stimulus_currents: np.ndarray[int, float] = stimulus_currents
         self._gatings: np.ndarray[int, float] = np.zeros(self.connectivity.params_ping.nr_neurons["total"])
 

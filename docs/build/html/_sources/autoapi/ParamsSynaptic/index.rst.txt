@@ -26,15 +26,34 @@ Classes
    * conductance - synaptic conductance density;
    * reversal_potential - reversal (equilibrium) potentials.
 
+   :param rise_E: rise time for excitatory presynaptic neurons.
    :type rise_E: float
+
+   :param decay_E: decay time for excitatory presynaptic neurons.
    :type decay_E: float
+
+   :param rise_I: rise time for inhibitory presynaptic neurons.
    :type rise_I: float
+
+   :param decay_I: decay time for inhibitory presynaptic neurons.
    :type decay_I: float
+
+   :param conductance_EE: synaptic conductance density between excitatory neurons.
    :type conductance_EE: float
+
+   :param conductance_EI: synaptic conductance density between excitatory and inhibitory neurons.
    :type conductance_EI: float
+
+   :param conductance_IE: synaptic conductance density between inhibitory and excitatory neurons.
    :type conductance_IE: float
+
+   :param conductance_II: synaptic conductance density between inhibitory neurons.
    :type conductance_II: float
+
+   :param reversal_potential_E: reversal potential of excitatory neurons.
    :type reversal_potential_E: float
+
+   :param reversal_potential_I: reversal potential of inhibitory neurons.
    :type reversal_potential_I: float
 
    :ivar rise: rise time.

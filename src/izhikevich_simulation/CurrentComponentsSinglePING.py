@@ -40,13 +40,13 @@ class CurrentComponentsSinglePING(CurrentComponents):
     ):
         super().__init__(connectivity)
 
-        self._params_synaptic = params_synaptic
+        self._params_synaptic: ParamsSynaptic = params_synaptic
         self._synaptic_currents: np.ndarray[int, float] = np.zeros(self.connectivity.params_ping.nr_neurons["total"])
 
-        self._mean_ex = mean_ex
-        self._var_ex = var_ex
-        self._mean_in = mean_in
-        self._var_in = var_in
+        self._mean_ex: float = mean_ex
+        self._var_ex: float = var_ex
+        self._mean_in: float = mean_in
+        self._var_in: float = var_in
 
     def get_synaptic_currents(self, dt, potentials) -> np.ndarray[int, float]:
         """

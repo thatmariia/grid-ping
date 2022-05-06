@@ -1,7 +1,6 @@
-from src.params.Params import *
 
 
-class ParamsReceptiveField(Params):
+class ParamsReceptiveField:
     """
     This class contains parameters for the receptive field.
 
@@ -29,6 +28,6 @@ class ParamsReceptiveField(Params):
         assert min_diam_rf > 0, \
             "The minimal diameter_dg of the receptive field should be larger than 0."
 
-        self.slope = slope
-        self.intercept = intercept
-        self.min_diam_rf = min_diam_rf
+        self.slope: float = slope
+        self.intercept: float = intercept
+        self.min_diam_rf: float = min_diam_rf

@@ -1,8 +1,7 @@
-from src.params.Params import *
 from src.misc import *
 
 
-class ParamsGaborStimulus(Params):
+class ParamsGaborStimulus:
     """
     This class contains parameters for creating a Gabor luminance stimulus.
 
@@ -117,15 +116,15 @@ class ParamsGaborStimulus(Params):
         assert (patch_size_dg > 0) and (patch_size_dg <= min(figure_width_dg, figure_height_dg)), \
             "The size of the patch cannot be smaller than either of the figure sides."
 
-        self.spatial_freq = spatial_freq
-        self.vlum = vlum
-        self.diameter_dg = diameter_dg
-        self.diameter = diameter
-        self.dist_scale = dist_scale
-        self.full_width_dg = full_width_dg
-        self.full_height_dg = full_height_dg
-        self.contrast_range = contrast_range
-        self.figure_width_dg = figure_width_dg
-        self.figure_height_dg = figure_height_dg
-        self.figure_ecc_dg = figure_ecc_dg
-        self.patch_size_dg = patch_size_dg
+        self.spatial_freq: float = spatial_freq
+        self.vlum: float = vlum
+        self.diameter_dg: float = diameter_dg
+        self.diameter: float = diameter
+        self.dist_scale: float = dist_scale
+        self.full_width_dg: float = full_width_dg
+        self.full_height_dg: float = full_height_dg
+        self.contrast_range: float = contrast_range
+        self.figure_width_dg: float = figure_width_dg
+        self.figure_height_dg: float = figure_height_dg
+        self.figure_ecc_dg: float = figure_ecc_dg
+        self.patch_size_dg: float = patch_size_dg

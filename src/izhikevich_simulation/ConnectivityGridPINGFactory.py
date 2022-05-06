@@ -13,9 +13,6 @@ class ConnectivityGridPINGFactory:
     This class determines the connectivity between neurons in the oscillatory network.
     """
 
-    def __init__(self):
-        pass
-
     def create(
             self, params_ping: ParamsPING, params_connectivity: ParamsConnectivity,
             cortical_coords: list[list[tuple[float, float]]]
@@ -146,7 +143,7 @@ class ConnectivityGridPINGFactory:
             types_coupling_weights = self._compute_type_coupling_weights(
                 dist=dist,
                 max_connect_strength=params_connectivity.max_connect_strength[(nts[0], nts[1])],
-                spatial_const=params_connectivity.spatial_consts[(nts[0], nts[1])]
+                spatial_const=params_connectivity.spatial_const[(nts[0], nts[1])]
             )
             if nts[0] == nts[1]:
                 coupling_weights[params_ping.neur_slice[nts[0]], params_ping.neur_slice[nts[1]]] = \

@@ -1,10 +1,9 @@
-from src.params.Params import *
 from src.NeuronTypes import *
 
 from math import sqrt
 from typing import Union
 
-class ParamsPING(Params):
+class ParamsPING:
     """
     This class contains parameters describing PING networks and their composition.
 

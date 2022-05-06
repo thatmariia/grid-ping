@@ -263,15 +263,28 @@
 <dt class="sig sig-object py" id="ParamsIzhikevich.ParamsIzhikevich">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ParamsIzhikevich.</span></span><span class="sig-name descname"><span class="pre">ParamsIzhikevich</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">peak_potential</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta_E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeta_E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha_I</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta_I</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma_I</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zeta_I</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ParamsIzhikevich.ParamsIzhikevich" title="Permalink to this definition">#</a></dt>
 <dd><p>This class contains Izhikevich parameters.</p>
-<ul class="simple">
-<li><p>alpha describes the timescale of recovery;</p></li>
-<li><p>beta describes the sensitivity of recovery to the subthreshold fluctuations of potential;</p></li>
-<li><p>gamma describes the after-spike reset value of potential;</p></li>
-<li><p>zeta describes the after-spike reset of recovery.</p></li>
-</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>peak_potential</strong> (<em>float</em>) – potential at which spikes terminate.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>peak_potential</strong> (<em>float</em>) – potential at which spikes terminate.</p></li>
+<li><p><strong>alpha_E</strong> (<em>float</em>) – describes the timescale of recovery for excitatory neurons.</p></li>
+<li><p><strong>beta_E</strong> (<em>float</em>) – describes the sensitivity of recovery to the subthreshold fluctuations of potential for excitatory neurons.</p></li>
+<li><p><strong>gamma_E</strong> (<em>float</em>) – describes the after-spike reset value of potential for excitatory neurons.</p></li>
+<li><p><strong>zeta_E</strong> (<em>float</em>) – describes the after-spike reset of recovery for excitatory neurons.</p></li>
+<li><p><strong>alpha_I</strong> (<em>float</em>) – describes the timescale of recovery for inhibitory neurons.</p></li>
+<li><p><strong>beta_I</strong> (<em>float</em>) – describes the sensitivity of recovery to the subthreshold fluctuations of potential for inhibitory neurons.</p></li>
+<li><p><strong>gamma_I</strong> (<em>float</em>) – describes the after-spike reset value of potential for inhibitory neurons.</p></li>
+<li><p><strong>zeta_I</strong> (<em>float</em>) – describes the after-spike reset of recovery for inhibitory neurons.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Variables</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>peak_potential</strong> – potential at which spikes terminate.</p></li>
+<li><p><strong>alpha</strong> – describes the timescale of recovery.</p></li>
+<li><p><strong>beta</strong> – describes the sensitivity of recovery to the subthreshold fluctuations of potential.</p></li>
+<li><p><strong>gamma</strong> – gamma describes the after-spike reset value of potential.</p></li>
+<li><p><strong>zeta</strong> – zeta describes the after-spike reset of recovery.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

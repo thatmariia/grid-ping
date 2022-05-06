@@ -40,10 +40,10 @@ class ParamsInitializer:
             max_connect_strength_EI=0.07,
             max_connect_strength_IE=-0.04,
             max_connect_strength_II=-0.015,
-            spatial_consts_EE=0.4,
-            spatial_consts_EI=0.3,
-            spatial_consts_IE=0.3,
-            spatial_consts_II=0.3
+            spatial_const_EE=0.4,
+            spatial_const_EI=0.3,
+            spatial_const_IE=0.3,
+            spatial_const_II=0.3
         )
         params_izhi = ParamsIzhikevich(
             peak_potential=30,

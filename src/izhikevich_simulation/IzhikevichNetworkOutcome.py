@@ -10,4 +10,4 @@ class IzhikevichNetworkOutcome:
     """
 
     def __init__(self, spikes):
-        self.spikes = spikes
+        self.spikes: list[tuple[int, int]] = spikes

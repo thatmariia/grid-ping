@@ -111,7 +111,7 @@ class CurrentComponentsGridPING(CurrentComponents):
         :rtype: numpy.ndarray[int, float]
         """
 
-        current = self._get_thalamic_input() + self._create_main_input_stimulus(self._stimulus_currents)
+        current = self._get_thalamic_input() + self._get_stimulus_input()
 
         return current
 
@@ -129,38 +129,24 @@ class CurrentComponentsGridPING(CurrentComponents):
             1.5 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.IN])
         )
 
-    def _create_main_input_stimulus(self, stimulus_currents) -> list[float]:
+    def _get_stimulus_input(self) -> np.ndarray[int, float]:
         """
-        Parses external input stimulus. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.
+        Distributes the currents from stimulus to corresponding neurons.
 
         Creates initial :math:`I_{stim}`.
 
-        :return: input stimulus.
-        :rtype: list[float]
+        :return: input from stimulus.
+        :rtype: numpy.ndarray[int, float]
         """
 
-        # TODO:: implement the real strategy
+        stimulus_input = np.zeros(self.connectivity.params_ping.nr_neurons["total"])
+        currents_grid = self._stimulus_currents.reshape(
+            self.connectivity.params_ping.grid_size, self.connectivity.params_ping.grid_size
+        )
 
-        stim_input = []
-        for i in stimulus_currents:
-            stim_input += [i] * \
-                          (self.connectivity.params_ping.nr_neurons["total"]
-                           // self.connectivity.params_ping.nr_ping_networks)
+        for ping_network in self.connectivity.grid_geometry.ping_networks:
+            i = ping_network.grid_location[0]
+            j = ping_network.grid_location[1]
+            stimulus_input[ping_network.ids[NeuronTypes.EX]] = currents_grid[i, j]
 
-        return stim_input
-
-        # old code:
-        # # sinusoidal spatial modulation of input strength
-        # amplitude = 1
-        # # mean input level to RS cells
-        # mean_input_lvl_RS = 7
-        # step = 2 * pi / (self._nr_neurons[NeuronTypes.EX] - 1)
-        # stim_input = mean_input_lvl_RS + amplitude * np.sin(
-        #     crange(-pi, pi, step)
-        # )
-        # # additional mean input to FS cells
-        # stim_input = np.append(stim_input, 3.5 * np.ones(self._nr_neurons[NeuronTypes.IN]))
-        #
-        # print("stim input\n", stim_input)
-        #
-        # return stim_input
+        return stimulus_input

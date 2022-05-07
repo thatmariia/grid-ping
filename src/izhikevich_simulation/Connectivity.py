@@ -1,6 +1,8 @@
 from src.params.ParamsPING import *
+from src.izhikevich_simulation.GridGeometry import *
 
 import numpy as np
+
 
 class Connectivity:
     """
@@ -28,11 +30,18 @@ class Connectivity:
     :param coupling_weights: coupling weights between all pairs of neurons.
     :type coupling_weights: numpy.ndarray[(int, int), float]
 
+    :param grid_geometry: contains information about grid locations of PING networks and neurons located in them.
+    :type grid_geometry: GridGeometry
+
     :ivar params_ping: parameters describing PING networks and their composition.
     :ivar coupling_weights: coupling weights between all pairs of neurons.
+    :ivar grid_geometry: contains information about grid locations of PING networks and neurons located in them.
     """
 
-    def __init__(self, params_ping: ParamsPING, coupling_weights: np.ndarray[(int, int), float]):
+    def __init__(
+            self, params_ping: ParamsPING, coupling_weights: np.ndarray[(int, int), float],
+            grid_geometry: GridGeometry = None
+    ):
         self.params_ping: ParamsPING = params_ping
         self.coupling_weights: np.ndarray[(int, int), float] = coupling_weights
-
+        self.grid_geometry = grid_geometry

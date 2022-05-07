@@ -182,6 +182,8 @@
 <li class="toctree-l2"><a class="reference internal" href="autoapi/misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">misc</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/NeuronTypes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/main/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/GridGeometry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GridGeometry</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="autoapi/GridGeometryFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GridGeometryFactory</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/Connectivity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Connectivity</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/CurrentComponents/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponents</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="autoapi/ConnectivityGridPINGFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ConnectivityGridPINGFactory</span></code></a></li>
@@ -256,7 +258,7 @@
 </li>
         <li><a href="autoapi/PatchGeometryFactory/index.html#PatchGeometryFactory.PatchGeometryFactory._assign_circuits">_assign_circuits() (PatchGeometryFactory.PatchGeometryFactory method)</a>
 </li>
-        <li><a href="autoapi/ConnectivityGridPINGFactory/index.html#ConnectivityGridPINGFactory.ConnectivityGridPINGFactory._assign_ping_networks">_assign_ping_networks() (ConnectivityGridPINGFactory.ConnectivityGridPINGFactory method)</a>
+        <li><a href="autoapi/GridGeometryFactory/index.html#GridGeometryFactory.GridGeometryFactory._assign_ping_networks">_assign_ping_networks() (GridGeometryFactory.GridGeometryFactory method)</a>
 </li>
         <li><a href="autoapi/StimulusLocations/index.html#StimulusLocations.StimulusLocations._compute_coordinates">_compute_coordinates() (StimulusLocations.StimulusLocations method)</a>
 </li>
@@ -268,8 +270,6 @@
 </li>
         <li><a href="autoapi/ConnectivityGridPINGFactory/index.html#ConnectivityGridPINGFactory.ConnectivityGridPINGFactory._compute_type_coupling_weights">_compute_type_coupling_weights() (ConnectivityGridPINGFactory.ConnectivityGridPINGFactory method)</a>
 </li>
-        <li><a href="autoapi/CurrentComponentsGridPING/index.html#CurrentComponentsGridPING.CurrentComponentsGridPING._create_main_input_stimulus">_create_main_input_stimulus() (CurrentComponentsGridPING.CurrentComponentsGridPING method)</a>
-</li>
         <li><a href="autoapi/FrequencyToCurrentConverter/index.html#FrequencyToCurrentConverter.FrequencyToCurrentConverter._fit_line_robust">_fit_line_robust() (FrequencyToCurrentConverter.FrequencyToCurrentConverter method)</a>
 </li>
         <li><a href="autoapi/IzhikevichNetworkSimulator/index.html#IzhikevichNetworkSimulator.IzhikevichNetworkSimulator._get_change_in_potentials">_get_change_in_potentials() (IzhikevichNetworkSimulator.IzhikevichNetworkSimulator method)</a>
@@ -278,10 +278,10 @@
 </li>
         <li><a href="autoapi/GaborLuminanceStimulusFactory/index.html#GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory._get_figure_coords">_get_figure_coords() (GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory method)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="autoapi/GaborLuminanceStimulusFactory/index.html#GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory._get_full_stimulus">_get_full_stimulus() (GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory method)</a>
 </li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="autoapi/CurrentComponentsGridPING/index.html#CurrentComponentsGridPING.CurrentComponentsGridPING._get_gatings">_get_gatings() (CurrentComponentsGridPING.CurrentComponentsGridPING method)</a>
 </li>
         <li><a href="autoapi/GaborLuminanceStimulusFactory/index.html#GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory._get_grating">_get_grating() (GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory method)</a>
@@ -291,6 +291,8 @@
         <li><a href="autoapi/IzhikevichNetworkSimulator/index.html#IzhikevichNetworkSimulator.IzhikevichNetworkSimulator._get_izhi_parameters">_get_izhi_parameters() (IzhikevichNetworkSimulator.IzhikevichNetworkSimulator method)</a>
 </li>
         <li><a href="autoapi/ConnectivityGridPINGFactory/index.html#ConnectivityGridPINGFactory.ConnectivityGridPINGFactory._get_neurons_dist">_get_neurons_dist() (ConnectivityGridPINGFactory.ConnectivityGridPINGFactory method)</a>
+</li>
+        <li><a href="autoapi/CurrentComponentsGridPING/index.html#CurrentComponentsGridPING.CurrentComponentsGridPING._get_stimulus_input">_get_stimulus_input() (CurrentComponentsGridPING.CurrentComponentsGridPING method)</a>
 </li>
         <li><a href="autoapi/CurrentComponentsGridPING/index.html#CurrentComponentsGridPING.CurrentComponentsGridPING._get_thalamic_input">_get_thalamic_input() (CurrentComponentsGridPING.CurrentComponentsGridPING method)</a>
 </li>
@@ -382,6 +384,8 @@
           <li><a href="autoapi/ConnectivitySinglePINGFactory/index.html#ConnectivitySinglePINGFactory.ConnectivitySinglePINGFactory.create">(ConnectivitySinglePINGFactory.ConnectivitySinglePINGFactory method)</a>
 </li>
           <li><a href="autoapi/GaborLuminanceStimulusFactory/index.html#GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory.create">(GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory method)</a>
+</li>
+          <li><a href="autoapi/GridGeometryFactory/index.html#GridGeometryFactory.GridGeometryFactory.create">(GridGeometryFactory.GridGeometryFactory method)</a>
 </li>
           <li><a href="autoapi/PatchGeometryFactory/index.html#PatchGeometryFactory.PatchGeometryFactory.create">(PatchGeometryFactory.PatchGeometryFactory method)</a>
 </li>
@@ -478,8 +482,6 @@
         </ul></li>
         <li><a href="autoapi/GaborLuminanceStimulusFactory/index.html#GaborLuminanceStimulusFactory.GaborLuminanceStimulusFactory">GaborLuminanceStimulusFactory (class in GaborLuminanceStimulusFactory)</a>
 </li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="autoapi/CurrentComponents/index.html#CurrentComponents.CurrentComponents.get_current_input">get_current_input() (CurrentComponents.CurrentComponents method)</a>
 
         <ul>
@@ -488,6 +490,8 @@
           <li><a href="autoapi/CurrentComponentsSinglePING/index.html#CurrentComponentsSinglePING.CurrentComponentsSinglePING.get_current_input">(CurrentComponentsSinglePING.CurrentComponentsSinglePING method)</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="autoapi/CurrentComponents/index.html#CurrentComponents.CurrentComponents.get_synaptic_currents">get_synaptic_currents() (CurrentComponents.CurrentComponents method)</a>
 
         <ul>
@@ -496,6 +500,24 @@
           <li><a href="autoapi/CurrentComponentsSinglePING/index.html#CurrentComponentsSinglePING.CurrentComponentsSinglePING.get_synaptic_currents">(CurrentComponentsSinglePING.CurrentComponentsSinglePING method)</a>
 </li>
         </ul></li>
+        <li>
+    GridGeometry
+
+        <ul>
+          <li><a href="autoapi/GridGeometry/index.html#module-GridGeometry">module</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/GridGeometry/index.html#GridGeometry.GridGeometry">GridGeometry (class in GridGeometry)</a>
+</li>
+        <li>
+    GridGeometryFactory
+
+        <ul>
+          <li><a href="autoapi/GridGeometryFactory/index.html#module-GridGeometryFactory">module</a>
+</li>
+        </ul></li>
+        <li><a href="autoapi/GridGeometryFactory/index.html#GridGeometryFactory.GridGeometryFactory">GridGeometryFactory (class in GridGeometryFactory)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -592,6 +614,10 @@
           <li><a href="autoapi/GaborLuminanceStimulus/index.html#module-GaborLuminanceStimulus">GaborLuminanceStimulus</a>
 </li>
           <li><a href="autoapi/GaborLuminanceStimulusFactory/index.html#module-GaborLuminanceStimulusFactory">GaborLuminanceStimulusFactory</a>
+</li>
+          <li><a href="autoapi/GridGeometry/index.html#module-GridGeometry">GridGeometry</a>
+</li>
+          <li><a href="autoapi/GridGeometryFactory/index.html#module-GridGeometryFactory">GridGeometryFactory</a>
 </li>
           <li><a href="autoapi/IzhikevichNetworkOutcome/index.html#module-IzhikevichNetworkOutcome">IzhikevichNetworkOutcome</a>
 </li>

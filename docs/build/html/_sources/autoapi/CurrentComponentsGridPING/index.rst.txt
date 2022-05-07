@@ -84,14 +84,14 @@ Classes
       :rtype: numpy.ndarray[int, float]
 
 
-   .. py:method:: _create_main_input_stimulus(self, stimulus_currents) -> list[float]
+   .. py:method:: _get_stimulus_input(self) -> numpy.ndarray[int, float]
 
-      Parses external input stimulus. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.
+      Distributes the currents from stimulus to corresponding neurons.
 
       Creates initial :math:`I_{stim}`.
 
-      :return: input stimulus.
-      :rtype: list[float]
+      :return: input from stimulus.
+      :rtype: numpy.ndarray[int, float]
 
 
 

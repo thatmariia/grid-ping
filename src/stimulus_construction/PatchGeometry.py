@@ -1,6 +1,8 @@
 from src.misc import *
 from src.stimulus_construction.PINGNetworkPixels import *
 
+import numpy as np
+
 
 class PatchGeometry:
     """

@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <meta name="generator" content="sphinx-4.4.0, furo 2022.03.04"/>
-        <title>Params - grid-ping documentation</title>
+        <title>GridGeometryFactory - grid-ping documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=935aa2abcc5c1da4283d1dc201fb1f0add16d23a" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -19,6 +19,7 @@
   body {
     --color-code-background: #f8f8f8;
   --color-code-foreground: black;
+  --color-problematic: #F27E92;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -32,6 +33,7 @@
     body[data-theme="dark"] {
       --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-problematic: #FFA3AF;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -45,6 +47,7 @@
       body:not([data-theme="light"]) {
         --color-code-background: #202020;
   --color-code-foreground: #d0d0d0;
+  --color-problematic: #FFA3AF;
   --color-brand-primary: #46A9E5;
   --color-brand-content: #46A9E5;
   --color-background-hover: #FCEA88;
@@ -181,6 +184,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">misc</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../NeuronTypes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../main/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../GridGeometry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GridGeometry</span></code></a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GridGeometryFactory</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Connectivity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Connectivity</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../CurrentComponents/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponents</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ConnectivityGridPINGFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ConnectivityGridPINGFactory</span></code></a></li>
@@ -192,7 +197,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../IzhikevichNetworkOutcome/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">IzhikevichNetworkOutcome</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ParamsConnectivity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ParamsConnectivity</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ParamsGaborStimulus/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ParamsGaborStimulus</span></code></a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Params</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ParamsIzhikevich/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ParamsIzhikevich</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ParamsInitializer/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ParamsInitializer</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ParamsSynaptic/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ParamsSynaptic</span></code></a></li>
@@ -243,8 +247,8 @@
           </label>
         </div>
         <article role="main">
-          <section id="module-Params">
-<span id="params"></span><h1><a class="reference internal" href="#module-Params" title="Params"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Params</span></code></a><a class="headerlink" href="#module-Params" title="Permalink to this headline">#</a></h1>
+          <section id="module-GridGeometryFactory">
+<span id="gridgeometryfactory"></span><h1><a class="reference internal" href="#module-GridGeometryFactory" title="GridGeometryFactory"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GridGeometryFactory</span></code></a><a class="headerlink" href="#module-GridGeometryFactory" title="Permalink to this headline">#</a></h1>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">#</a></h2>
 <section id="classes">
@@ -255,17 +259,49 @@
 <col style="width: 90%"/>
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#Params.Params" title="Params.Params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Params</span></code></a></p></td>
-<td><p>Helper class that provides a standard way to create an ABC using</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#GridGeometryFactory.GridGeometryFactory" title="GridGeometryFactory.GridGeometryFactory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GridGeometryFactory</span></code></a></p></td>
+<td><p>This class constructs a grid of PING networks and distributes neurons among them.</p></td>
 </tr>
 </tbody>
 </table></div>
 <dl class="py class">
-<dt class="sig sig-object py" id="Params.Params">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">Params.</span></span><span class="sig-name descname"><span class="pre">Params</span></span><a class="headerlink" href="#Params.Params" title="Permalink to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
-<p>Helper class that provides a standard way to create an ABC using
-inheritance.</p>
+<dt class="sig sig-object py" id="GridGeometryFactory.GridGeometryFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">GridGeometryFactory.</span></span><span class="sig-name descname"><span class="pre">GridGeometryFactory</span></span><a class="headerlink" href="#GridGeometryFactory.GridGeometryFactory" title="Permalink to this definition">#</a></dt>
+<dd><p>This class constructs a grid of PING networks and distributes neurons among them.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="GridGeometryFactory.GridGeometryFactory.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_ping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">src.params.ParamsPING.ParamsPING</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">src.izhikevich_simulation.GridGeometry.GridGeometry</span></span></span><a class="headerlink" href="#GridGeometryFactory.GridGeometryFactory.create" title="Permalink to this definition">#</a></dt>
+<dd><p>Goes through the steps to construct a grid of PING networks and distribute neurons among them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>params_ping</strong> (<a class="reference internal" href="../ParamsPING/index.html#ParamsPING.ParamsPING" title="ParamsPING.ParamsPING"><em>ParamsPING</em></a>) – parameters describing PING networks and their composition.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>information about grid locations of PING networks and neurons located in them.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../GridGeometry/index.html#GridGeometry.GridGeometry" title="GridGeometry.GridGeometry">GridGeometry</a></p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="GridGeometryFactory.GridGeometryFactory._assign_ping_networks">
+<span class="sig-name descname"><span class="pre">_assign_ping_networks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params_ping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">src.params.ParamsPING.ParamsPING</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">src.izhikevich_simulation.PINGNetworkNeurons.PINGNetworkNeurons</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">src.params.ParamsPING.NeuronTypes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#GridGeometryFactory.GridGeometryFactory._assign_ping_networks" title="Permalink to this definition">#</a></dt>
+<dd><p>Creates PING networks, assigns grid locations to them, and adds the same number of neurons of each neuron type
+to them.</p>
+<p>In other words, this function creates a map that can be used as function <span class="math notranslate nohighlight">\(\mathsf{loc}\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>params_ping</strong> (<a class="reference internal" href="../ParamsPING/index.html#ParamsPING.ParamsPING" title="ParamsPING.ParamsPING"><em>ParamsPING</em></a>) – parameters describing PING networks and their composition.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of PING networks in the network and a dictionary mapping a neuron to the PING network it belongs to.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple[list[<a class="reference internal" href="../PINGNetworkNeurons/index.html#PINGNetworkNeurons.PINGNetworkNeurons" title="PINGNetworkNeurons.PINGNetworkNeurons">PINGNetworkNeurons</a>], dict[<a class="reference internal" href="../NeuronTypes/index.html#NeuronTypes.NeuronTypes" title="NeuronTypes.NeuronTypes">NeuronTypes</a>, dict[int, int]]]</p>
+</dd>
+</dl>
+</dd></dl>
 </dd></dl>
 </section>
 </section>
@@ -310,10 +346,14 @@ inheritance.</p>
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Params</span></code></a><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GridGeometryFactory</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
 <li><a class="reference internal" href="#classes">Classes</a><ul>
-<li><a class="reference internal" href="#Params.Params">Params</a></li>
+<li><a class="reference internal" href="#GridGeometryFactory.GridGeometryFactory">GridGeometryFactory</a><ul>
+<li><a class="reference internal" href="#GridGeometryFactory.GridGeometryFactory.create">create</a></li>
+<li><a class="reference internal" href="#GridGeometryFactory.GridGeometryFactory._assign_ping_networks">_assign_ping_networks</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -334,5 +374,6 @@ inheritance.</p>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/scripts/furo.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     </body>
 </html>

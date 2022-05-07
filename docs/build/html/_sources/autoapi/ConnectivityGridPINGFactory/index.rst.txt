@@ -21,7 +21,7 @@ Classes
 
    This class determines the connectivity between neurons in the oscillatory network.
 
-   .. py:method:: create(self, params_ping: src.izhikevich_simulation.Connectivity.ParamsPING, params_connectivity: src.params.ParamsConnectivity.ParamsConnectivity, cortical_coords: list[list[tuple[float, float]]]) -> src.izhikevich_simulation.Connectivity.Connectivity
+   .. py:method:: create(self, params_ping: src.izhikevich_simulation.GridGeometryFactory.ParamsPING, params_connectivity: src.params.ParamsConnectivity.ParamsConnectivity, cortical_coords: list[list[tuple[float, float]]]) -> src.izhikevich_simulation.Connectivity.Connectivity
 
       Determines the connectivity between neurons in the oscillatory network.
 
@@ -38,21 +38,7 @@ Classes
       :rtype: Connectivity
 
 
-   .. py:method:: _assign_ping_networks(self, params_ping: src.izhikevich_simulation.Connectivity.ParamsPING) -> tuple[list[src.izhikevich_simulation.PINGNetworkNeurons.PINGNetworkNeurons], dict[src.izhikevich_simulation.Connectivity.NeuronTypes, dict[int, int]]]
-
-      Creates PING networks, assigns grid locations to them, and adds the same number of neurons of each neuron type
-      to them.
-
-      In other words, this function creates a map that can be used as function :math:`\mathsf{loc}`.
-
-      :param params_ping: parameters describing PING networks and their composition.
-      :type params_ping: ParamsPING
-
-      :return: list of PING networks in the network and a dictionary mapping a neuron to the PING network it belongs to.
-      :rtype: tuple[list[PINGNetworkNeurons], dict[NeuronTypes, dict[int, int]]]
-
-
-   .. py:method:: _compute_coupling_weights(self, params_ping: src.izhikevich_simulation.Connectivity.ParamsPING, params_connectivity: src.params.ParamsConnectivity.ParamsConnectivity, ping_networks: list[src.izhikevich_simulation.PINGNetworkNeurons.PINGNetworkNeurons], neuron_ping_map: dict[src.izhikevich_simulation.Connectivity.NeuronTypes, dict[int, int]], cortical_coords: list[list[tuple[float, float]]]) -> numpy.ndarray[(int, int), float]
+   .. py:method:: _compute_coupling_weights(self, params_ping: src.izhikevich_simulation.GridGeometryFactory.ParamsPING, params_connectivity: src.params.ParamsConnectivity.ParamsConnectivity, grid_geometry: src.izhikevich_simulation.GridGeometry.GridGeometry, cortical_coords: list[list[tuple[float, float]]]) -> numpy.ndarray[(int, int), float]
 
       Computes the coupling weights between all neurons.
 
@@ -65,11 +51,8 @@ Classes
       :param params_connectivity: parameters of the network connectivity.
       :type params_connectivity: ParamsConnectivity
 
-      :param ping_networks: list of PING networks in the network.
-      :type ping_networks: list[PINGNetworkNeurons]
-
-      :param neuron_ping_map: a dictionary mapping a neuron to the PING network it belongs to.
-      :type neuron_ping_map: dict[NeuronTypes, dict[int, int]]
+      :param grid_geometry: contains information about grid locations of PING networks and neurons located in them.
+      :type grid_geometry: GridGeometry
 
       :param cortical_coords: coordinates of the points in the visual cortex.
       :type cortical_coords: list[list[tuple[float, float]]]
@@ -78,7 +61,7 @@ Classes
       :rtype: numpy.ndarray[(int, int), float]
 
 
-   .. py:method:: _get_neurons_dist(self, neuron_type1: src.izhikevich_simulation.Connectivity.NeuronTypes, neuron_type2: src.izhikevich_simulation.Connectivity.NeuronTypes, nr1: int, nr2: int, ping_networks: list[src.izhikevich_simulation.PINGNetworkNeurons.PINGNetworkNeurons], neuron_ping_map: dict[src.izhikevich_simulation.Connectivity.NeuronTypes, dict[int, int]], cortical_coords: list[list[tuple[float, float]]]) -> numpy.ndarray[(int, int), float]
+   .. py:method:: _get_neurons_dist(self, neuron_type1: src.izhikevich_simulation.GridGeometry.NeuronTypes, neuron_type2: src.izhikevich_simulation.GridGeometry.NeuronTypes, nr1: int, nr2: int, grid_geometry: src.izhikevich_simulation.GridGeometry.GridGeometry, cortical_coords: list[list[tuple[float, float]]]) -> numpy.ndarray[(int, int), float]
 
       Computes the matrix of Euclidian distances between two types of neurons.
 
@@ -97,11 +80,8 @@ Classes
       :param nr2: number of neurons of neuron_type 2
       :type nr2: int
 
-      :param ping_networks: list of PING networks in the network.
-      :type ping_networks: list[PINGNetworkNeurons]
-
-      :param neuron_ping_map: a dictionary mapping a neuron to the PING network it belongs to.
-      :type neuron_ping_map: dict[NeuronTypes, dict[int, int]]
+      :param grid_geometry: contains information about grid locations of PING networks and neurons located in them.
+      :type grid_geometry: GridGeometry
 
       :param cortical_coords: coordinates of the points in the visual cortex.
       :type cortical_coords: list[list[tuple[float, float]]]

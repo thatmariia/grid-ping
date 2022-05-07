@@ -3,6 +3,8 @@ from src.params.ParamsConnectivity import *
 from src.izhikevich_simulation.PINGNetworkNeurons import *
 from src.izhikevich_simulation.Connectivity import *
 from src.misc import *
+from src.izhikevich_simulation.GridGeometryFactory import *
+from src.izhikevich_simulation.GridGeometry import *
 
 from itertools import product
 import numpy as np
@@ -33,74 +35,23 @@ class ConnectivityGridPINGFactory:
         :rtype: Connectivity
         """
 
-        ping_networks, neuron_ping_map = self._assign_ping_networks(params_ping)
+        grid_geometry = GridGeometryFactory().create(params_ping)
         coupling_weights = self._compute_coupling_weights(
-            params_ping, params_connectivity, ping_networks, neuron_ping_map, cortical_coords
+            params_ping, params_connectivity, grid_geometry, cortical_coords
         )
 
         connectivity = Connectivity(
             params_ping=params_ping,
-            coupling_weights=coupling_weights
+            coupling_weights=coupling_weights,
+            grid_geometry=grid_geometry
         )
 
         return connectivity
 
-    def _assign_ping_networks(
-            self, params_ping: ParamsPING,
-    ) -> tuple[list[PINGNetworkNeurons], dict[NeuronTypes, dict[int, int]]]:
-        """
-        Creates PING networks, assigns grid locations to them, and adds the same number of neurons of each neuron type
-        to them.
-
-        In other words, this function creates a map that can be used as function :math:`\mathsf{loc}`.
-
-        :param params_ping: parameters describing PING networks and their composition.
-        :type params_ping: ParamsPING
-
-        :return: list of PING networks in the network and a dictionary mapping a neuron to the PING network it belongs to.
-        :rtype: tuple[list[PINGNetworkNeurons], dict[NeuronTypes, dict[int, int]]]
-        """
-
-        ping_networks = []
-        neuron_ping_map = {
-            NeuronTypes.EX: {},
-            NeuronTypes.IN: {}
-        }
-
-        grid_size = int(math.sqrt(params_ping.nr_ping_networks))  # now assuming the grid is square
-
-        #  number of neurons of each neuron_type in each PING network
-        nr_ex_per_ping_network = params_ping.nr_neurons[NeuronTypes.EX] // params_ping.nr_ping_networks
-        nr_in_per_ping_network = params_ping.nr_neurons[NeuronTypes.IN] // params_ping.nr_ping_networks
-
-        for i in range(params_ping.nr_ping_networks):
-            x = i // grid_size
-            y = i % grid_size
-
-            ex_ids = []
-            for neuron_id in range(i * nr_ex_per_ping_network, (i + 1) * nr_ex_per_ping_network):
-                ex_ids.append(neuron_id)
-                neuron_ping_map[NeuronTypes.EX][neuron_id] = i
-
-            in_ids = []
-            for neuron_id in range(i * nr_in_per_ping_network, (i + 1) * nr_in_per_ping_network):
-                in_ids.append(neuron_id)
-                neuron_ping_map[NeuronTypes.IN][neuron_id] = i
-
-            ping_network = PINGNetworkNeurons(
-                grid_location=(x, y),
-                ids_ex=ex_ids,
-                ids_in=in_ids
-            )
-
-            ping_networks.append(ping_network)
-
-        return ping_networks, neuron_ping_map
-
     def _compute_coupling_weights(
             self,
             params_ping: ParamsPING, params_connectivity: ParamsConnectivity,
-            ping_networks: list[PINGNetworkNeurons], neuron_ping_map: dict[NeuronTypes, dict[int, int]],
+            grid_geometry: GridGeometry,
             cortical_coords: list[list[tuple[float, float]]]
     ) -> np.ndarray[(int, int), float]:
         """
@@ -115,11 +66,8 @@ class ConnectivityGridPINGFactory:
         :param params_connectivity: parameters of the network connectivity.
         :type params_connectivity: ParamsConnectivity
 
-        :param ping_networks: list of PING networks in the network.
-        :type ping_networks: list[PINGNetworkNeurons]
-
-        :param neuron_ping_map: a dictionary mapping a neuron to the PING network it belongs to.
-        :type neuron_ping_map: dict[NeuronTypes, dict[int, int]]
+        :param grid_geometry: contains information about grid locations of PING networks and neurons located in them.
+        :type grid_geometry: GridGeometry
 
         :param cortical_coords: coordinates of the points in the visual cortex.
         :type cortical_coords: list[list[tuple[float, float]]]
@@ -136,8 +84,7 @@ class ConnectivityGridPINGFactory:
                 neuron_type2=nts[1],
                 nr1=params_ping.nr_neurons[nts[0]],
                 nr2=params_ping.nr_neurons[nts[1]],
-                ping_networks=ping_networks,
-                neuron_ping_map=neuron_ping_map,
+                grid_geometry=grid_geometry,
                 cortical_coords=cortical_coords
             )
             types_coupling_weights = self._compute_type_coupling_weights(
@@ -157,7 +104,7 @@ class ConnectivityGridPINGFactory:
     def _get_neurons_dist(
             self,
             neuron_type1: NeuronTypes, neuron_type2: NeuronTypes, nr1: int, nr2: int,
-            ping_networks: list[PINGNetworkNeurons], neuron_ping_map: dict[NeuronTypes, dict[int, int]],
+            grid_geometry: GridGeometry,
             cortical_coords: list[list[tuple[float, float]]]
     ) -> np.ndarray[(int, int), float]:
         """
@@ -178,11 +125,8 @@ class ConnectivityGridPINGFactory:
         :param nr2: number of neurons of neuron_type 2
         :type nr2: int
 
-        :param ping_networks: list of PING networks in the network.
-        :type ping_networks: list[PINGNetworkNeurons]
-
-        :param neuron_ping_map: a dictionary mapping a neuron to the PING network it belongs to.
-        :type neuron_ping_map: dict[NeuronTypes, dict[int, int]]
+        :param grid_geometry: contains information about grid locations of PING networks and neurons located in them.
+        :type grid_geometry: GridGeometry
 
         :param cortical_coords: coordinates of the points in the visual cortex.
         :type cortical_coords: list[list[tuple[float, float]]]
@@ -196,9 +140,9 @@ class ConnectivityGridPINGFactory:
         for id1 in range(nr1):
             for id2 in range(nr2):
 
-                # finding to which ping_networks the neurons belong
-                ping_network1 = ping_networks[neuron_ping_map[neuron_type1][id1]]
-                ping_network2 = ping_networks[neuron_ping_map[neuron_type2][id2]]
+                # finding to which ping networks the neurons belong
+                ping_network1 = grid_geometry.ping_networks[grid_geometry.neuron_ping_map[neuron_type1][id1]]
+                ping_network2 = grid_geometry.ping_networks[grid_geometry.neuron_ping_map[neuron_type2][id2]]
 
                 # computing the distance between the found PING networks
                 # (which = the distance between neurons in those PING networks)

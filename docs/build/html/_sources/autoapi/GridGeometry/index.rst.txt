@@ -1,0 +1,30 @@
+:py:mod:`GridGeometry`
+======================
+
+.. py:module:: GridGeometry
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   GridGeometry.GridGeometry
+
+
+
+
+.. py:class:: GridGeometry(ping_networks: list[src.izhikevich_simulation.PINGNetworkNeurons.PINGNetworkNeurons], neuron_ping_map: dict[src.NeuronTypes.NeuronTypes, dict[int, int]])
+
+   This class contains information about grid locations of PING networks and neurons located in them.
+
+   :param ping_networks: list of PING networks.
+   :type ping_networks: list[PINGNetworkNeurons]
+
+   :param neuron_ping_map: dictionary mapping a neuron to the PING network it belongs to.
+   :type neuron_ping_map: dict[NeuronTypes, dict[int, int]]
+
+

@@ -9,6 +9,8 @@ This page contains auto-generated API reference documentation [#f1]_.
    /autoapi/misc/index
    /autoapi/NeuronTypes/index
    /autoapi/main/index
+   /autoapi/GridGeometry/index
+   /autoapi/GridGeometryFactory/index
    /autoapi/Connectivity/index
    /autoapi/CurrentComponents/index
    /autoapi/ConnectivityGridPINGFactory/index

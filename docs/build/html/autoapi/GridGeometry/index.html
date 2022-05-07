@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" />
 
     <meta name="generator" content="sphinx-4.4.0, furo 2022.03.04"/>
-        <title>main - grid-ping documentation</title>
+        <title>GridGeometry - grid-ping documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=935aa2abcc5c1da4283d1dc201fb1f0add16d23a" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
@@ -183,8 +183,8 @@
 <li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">misc</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../NeuronTypes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="../GridGeometry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GridGeometry</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../main/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GridGeometry</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../GridGeometryFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GridGeometryFactory</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Connectivity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Connectivity</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../CurrentComponents/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponents</span></code></a></li>
@@ -247,14 +247,37 @@
           </label>
         </div>
         <article role="main">
-          <section id="module-main">
-<span id="main"></span><h1><a class="reference internal" href="#module-main" title="main"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a><a class="headerlink" href="#module-main" title="Permalink to this headline">#</a></h1>
+          <section id="module-GridGeometry">
+<span id="gridgeometry"></span><h1><a class="reference internal" href="#module-GridGeometry" title="GridGeometry"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GridGeometry</span></code></a><a class="headerlink" href="#module-GridGeometry" title="Permalink to this headline">#</a></h1>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">#</a></h2>
-<dl class="py data">
-<dt class="sig sig-object py" id="main.params_initializer">
-<span class="sig-prename descclassname"><span class="pre">main.</span></span><span class="sig-name descname"><span class="pre">params_initializer</span></span><a class="headerlink" href="#main.params_initializer" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">#</a></h3>
+<div class="table-wrapper"><table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%"/>
+<col style="width: 90%"/>
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#GridGeometry.GridGeometry" title="GridGeometry.GridGeometry"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GridGeometry</span></code></a></p></td>
+<td><p>This class contains information about grid locations of PING networks and neurons located in them.</p></td>
+</tr>
+</tbody>
+</table></div>
+<dl class="py class">
+<dt class="sig sig-object py" id="GridGeometry.GridGeometry">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">GridGeometry.</span></span><span class="sig-name descname"><span class="pre">GridGeometry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ping_networks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">src.izhikevich_simulation.PINGNetworkNeurons.PINGNetworkNeurons</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neuron_ping_map</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">src.NeuronTypes.NeuronTypes</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#GridGeometry.GridGeometry" title="Permalink to this definition">#</a></dt>
+<dd><p>This class contains information about grid locations of PING networks and neurons located in them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ping_networks</strong> (<em>list</em><em>[</em><a class="reference internal" href="../PINGNetworkNeurons/index.html#PINGNetworkNeurons.PINGNetworkNeurons" title="PINGNetworkNeurons.PINGNetworkNeurons"><em>PINGNetworkNeurons</em></a><em>]</em>) – list of PING networks.</p></li>
+<li><p><strong>neuron_ping_map</strong> (<em>dict</em><em>[</em><a class="reference internal" href="../NeuronTypes/index.html#NeuronTypes.NeuronTypes" title="NeuronTypes.NeuronTypes"><em>NeuronTypes</em></a><em>, </em><em>dict</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em>) – dictionary mapping a neuron to the PING network it belongs to.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+</section>
 </section>
 </section>
 
@@ -297,9 +320,12 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a><ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GridGeometry</span></code></a><ul>
 <li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
-<li><a class="reference internal" href="#main.params_initializer">params_initializer</a></li>
+<li><a class="reference internal" href="#classes">Classes</a><ul>
+<li><a class="reference internal" href="#GridGeometry.GridGeometry">GridGeometry</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

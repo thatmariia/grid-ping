@@ -184,6 +184,8 @@
 <li class="toctree-l2"><a class="reference internal" href="../misc/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">misc</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../NeuronTypes/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">NeuronTypes</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../main/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../GridGeometry/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GridGeometry</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="../GridGeometryFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GridGeometryFactory</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Connectivity/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">Connectivity</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../CurrentComponents/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">CurrentComponents</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../ConnectivityGridPINGFactory/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ConnectivityGridPINGFactory</span></code></a></li>
@@ -350,16 +352,16 @@
 </dl>
 </dd></dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="CurrentComponentsGridPING.CurrentComponentsGridPING._create_main_input_stimulus">
-<span class="sig-name descname"><span class="pre">_create_main_input_stimulus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stimulus_currents</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#CurrentComponentsGridPING.CurrentComponentsGridPING._create_main_input_stimulus" title="Permalink to this definition">#</a></dt>
-<dd><p>Parses external input stimulus. ARTIFICIAL FUNCTION - REAL NOT IMPLEMENTED YET.</p>
+<dt class="sig sig-object py" id="CurrentComponentsGridPING.CurrentComponentsGridPING._get_stimulus_input">
+<span class="sig-name descname"><span class="pre">_get_stimulus_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">→</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#CurrentComponentsGridPING.CurrentComponentsGridPING._get_stimulus_input" title="Permalink to this definition">#</a></dt>
+<dd><p>Distributes the currents from stimulus to corresponding neurons.</p>
 <p>Creates initial <span class="math notranslate nohighlight">\(I_{stim}\)</span>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>input stimulus.</p>
+<dd class="field-odd"><p>input from stimulus.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>list[float]</p>
+<dd class="field-even"><p>numpy.ndarray[int, float]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -415,7 +417,7 @@
 <li><a class="reference internal" href="#CurrentComponentsGridPING.CurrentComponentsGridPING._get_gatings">_get_gatings</a></li>
 <li><a class="reference internal" href="#CurrentComponentsGridPING.CurrentComponentsGridPING.get_current_input">get_current_input</a></li>
 <li><a class="reference internal" href="#CurrentComponentsGridPING.CurrentComponentsGridPING._get_thalamic_input">_get_thalamic_input</a></li>
-<li><a class="reference internal" href="#CurrentComponentsGridPING.CurrentComponentsGridPING._create_main_input_stimulus">_create_main_input_stimulus</a></li>
+<li><a class="reference internal" href="#CurrentComponentsGridPING.CurrentComponentsGridPING._get_stimulus_input">_get_stimulus_input</a></li>
 </ul>
 </li>
 </ul>

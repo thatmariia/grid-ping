@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: Connectivity(params_ping: src.params.ParamsPING.ParamsPING, coupling_weights: numpy.ndarray[(int, int), float])
+.. py:class:: Connectivity(params_ping: src.params.ParamsPING.ParamsPING, coupling_weights: numpy.ndarray[(int, int), float], grid_geometry: src.izhikevich_simulation.GridGeometry.GridGeometry = None)
 
    This class contains information about connectivity between neurons in the oscillatory network.
 
@@ -43,7 +43,11 @@ Classes
    :param coupling_weights: coupling weights between all pairs of neurons.
    :type coupling_weights: numpy.ndarray[(int, int), float]
 
+   :param grid_geometry: contains information about grid locations of PING networks and neurons located in them.
+   :type grid_geometry: GridGeometry
+
    :ivar params_ping: parameters describing PING networks and their composition.
    :ivar coupling_weights: coupling weights between all pairs of neurons.
+   :ivar grid_geometry: contains information about grid locations of PING networks and neurons located in them.
 
 

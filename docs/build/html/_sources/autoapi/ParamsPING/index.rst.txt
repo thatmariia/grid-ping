@@ -50,6 +50,7 @@ Classes
    :ivar nr_neurons: dictionary of number of neurons of each type and the total number of neurons.
    :ivar neur_slice: indices of each type of neurons.
    :ivar nr_ping_networks: number of PING networks in the network.
+   :ivar nr_neurons_per_ping: number of neurons of each type in a single PING network.
    :ivar grid_size: number of PING networks in each row and column.
 
 

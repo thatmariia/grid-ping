@@ -1,0 +1,49 @@
+:py:mod:`GridGeometryFactory`
+=============================
+
+.. py:module:: GridGeometryFactory
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   GridGeometryFactory.GridGeometryFactory
+
+
+
+
+.. py:class:: GridGeometryFactory
+
+   This class constructs a grid of PING networks and distributes neurons among them.
+
+   .. py:method:: create(self, params_ping: src.params.ParamsPING.ParamsPING) -> src.izhikevich_simulation.GridGeometry.GridGeometry
+
+      Goes through the steps to construct a grid of PING networks and distribute neurons among them.
+
+      :param params_ping: parameters describing PING networks and their composition.
+      :type params_ping: ParamsPING
+
+      :return: information about grid locations of PING networks and neurons located in them.
+      :rtype: GridGeometry
+
+
+   .. py:method:: _assign_ping_networks(self, params_ping: src.params.ParamsPING.ParamsPING) -> tuple[list[src.izhikevich_simulation.PINGNetworkNeurons.PINGNetworkNeurons], dict[src.params.ParamsPING.NeuronTypes, dict[int, int]]]
+
+      Creates PING networks, assigns grid locations to them, and adds the same number of neurons of each neuron type
+      to them.
+
+      In other words, this function creates a map that can be used as function :math:`\mathsf{loc}`.
+
+      :param params_ping: parameters describing PING networks and their composition.
+      :type params_ping: ParamsPING
+
+      :return: list of PING networks in the network and a dictionary mapping a neuron to the PING network it belongs to.
+      :rtype: tuple[list[PINGNetworkNeurons], dict[NeuronTypes, dict[int, int]]]
+
+
+

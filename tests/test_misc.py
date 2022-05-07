@@ -9,5 +9,5 @@ class TestMisc:
         assert round(euclidian_dist((-0.27, 3.91), (8.4, -0.5)), 4) == 9.7271
 
     def test_neuron_slice(self):
-        assert neur_slice(NeuronTypes.E, 10, 5) == slice(10)
-        assert neur_slice(NeuronTypes.I, 10, 5) == slice(10, 15)
+        assert neur_slice(NeuronTypes.EX, 10, 5) == slice(10)
+        assert neur_slice(NeuronTypes.IN, 10, 5) == slice(10, 15)

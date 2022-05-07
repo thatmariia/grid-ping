@@ -11,16 +11,16 @@ class TestGridConnectivity:
 
     connectivity1 = GridConnectivity(
         nr_neurons={
-            NeuronTypes.E: 2,
-            NeuronTypes.I: 2
+            NeuronTypes.EX: 2,
+            NeuronTypes.IN: 2
         },
         nr_ping_networks=1
     )
 
     connectivity2 = GridConnectivity(
         nr_neurons={
-            NeuronTypes.E: 8,
-            NeuronTypes.I: 4
+            NeuronTypes.EX: 8,
+            NeuronTypes.IN: 4
         },
         nr_ping_networks=4
     )
@@ -31,8 +31,8 @@ class TestGridConnectivity:
             PINGNetworkNeurons((0, 0), [0, 1], [0, 1])
         ]
         neuron_ping_map1_expected = {
-            NeuronTypes.E: {0: 0, 1: 0},
-            NeuronTypes.I: {0: 0, 1: 0},
+            NeuronTypes.EX: {0: 0, 1: 0},
+            NeuronTypes.IN: {0: 0, 1: 0},
         }
         assert ping_networks1 == ping_networks1_expected
         assert neuron_ping_map1 == neuron_ping_map1_expected
@@ -47,8 +47,8 @@ class TestGridConnectivity:
             PINGNetworkNeurons((1, 1), [6, 7], [3]),
         ]
         neuron_ping_map2_expected = {
-            NeuronTypes.E: {0: 0, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2, 6: 3, 7: 3},
-            NeuronTypes.I: {0: 0, 1: 1, 2: 2, 3: 3},
+            NeuronTypes.EX: {0: 0, 1: 0, 2: 1, 3: 1, 4: 2, 5: 2, 6: 3, 7: 3},
+            NeuronTypes.IN: {0: 0, 1: 1, 2: 2, 3: 3},
         }
         assert ping_networks2 == ping_networks2_expected
         assert neuron_ping_map2 == neuron_ping_map2_expected
@@ -56,40 +56,40 @@ class TestGridConnectivity:
     def test_get_neurons_dist(self):
         ping_networks1, neuron_ping_map1 = self.connectivity1._assign_ping_networks()
         distEE1 = self.connectivity1._get_neurons_dist(
-            neuron_type1=NeuronTypes.E,
-            neuron_type2=NeuronTypes.E,
-            nr1=self.connectivity1._nr_neurons[NeuronTypes.E],
-            nr2=self.connectivity1._nr_neurons[NeuronTypes.E],
+            neuron_type1=NeuronTypes.EX,
+            neuron_type2=NeuronTypes.EX,
+            nr1=self.connectivity1._nr_neurons[NeuronTypes.EX],
+            nr2=self.connectivity1._nr_neurons[NeuronTypes.EX],
             ping_networks=ping_networks1,
             neuron_ping_map=neuron_ping_map1
         )
         distEE1_expected = [[0.0, 0.0], [0.0, 0.0]]
 
         distII1 = self.connectivity1._get_neurons_dist(
-            neuron_type1=NeuronTypes.I,
-            neuron_type2=NeuronTypes.I,
-            nr1=self.connectivity1._nr_neurons[NeuronTypes.I],
-            nr2=self.connectivity1._nr_neurons[NeuronTypes.I],
+            neuron_type1=NeuronTypes.IN,
+            neuron_type2=NeuronTypes.IN,
+            nr1=self.connectivity1._nr_neurons[NeuronTypes.IN],
+            nr2=self.connectivity1._nr_neurons[NeuronTypes.IN],
             ping_networks=ping_networks1,
             neuron_ping_map=neuron_ping_map1
         )
         distII1_expected = [[0.0, 0.0], [0.0, 0.0]]
 
         distEI1 = self.connectivity1._get_neurons_dist(
-            neuron_type1=NeuronTypes.E,
-            neuron_type2=NeuronTypes.I,
-            nr1=self.connectivity1._nr_neurons[NeuronTypes.E],
-            nr2=self.connectivity1._nr_neurons[NeuronTypes.I],
+            neuron_type1=NeuronTypes.EX,
+            neuron_type2=NeuronTypes.IN,
+            nr1=self.connectivity1._nr_neurons[NeuronTypes.EX],
+            nr2=self.connectivity1._nr_neurons[NeuronTypes.IN],
             ping_networks=ping_networks1,
             neuron_ping_map=neuron_ping_map1
         )
         distEI1_expected = [[0.0, 0.0], [0.0, 0.0]]
 
         distIE1 = self.connectivity1._get_neurons_dist(
-            neuron_type1=NeuronTypes.I,
-            neuron_type2=NeuronTypes.E,
-            nr1=self.connectivity1._nr_neurons[NeuronTypes.I],
-            nr2=self.connectivity1._nr_neurons[NeuronTypes.E],
+            neuron_type1=NeuronTypes.IN,
+            neuron_type2=NeuronTypes.EX,
+            nr1=self.connectivity1._nr_neurons[NeuronTypes.IN],
+            nr2=self.connectivity1._nr_neurons[NeuronTypes.EX],
             ping_networks=ping_networks1,
             neuron_ping_map=neuron_ping_map1
         )
@@ -104,10 +104,10 @@ class TestGridConnectivity:
 
         ping_networks2, neuron_ping_map2 = self.connectivity2._assign_ping_networks()
         distEE2 = self.connectivity2._get_neurons_dist(
-            neuron_type1=NeuronTypes.E,
-            neuron_type2=NeuronTypes.E,
-            nr1=self.connectivity2._nr_neurons[NeuronTypes.E],
-            nr2=self.connectivity2._nr_neurons[NeuronTypes.E],
+            neuron_type1=NeuronTypes.EX,
+            neuron_type2=NeuronTypes.EX,
+            nr1=self.connectivity2._nr_neurons[NeuronTypes.EX],
+            nr2=self.connectivity2._nr_neurons[NeuronTypes.EX],
             ping_networks=ping_networks2,
             neuron_ping_map=neuron_ping_map2
         )
@@ -123,10 +123,10 @@ class TestGridConnectivity:
         ]
 
         distII2 = self.connectivity2._get_neurons_dist(
-            neuron_type1=NeuronTypes.I,
-            neuron_type2=NeuronTypes.I,
-            nr1=self.connectivity2._nr_neurons[NeuronTypes.I],
-            nr2=self.connectivity2._nr_neurons[NeuronTypes.I],
+            neuron_type1=NeuronTypes.IN,
+            neuron_type2=NeuronTypes.IN,
+            nr1=self.connectivity2._nr_neurons[NeuronTypes.IN],
+            nr2=self.connectivity2._nr_neurons[NeuronTypes.IN],
             ping_networks=ping_networks2,
             neuron_ping_map=neuron_ping_map2
         )
@@ -138,10 +138,10 @@ class TestGridConnectivity:
         ]
 
         distEI2 = self.connectivity2._get_neurons_dist(
-            neuron_type1=NeuronTypes.E,
-            neuron_type2=NeuronTypes.I,
-            nr1=self.connectivity2._nr_neurons[NeuronTypes.E],
-            nr2=self.connectivity2._nr_neurons[NeuronTypes.I],
+            neuron_type1=NeuronTypes.EX,
+            neuron_type2=NeuronTypes.IN,
+            nr1=self.connectivity2._nr_neurons[NeuronTypes.EX],
+            nr2=self.connectivity2._nr_neurons[NeuronTypes.IN],
             ping_networks=ping_networks2,
             neuron_ping_map=neuron_ping_map2
         )
@@ -157,10 +157,10 @@ class TestGridConnectivity:
         ]
 
         distIE2 = self.connectivity2._get_neurons_dist(
-            neuron_type1=NeuronTypes.I,
-            neuron_type2=NeuronTypes.E,
-            nr1=self.connectivity2._nr_neurons[NeuronTypes.I],
-            nr2=self.connectivity2._nr_neurons[NeuronTypes.E],
+            neuron_type1=NeuronTypes.IN,
+            neuron_type2=NeuronTypes.EX,
+            nr1=self.connectivity2._nr_neurons[NeuronTypes.IN],
+            nr2=self.connectivity2._nr_neurons[NeuronTypes.EX],
             ping_networks=ping_networks2,
             neuron_ping_map=neuron_ping_map2
         )
@@ -180,17 +180,17 @@ class TestGridConnectivity:
         ping_networks1, neuron_ping_map1 = self.connectivity1._assign_ping_networks()
 
         distEE1 = self.connectivity1._get_neurons_dist(
-            neuron_type1=NeuronTypes.E,
-            neuron_type2=NeuronTypes.E,
-            nr1=self.connectivity1._nr_neurons[NeuronTypes.E],
-            nr2=self.connectivity1._nr_neurons[NeuronTypes.E],
+            neuron_type1=NeuronTypes.EX,
+            neuron_type2=NeuronTypes.EX,
+            nr1=self.connectivity1._nr_neurons[NeuronTypes.EX],
+            nr2=self.connectivity1._nr_neurons[NeuronTypes.EX],
             ping_networks=ping_networks1,
             neuron_ping_map=neuron_ping_map1
         )
         type_coupling_weights_EE1 = self.connectivity1._compute_type_coupling_weights(
             dist=distEE1,
-            max_connect_strength=MAX_CONNECT_STRENGTH[(NeuronTypes.E, NeuronTypes.E)],
-            spatial_const=SPATIAL_CONST[(NeuronTypes.E, NeuronTypes.E)]
+            max_connect_strength=MAX_CONNECT_STRENGTH[(NeuronTypes.EX, NeuronTypes.EX)],
+            spatial_const=SPATIAL_CONST[(NeuronTypes.EX, NeuronTypes.EX)]
         )
         type_coupling_weights_EE1_expected = [
             [0.004, 0.004],
@@ -198,17 +198,17 @@ class TestGridConnectivity:
         ]
 
         distII1 = self.connectivity1._get_neurons_dist(
-            neuron_type1=NeuronTypes.I,
-            neuron_type2=NeuronTypes.I,
-            nr1=self.connectivity1._nr_neurons[NeuronTypes.I],
-            nr2=self.connectivity1._nr_neurons[NeuronTypes.I],
+            neuron_type1=NeuronTypes.IN,
+            neuron_type2=NeuronTypes.IN,
+            nr1=self.connectivity1._nr_neurons[NeuronTypes.IN],
+            nr2=self.connectivity1._nr_neurons[NeuronTypes.IN],
             ping_networks=ping_networks1,
             neuron_ping_map=neuron_ping_map1
         )
         type_coupling_weights_II1 = self.connectivity1._compute_type_coupling_weights(
             dist=distII1,
-            max_connect_strength=MAX_CONNECT_STRENGTH[(NeuronTypes.I, NeuronTypes.I)],
-            spatial_const=SPATIAL_CONST[(NeuronTypes.I, NeuronTypes.I)]
+            max_connect_strength=MAX_CONNECT_STRENGTH[(NeuronTypes.IN, NeuronTypes.IN)],
+            spatial_const=SPATIAL_CONST[(NeuronTypes.IN, NeuronTypes.IN)]
         )
         type_coupling_weights_II1_expected = [
             [-0.015, -0.015],
@@ -216,17 +216,17 @@ class TestGridConnectivity:
         ]
 
         distEI1 = self.connectivity1._get_neurons_dist(
-            neuron_type1=NeuronTypes.E,
-            neuron_type2=NeuronTypes.I,
-            nr1=self.connectivity1._nr_neurons[NeuronTypes.E],
-            nr2=self.connectivity1._nr_neurons[NeuronTypes.I],
+            neuron_type1=NeuronTypes.EX,
+            neuron_type2=NeuronTypes.IN,
+            nr1=self.connectivity1._nr_neurons[NeuronTypes.EX],
+            nr2=self.connectivity1._nr_neurons[NeuronTypes.IN],
             ping_networks=ping_networks1,
             neuron_ping_map=neuron_ping_map1
         )
         type_coupling_weights_EI1 = self.connectivity1._compute_type_coupling_weights(
             dist=distEI1,
-            max_connect_strength=MAX_CONNECT_STRENGTH[(NeuronTypes.E, NeuronTypes.I)],
-            spatial_const=SPATIAL_CONST[(NeuronTypes.E, NeuronTypes.I)]
+            max_connect_strength=MAX_CONNECT_STRENGTH[(NeuronTypes.EX, NeuronTypes.IN)],
+            spatial_const=SPATIAL_CONST[(NeuronTypes.EX, NeuronTypes.IN)]
         )
         type_coupling_weights_EI1_expected = [
             [0.07, 0.07],
@@ -234,17 +234,17 @@ class TestGridConnectivity:
         ]
 
         distIE1 = self.connectivity1._get_neurons_dist(
-            neuron_type1=NeuronTypes.I,
-            neuron_type2=NeuronTypes.E,
-            nr1=self.connectivity1._nr_neurons[NeuronTypes.I],
-            nr2=self.connectivity1._nr_neurons[NeuronTypes.E],
+            neuron_type1=NeuronTypes.IN,
+            neuron_type2=NeuronTypes.EX,
+            nr1=self.connectivity1._nr_neurons[NeuronTypes.IN],
+            nr2=self.connectivity1._nr_neurons[NeuronTypes.EX],
             ping_networks=ping_networks1,
             neuron_ping_map=neuron_ping_map1
         )
         type_coupling_weights_IE1 = self.connectivity1._compute_type_coupling_weights(
             dist=distIE1,
-            max_connect_strength=MAX_CONNECT_STRENGTH[(NeuronTypes.I, NeuronTypes.E)],
-            spatial_const=SPATIAL_CONST[(NeuronTypes.I, NeuronTypes.E)]
+            max_connect_strength=MAX_CONNECT_STRENGTH[(NeuronTypes.IN, NeuronTypes.EX)],
+            spatial_const=SPATIAL_CONST[(NeuronTypes.IN, NeuronTypes.EX)]
         )
         type_coupling_weights_IE1_expected = [
             [-0.04, -0.04],
@@ -261,17 +261,17 @@ class TestGridConnectivity:
         ping_networks2, neuron_ping_map2 = self.connectivity2._assign_ping_networks()
 
         distEE2 = self.connectivity2._get_neurons_dist(
-            neuron_type1=NeuronTypes.E,
-            neuron_type2=NeuronTypes.E,
-            nr1=self.connectivity2._nr_neurons[NeuronTypes.E],
-            nr2=self.connectivity2._nr_neurons[NeuronTypes.E],
+            neuron_type1=NeuronTypes.EX,
+            neuron_type2=NeuronTypes.EX,
+            nr1=self.connectivity2._nr_neurons[NeuronTypes.EX],
+            nr2=self.connectivity2._nr_neurons[NeuronTypes.EX],
             ping_networks=ping_networks2,
             neuron_ping_map=neuron_ping_map2
         )
         type_coupling_weights_EE2 = self.connectivity2._compute_type_coupling_weights(
             dist=distEE2,
-            max_connect_strength=MAX_CONNECT_STRENGTH[(NeuronTypes.E, NeuronTypes.E)],
-            spatial_const=SPATIAL_CONST[(NeuronTypes.E, NeuronTypes.E)]
+            max_connect_strength=MAX_CONNECT_STRENGTH[(NeuronTypes.EX, NeuronTypes.EX)],
+            spatial_const=SPATIAL_CONST[(NeuronTypes.EX, NeuronTypes.EX)]
         )
         type_coupling_weights_EE2_expected = [
             [0.004, 0.004, 0.004 * exp(-2.5), 0.004 * exp(-2.5), 0.004 * exp(-2.5), 0.004 * exp(-2.5),
@@ -296,17 +296,17 @@ class TestGridConnectivity:
         ]
 
         distII2 = self.connectivity2._get_neurons_dist(
-            neuron_type1=NeuronTypes.I,
-            neuron_type2=NeuronTypes.I,
-            nr1=self.connectivity2._nr_neurons[NeuronTypes.I],
-            nr2=self.connectivity2._nr_neurons[NeuronTypes.I],
+            neuron_type1=NeuronTypes.IN,
+            neuron_type2=NeuronTypes.IN,
+            nr1=self.connectivity2._nr_neurons[NeuronTypes.IN],
+            nr2=self.connectivity2._nr_neurons[NeuronTypes.IN],
             ping_networks=ping_networks2,
             neuron_ping_map=neuron_ping_map2
         )
         type_coupling_weights_II2 = self.connectivity2._compute_type_coupling_weights(
             dist=distII2,
-            max_connect_strength=MAX_CONNECT_STRENGTH[(NeuronTypes.I, NeuronTypes.I)],
-            spatial_const=SPATIAL_CONST[(NeuronTypes.I, NeuronTypes.I)]
+            max_connect_strength=MAX_CONNECT_STRENGTH[(NeuronTypes.IN, NeuronTypes.IN)],
+            spatial_const=SPATIAL_CONST[(NeuronTypes.IN, NeuronTypes.IN)]
         )
         type_coupling_weights_II2_expected = [
             [-0.015, -0.015 * exp(-1 / 0.3), -0.015 * exp(-1 / 0.3), -0.015 * exp(-sqrt(2) / 0.3)],
@@ -316,17 +316,17 @@ class TestGridConnectivity:
         ]
 
         distEI2 = self.connectivity2._get_neurons_dist(
-            neuron_type1=NeuronTypes.E,
-            neuron_type2=NeuronTypes.I,
-            nr1=self.connectivity2._nr_neurons[NeuronTypes.E],
-            nr2=self.connectivity2._nr_neurons[NeuronTypes.I],
+            neuron_type1=NeuronTypes.EX,
+            neuron_type2=NeuronTypes.IN,
+            nr1=self.connectivity2._nr_neurons[NeuronTypes.EX],
+            nr2=self.connectivity2._nr_neurons[NeuronTypes.IN],
             ping_networks=ping_networks2,
             neuron_ping_map=neuron_ping_map2
         )
         type_coupling_weights_EI2 = self.connectivity2._compute_type_coupling_weights(
             dist=distEI2,
-            max_connect_strength=MAX_CONNECT_STRENGTH[(NeuronTypes.E, NeuronTypes.I)],
-            spatial_const=SPATIAL_CONST[(NeuronTypes.E, NeuronTypes.I)]
+            max_connect_strength=MAX_CONNECT_STRENGTH[(NeuronTypes.EX, NeuronTypes.IN)],
+            spatial_const=SPATIAL_CONST[(NeuronTypes.EX, NeuronTypes.IN)]
         )
         type_coupling_weights_EI2_expected = [
             [0.07, 0.07 * exp(-1 / 0.3), 0.07 * exp(-1 / 0.3), 0.07 * exp(-sqrt(2) / 0.3)],
@@ -343,17 +343,17 @@ class TestGridConnectivity:
         ]
 
         distIE2 = self.connectivity2._get_neurons_dist(
-            neuron_type1=NeuronTypes.I,
-            neuron_type2=NeuronTypes.E,
-            nr1=self.connectivity2._nr_neurons[NeuronTypes.I],
-            nr2=self.connectivity2._nr_neurons[NeuronTypes.E],
+            neuron_type1=NeuronTypes.IN,
+            neuron_type2=NeuronTypes.EX,
+            nr1=self.connectivity2._nr_neurons[NeuronTypes.IN],
+            nr2=self.connectivity2._nr_neurons[NeuronTypes.EX],
             ping_networks=ping_networks2,
             neuron_ping_map=neuron_ping_map2
         )
         type_coupling_weights_IE2 = self.connectivity2._compute_type_coupling_weights(
             dist=distIE2,
-            max_connect_strength=MAX_CONNECT_STRENGTH[(NeuronTypes.I, NeuronTypes.E)],
-            spatial_const=SPATIAL_CONST[(NeuronTypes.I, NeuronTypes.E)]
+            max_connect_strength=MAX_CONNECT_STRENGTH[(NeuronTypes.IN, NeuronTypes.EX)],
+            spatial_const=SPATIAL_CONST[(NeuronTypes.IN, NeuronTypes.EX)]
         )
         type_coupling_weights_IE2_expected = [
             [-0.04, -0.04, -0.04 * exp(-1 / 0.3), -0.04 * exp(-1 / 0.3), -0.04 * exp(-1 / 0.3), -0.04 * exp(-1 / 0.3),

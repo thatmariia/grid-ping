@@ -9,12 +9,12 @@ class IzhikevichNetworkOutcome:
     :type spikes: list[tuple[int, int]]
 
     :param potentials: potentials of neurons throughout the simulation.
-    :type potentials: list[numpy.ndarray[int, int]]
+    :type potentials: list[numpy.ndarray[int, float]]
 
     :ivar spikes: indices of spikes.
     :ivar potentials: potentials of neurons throughout the simulation.
     """
 
-    def __init__(self, spikes: list[tuple[int, int]], potentials: list[np.ndarray[int, int]]):
+    def __init__(self, spikes: list[tuple[int, int]], potentials: list[np.ndarray[int, float]]):
         self.spikes: list[tuple[int, int]] = spikes
-        self.potentials: list[np.ndarray[int, int]] = potentials
+        self.potentials: list[np.ndarray[int, float]] = potentials

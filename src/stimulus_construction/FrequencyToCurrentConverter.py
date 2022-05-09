@@ -14,7 +14,6 @@ from tqdm import tqdm
 from sklearn.linear_model import TheilSenRegressor
 from sklearn.model_selection import RepeatedKFold, cross_val_score
 
-from copy import deepcopy
 import warnings
 
 class FrequencyToCurrentConverter:
@@ -135,8 +134,10 @@ class FrequencyToCurrentConverter:
             max_connect_strength_IE=0.3,
             max_connect_strength_II=0.2
         )
-        params_single_ping = deepcopy(params_ping)
-        params_single_ping.nr_ping_networks = 1
+        params_single_ping = ParamsPING(
+            nr_excitatory=params_ping.nr_neurons_per_ping[NeuronTypes.EX],
+            nr_inhibitory=params_ping.nr_neurons_per_ping[NeuronTypes.IN]
+        )
         connectivity = ConnectivitySinglePINGFactory().create(
             params_ping=params_single_ping,
             params_connectivity=params_connectivity

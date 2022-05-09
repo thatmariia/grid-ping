@@ -1,0 +1,32 @@
+API Reference
+=============
+
+This page contains auto-generated API reference documentation [#f1]_.
+
+.. toctree::
+   :titlesonly:
+
+   /autoapi/misc/index
+   /autoapi/Connectivity/index
+   /autoapi/GaborLuminanceStimulusFactory/index
+   /autoapi/NeuronTypes/index
+   /autoapi/StimulusFactory/index
+   /autoapi/ContrastToFrequencyConverter/index
+   /autoapi/CurrentComponents/index
+   /autoapi/constants/index
+   /autoapi/PatchGeometryFactory/index
+   /autoapi/ConnectivityGridPINGFactory/index
+   /autoapi/PINGNetworkNeurons/index
+   /autoapi/Stimulus/index
+   /autoapi/LuminanceToContrastConverter/index
+   /autoapi/StimulusLocations/index
+   /autoapi/GaborLuminanceStimulus/index
+   /autoapi/IzhikevichNetworkSimulator/index
+   /autoapi/PINGNetworkPixels/index
+   /autoapi/PatchGeometry/index
+   /autoapi/CurrentComponentsGridPING/index
+   /autoapi/IzhikevichNetworkOutcome/index
+   /autoapi/main/index
+   /autoapi/FrequencyToCurrentConverter/index
+
+.. [#f1] Created with `sphinx-autoapi <https://github.com/readthedocs/sphinx-autoapi>`_

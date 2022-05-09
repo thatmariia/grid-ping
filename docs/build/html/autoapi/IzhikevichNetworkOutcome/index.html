@@ -266,14 +266,20 @@
 </table></div>
 <dl class="py class">
 <dt class="sig sig-object py" id="IzhikevichNetworkOutcome.IzhikevichNetworkOutcome">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IzhikevichNetworkOutcome.</span></span><span class="sig-name descname"><span class="pre">IzhikevichNetworkOutcome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spikes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IzhikevichNetworkOutcome.IzhikevichNetworkOutcome" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">IzhikevichNetworkOutcome.</span></span><span class="sig-name descname"><span class="pre">IzhikevichNetworkOutcome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spikes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">potentials</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#IzhikevichNetworkOutcome.IzhikevichNetworkOutcome" title="Permalink to this definition">#</a></dt>
 <dd><p>This class contains the collected information from the simulation of the Izhikevich network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>spikes</strong> (<em>list</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em>) – indices of spikes.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spikes</strong> (<em>list</em><em>[</em><em>tuple</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em>) – indices of spikes.</p></li>
+<li><p><strong>potentials</strong> (<em>list</em><em>[</em><em>numpy.ndarray</em><em>[</em><em>int</em><em>, </em><em>int</em><em>]</em><em>]</em>) – potentials of neurons throughout the simulation.</p></li>
+</ul>
 </dd>
 <dt class="field-even">Variables</dt>
-<dd class="field-even"><p><strong>spikes</strong> – indices of spikes.</p>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>spikes</strong> – indices of spikes.</p></li>
+<li><p><strong>potentials</strong> – potentials of neurons throughout the simulation.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>

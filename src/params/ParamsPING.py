@@ -17,10 +17,6 @@ class ParamsPING:
     :type nr_ping_networks: int
 
     :raises:
-        AssertionError: if the number of excitatory neurons is smaller than 2.
-    :raises:
-        AssertionError: if the number of inhibitory neurons is smaller than 2.
-    :raises:
         AssertionError: If the number of PING networks is smaller than 1.
     :raises:
         AssertionError: if number of excitatory neurons doesn't divide the number of PING networks as there should be
@@ -42,9 +38,6 @@ class ParamsPING:
 
     def __init__(self, nr_excitatory: int, nr_inhibitory: int, nr_ping_networks: int=1):
 
-        # FIXME:: first 2 assertions are only there because of the stim_input?
-        assert nr_excitatory >= 2, "Number of excitatory neurons cannot be smaller than 2."
-        assert nr_inhibitory >= 2, "Number of inhibitory neurons cannot be smaller than 2."
         assert nr_ping_networks >= 1, "Number of PING networks cannot be smaller than 1."
         assert nr_excitatory % nr_ping_networks == 0, \
             "Cannot allocated equal number of excitatory neurons to each PING network. Make sure the number of " \

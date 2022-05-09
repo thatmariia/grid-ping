@@ -31,9 +31,9 @@ Classes
    :type nr_ping_networks: int
 
    :raises:
-       AssertionError: if the number of excitatory neurons is smaller than 2.
+       AssertionError: if the number of excitatory neurons is smaller than 1.
    :raises:
-       AssertionError: if the number of inhibitory neurons is smaller than 2.
+       AssertionError: if the number of inhibitory neurons is smaller than 1.
    :raises:
        AssertionError: If the number of PING networks is smaller than 1.
    :raises:

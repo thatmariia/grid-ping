@@ -17,7 +17,7 @@ Classes
 
 
 
-.. py:class:: IzhikevichNetworkOutcome(spikes: list[tuple[int, int]], potentials: list[numpy.ndarray[int, int]])
+.. py:class:: IzhikevichNetworkOutcome(spikes: list[tuple[int, int]], potentials: list[numpy.ndarray[int, float]])
 
    This class contains the collected information from the simulation of the Izhikevich network.
 
@@ -25,7 +25,7 @@ Classes
    :type spikes: list[tuple[int, int]]
 
    :param potentials: potentials of neurons throughout the simulation.
-   :type potentials: list[numpy.ndarray[int, int]]
+   :type potentials: list[numpy.ndarray[int, float]]
 
    :ivar spikes: indices of spikes.
    :ivar potentials: potentials of neurons throughout the simulation.

@@ -4,6 +4,8 @@ from src.izhikevich_simulation.IzhikevichNetworkOutcome import *
 import numpy as np
 from math import floor, pi
 from scipy import fft
+import matplotlib.pyplot as plt
+from collections import Counter
 
 import warnings
 
@@ -17,16 +19,35 @@ class SpikingFrequencyComputer:
         for ping_network in simulation_outcome.grid_geometry.ping_networks:
             # select ex neurons for a single ping network from spikes
             spikes_in_ping_mask = np.isin(
-                np.array(simulation_outcome.spikes).T, ping_network.ids[NeuronTypes.EX]
+                np.array(simulation_outcome.spikes).T[1], ping_network.ids[NeuronTypes.EX]
             )
+
             # times when excitatory neurons fired
-            spikes_times_in_ping = np.array(simulation_outcome.spikes[spikes_in_ping_mask]).T[0]
+            spikes_times_in_ping = np.array(simulation_outcome.spikes)[spikes_in_ping_mask].T[0]
 
             frequency = self.compute_for_single_ping(
                 spikes_times=spikes_times_in_ping,
                 simulation_time=simulation_outcome.simulation_time
             )
             frequencies.append(frequency)
+
+        return frequencies
+
+    def plot_ping_frequencies(self, frequencies):
+        # TODO:: make pretty
+
+        print("Plotting current-frequency.....", end="")
+        path = "../plots/test-freq-in-pings.png"
+
+        fig, ax = plt.subplots(figsize=(30, 30))
+        ax.tick_params(axis='both', which='major', labelsize=50)
+
+        plt.hist(Counter(frequencies), color="#ACDDE7")
+        fig.savefig(path, bbox_inches='tight')
+
+        print(end="\r", flush=True)
+        print(f"Plotting ended, result: {path[3:]}")
+
 
     def compute_for_single_ping(self, spikes_times: np.ndarray[int, int], simulation_time: int) -> int:
 

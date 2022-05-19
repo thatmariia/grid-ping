@@ -46,7 +46,7 @@ class FrequencyToCurrentConverter:
         simulation_time = 1000
         inputs = list(range(20, 51))
         g_power = np.zeros(len(inputs)) * np.nan
-        frequency_factory = SpikingFrequencyComputer()
+        frequency_computer = SpikingFrequencyComputer()
 
         for i in (pbar := tqdm(range(len(inputs)))):
             pbar.set_description("Stimulus conversion to current")
@@ -62,7 +62,7 @@ class FrequencyToCurrentConverter:
             spikes_ex_times = spikes_T[0][spikes_ex_indices]
 
             # making TFR
-            g_power[i] = frequency_factory.compute_for_single_ping(
+            g_power[i] = frequency_computer.compute_for_single_ping(
                 spikes_times=spikes_ex_times,
                 simulation_time=simulation_time
             )

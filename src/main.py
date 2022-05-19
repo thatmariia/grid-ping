@@ -3,6 +3,7 @@ from src.stimulus_construction.StimulusFactory import *
 from src.izhikevich_simulation.ConnectivityGridPINGFactory import *
 from src.izhikevich_simulation.CurrentComponentsGridPING import *
 from src.izhikevich_simulation.IzhikevichNetworkSimulator import *
+from src.SpikingFrequencyComputer import *
 
 
 if __name__ == "__main__":
@@ -32,3 +33,8 @@ if __name__ == "__main__":
         simulation_time=8,
         dt=1
     )
+
+    ping_frequencies = SpikingFrequencyComputer().compute_per_ping(
+        simulation_outcome=simulation_outcome
+    )
+    SpikingFrequencyComputer().plot_ping_frequencies(ping_frequencies)

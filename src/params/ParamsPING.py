@@ -1,4 +1,4 @@
-from src.NeuronTypes import *
+from src.params.NeuronTypes import *
 
 from math import sqrt
 from typing import Union

@@ -1,13 +1,9 @@
 from src.izhikevich_simulation.ConnectivitySinglePINGFactory import *
 from src.izhikevich_simulation.CurrentComponentsSinglePING import *
 from src.izhikevich_simulation.IzhikevichNetworkSimulator import *
-from src.izhikevich_simulation.IzhikevichNetworkOutcome import *
-from src.NeuronTypes import *
 from src.SpikingFrequencyComputer import *
 
 import numpy as np
-from math import floor, pi
-from scipy import fft
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 from tqdm import tqdm
@@ -15,7 +11,6 @@ from tqdm import tqdm
 from sklearn.linear_model import TheilSenRegressor
 from sklearn.model_selection import RepeatedKFold, cross_val_score
 
-import warnings
 
 class FrequencyToCurrentConverter:
     """

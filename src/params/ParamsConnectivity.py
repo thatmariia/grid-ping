@@ -1,4 +1,4 @@
-from src.NeuronTypes import *
+from src.params.NeuronTypes import *
 
 
 class ParamsConnectivity:

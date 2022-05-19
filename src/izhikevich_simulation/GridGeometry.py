@@ -1,5 +1,5 @@
 from src.izhikevich_simulation.PINGNetworkNeurons import *
-from src.NeuronTypes import *
+from src.params.NeuronTypes import *
 
 
 class GridGeometry:

@@ -3,6 +3,7 @@ from src.izhikevich_simulation.CurrentComponentsSinglePING import *
 from src.izhikevich_simulation.IzhikevichNetworkSimulator import *
 from src.izhikevich_simulation.IzhikevichNetworkOutcome import *
 from src.NeuronTypes import *
+from src.SpikingFrequencyComputer import *
 
 import numpy as np
 from math import floor, pi
@@ -45,6 +46,7 @@ class FrequencyToCurrentConverter:
         simulation_time = 1000
         inputs = list(range(20, 51))
         g_power = np.zeros(len(inputs)) * np.nan
+        frequency_factory = SpikingFrequencyComputer()
 
         for i in (pbar := tqdm(range(len(inputs)))):
             pbar.set_description("Stimulus conversion to current")
@@ -58,12 +60,12 @@ class FrequencyToCurrentConverter:
             ).flatten()
             # times when excitatory neurons fired
             spikes_ex_times = spikes_T[0][spikes_ex_indices]
-            # number of excitatory neurons fired at each time
-            spikes_ex_per_times = [np.count_nonzero(spikes_ex_times == t) for t in range(simulation_time)]
-            signal = spikes_ex_per_times[299:]
 
             # making TFR
-            g_power[i] = self._make_tfr(simulation_time, signal)
+            g_power[i] = frequency_factory.compute_for_single_ping(
+                spikes_times=spikes_ex_times,
+                simulation_time=simulation_time
+            )
 
         # fitting a line
         inputs = np.array(inputs)
@@ -162,51 +164,6 @@ class FrequencyToCurrentConverter:
         )
 
         return simulation_outcome
-
-    def _make_tfr(self, simulation_time: int, signal: list[int]) -> int:
-        """
-        TODO:: Determines most prominent frequency??
-
-        :param simulation_time: number of epochs to run the simulation.
-        :type simulation_time: int
-
-        :param signal: number of excitatory neurons fired at relevant epochs of the simulation.
-        :type signal: list[int]
-
-        :return: TODO:: most prominent frequency?
-        :rtype: int
-        """
-
-        t = [i / 0.001 for i in range(1, simulation_time+1)]
-        t = t[298:]
-        wt = np.linspace(-1, 1, floor(2 / 0.001) + 1)
-        # half the size of the wavelet
-        half_wave_size = floor((len(wt) - 1) / 2)
-        # the size of the data + zero padding
-        nr_points = len(wt) + len(signal) - 1
-        fft_data = fft.fft(signal, nr_points)
-
-        freq_of_interest = list(range(20, 81))
-        tfr = np.zeros((len(freq_of_interest), len(t)), dtype="complex_") * np.nan
-
-        # set the width of the Gaussian
-        sd = 0.05
-        for freq in freq_of_interest:
-            g = np.exp(-np.power(wt, 2) / (2 * sd ** 2))
-            complex_sine = np.exp(1j * 2 * pi * freq * wt)
-            complex_wavelet = complex_sine * g
-            fft_wavelet = fft.fft(complex_wavelet, nr_points)
-            fft_wavelet = fft_wavelet / max(fft_wavelet)
-
-            tmp = fft.ifft(fft_wavelet * fft_data, nr_points)
-            # trim the edges, these are the bits we included by zero padding
-            tfr[np.argwhere(np.array(freq_of_interest) == freq).flatten(), :] = tmp[half_wave_size: -half_wave_size + 1]
-
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore", category=RuntimeWarning)
-            mx_i = int(np.argmax(np.nanmean(np.abs(tfr), 1)))
-
-        return mx_i
 
     def _plot_relationship(
             self, freqs: np.ndarray[int, float], currents: np.ndarray[int, float],

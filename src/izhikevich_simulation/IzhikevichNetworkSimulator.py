@@ -71,7 +71,6 @@ class IzhikevichNetworkSimulator:
 
         # spike timings
         spikes: list[tuple[int, int]] = []
-        all_potentials: list[np.ndarray[int, float]] = [potentials]
 
         for t in (pbar := tqdm(range(simulation_time), disable=self._pb_off)):
             pbar.set_description("Network simulation")
@@ -95,12 +94,11 @@ class IzhikevichNetworkSimulator:
             potentials = potentials + 0.5 * self._get_change_in_potentials(potentials, recovery, currents)
             recovery = recovery + self._get_change_in_recovery(potentials, recovery, izhi_alpha, izhi_beta)
 
-            all_potentials.append(potentials)
-            all_potentials[t][fired_neurons_ids] = 30
-
         outcome = IzhikevichNetworkOutcome(
             spikes=spikes,
-            potentials=all_potentials
+            params_ping=self._current_components.connectivity.params_ping,
+            simulation_time=simulation_time,
+            grid_geometry=self._current_components.connectivity.grid_geometry
         )
 
         return outcome

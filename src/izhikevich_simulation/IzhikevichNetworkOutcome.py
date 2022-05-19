@@ -1,3 +1,6 @@
+from src.params.ParamsPING import *
+from src.izhikevich_simulation.GridGeometry import *
+
 import numpy as np
 
 
@@ -8,13 +11,16 @@ class IzhikevichNetworkOutcome:
     :param spikes: indices of spikes.
     :type spikes: list[tuple[int, int]]
 
-    :param potentials: potentials of neurons throughout the simulation.
-    :type potentials: list[numpy.ndarray[int, float]]
+    TODO:: list other params
 
     :ivar spikes: indices of spikes.
-    :ivar potentials: potentials of neurons throughout the simulation.
     """
 
-    def __init__(self, spikes: list[tuple[int, int]], potentials: list[np.ndarray[int, float]]):
+    def __init__(
+            self,
+            spikes: list[tuple[int, int]], params_ping: ParamsPING, simulation_time: int, grid_geometry: GridGeometry
+    ):
         self.spikes: list[tuple[int, int]] = spikes
-        self.potentials: list[np.ndarray[int, float]] = potentials
+        self.params_ping = params_ping
+        self.simulation_time = simulation_time
+        self.grid_geometry = grid_geometry

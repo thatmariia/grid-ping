@@ -84,6 +84,7 @@ class ConnectivityGridPINGFactory:
                 neuron_type2=nts[1],
                 nr1=params_ping.nr_neurons[nts[0]],
                 nr2=params_ping.nr_neurons[nts[1]],
+                params_ping=params_ping,
                 grid_geometry=grid_geometry,
                 cortical_coords=cortical_coords
             )
@@ -104,6 +105,7 @@ class ConnectivityGridPINGFactory:
     def _get_neurons_dist(
             self,
             neuron_type1: NeuronTypes, neuron_type2: NeuronTypes, nr1: int, nr2: int,
+            params_ping: ParamsPING,
             grid_geometry: GridGeometry,
             cortical_coords: list[list[tuple[float, float]]]
     ) -> np.ndarray[(int, int), float]:
@@ -125,6 +127,9 @@ class ConnectivityGridPINGFactory:
         :param nr2: number of neurons of neuron_type 2
         :type nr2: int
 
+        :param params_ping: parameters describing PING networks and their composition.
+        :type params_ping: ParamsPING
+
         :param grid_geometry: contains information about grid locations of PING networks and neurons located in them.
         :type grid_geometry: GridGeometry
 
@@ -135,10 +140,12 @@ class ConnectivityGridPINGFactory:
         :rtype: numpy.ndarray[(int, int), float]
         """
 
+        # TODO:: optimize
+
         dist = np.zeros((nr1, nr2))
 
-        for id1 in range(nr1):
-            for id2 in range(nr2):
+        for id1 in range(params_ping.neur_slice[neuron_type1].start, params_ping.neur_slice[neuron_type1].stop):
+            for id2 in range(params_ping.neur_slice[neuron_type2].start, params_ping.neur_slice[neuron_type2].stop):
 
                 # finding to which ping networks the neurons belong
                 ping_network1 = grid_geometry.ping_networks[grid_geometry.neuron_ping_map[neuron_type1][id1]]
@@ -148,7 +155,8 @@ class ConnectivityGridPINGFactory:
                 # (which = the distance between neurons in those PING networks)
                 cortical_coord1 = cortical_coords[ping_network1.grid_location[0]][ping_network1.grid_location[1]]
                 cortical_coord2 = cortical_coords[ping_network2.grid_location[0]][ping_network2.grid_location[1]]
-                dist[id1][id2] = euclidian_dist(
+
+                dist[id1 - params_ping.neur_slice[neuron_type1].start][id2 - params_ping.neur_slice[neuron_type2].start] = euclidian_dist(
                     cortical_coord1, cortical_coord2
                 )
 

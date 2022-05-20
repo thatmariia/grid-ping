@@ -12,23 +12,23 @@ class ParamsInitializer:
 
     def initialize(self):
         params_ping = ParamsPING(
-            nr_excitatory=200,#400,
-            nr_inhibitory=50,#100,
-            nr_ping_networks=25#100
+            nr_excitatory=400,
+            nr_inhibitory=200,
+            nr_ping_networks=100
         )
         params_gabor = ParamsGaborStimulus(
             spatial_freq=5.7,
             vlum=0.5,
-            diameter_dg=1,
+            diameter_dg=0.7,
             diameter=50,
-            dist_scale=2.5,
-            full_width_dg=35,
+            dist_scale=1.5,
+            full_width_dg=33.87,
             full_height_dg=27.09,
             contrast_range=0.01,
-            figure_width_dg=9,
-            figure_height_dg=5.1,
-            figure_ecc_dg=8,
-            patch_size_dg=5
+            figure_width_dg=5,
+            figure_height_dg=9,
+            figure_ecc_dg=7,
+            patch_size_dg=4.2
         )
         params_rf = ParamsReceptiveField(
             slope=0.172,

@@ -30,7 +30,7 @@ if __name__ == "__main__":
         current_components=neural_model,
         pb_off=False
     ).simulate(
-        simulation_time=8,
+        simulation_time=100,
         dt=1
     )
 

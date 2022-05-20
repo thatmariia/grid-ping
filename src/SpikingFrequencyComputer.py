@@ -11,6 +11,9 @@ import warnings
 
 
 class SpikingFrequencyComputer:
+    """
+    TODO:: docs
+    """
 
     def compute_per_ping(self, simulation_outcome: IzhikevichNetworkOutcome):
 
@@ -36,13 +39,15 @@ class SpikingFrequencyComputer:
     def plot_ping_frequencies(self, frequencies):
         # TODO:: make pretty
 
+        print(frequencies)
+
         print("Plotting current-frequency.....", end="")
         path = "../plots/test-freq-in-pings.png"
 
         fig, ax = plt.subplots(figsize=(30, 30))
         ax.tick_params(axis='both', which='major', labelsize=50)
 
-        plt.hist(Counter(frequencies), color="#ACDDE7")
+        plt.hist(frequencies, color="#ACDDE7")
         fig.savefig(path, bbox_inches='tight')
 
         print(end="\r", flush=True)
@@ -54,6 +59,7 @@ class SpikingFrequencyComputer:
         # number of excitatory neurons fired at each time
         spikes_ex_per_times = [np.count_nonzero(spikes_times == t) for t in range(simulation_time)]
         signal = spikes_ex_per_times[299:]
+        # print("signal =", signal)
 
         # making TFR
         frequency = self._make_tfr(simulation_time, signal)

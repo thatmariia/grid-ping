@@ -67,8 +67,8 @@ class GridGeometryFactory:
                     i * params_ping.nr_neurons_per_ping[NeuronTypes.IN],
                     (i + 1) * params_ping.nr_neurons_per_ping[NeuronTypes.IN]
             ):
-                in_ids.append(neuron_id)
-                neuron_ping_map[NeuronTypes.IN][neuron_id] = i
+                in_ids.append(params_ping.nr_neurons[NeuronTypes.EX] + neuron_id)
+                neuron_ping_map[NeuronTypes.IN][params_ping.nr_neurons[NeuronTypes.EX] + neuron_id] = i
 
             ping_network = PINGNetworkNeurons(
                 grid_location=(x, y),

@@ -1,3 +1,5 @@
+from src.misc import *
+
 import numpy as np
 
 
@@ -11,16 +13,19 @@ class StimulusLocations:
     :param angles: angles of the points relative to horizontal axis.
     :type angles: numpy.ndarray[int, float]
 
-    :ivar cortical_coords: coordinates of the points in the visual cortex.
-    :type cortical_coords: list[list[tuple[float, float]]]
+    :ivar cortical_distances: coordinates of the points in the visual cortex.
+    :type cortical_distances: list[list[tuple[float, float]]]
     """
 
-    def __init__(self, eccentricities: np.ndarray[int, float], angles: np.ndarray[int, float]):
-        self.cortical_coords: list[list[tuple[float, float]]] = self._compute_coordinates(eccentricities, angles)
+    def __init__(
+            self, eccentricities: np.ndarray[int, float],
+            angles: np.ndarray[int, float]
+    ):
+        self.cortical_distances: list[list[float]] = self._compute_distances(eccentricities, angles)
 
-    def _compute_coordinates(
+    def _compute_distances(
             self, eccentricities: np.ndarray[int, float], angles: np.ndarray[int, float]
-    ) -> list[list[tuple[float, float]]]:
+    ) -> list[list[float]]:
         """
         Computes the cortical coordinates given eccentricities and angles in the visual field.
         TODO:: add refs
@@ -31,8 +36,8 @@ class StimulusLocations:
         :param angles: angles of the points relative to horizontal axis.
         :type angles: numpy.ndarray[int, float]
 
-        :return: coordinates of the points in the visual cortex.
-        :rtype: list[list[tuple[float, float]]]
+        :return: coordinates of the points in the visual cortex. TODO:: dists actually
+        :rtype: list[list[tuple[float]]]
         """
 
         k = 15.0
@@ -46,4 +51,12 @@ class StimulusLocations:
         x = np.real(w)
         y = np.imag(w)
 
-        return [list(zip(x[i], y[i])) for i in range(len(x))]
+        coordinates = [list(zip(x[i], y[i])) for i in range(len(x))]
+        coordinates = [i for row_coords in coordinates for i in row_coords]
+
+        distances = [
+            [euclidian_dist(tuple(c1), tuple(c2)) for c1 in coordinates]
+            for c2 in coordinates
+        ]
+
+        return distances

@@ -60,6 +60,10 @@ class ParamsPING:
             NeuronTypes.IN: nr_inhibitory,
             "total": nr_excitatory + nr_inhibitory
         }
+        self.neur_indices: dict[NeuronTypes, list] = {
+            NeuronTypes.EX: list(range(0, nr_excitatory)),
+            NeuronTypes.IN: list(range(nr_excitatory, nr_excitatory + nr_inhibitory))
+        }
         self.neur_slice: dict[NeuronTypes, slice] = {
             NeuronTypes.EX: slice(0, nr_excitatory),
             NeuronTypes.IN: slice(nr_excitatory, nr_excitatory + nr_inhibitory),

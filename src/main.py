@@ -18,7 +18,7 @@ if __name__ == "__main__":
     connectivity = ConnectivityGridPINGFactory().create(
         params_ping=params_ping,
         params_connectivity=params_connectivity,
-        cortical_coords=stimulus_locations.cortical_coords
+        cortical_distances=stimulus_locations.cortical_distances
     )
     neural_model = CurrentComponentsGridPING(
         connectivity=connectivity,

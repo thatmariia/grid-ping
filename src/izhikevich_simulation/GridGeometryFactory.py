@@ -1,3 +1,6 @@
+import numpy as np
+from itertools import product
+
 from src.izhikevich_simulation.GridGeometry import *
 from src.izhikevich_simulation.PINGNetworkNeurons import *
 from src.params.ParamsPING import *
@@ -19,18 +22,18 @@ class GridGeometryFactory:
         :rtype: GridGeometry
         """
 
-        ping_networks, neuron_ping_map = self._assign_ping_networks(params_ping)
+        ping_networks, neuron_locations = self._assign_ping_networks(params_ping)
 
         grid_geometry = GridGeometry(
             ping_networks=ping_networks,
-            neuron_ping_map=neuron_ping_map
+            neuron_locations=neuron_locations
         )
 
         return grid_geometry
 
     def _assign_ping_networks(
             self, params_ping: ParamsPING,
-    ) -> tuple[list[PINGNetworkNeurons], dict[NeuronTypes, dict[int, int]]]:
+    ) -> tuple[list[PINGNetworkNeurons], np.ndarray[int, int]]:
         """
         Creates PING networks, assigns grid locations to them, and adds the same number of neurons of each neuron type
         to them.
@@ -40,15 +43,14 @@ class GridGeometryFactory:
         :param params_ping: parameters describing PING networks and their composition.
         :type params_ping: ParamsPING
 
+        TODO: update ping map or delete it for good
+
         :return: list of PING networks in the network and a dictionary mapping a neuron to the PING network it belongs to.
         :rtype: tuple[list[PINGNetworkNeurons], dict[NeuronTypes, dict[int, int]]]
         """
 
         ping_networks = []
-        neuron_ping_map = {
-            NeuronTypes.EX: {},
-            NeuronTypes.IN: {}
-        }
+        neuron_locations = np.zeros(params_ping.nr_neurons["total"], dtype=int)
 
         for i in range(params_ping.nr_ping_networks):
             x = i // params_ping.grid_size
@@ -60,7 +62,7 @@ class GridGeometryFactory:
                     (i + 1) * params_ping.nr_neurons_per_ping[NeuronTypes.EX]
             ):
                 ex_ids.append(neuron_id)
-                neuron_ping_map[NeuronTypes.EX][neuron_id] = i
+                neuron_locations[neuron_id] = i
 
             in_ids = []
             for neuron_id in range(
@@ -68,7 +70,8 @@ class GridGeometryFactory:
                     (i + 1) * params_ping.nr_neurons_per_ping[NeuronTypes.IN]
             ):
                 in_ids.append(params_ping.nr_neurons[NeuronTypes.EX] + neuron_id)
-                neuron_ping_map[NeuronTypes.IN][params_ping.nr_neurons[NeuronTypes.EX] + neuron_id] = i
+                neuron_locations[params_ping.nr_neurons[NeuronTypes.EX] + neuron_id] = i
+
 
             ping_network = PINGNetworkNeurons(
                 grid_location=(x, y),
@@ -78,4 +81,4 @@ class GridGeometryFactory:
 
             ping_networks.append(ping_network)
 
-        return ping_networks, neuron_ping_map
+        return ping_networks, neuron_locations

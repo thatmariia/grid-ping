@@ -13,19 +13,19 @@ class StimulusLocations:
     :param angles: angles of the points relative to horizontal axis.
     :type angles: numpy.ndarray[int, float]
 
-    :ivar cortical_distances: coordinates of the points in the visual cortex.
-    :type cortical_distances: list[list[tuple[float, float]]]
+    :ivar cortical_distances: distances between PING networks in the visual cortex.
+    :type cortical_distances: numpy.ndarray[(int, int), float]
     """
 
     def __init__(
             self, eccentricities: np.ndarray[int, float],
             angles: np.ndarray[int, float]
     ):
-        self.cortical_distances: list[list[float]] = self._compute_distances(eccentricities, angles)
+        self.cortical_distances: np.ndarray[(int, int), float] = self._compute_distances(eccentricities, angles)
 
     def _compute_distances(
             self, eccentricities: np.ndarray[int, float], angles: np.ndarray[int, float]
-    ) -> list[list[float]]:
+    ) -> np.ndarray[(int, int), float]:
         """
         Computes the cortical coordinates given eccentricities and angles in the visual field.
         TODO:: add refs
@@ -36,8 +36,8 @@ class StimulusLocations:
         :param angles: angles of the points relative to horizontal axis.
         :type angles: numpy.ndarray[int, float]
 
-        :return: coordinates of the points in the visual cortex. TODO:: dists actually
-        :rtype: list[list[tuple[float]]]
+        :return: distances between PING networks in the visual cortex.
+        :rtype: numpy.ndarray[(int, int), float]
         """
 
         k = 15.0
@@ -59,4 +59,4 @@ class StimulusLocations:
             for c2 in coordinates
         ]
 
-        return distances
+        return np.array(distances)

@@ -5,9 +5,7 @@ from src.izhikevich_simulation.CurrentComponentsGridPING import *
 from src.izhikevich_simulation.IzhikevichNetworkSimulator import *
 from src.SpikingFrequencyComputer import *
 
-
 if __name__ == "__main__":
-
     params_initializer = ParamsInitializer()
     params_ping, params_gabor, params_rf, params_connectivity, params_izhi, params_synaptic = params_initializer.initialize()
 
@@ -30,7 +28,7 @@ if __name__ == "__main__":
         current_components=neural_model,
         pb_off=False
     ).simulate(
-        simulation_time=100,
+        simulation_time=1000,
         dt=1
     )
 

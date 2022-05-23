@@ -1,8 +1,6 @@
 from src.params.ParamsConnectivity import *
 
-from src.izhikevich_simulation.PINGNetworkNeurons import *
 from src.izhikevich_simulation.Connectivity import *
-from src.misc import *
 from src.izhikevich_simulation.GridGeometryFactory import *
 from src.izhikevich_simulation.GridGeometry import *
 
@@ -18,7 +16,7 @@ class ConnectivityGridPINGFactory:
 
     def create(
             self, params_ping: ParamsPING, params_connectivity: ParamsConnectivity,
-            cortical_distances: list[list[float]]
+            cortical_distances: np.ndarray[(int, int), float]
     ) -> Connectivity:
         """
         Determines the connectivity between neurons in the oscillatory network.
@@ -29,16 +27,16 @@ class ConnectivityGridPINGFactory:
         :param params_connectivity: parameters of the network connectivity.
         :type params_connectivity: ParamsConnectivity
 
-        :param cortical_distances: coordinates of the points in the visual cortex.
-        :type cortical_distances: list[list[float]]
+        :param cortical_distances: distances between PING networks in the visual cortex.
+        :type cortical_distances: numpy.ndarray[(int, int), float]
 
         :return: connectivity between neurons in the oscillatory network.
         :rtype: Connectivity
         """
 
-        grid_geometry = GridGeometryFactory().create(params_ping)
+        grid_geometry = GridGeometryFactory().create(params_ping, cortical_distances)
         coupling_weights = self._compute_coupling_weights(
-            params_ping, params_connectivity, grid_geometry, cortical_distances
+            params_ping, params_connectivity, grid_geometry
         )
 
         connectivity = Connectivity(
@@ -51,9 +49,7 @@ class ConnectivityGridPINGFactory:
 
     def _compute_coupling_weights(
             self,
-            params_ping: ParamsPING, params_connectivity: ParamsConnectivity,
-            grid_geometry: GridGeometry,
-            cortical_distances: list[list[float]]
+            params_ping: ParamsPING, params_connectivity: ParamsConnectivity, grid_geometry: GridGeometry
     ) -> np.ndarray[(int, int), float]:
         """
         Computes the coupling weights between all neurons.
@@ -70,9 +66,6 @@ class ConnectivityGridPINGFactory:
         :param grid_geometry: contains information about grid locations of PING networks and neurons located in them.
         :type grid_geometry: GridGeometry
 
-        :param cortical_distances: coordinates of the points in the visual cortex.
-        :type cortical_distances: list[list[float]]
-
         :return: matrix of all coupling weights.
         :rtype: numpy.ndarray[(int, int), float]
         """
@@ -82,20 +75,13 @@ class ConnectivityGridPINGFactory:
         for nts in (pbar := tqdm(list(product([NeuronTypes.EX, NeuronTypes.IN], repeat=2)))):
             pbar.set_description("Computing coupling weights")
 
-            dist = self._get_neurons_dist(
-                neuron_type1=nts[0],
-                neuron_type2=nts[1],
-                nr1=params_ping.nr_neurons[nts[0]],
-                nr2=params_ping.nr_neurons[nts[1]],
-                params_ping=params_ping,
-                grid_geometry=grid_geometry,
-                cortical_distances=cortical_distances
-            )
+            dist = grid_geometry.neuron_distances[params_ping.neur_slice[nts[0]], params_ping.neur_slice[nts[1]]]
             types_coupling_weights = self._compute_type_coupling_weights(
                 dist=dist,
                 max_connect_strength=params_connectivity.max_connect_strength[(nts[0], nts[1])],
                 spatial_const=params_connectivity.spatial_const[(nts[0], nts[1])]
             )
+
             if nts[0] == nts[1]:
                 coupling_weights[params_ping.neur_slice[nts[0]], params_ping.neur_slice[nts[1]]] = \
                     types_coupling_weights
@@ -104,63 +90,6 @@ class ConnectivityGridPINGFactory:
                     types_coupling_weights.T
 
         return np.nan_to_num(coupling_weights)
-
-    def _get_neurons_dist(
-            self,
-            neuron_type1: NeuronTypes, neuron_type2: NeuronTypes, nr1: int, nr2: int,
-            params_ping: ParamsPING,
-            grid_geometry: GridGeometry,
-            cortical_distances: list[list[float]]
-    ) -> np.ndarray[(int, int), float]:
-        """
-        Computes the matrix of Euclidian distances between two types of neurons.
-
-        This method computes a matrix of :math:`\| \mathsf{loc}(v), \mathsf{loc}(w) \|` between neurons :math:`v` and
-        :math:`w` of given types.
-
-        :param neuron_type1: neurons neuron_type 1
-        :type neuron_type1: NeuronTypes
-
-        :param neuron_type2: neurons neuron_type 2
-        :type neuron_type2: NeuronTypes
-
-        :param nr1: number of neurons of neuron_type 1
-        :type nr1: int
-
-        :param nr2: number of neurons of neuron_type 2
-        :type nr2: int
-
-        :param params_ping: parameters describing PING networks and their composition.
-        :type params_ping: ParamsPING
-
-        :param grid_geometry: contains information about grid locations of PING networks and neurons located in them.
-        :type grid_geometry: GridGeometry
-
-        :param cortical_distances: coordinates of the points in the visual cortex.
-        :type cortical_distances: list[list[float]]
-
-        :return: The matrix nr1 x nr2 of pairwise distances between neurons.
-        :rtype: numpy.ndarray[(int, int), float]
-        """
-
-        def get_cortical_dist(id1, id2):
-            # finding to which ping networks the neurons belong
-            ping_network1 = grid_geometry.neuron_locations[id1]
-            ping_network2 = grid_geometry.neuron_locations[id2]
-            # print(ping_network1, ping_network2)
-
-            # computing the distance between the found PING networks
-            # (which = the distance between neurons in those PING networks)
-            return cortical_distances[ping_network1][ping_network2]
-
-
-        # find cortical distances between neurons of different types
-        dist = np.array([
-            [get_cortical_dist(id1, id2) for id2 in params_ping.neur_indices[neuron_type2]]
-            for id1 in params_ping.neur_indices[neuron_type1]
-        ])
-
-        return dist
 
     def _compute_type_coupling_weights(
             self,

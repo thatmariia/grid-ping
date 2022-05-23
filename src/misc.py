@@ -1,5 +1,23 @@
 import math
 from math import ceil
+import numpy as np
+
+
+def cartesian_product(*arrays) -> np.ndarray:
+    """
+    Computes the cartesian product of given arrays fast.
+
+    :param arrays: arrays to compute the cartesian product of.
+
+    :return: the cartesian product of the given arrays.
+    :rtype: numpy.ndarray
+    """
+    la = len(arrays)
+    dtype = np.result_type(*arrays)
+    arr = np.empty([len(a) for a in arrays] + [la], dtype=dtype)
+    for i, a in enumerate(np.ix_(*arrays)):
+        arr[..., i] = a
+    return arr.reshape(-1, la)
 
 
 def multiply_point(point: tuple[float, ...], coef: float) -> tuple[float, ...]:

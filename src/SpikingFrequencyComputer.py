@@ -93,8 +93,8 @@ class SpikingFrequencyComputer:
 
         # set the width of the Gaussian
         sd = 0.05
+        g = np.exp(-np.power(wt, 2) / (2 * sd ** 2))
         for frequency in gamma_frequencies:
-            g = np.exp(-np.power(wt, 2) / (2 * sd ** 2))
             complex_sine = np.exp(1j * 2 * pi * frequency * wt)
             complex_wavelet = complex_sine * g
             fft_wavelet = fft.fft(complex_wavelet, nr_points)

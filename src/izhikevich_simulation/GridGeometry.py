@@ -11,16 +11,19 @@ class GridGeometry:
     :param ping_networks: list of PING networks.
     :type ping_networks: list[PINGNetworkNeurons]
 
-    :param neuron_ping_map: dictionary mapping a neuron to the PING network it belongs to.
-    :type neuron_ping_map: dict[NeuronTypes, dict[int, int]]
+    :param neuron_distances: distances between neurons in the visual cortex.
+    :type neuron_distances: numpy.ndarray[(int, int), float]
+
+    :ivar ping_networks: list of PING networks.
+    :ivar neuron_distances: distances between neurons in the visual cortex.
     """
 
     def __init__(
             self,
-            ping_networks: list[PINGNetworkNeurons],
-            neuron_locations: np.ndarray[int, int]
+            ping_networks,
+            neuron_distances
     ):
 
         self.ping_networks: list[PINGNetworkNeurons] = ping_networks
-        self.neuron_locations: np.ndarray[int, int] = neuron_locations
+        self.neuron_distances: np.ndarray[(int, int), float] = neuron_distances
 

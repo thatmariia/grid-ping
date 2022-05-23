@@ -1,5 +1,7 @@
 import numpy as np
 from itertools import product
+from tqdm import tqdm
+from src.misc import *
 
 from src.izhikevich_simulation.GridGeometry import *
 from src.izhikevich_simulation.PINGNetworkNeurons import *
@@ -11,74 +13,112 @@ class GridGeometryFactory:
     This class constructs a grid of PING networks and distributes neurons among them.
     """
 
-    def create(self, params_ping: ParamsPING) -> GridGeometry:
+    def create(self, params_ping: ParamsPING, cortical_distances: np.ndarray[(int, int), float]) -> GridGeometry:
         """
         Goes through the steps to construct a grid of PING networks and distribute neurons among them.
 
         :param params_ping: parameters describing PING networks and their composition.
         :type params_ping: ParamsPING
 
+        :param cortical_distances: distances between PING networks in the visual cortex.
+        :type cortical_distances: numpy.ndarray[(int, int), float]
+
         :return: information about grid locations of PING networks and neurons located in them.
         :rtype: GridGeometry
         """
 
-        ping_networks, neuron_locations = self._assign_ping_networks(params_ping)
+        ping_networks, neuron_distances = self._assign_ping_distances(params_ping, cortical_distances)
 
         grid_geometry = GridGeometry(
             ping_networks=ping_networks,
-            neuron_locations=neuron_locations
+            neuron_distances=neuron_distances
         )
-
         return grid_geometry
 
-    def _assign_ping_networks(
-            self, params_ping: ParamsPING,
-    ) -> tuple[list[PINGNetworkNeurons], np.ndarray[int, int]]:
+    def _refresh_neuron_ping_ids(
+            self, ping_id: int,
+            ping_ids: dict[int, dict[NeuronTypes, list[int]]],
+            params_ping: ParamsPING
+    ) -> dict[int, dict[NeuronTypes, list[int]]]:
         """
-        Creates PING networks, assigns grid locations to them, and adds the same number of neurons of each neuron type
-        to them.
+        Adds the neurons to the relevant PING network if they are not already there.
 
-        In other words, this function creates a map that can be used as function :math:`\mathsf{loc}`.
+        :param ping_id: ID of the PING network.
+        :type ping_id: int
+
+        :param ping_ids: dictionary containing the IDs of the neurons in each PING network.
+        :type ping_ids: dict[int, dict[NeuronTypes, list[int]]]
 
         :param params_ping: parameters describing PING networks and their composition.
         :type params_ping: ParamsPING
 
-        TODO: update ping map or delete it for good
+        :return: dictionary containing the IDs of the neurons in each PING network.
+        :rtype: dict[int, dict[NeuronTypes, list[int]]]
+        """
 
-        :return: list of PING networks in the network and a dictionary mapping a neuron to the PING network it belongs to.
-        :rtype: tuple[list[PINGNetworkNeurons], dict[NeuronTypes, dict[int, int]]]
+        if ping_id in ping_ids:
+            return ping_ids
+
+        ex_ids = list(range(
+            ping_id * params_ping.nr_neurons_per_ping[NeuronTypes.EX],
+            (ping_id + 1) * params_ping.nr_neurons_per_ping[NeuronTypes.EX]
+        ))
+        in_ids = list(range(
+            ping_id * params_ping.nr_neurons_per_ping[NeuronTypes.IN],
+            (ping_id + 1) * params_ping.nr_neurons_per_ping[NeuronTypes.IN]
+        ))
+        ping_ids[ping_id] = {
+            NeuronTypes.EX: ex_ids,
+            NeuronTypes.IN: in_ids
+        }
+        return ping_ids
+
+    def _assign_ping_distances(
+            self, params_ping: ParamsPING, cortical_distances: np.ndarray[(int, int), float]
+    ) -> tuple[list[PINGNetworkNeurons], np.ndarray[(int, int), float]]:
+        """
+        Assigns neurons to PING networks and the distances between them in the visual cortex.
+
+        :param params_ping: parameters describing PING networks and their composition.
+        :type params_ping: ParamsPING
+
+        :param cortical_distances: distances between PING networks in the visual cortex.
+        :type cortical_distances: numpy.ndarray[(int, int), float]
+
+        :return: information about grid locations of PING networks and distances between neurons located in them.
+        :rtype: tuple[list[PINGNetworkNeurons], numpy.ndarray[(int, int), float]]
         """
 
         ping_networks = []
-        neuron_locations = np.zeros(params_ping.nr_neurons["total"], dtype=int)
+        neuron_distances = np.zeros((params_ping.nr_neurons["total"], params_ping.nr_neurons["total"]), dtype=int)
 
-        for i in range(params_ping.nr_ping_networks):
-            x = i // params_ping.grid_size
-            y = i % params_ping.grid_size
+        ping_ids = {}
 
-            ex_ids = []
-            for neuron_id in range(
-                    i * params_ping.nr_neurons_per_ping[NeuronTypes.EX],
-                    (i + 1) * params_ping.nr_neurons_per_ping[NeuronTypes.EX]
-            ):
-                ex_ids.append(neuron_id)
-                neuron_locations[neuron_id] = i
+        for ping1 in (pbar := tqdm(range(params_ping.nr_ping_networks))):
+            pbar.set_description("Computing distances between PING networks")
 
-            in_ids = []
-            for neuron_id in range(
-                    i * params_ping.nr_neurons_per_ping[NeuronTypes.IN],
-                    (i + 1) * params_ping.nr_neurons_per_ping[NeuronTypes.IN]
-            ):
-                in_ids.append(params_ping.nr_neurons[NeuronTypes.EX] + neuron_id)
-                neuron_locations[params_ping.nr_neurons[NeuronTypes.EX] + neuron_id] = i
+            loc_ping1 = (ping1 // params_ping.grid_size, ping1 % params_ping.grid_size)
 
+            ping_ids = self._refresh_neuron_ping_ids(ping1, ping_ids, params_ping)
+            ex_ids1 = ping_ids[ping1][NeuronTypes.EX]
+            in_ids1 = ping_ids[ping1][NeuronTypes.IN]
 
             ping_network = PINGNetworkNeurons(
-                grid_location=(x, y),
-                ids_ex=ex_ids,
-                ids_in=in_ids
+                grid_location=loc_ping1,
+                ids_ex=ex_ids1,
+                ids_in=in_ids1
             )
-
             ping_networks.append(ping_network)
 
-        return ping_networks, neuron_locations
+            for ping2 in range(params_ping.nr_ping_networks):
+
+                ping_ids = self._refresh_neuron_ping_ids(ping2, ping_ids, params_ping)
+                ex_ids2 = ping_ids[ping2][NeuronTypes.EX]
+                in_ids2 = ping_ids[ping2][NeuronTypes.IN]
+
+                all_id_pairs = cartesian_product(np.array(ex_ids1 + in_ids1), np.array(ex_ids2 + in_ids2))
+                neuron_distances.ravel()[
+                    np.ravel_multi_index(all_id_pairs.T, neuron_distances.shape)
+                ] = cortical_distances[ping1, ping2]
+
+        return ping_networks, neuron_distances

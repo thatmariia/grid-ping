@@ -62,7 +62,7 @@ class CurrentComponentsGridPING(CurrentComponents):
 
             # synaptic current calculation of a postsynaptic neuron
             new_currents[self.connectivity.params_ping.neur_slice[postsyn_nt]] += \
-                sum(conductances) * (
+                (1 / len(conductances)) * sum(conductances) * (
                         potentials[self.connectivity.params_ping.neur_slice[postsyn_nt]] -
                         self._params_synaptic.reversal_potential[presyn_nt]
                 )

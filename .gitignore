@@ -2,6 +2,9 @@
 **/.DS_Store
 .idea/
 
+# debugging helpers (only used during development)
+local_storage/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 **/__pycache__/

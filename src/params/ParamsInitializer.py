@@ -4,6 +4,7 @@ from src.params.ParamsReceptiveField import *
 from src.params.ParamsConnectivity import *
 from src.params.ParamsIzhikevich import *
 from src.params.ParamsSynaptic import *
+from src.params.ParamsFrequencies import *
 
 class ParamsInitializer:
     """
@@ -14,7 +15,7 @@ class ParamsInitializer:
         params_ping = ParamsPING(
             nr_excitatory=8000,
             nr_inhibitory=2000,
-            nr_ping_networks=400
+            nr_ping_networks=100
         )
         params_gabor = ParamsGaborStimulus(
             spatial_freq=5.7,
@@ -68,5 +69,9 @@ class ParamsInitializer:
             reversal_potential_E=-80,
             reversal_potential_I=0
         )
+        params_freqs = ParamsFrequencies(
+            frequency_range=range(20, 81),
+            gaussian_width=0.5
+        )
 
-        return params_ping, params_gabor, params_rf, params_connectivity, params_izhi, params_synaptic
+        return params_ping, params_gabor, params_rf, params_connectivity, params_izhi, params_synaptic, params_freqs

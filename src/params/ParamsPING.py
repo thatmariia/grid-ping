@@ -74,3 +74,6 @@ class ParamsPING:
             NeuronTypes.IN: nr_inhibitory // nr_ping_networks
         }
         self.grid_size: int = int(sqrt(nr_ping_networks))
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__

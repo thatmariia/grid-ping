@@ -17,7 +17,8 @@ class StimulusFactory:
             self, params_gabor: ParamsGaborStimulus,
             params_rf: ParamsReceptiveField,
             params_ping: ParamsPING,
-            params_izhi: ParamsIzhikevich
+            params_izhi: ParamsIzhikevich,
+            params_freqs: ParamsFrequencies
     ) -> Stimulus:
         """
         Creates an external stimulus (Gabor texture) and prepares for the neural network input.
@@ -73,7 +74,7 @@ class StimulusFactory:
             stimulus_contrasts
         )
         stimulus_currents = FrequencyToCurrentConverter().convert(
-            stimulus_frequencies, params_ping, params_izhi
+            stimulus_frequencies, params_ping, params_izhi, params_freqs
         )
 
         stimulus = Stimulus(

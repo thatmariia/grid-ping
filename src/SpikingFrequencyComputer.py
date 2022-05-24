@@ -1,5 +1,6 @@
 from src.params.ParamsPING import *
 from src.izhikevich_simulation.IzhikevichNetworkOutcome import *
+from src.params.ParamsFrequencies import *
 
 import numpy as np
 from math import floor, pi
@@ -15,7 +16,9 @@ class SpikingFrequencyComputer:
     TODO:: docs
     """
 
-    def compute_per_ping(self, simulation_outcome: IzhikevichNetworkOutcome):
+    def compute_for_all_pings(
+            self, simulation_outcome: IzhikevichNetworkOutcome, params_freqs: ParamsFrequencies
+    ) -> list[int]:
 
         frequencies = []
 
@@ -30,7 +33,8 @@ class SpikingFrequencyComputer:
 
             frequency = self.compute_for_single_ping(
                 spikes_times=spikes_times_in_ping,
-                simulation_time=simulation_outcome.simulation_time
+                simulation_time=simulation_outcome.simulation_time,
+                params_freqs=params_freqs
             )
             frequencies.append(frequency)
 
@@ -54,18 +58,19 @@ class SpikingFrequencyComputer:
         print(f"Plotting ended, result: {path[3:]}")
 
 
-    def compute_for_single_ping(self, spikes_times: np.ndarray[int, int], simulation_time: int) -> int:
+    def compute_for_single_ping(
+            self, spikes_times: np.ndarray[int, int], simulation_time: int, params_freqs: ParamsFrequencies
+    ) -> int:
 
         # number of excitatory neurons fired at each time
         spikes_ex_per_times = [np.count_nonzero(spikes_times == t) for t in range(simulation_time)]
         signal = spikes_ex_per_times[299:]
-        # print("signal =", signal)
 
         # making TFR
-        frequency = self._make_tfr(simulation_time, signal)
+        frequency = self._make_tfr(simulation_time, signal, params_freqs)
         return frequency
 
-    def _make_tfr(self, simulation_time: int, signal: list[int]) -> int:
+    def _make_tfr(self, simulation_time: int, signal: list[int], params_freqs: ParamsFrequencies) -> int:
         """
         TODO:: Determines most prominent frequency??
 
@@ -81,31 +86,25 @@ class SpikingFrequencyComputer:
 
         t = [i / 0.001 for i in range(1, simulation_time+1)]
         t = t[298:]
-        wt = np.linspace(-1, 1, floor(2 / 0.001) + 1)
-        # half the size of the wavelet
-        half_wave_size = floor((len(wt) - 1) / 2)
         # the size of the data + zero padding
-        nr_points = len(wt) + len(signal) - 1
+        nr_points = len(params_freqs.wt) + len(signal) - 1
         fft_data = fft.fft(signal, nr_points)
 
-        gamma_frequencies = list(range(20, 81))
-        tfr = np.zeros((len(gamma_frequencies), len(t)), dtype="complex_") * np.nan
+        tfr = np.zeros((len(params_freqs.frequencies), len(t)), dtype="complex_") * np.nan
 
-        # set the width of the Gaussian
-        sd = 0.05
-        g = np.exp(-np.power(wt, 2) / (2 * sd ** 2))
-        for frequency in gamma_frequencies:
-            complex_sine = np.exp(1j * 2 * pi * frequency * wt)
-            complex_wavelet = complex_sine * g
-            fft_wavelet = fft.fft(complex_wavelet, nr_points)
+        for fi in range(len(params_freqs.frequencies)):
+
+            fft_wavelet = fft.fft(params_freqs.complex_wavelets[fi], nr_points)
             fft_wavelet = fft_wavelet / max(fft_wavelet)
 
             tmp = fft.ifft(fft_wavelet * fft_data, nr_points)
             # trim the edges, these are the bits we included by zero padding
-            tfr[np.argwhere(np.array(gamma_frequencies) == frequency).flatten(), :] = tmp[half_wave_size: -half_wave_size + 1]
+            tfr[
+            np.argwhere(np.array(params_freqs.frequencies) == params_freqs.frequencies[fi]).flatten(), :
+            ] = tmp[params_freqs.half_wave_size: -params_freqs.half_wave_size + 1]
 
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", category=RuntimeWarning)
             mx_i = int(np.argmax(np.nanmean(np.abs(tfr), 1)))
 
-        return gamma_frequencies[mx_i]
+        return params_freqs.frequencies[mx_i]

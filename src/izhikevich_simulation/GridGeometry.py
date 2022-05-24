@@ -20,10 +20,13 @@ class GridGeometry:
 
     def __init__(
             self,
-            ping_networks,
-            neuron_distances
+            ping_networks: list[PINGNetworkNeurons],
+            neuron_distances: np.ndarray[(int, int), float]
     ):
 
         self.ping_networks: list[PINGNetworkNeurons] = ping_networks
         self.neuron_distances: np.ndarray[(int, int), float] = neuron_distances
+
+    def __eq__(self, other):
+        return np.all(self.ping_networks == other.ping_networks) and np.all(self.neuron_distances == other.neuron_distances)
 

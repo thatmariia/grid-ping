@@ -64,8 +64,8 @@ class GridGeometryFactory:
             (ping_id + 1) * params_ping.nr_neurons_per_ping[NeuronTypes.EX]
         ))
         in_ids = list(range(
-            ping_id * params_ping.nr_neurons_per_ping[NeuronTypes.IN],
-            (ping_id + 1) * params_ping.nr_neurons_per_ping[NeuronTypes.IN]
+            params_ping.nr_neurons[NeuronTypes.EX] + ping_id * params_ping.nr_neurons_per_ping[NeuronTypes.IN],
+            params_ping.nr_neurons[NeuronTypes.EX] + (ping_id + 1) * params_ping.nr_neurons_per_ping[NeuronTypes.IN]
         ))
         ping_ids[ping_id] = {
             NeuronTypes.EX: ex_ids,

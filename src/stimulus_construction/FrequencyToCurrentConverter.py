@@ -18,7 +18,9 @@ class FrequencyToCurrentConverter:
     """
 
     def convert(
-            self, stimulus_frequencies: np.ndarray[int, float], params_ping: ParamsPING, params_izhi: ParamsIzhikevich
+            self,
+            stimulus_frequencies: np.ndarray[int, float],
+            params_ping: ParamsPING, params_izhi: ParamsIzhikevich, params_freqs: ParamsFrequencies
     ) -> np.ndarray[int, float]:
         """
         Converts the frequencies stimulus into the currents stimulus.
@@ -59,7 +61,8 @@ class FrequencyToCurrentConverter:
             # making TFR
             g_power[i] = frequency_computer.compute_for_single_ping(
                 spikes_times=spikes_ex_times,
-                simulation_time=simulation_time
+                simulation_time=simulation_time,
+                params_freqs=params_freqs
             )
 
         # fitting a line

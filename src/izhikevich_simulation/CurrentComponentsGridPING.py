@@ -59,10 +59,11 @@ class CurrentComponentsGridPING(CurrentComponents):
             # conductance calculation between neurons (synapse)
             conductances = self._params_synaptic.conductance[(presyn_nt, postsyn_nt)] * \
                            new_gatings[self.connectivity.params_ping.neur_slice[presyn_nt]]
+            total_conductance = (1 / self.connectivity.params_ping.nr_neurons[presyn_nt]) * sum(conductances)
 
             # synaptic current calculation of a postsynaptic neuron
             new_currents[self.connectivity.params_ping.neur_slice[postsyn_nt]] += \
-                (1 / len(conductances)) * sum(conductances) * (
+                 np.array(total_conductance) * (
                         potentials[self.connectivity.params_ping.neur_slice[postsyn_nt]] -
                         self._params_synaptic.reversal_potential[presyn_nt]
                 )
@@ -94,7 +95,7 @@ class CurrentComponentsGridPING(CurrentComponents):
             change_gatings = (
                     self._params_synaptic.rise[nt] * transmission_concs *
                     (1 - self._gatings[self.connectivity.params_ping.neur_slice[nt]]) -
-                    self._gatings[self.connectivity.params_ping.neur_slice[nt]] / self._params_synaptic.decay[nt]
+                    (self._gatings[self.connectivity.params_ping.neur_slice[nt]] / self._params_synaptic.decay[nt])
             )
             new_gatings[self.connectivity.params_ping.neur_slice[nt]] = \
                 self._gatings[self.connectivity.params_ping.neur_slice[nt]] + dt * change_gatings

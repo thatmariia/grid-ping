@@ -20,6 +20,7 @@ class PINGNetworkNeurons:
     """
 
     def __init__(self, grid_location: tuple[int, int], ids_ex: list[int], ids_in: list[int]):
+
         self.grid_location: tuple[int, int] = grid_location
         self.ids: dict[NeuronTypes, list[int]] = {
             NeuronTypes.EX: ids_ex,

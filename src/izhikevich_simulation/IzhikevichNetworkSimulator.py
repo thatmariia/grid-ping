@@ -83,9 +83,11 @@ class IzhikevichNetworkSimulator:
                 recovery[id] += izhi_zeta[id]
 
             # current
-            currents = self._current_components.get_current_input() + np.matmul(
+            synaptic_currents = self._current_components.get_synaptic_currents(dt, potentials)
+            current_input = self._current_components.get_current_input()
+            currents = current_input + np.matmul(
                 self._current_components.connectivity.coupling_weights,
-                self._current_components.get_synaptic_currents(dt, potentials)
+                synaptic_currents
             )
 
             # updating potential and recovery

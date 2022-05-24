@@ -7,9 +7,9 @@ from src.SpikingFrequencyComputer import *
 
 if __name__ == "__main__":
     params_initializer = ParamsInitializer()
-    params_ping, params_gabor, params_rf, params_connectivity, params_izhi, params_synaptic = params_initializer.initialize()
+    params_ping, params_gabor, params_rf, params_connectivity, params_izhi, params_synaptic, params_freqs = params_initializer.initialize()
 
-    stimulus = StimulusFactory().create(params_gabor, params_rf, params_ping, params_izhi)
+    stimulus = StimulusFactory().create(params_gabor, params_rf, params_ping, params_izhi, params_freqs)
 
     stimulus_locations = stimulus.extract_stimulus_location()
 
@@ -32,7 +32,8 @@ if __name__ == "__main__":
         dt=1
     )
 
-    ping_frequencies = SpikingFrequencyComputer().compute_per_ping(
-        simulation_outcome=simulation_outcome
+    ping_frequencies = SpikingFrequencyComputer().compute_for_all_pings(
+        simulation_outcome=simulation_outcome,
+        params_freqs=params_freqs
     )
     SpikingFrequencyComputer().plot_ping_frequencies(ping_frequencies)

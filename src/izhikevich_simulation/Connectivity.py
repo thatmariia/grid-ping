@@ -45,3 +45,8 @@ class Connectivity:
         self.params_ping: ParamsPING = params_ping
         self.coupling_weights: np.ndarray[(int, int), float] = coupling_weights
         self.grid_geometry = grid_geometry
+
+    def __eq__(self, other):
+        return (self.params_ping == other.params_ping) and \
+               np.all(self.coupling_weights == other.coupling_weights) and \
+               (self.grid_geometry == other.grid_geometry)

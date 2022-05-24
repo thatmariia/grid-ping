@@ -60,6 +60,8 @@ class LuminanceToContrastConverter:
         :rtype: numpy.ndarray[int, float]
         """
 
+        # TODO:: optimize
+
         mean_luminance = mean(np.array(stimulus_luminance.stimulus).flatten())
         local_contrasts = []
 

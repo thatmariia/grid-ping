@@ -7,6 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 from tqdm import tqdm
+from scipy import fft
 
 from sklearn.linear_model import TheilSenRegressor
 from sklearn.model_selection import RepeatedKFold, cross_val_score
@@ -57,17 +58,18 @@ class FrequencyToCurrentConverter:
             ).flatten()
             # times when excitatory neurons fired
             spikes_ex_times = spikes_T[0][spikes_ex_indices]
+            spikes_ex_per_times = [np.count_nonzero(spikes_ex_times == t) for t in range(simulation_time)]
+            signal = np.array(spikes_ex_per_times[299:])
 
-            # making TFR
-            g_power[i] = frequency_computer.compute_for_single_ping(
-                spikes_times=spikes_ex_times,
-                simulation_time=simulation_time,
+            g_power[i] = frequency_computer.fft_single_ping(
+                signal=signal,
                 params_freqs=params_freqs
             )
 
         # fitting a line
         inputs = np.array(inputs)
         fitted_model = self._fit_line_robust(x=inputs, y=g_power.reshape((-1, 1)))
+        print(fitted_model.coef_, fitted_model.intercept_)
 
         # plot
         freqs_line = np.arange(g_power.min(), g_power.max(), 0.01)

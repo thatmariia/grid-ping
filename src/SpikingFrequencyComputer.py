@@ -30,9 +30,13 @@ class SpikingFrequencyComputer:
 
             # times when excitatory neurons fired
             spikes_times_in_ping = np.array(simulation_outcome.spikes)[spikes_in_ping_mask].T[0]
+            spikes_ex_per_times = [
+                np.count_nonzero(spikes_times_in_ping == t) for t in range(simulation_outcome.simulation_time)
+            ]
+            signal = np.array(spikes_ex_per_times[299:])
 
-            frequency = self.compute_for_single_ping(
-                spikes_times=spikes_times_in_ping,
+            frequency = self.tfr_single_ping(
+                signal=signal,
                 simulation_time=simulation_outcome.simulation_time,
                 params_freqs=params_freqs
             )
@@ -58,19 +62,34 @@ class SpikingFrequencyComputer:
         print(f"Plotting ended, result: {path[3:]}")
 
 
-    def compute_for_single_ping(
-            self, spikes_times: np.ndarray[int, int], simulation_time: int, params_freqs: ParamsFrequencies
+    def fft_single_ping(
+            self, signal: np.ndarray[int, int], params_freqs: ParamsFrequencies
     ) -> int:
+        """
+        TODO
+        :param signal:
+        :param simulation_time:
+        :param params_freqs:
+        :return:
+        """
 
-        # number of excitatory neurons fired at each time
-        spikes_ex_per_times = [np.count_nonzero(spikes_times == t) for t in range(simulation_time)]
-        signal = spikes_ex_per_times[299:]
+        fft_data = fft.fft(signal)
+        freqs = fft.fftfreq(len(signal), d=1 / 1000)
 
-        # making TFR
-        frequency = self._make_tfr(simulation_time, signal, params_freqs)
-        return frequency
+        gamma_indices = np.argwhere(
+            (freqs >= params_freqs.frequencies[0]) &
+            (freqs <= params_freqs.frequencies[-1])
+        ).flatten()
+        max_i = np.argmax(np.abs(fft_data[gamma_indices]))
+        freq_max = freqs[gamma_indices][max_i]
+        freq_max_abs = np.abs(freq_max)
 
-    def _make_tfr(self, simulation_time: int, signal: list[int], params_freqs: ParamsFrequencies) -> int:
+        return np.abs(freq_max_abs)
+
+
+    def tfr_single_ping(
+            self, signal: np.ndarray[int, int], simulation_time: int, params_freqs: ParamsFrequencies
+    ) -> int:
         """
         TODO:: Determines most prominent frequency??
 

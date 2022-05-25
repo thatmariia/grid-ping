@@ -6,7 +6,7 @@ from src.izhikevich_simulation.IzhikevichNetworkSimulator import *
 from src.SpikingFrequencyComputer import *
 from src.debug_funcs import *
 
-DEBUGMODE = True
+DEBUGMODE = False
 
 
 if __name__ == "__main__":

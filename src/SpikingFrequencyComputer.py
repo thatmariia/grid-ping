@@ -7,6 +7,7 @@ from math import floor, pi
 from scipy import fft
 import matplotlib.pyplot as plt
 from collections import Counter
+from tqdm import tqdm
 
 import warnings
 
@@ -22,7 +23,9 @@ class SpikingFrequencyComputer:
 
         frequencies = []
 
-        for ping_network in simulation_outcome.grid_geometry.ping_networks:
+        for ping_network in (pbar := tqdm(simulation_outcome.grid_geometry.ping_networks)):
+            pbar.set_description("Frequency distribution per PING")
+
             # select ex neurons for a single ping network from spikes
             spikes_in_ping_mask = np.isin(
                 np.array(simulation_outcome.spikes).T[1], ping_network.ids[NeuronTypes.EX]
@@ -47,15 +50,13 @@ class SpikingFrequencyComputer:
     def plot_ping_frequencies(self, frequencies):
         # TODO:: make pretty
 
-        print(frequencies)
-
         print("Plotting current-frequency.....", end="")
         path = "../plots/test-freq-in-pings.png"
 
         fig, ax = plt.subplots(figsize=(30, 30))
         ax.tick_params(axis='both', which='major', labelsize=50)
 
-        plt.hist(frequencies, color="#ACDDE7")
+        plt.hist(frequencies, color="#ACDDE7", rwidth=0.7)
         fig.savefig(path, bbox_inches='tight')
 
         print(end="\r", flush=True)

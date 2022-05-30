@@ -61,15 +61,18 @@ class FrequencyToCurrentConverter:
             spikes_ex_per_times = [np.count_nonzero(spikes_ex_times == t) for t in range(simulation_time)]
             signal = np.array(spikes_ex_per_times[299:])
 
-            g_power[i] = frequency_computer.fft_single_ping(
-                signal=signal,
-                params_freqs=params_freqs
+            # g_power[i] = frequency_computer.fft_single_ping(
+            #     signal=signal,
+            #     params_freqs=params_freqs
+            # )
+
+            g_power[i] = frequency_computer.tfr_single_ping(
+                signal, simulation_time, params_freqs
             )
 
         # fitting a line
         inputs = np.array(inputs)
         fitted_model = self._fit_line_robust(x=inputs, y=g_power.reshape((-1, 1)))
-        print(fitted_model.coef_, fitted_model.intercept_)
 
         # plot
         freqs_line = np.arange(g_power.min(), g_power.max(), 0.01)

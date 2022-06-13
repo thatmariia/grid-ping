@@ -2,6 +2,7 @@ from src.params.ParamsIzhikevich import *
 
 from src.izhikevich_simulation.CurrentComponents import *
 from src.izhikevich_simulation.IzhikevichNetworkOutcome import *
+from src.SpikingFrequencyComputer import *
 
 from tqdm import tqdm
 import numpy as np
@@ -43,8 +44,9 @@ class IzhikevichNetworkSimulator:
     :ivar _pb_off: indicates whether the progress bar should be off.
     """
 
-    def __init__(self, params_izhi: ParamsIzhikevich, current_components: CurrentComponents, pb_off=True):
+    def __init__(self, params_izhi: ParamsIzhikevich, params_freqs, current_components: CurrentComponents, pb_off=True):
         self._params_izhi: ParamsIzhikevich = params_izhi
+        self.params_freqs = params_freqs
         self._current_components: CurrentComponents = current_components
         self._pb_off = pb_off
 
@@ -95,12 +97,27 @@ class IzhikevichNetworkSimulator:
             potentials = potentials + 0.5 * self._get_change_in_potentials(potentials, recovery, currents)
             recovery = recovery + self._get_change_in_recovery(potentials, recovery, izhi_alpha, izhi_beta)
 
-        outcome = IzhikevichNetworkOutcome(
-            spikes=spikes,
-            params_ping=self._current_components.connectivity.params_ping,
-            simulation_time=simulation_time,
-            grid_geometry=self._current_components.connectivity.grid_geometry
-        )
+            if (t > 0) and (t % 1000 == 0):
+
+                outcome = IzhikevichNetworkOutcome(
+                    spikes=spikes,
+                    params_ping=self._current_components.connectivity.params_ping,
+                    simulation_time=simulation_time,
+                    grid_geometry=self._current_components.connectivity.grid_geometry
+                )
+
+                ping_frequencies = SpikingFrequencyComputer().compute_for_all_pings(
+                    simulation_outcome=outcome,
+                    params_freqs=self.params_freqs
+                )
+                SpikingFrequencyComputer().plot_ping_frequencies(ping_frequencies, t=t)
+
+        # outcome = IzhikevichNetworkOutcome(
+        #     spikes=spikes,
+        #     params_ping=self._current_components.connectivity.params_ping,
+        #     simulation_time=simulation_time,
+        #     grid_geometry=self._current_components.connectivity.grid_geometry
+        # )
 
         return outcome
 

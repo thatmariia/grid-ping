@@ -8,6 +8,7 @@ from scipy import fft
 import matplotlib.pyplot as plt
 from collections import Counter
 from tqdm import tqdm
+import seaborn as sns
 
 import warnings
 
@@ -15,6 +16,7 @@ import warnings
 class SpikingFrequencyComputer:
     """
     TODO:: docs
+    TODO:: assrt that outcome isnt empty
     """
 
     def compute_for_all_pings(
@@ -23,7 +25,7 @@ class SpikingFrequencyComputer:
 
         frequencies = []
 
-        for ping_network in (pbar := tqdm(simulation_outcome.grid_geometry.ping_networks)):
+        for ping_network in (pbar := tqdm(simulation_outcome.grid_geometry.ping_networks, disable=True)):
             pbar.set_description("Frequency distribution per PING")
 
             # select ex neurons for a single ping network from spikes
@@ -47,16 +49,17 @@ class SpikingFrequencyComputer:
 
         return frequencies
 
-    def plot_ping_frequencies(self, frequencies):
+    def plot_ping_frequencies(self, frequencies, t=0):
         # TODO:: make pretty
 
         print("Plotting current-frequency.....", end="")
-        path = "../plots/test-freq-in-pings.png"
+        path = f"../plots/freq-in-pings/{t}.png"
 
-        fig, ax = plt.subplots(figsize=(30, 30))
-        ax.tick_params(axis='both', which='major', labelsize=50)
+        fig, ax = plt.subplots(ncols=2, figsize=(60, 30))
+        #ax.tick_params(axis='both', which='major', labelsize=50)
 
-        plt.hist(frequencies, color="#ACDDE7", rwidth=0.7)
+        ax[0].hist(frequencies, color="#ACDDE7", rwidth=0.7)
+        sns.heatmap(np.array(frequencies).reshape(int(sqrt(len(frequencies))), int(sqrt(len(frequencies)))), ax=ax[1])
         fig.savefig(path, bbox_inches='tight')
 
         print(end="\r", flush=True)

@@ -4,6 +4,7 @@ from src.params.ParamsFrequencies import *
 from src.izhikevich_simulation.CurrentComponents import *
 from src.izhikevich_simulation.IzhikevichNetworkOutcome import *
 from src.SpikingFrequencyComputer import *
+from src.plotter.ping_frequencies import plot_ping_frequencies
 
 from tqdm import tqdm
 import numpy as np
@@ -121,7 +122,7 @@ class IzhikevichNetworkSimulator:
                     simulation_outcome=simulation_outcome,
                     params_freqs=params_freqs
                 )
-                SpikingFrequencyComputer().plot_ping_frequencies(ping_frequencies, t=t)
+                plot_ping_frequencies(ping_frequencies, round(t * dt, 2))
 
         simulation_outcome = IzhikevichNetworkOutcome(
             spikes=spikes,

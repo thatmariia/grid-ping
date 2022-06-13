@@ -3,11 +3,10 @@ from src.izhikevich_simulation.CurrentComponentsSinglePING import *
 from src.izhikevich_simulation.IzhikevichNetworkSimulator import *
 from src.SpikingFrequencyComputer import *
 
+from src.plotter.stimulus import plot_frequency_vs_current
+
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.font_manager import FontProperties
 from tqdm import tqdm
-from scipy import fft
 
 from sklearn.linear_model import TheilSenRegressor
 from sklearn.model_selection import RepeatedKFold, cross_val_score
@@ -77,7 +76,7 @@ class FrequencyToCurrentConverter:
         # plot
         freqs_line = np.arange(g_power.min(), g_power.max(), 0.01)
         currents_line = fitted_model.predict(freqs_line.reshape((len(freqs_line), 1)))
-        self._plot_relationship(g_power, inputs, freqs_line, currents_line)
+        plot_frequency_vs_current(g_power, inputs, freqs_line, currents_line)
 
         # finally, convert frequencies
         stimulus_currents = fitted_model.predict(stimulus_frequencies.reshape(len(stimulus_frequencies), 1))
@@ -168,50 +167,3 @@ class FrequencyToCurrentConverter:
 
         return simulation_outcome
 
-    def _plot_relationship(
-            self, freqs: np.ndarray[int, float], currents: np.ndarray[int, float],
-            freqs_line: np.ndarray[int, float], currents_line: np.ndarray[int, float]
-    ) -> None:
-        """
-        Plots the relationship between frequency and current.
-
-        :param freqs: frequencies from simulated data.
-        :type freqs: numpy.ndarray[int, float]
-
-        :param currents: currents from simulated data.
-        :type currents: numpy.ndarray[int, float]
-
-        :param freqs_line: frequencies from fitted line.
-        :type freqs_line: numpy.ndarray[int, float]
-
-        :param currents_line: currents from fitted line.
-        :type currents_line: numpy.ndarray[int, float]
-
-        :rtype: None
-        """
-
-        # TODO:: make pretty
-
-        print("Plotting current-frequency.....", end="")
-        path = "../plots/test-freq-current-relationship.png"
-
-        font = FontProperties()
-        font.set_family('serif')
-        font.set_name('Avenir')
-        font.set_weight('ultralight')
-
-        fig, ax = plt.subplots(figsize=(30, 30))
-        ax.tick_params(axis='both', which='major', labelsize=50)
-
-        # simulation data
-        plt.scatter(currents, freqs, linewidths=30, s=300, c="#ACDDE7")
-        # fitted line
-        plt.plot(currents_line, freqs_line, solid_capstyle='round', color="#FFA3AF", lw=10)
-
-        plt.xlabel("Current", fontsize=70, fontproperties=font, labelpad=50)
-        plt.ylabel("Frequency", fontsize=70, fontproperties=font, labelpad=50)
-
-        fig.savefig(path, bbox_inches='tight')
-
-        print(end="\r", flush=True)
-        print(f"Plotting ended, result: {path[3:]}")

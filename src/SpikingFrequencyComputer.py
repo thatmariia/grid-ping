@@ -49,23 +49,6 @@ class SpikingFrequencyComputer:
 
         return frequencies
 
-    def plot_ping_frequencies(self, frequencies, t=0):
-        # TODO:: make pretty
-
-        print("Plotting current-frequency.....", end="")
-        path = f"../plots/freq-in-pings/{t}.png"
-
-        fig, ax = plt.subplots(ncols=2, figsize=(60, 30))
-        #ax.tick_params(axis='both', which='major', labelsize=50)
-
-        ax[0].hist(frequencies, color="#ACDDE7", rwidth=0.7)
-        sns.heatmap(np.array(frequencies).reshape(int(sqrt(len(frequencies))), int(sqrt(len(frequencies)))), ax=ax[1])
-        fig.savefig(path, bbox_inches='tight')
-
-        print(end="\r", flush=True)
-        print(f"Plotting ended, result: {path[3:]}")
-
-
     def fft_single_ping(
             self, signal: np.ndarray[int, int], params_freqs: ParamsFrequencies
     ) -> int:

@@ -6,12 +6,18 @@ from src.izhikevich_simulation.IzhikevichNetworkSimulator import *
 from src.SpikingFrequencyComputer import *
 from src.debug_funcs import *
 
-DEBUGMODE = False
+from src.plotter.directory_management import *
+from src.plotter.ping_frequencies import plot_ping_frequencies
 
+import os
+
+DEBUGMODE = False
 
 if __name__ == "__main__":
     params_initializer = ParamsInitializer()
     params_ping, params_gabor, params_rf, params_connectivity, params_izhi, params_synaptic, params_freqs = params_initializer.initialize()
+
+    cd_plotting_directory(params_gabor.dist_scale, params_gabor.contrast_range)
 
     if DEBUGMODE:
         stimulus_currents, cortical_distances = try_pulling_stimulus_data(params_gabor, params_rf, params_ping, params_izhi, params_freqs)
@@ -36,7 +42,7 @@ if __name__ == "__main__":
         current_components=neural_model,
         pb_off=False
     ).simulate(
-        simulation_time=50000,
+        simulation_time=2000,
         dt=0.01,
         params_freqs=params_freqs
     )
@@ -45,4 +51,4 @@ if __name__ == "__main__":
         simulation_outcome=simulation_outcome,
         params_freqs=params_freqs
     )
-    SpikingFrequencyComputer().plot_ping_frequencies(ping_frequencies)
+    plot_ping_frequencies(ping_frequencies)

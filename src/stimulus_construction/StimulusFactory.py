@@ -5,6 +5,8 @@ from src.stimulus_construction.ContrastToFrequencyConverter import *
 from src.stimulus_construction.FrequencyToCurrentConverter import *
 from src.stimulus_construction.Stimulus import *
 
+from src.plotter.stimulus import plot_full_stimulus, plot_stimulus_patch, plot_local_contrasts
+
 import numpy as np
 
 
@@ -46,8 +48,8 @@ class StimulusFactory:
 
         stimulus_luminance = GaborLuminanceStimulusFactory().create(params_gabor)
 
-        stimulus_luminance.plot_stimulus(filename="test-full-stimulus")
-        stimulus_luminance.plot_patch(filename="test-stimulus-patch")
+        plot_full_stimulus(stimulus_luminance.stimulus)
+        plot_stimulus_patch(stimulus_luminance.stimulus_patch)
 
         assert np.shape(stimulus_luminance.stimulus_patch)[0] % int(math.sqrt(params_ping.nr_ping_networks)) == 0, \
             "Vertical lines of lattice should not cut through pixels."
@@ -66,9 +68,7 @@ class StimulusFactory:
         stimulus_contrasts = luminance_to_contrast_converter.convert(
             params_rf, patch_geometry, stimulus_luminance
         )
-        luminance_to_contrast_converter.plot_local_contrasts(
-            stimulus_contrasts.reshape(params_ping.grid_size, params_ping.grid_size), filename="test-local-contrast"
-        )
+        plot_local_contrasts(stimulus_contrasts.reshape(params_ping.grid_size, params_ping.grid_size))
 
         stimulus_frequencies = ContrastToFrequencyConverter().convert(
             stimulus_contrasts

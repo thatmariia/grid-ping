@@ -119,38 +119,3 @@ class LuminanceToContrastConverter:
         diam_rf = max(params_rf.slope * eccentricity + params_rf.intercept, params_rf.min_diam_rf)
         std = diam_rf / 4.0
         return exp(-euclidian_dist(pixel, center) / (2 * std ** 2))
-
-    def plot_local_contrasts(self, local_contrasts: np.ndarray[(int, int), float], filename: str) -> None:
-        """
-        Plots the binary heatmap of local contrasts.
-
-        :param filename: name of the file for the plot (excluding extension).
-        :type filename: str
-
-        :param local_contrasts: a local_contrasts matrix to plot.
-        :type local_contrasts: numpy.ndarray[(int, int), float]
-
-        :rtype: None
-        """
-
-        path = f"../plots/{filename}.png"
-        print("Plotting local contrasts.....", end="")
-
-        fig, ax = plt.subplots(figsize=(30, 30))
-        sns.heatmap(
-            local_contrasts,
-            annot=False,
-            vmin=0,
-            vmax=1,
-            cmap="gist_gray",
-            cbar=False,
-            square=True,
-            xticklabels=False,
-            yticklabels=False,
-            ax=ax
-        )
-
-        fig.savefig(path, bbox_inches='tight', pad_inches=0)
-
-        print(end="\r", flush=True)
-        print(f"Plotting ended, result: {path[3:]}")

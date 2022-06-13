@@ -1,4 +1,5 @@
 from src.params.ParamsIzhikevich import *
+from src.params.ParamsFrequencies import *
 
 from src.izhikevich_simulation.CurrentComponents import *
 from src.izhikevich_simulation.IzhikevichNetworkOutcome import *
@@ -6,6 +7,7 @@ from src.SpikingFrequencyComputer import *
 
 from tqdm import tqdm
 import numpy as np
+
 
 class IzhikevichNetworkSimulator:
     """
@@ -36,7 +38,7 @@ class IzhikevichNetworkSimulator:
     :type current_components: CurrentComponents
 
     :param pb_off: indicates whether the progress bar should be off, default is True.
-    :type pb_off: Bool
+    :type pb_off: bool
 
 
     :ivar _params_izhi: contains Izhikevich parameters.
@@ -44,13 +46,19 @@ class IzhikevichNetworkSimulator:
     :ivar _pb_off: indicates whether the progress bar should be off.
     """
 
-    def __init__(self, params_izhi: ParamsIzhikevich, params_freqs, current_components: CurrentComponents, pb_off=True):
+    def __init__(
+            self,
+            params_izhi: ParamsIzhikevich,
+            current_components: CurrentComponents,
+            pb_off: bool = True
+    ):
         self._params_izhi: ParamsIzhikevich = params_izhi
-        self.params_freqs = params_freqs
         self._current_components: CurrentComponents = current_components
         self._pb_off = pb_off
 
-    def simulate(self, simulation_time: int, dt: float) -> IzhikevichNetworkOutcome:
+    def simulate(
+            self, simulation_time: int, dt: float, params_freqs: Union[None, ParamsFrequencies] = None
+    ) -> IzhikevichNetworkOutcome:
         """
         Runs the simulation.
 
@@ -62,6 +70,9 @@ class IzhikevichNetworkSimulator:
 
         :param dt: time interval
         :type dt: float
+
+        :param params_freqs: TODO, default is None
+        :type params_freqs: TODO
 
         :return: collected information from the simulation.
         :rtype: IzhikevichNetworkOutcome
@@ -77,7 +88,8 @@ class IzhikevichNetworkSimulator:
             pbar.set_description("Network simulation")
 
             # spiking
-            fired_neurons_ids = np.argwhere(potentials >= self._params_izhi.peak_potential).flatten()  # indices of spikes
+            fired_neurons_ids = np.argwhere(
+                potentials >= self._params_izhi.peak_potential).flatten()  # indices of spikes
             for id in fired_neurons_ids:
                 spikes.append((t, id))
 
@@ -97,29 +109,28 @@ class IzhikevichNetworkSimulator:
             potentials = potentials + 0.5 * self._get_change_in_potentials(potentials, recovery, currents)
             recovery = recovery + self._get_change_in_recovery(potentials, recovery, izhi_alpha, izhi_beta)
 
-            if (t > 0) and (t % 1000 == 0):
-
-                outcome = IzhikevichNetworkOutcome(
+            # plotting frequency distribution every 1000 epochs
+            if (params_freqs is not None) and (t > 0) and ((t + 1) % 1000 == 0):
+                simulation_outcome = IzhikevichNetworkOutcome(
                     spikes=spikes,
                     params_ping=self._current_components.connectivity.params_ping,
                     simulation_time=simulation_time,
                     grid_geometry=self._current_components.connectivity.grid_geometry
                 )
-
                 ping_frequencies = SpikingFrequencyComputer().compute_for_all_pings(
-                    simulation_outcome=outcome,
-                    params_freqs=self.params_freqs
+                    simulation_outcome=simulation_outcome,
+                    params_freqs=params_freqs
                 )
                 SpikingFrequencyComputer().plot_ping_frequencies(ping_frequencies, t=t)
 
-        # outcome = IzhikevichNetworkOutcome(
-        #     spikes=spikes,
-        #     params_ping=self._current_components.connectivity.params_ping,
-        #     simulation_time=simulation_time,
-        #     grid_geometry=self._current_components.connectivity.grid_geometry
-        # )
+        simulation_outcome = IzhikevichNetworkOutcome(
+            spikes=spikes,
+            params_ping=self._current_components.connectivity.params_ping,
+            simulation_time=simulation_time,
+            grid_geometry=self._current_components.connectivity.grid_geometry
+        )
 
-        return outcome
+        return simulation_outcome
 
     def _get_izhi_parameters(self) \
             -> tuple[np.ndarray[int, float], ...]:
@@ -156,7 +167,7 @@ class IzhikevichNetworkSimulator:
         """
 
         potentials = np.array([
-                -65 for _ in range(self._current_components.connectivity.params_ping.nr_neurons["total"])
+            -65 for _ in range(self._current_components.connectivity.params_ping.nr_neurons["total"])
         ])
         recovery = np.multiply(izhi_beta, potentials)
         return potentials, recovery
@@ -188,7 +199,6 @@ class IzhikevichNetworkSimulator:
 
         return izhi_alpha * (izhi_beta * potentials - recovery)
 
-
     def _get_change_in_potentials(
             self, potentials: np.ndarray[int, float], recovery: np.ndarray[int, float], currents: np.ndarray[int, float]
     ) -> np.ndarray[int, float]:
@@ -212,8 +222,3 @@ class IzhikevichNetworkSimulator:
 
         # TODO:: why do we multiply the equation for dv/dt with 0.5 and then call this function twice in run_simulation?
         return 0.04 * np.power(potentials, 2) + 5 * potentials + 140 - recovery + currents
-
-
-
-
-

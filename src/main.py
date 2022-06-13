@@ -6,7 +6,7 @@ from src.izhikevich_simulation.IzhikevichNetworkSimulator import *
 from src.SpikingFrequencyComputer import *
 from src.debug_funcs import *
 
-DEBUGMODE = True
+DEBUGMODE = False
 
 
 if __name__ == "__main__":
@@ -33,16 +33,16 @@ if __name__ == "__main__":
     )
     simulation_outcome = IzhikevichNetworkSimulator(
         params_izhi=params_izhi,
-        params_freqs=params_freqs,
         current_components=neural_model,
         pb_off=False
     ).simulate(
         simulation_time=50000,
-        dt=0.01
+        dt=0.01,
+        params_freqs=params_freqs
     )
 
-    # ping_frequencies = SpikingFrequencyComputer().compute_for_all_pings(
-    #     simulation_outcome=simulation_outcome,
-    #     params_freqs=params_freqs
-    # )
-    # SpikingFrequencyComputer().plot_ping_frequencies(ping_frequencies)
+    ping_frequencies = SpikingFrequencyComputer().compute_for_all_pings(
+        simulation_outcome=simulation_outcome,
+        params_freqs=params_freqs
+    )
+    SpikingFrequencyComputer().plot_ping_frequencies(ping_frequencies)

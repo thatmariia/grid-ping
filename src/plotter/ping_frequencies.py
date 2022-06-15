@@ -1,8 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
+import matplotlib.image as mpimg
 import seaborn as sns
 from math import sqrt
+import os
 
 from src.plotter.setup import PlotPaths
 
@@ -25,3 +27,17 @@ def plot_ping_frequencies(frequencies, t_ms=-1):
 
     print(end="\r", flush=True)
     print(f"Plotting ended, result: {path}")
+
+
+def fetch_ping_frequencies():
+    return mpimg.imread(PlotPaths.FREQUENCY_DISTRIBUTION.value + ".png")
+
+
+def fetch_ping_frequencies_evolution():
+    filenames = sorted([
+        f for f in os.listdir(PlotPaths.FREQUENCY_DISTRIBUTION_EVOLUTION.value)
+        if os.path.isfile(os.path.join(PlotPaths.FREQUENCY_DISTRIBUTION_EVOLUTION.value, f))
+    ])
+    print(filenames)
+    return [mpimg.imread(PlotPaths.FREQUENCY_DISTRIBUTION_EVOLUTION.value + "/" + f) for f in filenames]
+

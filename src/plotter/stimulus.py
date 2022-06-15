@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
+import matplotlib.image as mpimg
 import seaborn as sns
 
 from src.plotter.setup import PlotPaths
@@ -11,9 +12,17 @@ def plot_full_stimulus(stimulus: np.ndarray[(int, int), float]):
     _plot_bw_square_heatmap(stimulus, PlotPaths.FULL_STIMULUS.value)
 
 
+def fetch_full_stimulus():
+    return mpimg.imread(PlotPaths.FULL_STIMULUS.value + ".png")
+
+
 def plot_stimulus_patch(stimulus_patch: np.ndarray[(int, int), float]):
     print("Plotting patch.....", end="")
     _plot_bw_square_heatmap(stimulus_patch, PlotPaths.STIMULUS_PATCH.value)
+
+
+def fetch_stimulus_patch():
+    return mpimg.imread(PlotPaths.STIMULUS_PATCH.value + ".png")
 
 
 def plot_local_contrasts(local_contrasts: np.ndarray[(int, int), float]):
@@ -28,6 +37,10 @@ def plot_local_contrasts(local_contrasts: np.ndarray[(int, int), float]):
 
     print("Plotting local contrasts.....", end="")
     _plot_bw_square_heatmap(local_contrasts, PlotPaths.LOCAL_CONTRAST.value)
+
+
+def fetch_local_contrasts():
+    return mpimg.imread(PlotPaths.LOCAL_CONTRAST.value + ".png")
 
 
 def plot_frequency_vs_current(
@@ -77,6 +90,11 @@ def plot_frequency_vs_current(
 
     print(end="\r", flush=True)
     print(f"Plotting ended, result: {path}")
+
+
+def fetch_frequency_vs_current():
+    return mpimg.imread(PlotPaths.FREQUENCY_VS_CURRENT.value + ".png")
+
 
 
 def _plot_bw_square_heatmap(data: np.ndarray[(int, int), float], filename: str) -> None:

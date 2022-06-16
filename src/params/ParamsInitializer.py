@@ -11,7 +11,7 @@ class ParamsInitializer:
     This class initializes user-defined parameters.
     """
 
-    def initialize(self):
+    def initialize(self, dist_scale=1.5, contrast_range=0.01):
         params_ping = ParamsPING(
             nr_excitatory=400,
             nr_inhibitory=100,
@@ -22,10 +22,10 @@ class ParamsInitializer:
             vlum=0.5,
             diameter_dg=0.7,
             diameter=50,
-            dist_scale=1.5,
+            dist_scale=dist_scale,
             full_width_dg=33.87,
             full_height_dg=27.09,
-            contrast_range=0.01,
+            contrast_range=contrast_range,
             figure_width_dg=5,
             figure_height_dg=9,
             figure_ecc_dg=7,

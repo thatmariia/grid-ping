@@ -1,5 +1,7 @@
 from enum import Enum
 
+PLOT_FORMAT = ".png"
+PLOT_SIZE = 10
 
 class PlotNames(Enum):
 

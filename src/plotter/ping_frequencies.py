@@ -6,31 +6,41 @@ import seaborn as sns
 from math import sqrt
 import os
 
-from src.plotter.setup import PlotPaths
+from src.plotter.setup import PlotPaths, PLOT_FORMAT, PLOT_SIZE
+
+
+def display_ping_frequencies():
+    fig, ax = plt.subplots(figsize=(10, 5))
+
+    ax.imshow(fetch_ping_frequencies())
+    ax.axis('off')
+    plt.show()
 
 
 def plot_ping_frequencies(frequencies, t_ms=-1):
     # TODO:: make pretty
 
-    print("Plotting current-frequency.....", end="")
     if t_ms == -1:
-        path = f"{PlotPaths.FREQUENCY_DISTRIBUTION.value}.png"
+        print("Plotting current-frequency.....", end="")
+        path = f"{PlotPaths.FREQUENCY_DISTRIBUTION.value}{PLOT_FORMAT}"
     else:
-        path = f"{PlotPaths.FREQUENCY_DISTRIBUTION_EVOLUTION.value}/{t_ms}ms.png"
+        path = f"{PlotPaths.FREQUENCY_DISTRIBUTION_EVOLUTION.value}/{t_ms}ms{PLOT_FORMAT}"
 
-    fig, ax = plt.subplots(ncols=2, figsize=(60, 30))
+    fig, ax = plt.subplots(ncols=2, figsize=(2 * PLOT_SIZE, PLOT_SIZE))
     # ax.tick_params(axis='both', which='major', labelsize=50)
 
     ax[0].hist(frequencies, color="#ACDDE7", rwidth=0.7)
     sns.heatmap(np.array(frequencies).reshape(int(sqrt(len(frequencies))), int(sqrt(len(frequencies)))), ax=ax[1])
     fig.savefig(path, bbox_inches='tight')
+    plt.close()
 
-    print(end="\r", flush=True)
-    print(f"Plotting ended, result: {path}")
+    if t_ms == -1:
+        print(end="\r", flush=True)
+        print(f"Plotting ended, result: {path}")
 
 
 def fetch_ping_frequencies():
-    return mpimg.imread(PlotPaths.FREQUENCY_DISTRIBUTION.value + ".png")
+    return mpimg.imread(PlotPaths.FREQUENCY_DISTRIBUTION.value + PLOT_FORMAT)
 
 
 def fetch_ping_frequencies_evolution():

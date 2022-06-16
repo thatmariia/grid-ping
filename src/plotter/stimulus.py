@@ -4,7 +4,31 @@ from matplotlib.font_manager import FontProperties
 import matplotlib.image as mpimg
 import seaborn as sns
 
-from src.plotter.setup import PlotPaths
+from src.plotter.setup import PlotPaths, PLOT_FORMAT, PLOT_SIZE
+
+
+def display_patch_plots():
+    fig, ax = plt.subplots(ncols=2, figsize=(10, 5))
+
+    ax[0].imshow(fetch_stimulus_patch())
+    ax[0].axis('off')
+    ax[1].imshow(fetch_local_contrasts())
+    ax[1].axis('off')
+    plt.show()
+
+def display_full_stimulus():
+    fig, ax = plt.subplots(figsize=(10, 10))
+
+    ax.imshow(fetch_full_stimulus())
+    ax.axis('off')
+    plt.show()
+
+def display_frequency_vs_current():
+    fig, ax = plt.subplots(figsize=(7, 7))
+
+    ax.imshow(fetch_frequency_vs_current())
+    ax.axis('off')
+    plt.show()
 
 
 def plot_full_stimulus(stimulus: np.ndarray[(int, int), float]):
@@ -13,7 +37,7 @@ def plot_full_stimulus(stimulus: np.ndarray[(int, int), float]):
 
 
 def fetch_full_stimulus():
-    return mpimg.imread(PlotPaths.FULL_STIMULUS.value + ".png")
+    return mpimg.imread(PlotPaths.FULL_STIMULUS.value + PLOT_FORMAT)
 
 
 def plot_stimulus_patch(stimulus_patch: np.ndarray[(int, int), float]):
@@ -22,7 +46,7 @@ def plot_stimulus_patch(stimulus_patch: np.ndarray[(int, int), float]):
 
 
 def fetch_stimulus_patch():
-    return mpimg.imread(PlotPaths.STIMULUS_PATCH.value + ".png")
+    return mpimg.imread(PlotPaths.STIMULUS_PATCH.value + PLOT_FORMAT)
 
 
 def plot_local_contrasts(local_contrasts: np.ndarray[(int, int), float]):
@@ -40,7 +64,7 @@ def plot_local_contrasts(local_contrasts: np.ndarray[(int, int), float]):
 
 
 def fetch_local_contrasts():
-    return mpimg.imread(PlotPaths.LOCAL_CONTRAST.value + ".png")
+    return mpimg.imread(PlotPaths.LOCAL_CONTRAST.value + PLOT_FORMAT)
 
 
 def plot_frequency_vs_current(
@@ -68,18 +92,18 @@ def plot_frequency_vs_current(
     # TODO:: make pretty
 
     print("Plotting current-frequency.....", end="")
-    path = f"{PlotPaths.FREQUENCY_VS_CURRENT.value}.png"
+    path = f"{PlotPaths.FREQUENCY_VS_CURRENT.value}{PLOT_FORMAT}"
 
     font = FontProperties()
     font.set_family('serif')
     font.set_name('Avenir')
     font.set_weight('ultralight')
 
-    fig, ax = plt.subplots(figsize=(30, 30))
+    fig, ax = plt.subplots(figsize=(PLOT_SIZE, PLOT_SIZE))
     ax.tick_params(axis='both', which='major', labelsize=50)
 
     # simulation data
-    plt.scatter(currents, freqs, linewidths=30, s=300, c="#ACDDE7")
+    plt.scatter(currents, freqs, linewidths=10, s=100, c="#ACDDE7")
     # fitted line
     plt.plot(currents_line, freqs_line, solid_capstyle='round', color="#FFA3AF", lw=10)
 
@@ -87,13 +111,14 @@ def plot_frequency_vs_current(
     plt.ylabel("Frequency", fontsize=70, fontproperties=font, labelpad=50)
 
     fig.savefig(path, bbox_inches='tight')
+    plt.close()
 
     print(end="\r", flush=True)
     print(f"Plotting ended, result: {path}")
 
 
 def fetch_frequency_vs_current():
-    return mpimg.imread(PlotPaths.FREQUENCY_VS_CURRENT.value + ".png")
+    return mpimg.imread(PlotPaths.FREQUENCY_VS_CURRENT.value + PLOT_FORMAT)
 
 
 
@@ -110,9 +135,9 @@ def _plot_bw_square_heatmap(data: np.ndarray[(int, int), float], filename: str) 
     :rtype: None
     """
 
-    path = f"{filename}.png"
+    path = f"{filename}{PLOT_FORMAT}"
 
-    fig, ax = plt.subplots(figsize=(30, 30))
+    fig, ax = plt.subplots(figsize=(PLOT_SIZE, PLOT_SIZE))
     sns.heatmap(
         data,
         annot=False,
@@ -127,6 +152,7 @@ def _plot_bw_square_heatmap(data: np.ndarray[(int, int), float], filename: str) 
     )
 
     fig.savefig(path, bbox_inches='tight', pad_inches=0)
+    plt.close()
 
     print(end="\r", flush=True)
     print(f"Plotting ended, result: {path}")

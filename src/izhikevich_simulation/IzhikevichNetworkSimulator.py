@@ -1,9 +1,7 @@
 from src.params.ParamsIzhikevich import *
-from src.params.ParamsFrequencies import *
 
 from src.izhikevich_simulation.CurrentComponents import *
-from src.izhikevich_simulation.IzhikevichNetworkOutcome import *
-from src.SpikingFrequencyComputer import *
+from src.spiking_frequencies.SpikingFrequencyFactory import *
 from src.plotter.ping_frequencies import plot_ping_frequencies
 
 from tqdm import tqdm
@@ -118,11 +116,11 @@ class IzhikevichNetworkSimulator:
                     simulation_time=simulation_time,
                     grid_geometry=self._current_components.connectivity.grid_geometry
                 )
-                ping_frequencies = SpikingFrequencyComputer().compute_for_all_pings(
+                spiking_frequencies = SpikingFrequencyFactory().compute_for_all_pings(
                     simulation_outcome=simulation_outcome,
                     params_freqs=params_freqs
                 )
-                plot_ping_frequencies(ping_frequencies, round(t * dt, 2))
+                plot_ping_frequencies(spiking_frequencies.ping_frequencies, round(t * dt, 2))
 
         simulation_outcome = IzhikevichNetworkOutcome(
             spikes=spikes,

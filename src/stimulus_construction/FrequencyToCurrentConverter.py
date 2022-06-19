@@ -1,7 +1,7 @@
 from src.izhikevich_simulation.ConnectivitySinglePINGFactory import *
 from src.izhikevich_simulation.CurrentComponentsSinglePING import *
 from src.izhikevich_simulation.IzhikevichNetworkSimulator import *
-from src.SpikingFrequencyComputer import *
+from src.spiking_frequencies.SpikingFrequencyFactory import *
 
 from src.plotter.stimulus import plot_frequency_vs_current
 
@@ -43,7 +43,7 @@ class FrequencyToCurrentConverter:
         simulation_time = 1000
         inputs = list(range(20, 51))
         g_power = np.zeros(len(inputs)) * np.nan
-        frequency_computer = SpikingFrequencyComputer()
+        frequency_computer = SpikingFrequencyFactory()
 
         for i in (pbar := tqdm(range(len(inputs)))):
             pbar.set_description("Stimulus conversion to current")

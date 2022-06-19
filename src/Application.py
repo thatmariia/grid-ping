@@ -1,18 +1,16 @@
 from src.params.ParamsInitializer import *
-from src.stimulus_construction.StimulusFactory import *
 from src.izhikevich_simulation.ConnectivityGridPINGFactory import *
 from src.izhikevich_simulation.CurrentComponentsGridPING import *
-from src.izhikevich_simulation.IzhikevichNetworkSimulator import *
-from src.SpikingFrequencyComputer import *
+from src.spiking_frequencies.SpikingFrequencyFactory import *
 from src.debug_funcs import *
 
 from src.plotter.directory_management import *
 from src.plotter.ping_frequencies import plot_ping_frequencies
 
-import os
 from itertools import product
 
 DEBUGMODE = False
+
 
 class Application:
 
@@ -67,11 +65,11 @@ class Application:
                 params_freqs=params_freqs
             )
 
-            ping_frequencies = SpikingFrequencyComputer().compute_for_all_pings(
+            spiking_frequencies = SpikingFrequencyFactory().compute_for_all_pings(
                 simulation_outcome=simulation_outcome,
                 params_freqs=params_freqs
             )
-            plot_ping_frequencies(ping_frequencies)
+            plot_ping_frequencies(spiking_frequencies.ping_frequencies)
 
             return_to_start_path()
 

@@ -1,19 +1,15 @@
-from src.params.ParamsPING import *
 from src.izhikevich_simulation.IzhikevichNetworkOutcome import *
 from src.params.ParamsFrequencies import *
+from src.spiking_frequencies.SpikingFrequency import SpikingFrequency
 
 import numpy as np
-from math import floor, pi
 from scipy import fft
-import matplotlib.pyplot as plt
-from collections import Counter
 from tqdm import tqdm
-import seaborn as sns
 
 import warnings
 
 
-class SpikingFrequencyComputer:
+class SpikingFrequencyFactory:
     """
     TODO:: docs
     TODO:: assrt that outcome isnt empty
@@ -21,7 +17,7 @@ class SpikingFrequencyComputer:
 
     def compute_for_all_pings(
             self, simulation_outcome: IzhikevichNetworkOutcome, params_freqs: ParamsFrequencies
-    ) -> list[int]:
+    ) -> SpikingFrequency:
 
         frequencies = []
 
@@ -47,7 +43,9 @@ class SpikingFrequencyComputer:
             )
             frequencies.append(frequency)
 
-        return frequencies
+        spiking_frequency = SpikingFrequency(frequencies)
+
+        return spiking_frequency
 
     def fft_single_ping(
             self, signal: np.ndarray[int, int], params_freqs: ParamsFrequencies

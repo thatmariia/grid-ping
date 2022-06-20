@@ -5,9 +5,10 @@ from src.spiking_frequencies.SpikingFrequencyFactory import *
 from src.debug_funcs import *
 
 from src.plotter.directory_management import *
-from src.plotter.ping_frequencies import plot_ping_frequencies
+from src.plotter.ping_frequencies import plot_ping_frequencies, plot_frequencies_std
 
 from itertools import product
+import pandas as pd
 
 DEBUGMODE = False
 
@@ -15,12 +16,15 @@ DEBUGMODE = False
 class Application:
 
     def run(self):
+        clear_simulation_directory()
 
         # [1.0, 1.125, 1.25, 1.375, 1.5]
         dist_scales = [1.0, 1.5]
 
         # [0.01, 0.0257, 0.505, 0.7525, 1]
         contrast_ranges = [0.01, 1]
+
+        frequencies_std = pd.DataFrame(index=dist_scales, columns=contrast_ranges, dtype=float)
 
         for dist_scale, contrast_range in product(dist_scales, contrast_ranges):
 
@@ -34,7 +38,7 @@ class Application:
                 contrast_range=contrast_range
             )
 
-            cd_or_create_plotting_directory(params_gabor.dist_scale, params_gabor.contrast_range)
+            cd_or_create_partic_plotting_directory(params_gabor.dist_scale, params_gabor.contrast_range)
 
             if DEBUGMODE:
                 stimulus_currents, cortical_distances = try_pulling_stimulus_data(params_gabor, params_rf, params_ping,
@@ -71,5 +75,14 @@ class Application:
             )
             plot_ping_frequencies(spiking_frequencies.ping_frequencies)
 
-            return_to_start_path()
+            frequencies_std.loc[dist_scale, contrast_range] = spiking_frequencies.std
+
+            return_to_start_path_from_partic()
+
+        cd_or_create_general_plotting_directory()
+
+        plot_frequencies_std(frequencies_std)
+        # print(frequencies_std)
+
+        return_to_start_path_from_general()
 

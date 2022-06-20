@@ -11,3 +11,4 @@ matplotlib
 coverage
 scipy
 sklearn
+pandas

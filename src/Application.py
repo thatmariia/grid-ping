@@ -2,6 +2,7 @@ from src.params.ParamsInitializer import *
 from src.izhikevich_simulation.ConnectivityGridPINGFactory import *
 from src.izhikevich_simulation.CurrentComponentsGridPING import *
 from src.spiking_frequencies.SpikingFrequencyFactory import *
+from src.spiking_frequencies.CrossCorrelationFactory import CrossCorrelationFactory
 from src.debug_funcs import *
 
 from src.plotter.directory_management import *
@@ -19,10 +20,10 @@ class Application:
         clear_simulation_directory()
 
         # [1.0, 1.125, 1.25, 1.375, 1.5]
-        dist_scales = [1.0, 1.5]
+        dist_scales = [1.0]
 
         # [0.01, 0.0257, 0.505, 0.7525, 1]
-        contrast_ranges = [0.01, 1]
+        contrast_ranges = [0.01]
 
         frequencies_std = pd.DataFrame(index=dist_scales, columns=contrast_ranges, dtype=float)
 
@@ -59,17 +60,20 @@ class Application:
                 params_synaptic=params_synaptic,
                 stimulus_currents=stimulus_currents
             )
+            simulation_time = 100000
             simulation_outcome = IzhikevichNetworkSimulator(
                 params_izhi=params_izhi,
                 current_components=neural_model,
                 pb_off=False
             ).simulate(
-                simulation_time=2000,
-                dt=0.01,
+                simulation_time=simulation_time,
+                dt=0.001,
                 params_freqs=params_freqs
             )
 
-            spiking_frequencies = SpikingFrequencyFactory().compute_for_all_pings(
+            cc = CrossCorrelationFactory().create(simulation_outcome, params_ping, simulation_time)
+
+            spiking_frequencies = SpikingFrequencyFactory().create(
                 simulation_outcome=simulation_outcome,
                 params_freqs=params_freqs
             )

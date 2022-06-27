@@ -15,7 +15,7 @@ class SpikingFrequencyFactory:
     TODO:: assrt that outcome isnt empty
     """
 
-    def compute_for_all_pings(
+    def create(
             self, simulation_outcome: IzhikevichNetworkOutcome, params_freqs: ParamsFrequencies
     ) -> SpikingFrequency:
 

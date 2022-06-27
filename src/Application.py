@@ -20,10 +20,10 @@ class Application:
         clear_simulation_directory()
 
         # [1.0, 1.125, 1.25, 1.375, 1.5]
-        dist_scales = [1.0]
+        dist_scales = [1.0, 1.125, 1.25, 1.375, 1.5]
 
         # [0.01, 0.0257, 0.505, 0.7525, 1]
-        contrast_ranges = [0.01]
+        contrast_ranges = [0.01, 0.0257, 0.505, 0.7525, 1]
 
         frequencies_std = pd.DataFrame(index=dist_scales, columns=contrast_ranges, dtype=float)
 
@@ -60,7 +60,7 @@ class Application:
                 params_synaptic=params_synaptic,
                 stimulus_currents=stimulus_currents
             )
-            simulation_time = 100000
+            simulation_time = 1000000
             simulation_outcome = IzhikevichNetworkSimulator(
                 params_izhi=params_izhi,
                 current_components=neural_model,

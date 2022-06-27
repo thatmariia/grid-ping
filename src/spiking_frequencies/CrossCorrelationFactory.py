@@ -42,14 +42,16 @@ class CrossCorrelationFactory:
 
     def _compute_cross_correlation(self, spike_dat, simulation_time):
         max_lag = 12
+        step_size = 10
+
+        allcoh = np.zeros((spike_dat.shape[0] // step_size, spike_dat.shape[0] // step_size))
+        alltim = np.zeros((spike_dat.shape[0] // step_size, spike_dat.shape[0] // step_size))
 
         nn1 = 0
         time_window = list(range(199, simulation_time - 50))
-        for id1 in range(0, spike_dat.shape[0], 10):
-            nn1 += 1
+        for id1 in range(0, spike_dat.shape[0], step_size):
             nn2 = 0
-            for id2 in range(0, spike_dat.shape[0], 10):
-                nn2 += 1
+            for id2 in range(0, spike_dat.shape[0], step_size):
                 if id1 != id2:
 
                     sig1 = spike_dat[id1, time_window].T
@@ -61,7 +63,6 @@ class CrossCorrelationFactory:
                     if correlation.shape[0] > (2 * max_lag + 1):
                         mid = correlation.shape[0] // 2 + 1
                         correlation = correlation[mid - max_lag:mid + max_lag + 1]
-                    print(correlation)
 
                     # normalizing correlation
                     correlation = correlation / sqrt(
@@ -69,15 +70,32 @@ class CrossCorrelationFactory:
                         self._correlate_with_zero_lag(sig2, sig2)
                     )
 
+                    peak_lag = np.argmax(correlation)
+                    peak_height = correlation[peak_lag]
+
+                else:
+                    # autocorrelation
+
+                    peak_lag = max_lag + 1
+                    peak_height = 1
+
+                allcoh[nn1, nn2] = peak_height
+                alltim[nn1, nn2] = peak_lag
+
+                nn2 += 1
+            nn1 += 1
+
+        print(allcoh)
+        print("********")
+        print(alltim)
+
     def _correlate_with_zero_lag(self, sig1, sig2):
-        """
-        TODO:: what to do if 0?
-        :param sig1:
-        :param sig2:
-        :return:
-        """
+
         correlation = correlate(sig1, sig2)
         mid = correlation.shape[0] // 2 + 1
+        # FIXME:: what to actually do when encounter 0?
+        if correlation[mid] == 0:
+            return 1
         return correlation[mid]
 
     def _get_type_raster(self, spikes_type, params_ping, neur_type, simulation_time):

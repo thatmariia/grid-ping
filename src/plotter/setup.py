@@ -12,6 +12,7 @@ class PlotNames(Enum):
     FREQUENCY_VS_CURRENT = "frequency-vs-current"
     FREQUENCY_DISTRIBUTION_EVOLUTION = "frequency-distribution-evolution"
     FREQUENCY_DISTRIBUTION = "frequency-distribution"
+    FREQUENCY_SINGLE_PING_EVOLUTION = "frequency-single-ping-evolution"
     FREQUENCY_STDS = "frequency-stds"
 
 
@@ -33,4 +34,5 @@ class PlotPaths(Enum):
     FREQUENCY_VS_CURRENT = f"{ParticSubdirectoryNames.STIMULUS_CONSTRUCTION.value}/{PlotNames.FREQUENCY_VS_CURRENT.value}"
     FREQUENCY_DISTRIBUTION_EVOLUTION = f"{ParticSubdirectoryNames.PING_FREQUENCIES.value}/{PlotNames.FREQUENCY_DISTRIBUTION_EVOLUTION.value}"
     FREQUENCY_DISTRIBUTION = f"{ParticSubdirectoryNames.PING_FREQUENCIES.value}/{PlotNames.FREQUENCY_DISTRIBUTION.value}"
+    FREQUENCY_SINGLE_PING_EVOLUTION = f"{ParticSubdirectoryNames.PING_FREQUENCIES.value}/{PlotNames.FREQUENCY_SINGLE_PING_EVOLUTION.value}"
     FREQUENCY_STDS = f"{PlotNames.FREQUENCY_STDS.value}"

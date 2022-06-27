@@ -25,6 +25,14 @@ def display_frequencies_std():
     plt.show()
 
 
+def display_single_ping_frequency_evolution():
+    fig, ax = plt.subplots(figsize=(PLOT_SIZE, PLOT_SIZE))
+
+    ax.imshow(fetch_single_ping_frequency_evolution())
+    ax.axis('off')
+    plt.show()
+
+
 def plot_frequencies_std(frequencies_std):
 
     path = f"{PlotPaths.FREQUENCY_STDS.value}{PLOT_FORMAT}"
@@ -85,6 +93,29 @@ def fetch_ping_frequencies_evolution():
         f for f in os.listdir(PlotPaths.FREQUENCY_DISTRIBUTION_EVOLUTION.value)
         if os.path.isfile(os.path.join(PlotPaths.FREQUENCY_DISTRIBUTION_EVOLUTION.value, f))
     ])
-    print(filenames)
     return [mpimg.imread(PlotPaths.FREQUENCY_DISTRIBUTION_EVOLUTION.value + "/" + f) for f in filenames]
+
+
+def plot_single_ping_frequency_evolution(ping_freq_evol, time_fist_spike):
+
+    print("Plotting single PING's frequency evolution.....", end="")
+    path = f"{PlotPaths.FREQUENCY_SINGLE_PING_EVOLUTION.value}{PLOT_FORMAT}"
+
+    fig, ax = plt.subplots(figsize=(PLOT_SIZE, PLOT_SIZE))
+
+    time = list(range(time_fist_spike, len(ping_freq_evol) + time_fist_spike))
+    plt.plot(time, ping_freq_evol, solid_capstyle='round', color="#FFA3AF", lw=10)
+    plt.xlabel("Time", fontsize=70, labelpad=50)
+    plt.ylabel("Frequency", fontsize=70, labelpad=50)
+
+    fig.savefig(path, bbox_inches='tight')
+    plt.close()
+
+    print(end="\r", flush=True)
+    print(f"Plotting ended, result: {path}")
+
+
+def fetch_single_ping_frequency_evolution():
+    return mpimg.imread(PlotPaths.FREQUENCY_SINGLE_PING_EVOLUTION.value + PLOT_FORMAT)
+
 

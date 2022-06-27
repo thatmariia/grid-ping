@@ -2,7 +2,7 @@ from src.params.ParamsIzhikevich import *
 
 from src.izhikevich_simulation.CurrentComponents import *
 from src.spiking_frequencies.SpikingFrequencyFactory import *
-from src.plotter.ping_frequencies import plot_ping_frequencies
+from src.plotter.ping_frequencies import plot_ping_frequencies, plot_single_ping_frequency_evolution
 
 from tqdm import tqdm
 import numpy as np
@@ -83,6 +83,10 @@ class IzhikevichNetworkSimulator:
         # spike timings
         spikes: list[tuple[int, int]] = []
 
+        # ping_freq_evol
+        ping_evol_id = self._current_components.connectivity.params_ping.nr_ping_networks // 2
+        ping_freq_evol = []
+
         for t in (pbar := tqdm(range(simulation_time), disable=self._pb_off)):
             pbar.set_description("Network simulation")
 
@@ -108,19 +112,23 @@ class IzhikevichNetworkSimulator:
             potentials = potentials + 0.5 * self._get_change_in_potentials(potentials, recovery, currents)
             recovery = recovery + self._get_change_in_recovery(potentials, recovery, izhi_alpha, izhi_beta)
 
-            # # plotting frequency distribution every 1000 epochs
-            # if (params_freqs is not None) and (t > 0) and ((t + 1) % 1000 == 0):
-            #     simulation_outcome = IzhikevichNetworkOutcome(
-            #         spikes=spikes,
-            #         params_ping=self._current_components.connectivity.params_ping,
-            #         simulation_time=simulation_time,
-            #         grid_geometry=self._current_components.connectivity.grid_geometry
-            #     )
-            #     spiking_frequencies = SpikingFrequencyFactory().create(
-            #         simulation_outcome=simulation_outcome,
-            #         params_freqs=params_freqs
-            #     )
-            #     plot_ping_frequencies(spiking_frequencies.ping_frequencies, round(t * dt, 2))
+            if (params_freqs is not None) and (len(spikes) > 0):
+                simulation_outcome = IzhikevichNetworkOutcome(
+                    spikes=spikes,
+                    params_ping=self._current_components.connectivity.params_ping,
+                    simulation_time=simulation_time,
+                    grid_geometry=self._current_components.connectivity.grid_geometry
+                )
+                spiking_frequencies = SpikingFrequencyFactory().create(
+                    simulation_outcome=simulation_outcome,
+                    params_freqs=params_freqs
+                )
+                ping_freq_evol.append(spiking_frequencies.ping_frequencies[ping_evol_id])
+
+                # plotting frequency distribution every 1000 epochs
+                if (t + 1) % 1000 == 0:
+                    plot_ping_frequencies(spiking_frequencies.ping_frequencies, round(t * dt, 2))
+
 
         simulation_outcome = IzhikevichNetworkOutcome(
             spikes=spikes,
@@ -128,6 +136,9 @@ class IzhikevichNetworkSimulator:
             simulation_time=simulation_time,
             grid_geometry=self._current_components.connectivity.grid_geometry
         )
+
+        if (params_freqs is not None) and (len(spikes) > 0):
+            plot_single_ping_frequency_evolution(ping_freq_evol, spikes[0][0])
 
         return simulation_outcome
 

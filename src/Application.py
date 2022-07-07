@@ -60,14 +60,14 @@ class Application:
                 params_synaptic=params_synaptic,
                 stimulus_currents=stimulus_currents
             )
-            simulation_time = 1000000
+            simulation_time = 1000
             simulation_outcome = IzhikevichNetworkSimulator(
                 params_izhi=params_izhi,
                 current_components=neural_model,
                 pb_off=False
             ).simulate(
                 simulation_time=simulation_time,
-                dt=0.001,
+                dt=1,
                 params_freqs=params_freqs
             )
 

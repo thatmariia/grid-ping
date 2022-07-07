@@ -85,10 +85,6 @@ class CrossCorrelationFactory:
                 nn2 += 1
             nn1 += 1
 
-        print(allcoh)
-        print("********")
-        print(alltim)
-
     def _correlate_with_zero_lag(self, sig1, sig2):
 
         correlation = correlate(sig1, sig2)

@@ -126,7 +126,7 @@ class IzhikevichNetworkSimulator:
                 ping_freq_evol.append(spiking_frequencies.ping_frequencies[ping_evol_id])
 
                 # plotting frequency distribution every 1000 epochs
-                if (t + 1) % 1000 == 0:
+                if (t + 1) % 100 == 0:
                     plot_ping_frequencies(spiking_frequencies.ping_frequencies, round(t * dt, 2))
 
 

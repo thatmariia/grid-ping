@@ -71,7 +71,7 @@ class Application:
                 params_freqs=params_freqs
             )
 
-            cc = CrossCorrelationFactory().create(simulation_outcome, params_ping, simulation_time)
+            # cc = CrossCorrelationFactory().create(simulation_outcome, params_ping, simulation_time)
 
             spiking_frequencies = SpikingFrequencyFactory().create(
                 simulation_outcome=simulation_outcome,

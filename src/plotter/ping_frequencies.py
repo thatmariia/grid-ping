@@ -67,7 +67,6 @@ def plot_ping_frequencies(frequencies, t_ms=-1):
         path = f"{PlotPaths.FREQUENCY_DISTRIBUTION_EVOLUTION.value}/{t_ms}ms{PLOT_FORMAT}"
 
     fig, ax = plt.subplots(ncols=2, figsize=(2 * PLOT_SIZE, PLOT_SIZE))
-    # ax.tick_params(axis='both', which='major', labelsize=50)
 
     ax[0].hist(frequencies, color="#ACDDE7", rwidth=0.7)
     sns.heatmap(
@@ -104,9 +103,9 @@ def plot_single_ping_frequency_evolution(ping_freq_evol, time_fist_spike):
     fig, ax = plt.subplots(figsize=(PLOT_SIZE, PLOT_SIZE))
 
     time = list(range(time_fist_spike, len(ping_freq_evol) + time_fist_spike))
-    plt.plot(time, ping_freq_evol, solid_capstyle='round', color="#FFA3AF", lw=10)
-    plt.xlabel("Time", fontsize=70, labelpad=50)
-    plt.ylabel("Frequency", fontsize=70, labelpad=50)
+    plt.plot(time, ping_freq_evol, solid_capstyle='round', color="#FFA3AF")
+    plt.xlabel("Time")
+    plt.ylabel("Frequency")
 
     fig.savefig(path, bbox_inches='tight')
     plt.close()

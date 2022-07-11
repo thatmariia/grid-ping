@@ -94,21 +94,15 @@ def plot_frequency_vs_current(
     print("Plotting current-frequency.....", end="")
     path = f"{PlotPaths.FREQUENCY_VS_CURRENT.value}{PLOT_FORMAT}"
 
-    font = FontProperties()
-    font.set_family('serif')
-    font.set_name('Avenir')
-    font.set_weight('ultralight')
-
     fig, ax = plt.subplots(figsize=(PLOT_SIZE, PLOT_SIZE))
-    ax.tick_params(axis='both', which='major', labelsize=50)
 
     # simulation data
-    plt.scatter(currents, freqs, linewidths=10, s=100, c="#ACDDE7")
+    plt.scatter(currents, freqs, c="#ACDDE7")
     # fitted line
-    plt.plot(currents_line, freqs_line, solid_capstyle='round', color="#FFA3AF", lw=10)
+    plt.plot(currents_line, freqs_line, solid_capstyle='round', color="#FFA3AF")
 
-    plt.xlabel("Current", fontsize=70, fontproperties=font, labelpad=50)
-    plt.ylabel("Frequency", fontsize=70, fontproperties=font, labelpad=50)
+    plt.xlabel("Current")
+    plt.ylabel("Frequency")
 
     fig.savefig(path, bbox_inches='tight')
     plt.close()

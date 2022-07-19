@@ -7,6 +7,13 @@ import seaborn as sns
 from src.plotter.setup import PlotPaths, PLOT_FORMAT, PLOT_SIZE
 
 
+def display_stimulus_currents():
+    fig, ax = plt.subplots(figsize=(10, 10))
+
+    ax.imshow(fetch_stimulus_currents())
+    ax.axis('off')
+    plt.show()
+
 def display_patch_plots():
     fig, ax = plt.subplots(ncols=2, figsize=(10, 5))
 
@@ -29,6 +36,41 @@ def display_frequency_vs_current():
     ax.imshow(fetch_frequency_vs_current())
     ax.axis('off')
     plt.show()
+
+
+def plot_stimulus_currents(stimulus_currents: np.ndarray[int, float]):
+    """
+    Plots the stimulus currents.
+
+    :param stimulus_currents: the stimulus currents.
+    :type stimulus_currents: numpy.ndarray[int, float]
+
+    :rtype: None
+    """
+
+    print("Plotting stimulus currents.....", end="")
+    path = f"{PlotPaths.STIMULUS_CURRENTS.value}{PLOT_FORMAT}"
+
+    fig, ax = plt.subplots(figsize=(PLOT_SIZE, PLOT_SIZE))
+    sns.heatmap(
+        stimulus_currents.reshape((np.sqrt(stimulus_currents.shape[0]).astype(int), np.sqrt(stimulus_currents.shape[0]).astype(int))),
+        annot=True,
+        cbar=True,
+        square=True,
+        xticklabels=True,
+        yticklabels=True,
+        ax=ax
+    )
+
+    fig.savefig(path, bbox_inches='tight', pad_inches=0)
+    plt.close()
+
+    print(end="\r", flush=True)
+    print(f"Plotting ended, result: {path}")
+
+
+def fetch_stimulus_currents():
+    return mpimg.imread(PlotPaths.STIMULUS_CURRENTS.value + PLOT_FORMAT)
 
 
 def plot_full_stimulus(stimulus: np.ndarray[(int, int), float]):

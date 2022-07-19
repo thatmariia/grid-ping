@@ -24,10 +24,14 @@ class SpikingFrequencyFactory:
         for ping_network in (pbar := tqdm(simulation_outcome.grid_geometry.ping_networks, disable=True)):
             pbar.set_description("Frequency distribution per PING")
 
-            # select ex neurons for a single ping network from spikes
-            spikes_in_ping_mask = np.isin(
-                np.array(simulation_outcome.spikes).T[1], ping_network.ids[NeuronTypes.EX]
-            )
+            try:
+                # select ex neurons for a single ping network from spikes
+                spikes_in_ping_mask = np.isin(
+                    np.array(simulation_outcome.spikes).T[1], ping_network.ids[NeuronTypes.EX]
+                )
+            except:
+                frequencies.append(0)
+                continue
 
             # times when excitatory neurons fired
             spikes_times_in_ping = np.array(simulation_outcome.spikes)[spikes_in_ping_mask].T[0]

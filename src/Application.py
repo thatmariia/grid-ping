@@ -1,7 +1,9 @@
 from src.params.ParamsInitializer import *
+from src.stimulus_construction.StimulusFactory import StimulusFactory
 from src.izhikevich_simulation.ConnectivityGridPINGFactory import *
 from src.izhikevich_simulation.CurrentComponentsGridPING import *
 from src.spiking_frequencies.SpikingFrequencyFactory import *
+from src.izhikevich_simulation.IzhikevichNetworkSimulator import IzhikevichNetworkSimulator
 from src.spiking_frequencies.CrossCorrelationFactory import CrossCorrelationFactory
 from src.debug_funcs import *
 

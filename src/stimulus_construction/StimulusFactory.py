@@ -4,6 +4,7 @@ from src.stimulus_construction.LuminanceToContrastConverter import *
 from src.stimulus_construction.ContrastToFrequencyConverter import *
 from src.stimulus_construction.FrequencyToCurrentConverter import *
 from src.stimulus_construction.Stimulus import *
+from src.debug_funcs import USE_GRAY_STIMULUS
 
 from src.plotter.stimulus import plot_full_stimulus, plot_stimulus_patch, plot_local_contrasts, plot_stimulus_currents
 
@@ -48,9 +49,9 @@ class StimulusFactory:
 
         stimulus_luminance = GaborLuminanceStimulusFactory().create(params_gabor)
 
-        # feeding grey stimulus
-        stimulus_luminance.stimulus = np.ones(stimulus_luminance.stimulus.shape) * 0.5
-        stimulus_luminance.stimulus_patch = np.ones(stimulus_luminance.stimulus_patch.shape) * 0.5
+        if USE_GRAY_STIMULUS:
+            stimulus_luminance.stimulus = np.ones(stimulus_luminance.stimulus.shape) * 0.5
+            stimulus_luminance.stimulus_patch = np.ones(stimulus_luminance.stimulus_patch.shape) * 0.5
 
         plot_full_stimulus(stimulus_luminance.stimulus)
         plot_stimulus_patch(stimulus_luminance.stimulus_patch)

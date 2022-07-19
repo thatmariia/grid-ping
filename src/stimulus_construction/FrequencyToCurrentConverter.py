@@ -2,6 +2,7 @@ from src.izhikevich_simulation.ConnectivitySinglePINGFactory import *
 from src.izhikevich_simulation.CurrentComponentsSinglePING import *
 from src.izhikevich_simulation.IzhikevichNetworkSimulator import *
 from src.spiking_frequencies.SpikingFrequencyFactory import *
+from src.debug_funcs import USE_CALCULATED_FC_RELATIONSHIP
 
 from src.plotter.stimulus import plot_frequency_vs_current
 
@@ -39,6 +40,11 @@ class FrequencyToCurrentConverter:
         :return: the stimulus converted to currents.
         :rtype: numpy.ndarray[int, float]
         """
+
+        if USE_CALCULATED_FC_RELATIONSHIP:
+            slope = -4.15
+            intercept = 0.712
+            return slope * stimulus_frequencies + intercept
 
         simulation_time = 1000
         inputs = list(range(20, 51))

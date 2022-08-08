@@ -8,7 +8,8 @@ from src.spiking_frequencies.CrossCorrelationFactory import CrossCorrelationFact
 from src.debug_funcs import *
 
 from src.plotter.directory_management import *
-from src.plotter.ping_frequencies import plot_ping_frequencies, plot_frequencies_std
+from src.plotter.ping_frequencies import plot_ping_frequencies, plot_frequencies_std, plot_neuron_spikes_over_time
+from plotter.spikes_data import save_spikes_data
 
 from itertools import product
 import pandas as pd
@@ -43,14 +44,10 @@ class Application:
 
             cd_or_create_partic_plotting_directory(params_gabor.dist_scale, params_gabor.contrast_range)
 
-            if DEBUGMODE:
-                stimulus_currents, cortical_distances = try_pulling_stimulus_data(params_gabor, params_rf, params_ping,
-                                                                                  params_izhi, params_freqs)
-            else:
-                stimulus = StimulusFactory().create(params_gabor, params_rf, params_ping, params_izhi, params_freqs)
+            stimulus = StimulusFactory().create(params_gabor, params_rf, params_ping, params_izhi, params_freqs)
 
-                stimulus_currents = stimulus.stimulus_currents
-                cortical_distances = stimulus.extract_stimulus_location().cortical_distances
+            stimulus_currents = stimulus.stimulus_currents
+            cortical_distances = stimulus.extract_stimulus_location().cortical_distances
 
             connectivity = ConnectivityGridPINGFactory().create(
                 params_ping=params_ping,
@@ -73,6 +70,8 @@ class Application:
                 params_freqs=params_freqs
             )
 
+            plot_neuron_spikes_over_time(simulation_outcome.spikes, simulation_time, [5, 500])
+
             # cc = CrossCorrelationFactory().create(simulation_outcome, params_ping, simulation_time)
 
             spiking_frequencies = SpikingFrequencyFactory().create(
@@ -83,12 +82,13 @@ class Application:
 
             frequencies_std.loc[dist_scale, contrast_range] = spiking_frequencies.std
 
+            save_spikes_data(simulation_outcome.spikes)
+
             return_to_start_path_from_partic()
 
         cd_or_create_general_plotting_directory()
 
         plot_frequencies_std(frequencies_std)
-        # print(frequencies_std)
 
         return_to_start_path_from_general()
 

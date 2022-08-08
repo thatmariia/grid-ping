@@ -13,8 +13,8 @@ class ParamsInitializer:
 
     def initialize(self, dist_scale=1.5, contrast_range=0.01):
         params_ping = ParamsPING(
-            nr_excitatory=800,
-            nr_inhibitory=200,
+            nr_excitatory=160,
+            nr_inhibitory=40,
             nr_ping_networks=4
         )
         params_gabor = ParamsGaborStimulus(

@@ -32,6 +32,50 @@ def display_single_ping_frequency_evolution():
     ax.axis('off')
     plt.show()
 
+def display_spikes_over_time():
+    # TODO:: fig size?
+    fig, ax = plt.subplots(figsize=(PLOT_SIZE, PLOT_SIZE))
+
+    ax.imshow(fetch_spikes_over_time())
+    ax.axis('off')
+    plt.show()
+
+
+def plot_neuron_spikes_over_time(spikes, simulation_time, ids):
+    assert len(ids) > 0, "enter at least a single neuron ID"
+
+    if len(spikes) == 0:
+        print("No spikes found, skipping plot")
+        return
+
+    path = f"{PlotPaths.SPIKES_OVER_TIME.value}{PLOT_FORMAT}"
+    print("Plotting frequency std's.....", end="")
+
+    fig, ax = plt.subplots(ncols=len(ids), figsize=(len(ids) * PLOT_SIZE, PLOT_SIZE))
+
+    spikes_T = np.array(spikes).T
+
+    for i in range(len(ids)):
+        # indices when excitatory neurons fired
+        spikes_indices = np.argwhere(
+            spikes_T[1] == ids[i]
+        ).flatten()
+        # times when excitatory neurons fired
+        spikes_times = spikes_T[0][spikes_indices]
+        spikes_per_times = [np.count_nonzero(spikes_indices == t) for t in range(simulation_time)]
+
+        ax[i].plot(list(range(simulation_time)), spikes_per_times, solid_capstyle='round', color="#FFA3AF")
+        ax[i].title.set_text(f"Neuron {ids[i]}")
+
+    fig.savefig(path, bbox_inches='tight')
+    plt.close()
+
+    print(end="\r", flush=True)
+    print(f"Plotting ended, result: {path}")
+
+def fetch_spikes_over_time():
+    return mpimg.imread(PlotPaths.SPIKES_OVER_TIME.value + PLOT_FORMAT)
+
 
 def plot_frequencies_std(frequencies_std):
 

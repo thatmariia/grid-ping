@@ -12,7 +12,6 @@ import warnings
 class SpikingFrequencyFactory:
     """
     TODO:: docs
-    TODO:: assrt that outcome isnt empty
     """
 
     def create(

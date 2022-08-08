@@ -38,7 +38,7 @@ def display_frequency_vs_current():
     plt.show()
 
 
-def plot_stimulus_currents(stimulus_currents: np.ndarray[int, float]):
+def plot_stimulus_currents(stimulus_currents):
     """
     Plots the stimulus currents.
 
@@ -74,6 +74,13 @@ def fetch_stimulus_currents():
 
 
 def plot_full_stimulus(stimulus: np.ndarray[(int, int), float]):
+    """
+    Plots full stimulus.
+
+    :param stimulus:
+    :type stimulus: numpy.ndarray[(int, int), float]
+    """
+
     print("Plotting stimulus.....", end="")
     _plot_bw_square_heatmap(stimulus, PlotPaths.FULL_STIMULUS.value)
 
@@ -83,6 +90,13 @@ def fetch_full_stimulus():
 
 
 def plot_stimulus_patch(stimulus_patch: np.ndarray[(int, int), float]):
+    """
+    Plots the stimulus patch.
+
+    :param stimulus_patch:
+    :type stimulus_patch: numpy.ndarray[(int, int), float]
+    """
+
     print("Plotting patch.....", end="")
     _plot_bw_square_heatmap(stimulus_patch, PlotPaths.STIMULUS_PATCH.value)
 

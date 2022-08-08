@@ -1,6 +1,7 @@
 from enum import Enum
 import matplotlib as mpl
 
+DATA_FORMAT = ".txt"
 PLOT_FORMAT = ".png"
 PLOT_SIZE = 10
 
@@ -26,13 +27,19 @@ class PlotNames(Enum):
     FREQUENCY_DISTRIBUTION_EVOLUTION = "frequency-distribution-evolution"
     FREQUENCY_DISTRIBUTION = "frequency-distribution"
     FREQUENCY_SINGLE_PING_EVOLUTION = "frequency-single-ping-evolution"
+    SPIKES_OVER_TIME = "spikes-over-time"
     FREQUENCY_STDS = "frequency-stds"
+
+
+class DataNames(Enum):
+    SPIKES_DATA = "spikes-data"
 
 
 class ParticSubdirectoryNames(Enum):
     STIMULUS_CONSTRUCTION = "stimulus-construction"
     PING_FREQUENCIES = "ping-frequencies"
     FREQUENCY_DISTRIBUTION_EVOLUTION = f"ping-frequencies/{PlotNames.FREQUENCY_DISTRIBUTION_EVOLUTION.value}"
+    SPIKES_DATA = "spikes-data"
 
 
 class GeneralSubdirectoryNames(Enum):
@@ -49,4 +56,9 @@ class PlotPaths(Enum):
     FREQUENCY_DISTRIBUTION_EVOLUTION = f"{ParticSubdirectoryNames.PING_FREQUENCIES.value}/{PlotNames.FREQUENCY_DISTRIBUTION_EVOLUTION.value}"
     FREQUENCY_DISTRIBUTION = f"{ParticSubdirectoryNames.PING_FREQUENCIES.value}/{PlotNames.FREQUENCY_DISTRIBUTION.value}"
     FREQUENCY_SINGLE_PING_EVOLUTION = f"{ParticSubdirectoryNames.PING_FREQUENCIES.value}/{PlotNames.FREQUENCY_SINGLE_PING_EVOLUTION.value}"
+    SPIKES_OVER_TIME = f"{ParticSubdirectoryNames.PING_FREQUENCIES.value}/{PlotNames.SPIKES_OVER_TIME.value}"
     FREQUENCY_STDS = f"{PlotNames.FREQUENCY_STDS.value}"
+
+
+class DataPaths(Enum):
+    SPIKES_DATA = f"{ParticSubdirectoryNames.SPIKES_DATA.value}"

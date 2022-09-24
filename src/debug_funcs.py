@@ -4,7 +4,7 @@ from os import makedirs
 
 
 USE_GRAY_STIMULUS = False
-USE_CALCULATED_FC_RELATIONSHIP = False
+USE_CALCULATED_FC_RELATIONSHIP = True
 
 
 # def try_pulling_stimulus_data(params_gabor, params_rf, params_ping, params_izhi, params_freqs):

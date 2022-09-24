@@ -33,13 +33,14 @@ class PlotNames(Enum):
 
 class DataNames(Enum):
     SPIKES_DATA = "spikes-data"
+    CORTICAL_DISTANCES_DATA = "euclid-dist-data"
 
 
 class ParticSubdirectoryNames(Enum):
     STIMULUS_CONSTRUCTION = "stimulus-construction"
     PING_FREQUENCIES = "ping-frequencies"
     FREQUENCY_DISTRIBUTION_EVOLUTION = f"ping-frequencies/{PlotNames.FREQUENCY_DISTRIBUTION_EVOLUTION.value}"
-    SPIKES_DATA = "spikes-data"
+    RAW_DATA = "raw-data"
 
 
 class GeneralSubdirectoryNames(Enum):
@@ -61,4 +62,5 @@ class PlotPaths(Enum):
 
 
 class DataPaths(Enum):
-    SPIKES_DATA = f"{ParticSubdirectoryNames.SPIKES_DATA.value}"
+    SPIKES_DATA = f"{ParticSubdirectoryNames.RAW_DATA.value}"
+    CORTICAL_DISTANCES_DATA = f"{ParticSubdirectoryNames.RAW_DATA.value}"

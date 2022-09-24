@@ -9,7 +9,7 @@ from src.debug_funcs import *
 
 from src.plotter.directory_management import *
 from src.plotter.ping_frequencies import plot_ping_frequencies, plot_frequencies_std, plot_neuron_spikes_over_time
-from plotter.spikes_data import save_spikes_data
+from src.plotter.raw_data import save_spikes_data, save_cortical_dist_data
 
 from itertools import product
 import pandas as pd
@@ -49,6 +49,8 @@ class Application:
             stimulus_currents = stimulus.stimulus_currents
             cortical_distances = stimulus.extract_stimulus_location().cortical_distances
 
+            save_cortical_dist_data(cortical_distances)
+
             connectivity = ConnectivityGridPINGFactory().create(
                 params_ping=params_ping,
                 params_connectivity=params_connectivity,
@@ -72,7 +74,7 @@ class Application:
 
             plot_neuron_spikes_over_time(simulation_outcome.spikes, simulation_time, [5, 500])
 
-            # cc = CrossCorrelationFactory().create(simulation_outcome, params_ping, simulation_time)
+            cc = CrossCorrelationFactory().create(simulation_outcome.spikes, params_ping, simulation_time)
 
             spiking_frequencies = SpikingFrequencyFactory().create(
                 simulation_outcome=simulation_outcome,

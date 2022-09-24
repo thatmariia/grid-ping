@@ -159,8 +159,8 @@ class CurrentComponentsGridPING(CurrentComponents):
 
         # TODO:: what is this exactly?
         return np.append(
-            0 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.EX]),
-            0 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.IN])
+            1.5 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.EX]),
+            1.5 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.IN])
         )
 
     def _get_stimulus_input(self) -> np.ndarray[int, float]:
@@ -182,5 +182,8 @@ class CurrentComponentsGridPING(CurrentComponents):
             i = ping_network.grid_location[0]
             j = ping_network.grid_location[1]
             stimulus_input[ping_network.ids[NeuronTypes.EX]] = currents_grid[i, j]
+
+            # random number from gaussian distribution with mean 10 and standard deviation 5
+            #stimulus_input[ping_network.ids[NeuronTypes.EX]] = np.random.normal(10, 0.5)
 
         return stimulus_input

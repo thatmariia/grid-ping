@@ -84,7 +84,7 @@ class LuminanceToContrastConverter:
                         params_rf=params_rf
                     )
 
-                    num += weight * (stimulus_luminance.stimulus_patch[pix[0]][pix[1]] - mean_luminance) ** 2 / mean_luminance
+                    num += weight * (stimulus_luminance.stimulus_patch[pix[0]][pix[1]] - mean_luminance) ** 2 / (mean_luminance ** 2)
                     denum += weight
 
             local_contrast = sqrt(num / denum)
@@ -118,4 +118,4 @@ class LuminanceToContrastConverter:
 
         diam_rf = max(params_rf.slope * eccentricity + params_rf.intercept, params_rf.min_diam_rf)
         std = diam_rf / 4.0
-        return exp(-euclidian_dist(pixel, center) / (2 * std ** 2))
+        return exp(-(euclidian_dist(pixel, center) ** 2) / (2 * std ** 2))

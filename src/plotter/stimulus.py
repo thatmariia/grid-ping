@@ -54,7 +54,7 @@ def plot_stimulus_currents(stimulus_currents):
     fig, ax = plt.subplots(figsize=(PLOT_SIZE, PLOT_SIZE))
     sns.heatmap(
         stimulus_currents.reshape((np.sqrt(stimulus_currents.shape[0]).astype(int), np.sqrt(stimulus_currents.shape[0]).astype(int))),
-        annot=True,
+        annot=False,
         cbar=True,
         square=True,
         xticklabels=True,
@@ -194,7 +194,7 @@ def _plot_bw_square_heatmap(data: np.ndarray[(int, int), float], filename: str) 
         vmin=0,
         vmax=1,
         cmap="gist_gray",
-        cbar=False,
+        cbar=True,
         square=True,
         xticklabels=False,
         yticklabels=False,

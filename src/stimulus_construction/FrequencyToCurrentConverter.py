@@ -42,8 +42,8 @@ class FrequencyToCurrentConverter:
         """
 
         if USE_CALCULATED_FC_RELATIONSHIP:
-            slope = -4.15
-            intercept = 0.712
+            slope = 0.712
+            intercept = -4.15
             return slope * stimulus_frequencies + intercept
 
         simulation_time = 1000

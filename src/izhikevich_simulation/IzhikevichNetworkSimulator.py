@@ -7,6 +7,8 @@ from src.plotter.ping_frequencies import plot_ping_frequencies, plot_single_ping
 from tqdm import tqdm
 import numpy as np
 
+import matplotlib.pyplot as plt
+
 
 class IzhikevichNetworkSimulator:
     """
@@ -87,6 +89,11 @@ class IzhikevichNetworkSimulator:
         ping_evol_id = self._current_components.connectivity.params_ping.nr_ping_networks // 2
         ping_freq_evol = []
 
+        rid1 = 137
+        rid2 = 205
+        potentials_rid1 = []
+        potentials_rid2 = []
+
         for t in (pbar := tqdm(range(simulation_time), disable=self._pb_off)):
             pbar.set_description("Network simulation")
 
@@ -112,6 +119,9 @@ class IzhikevichNetworkSimulator:
             potentials = potentials + 0.5 * self._get_change_in_potentials(potentials, recovery, currents)
             recovery = recovery + self._get_change_in_recovery(potentials, recovery, izhi_alpha, izhi_beta)
 
+            potentials_rid1.append(potentials[rid1])
+            potentials_rid2.append(potentials[rid2])
+
             if (params_freqs is not None) and (len(spikes) > 0):
                 simulation_outcome = IzhikevichNetworkOutcome(
                     spikes=spikes,
@@ -128,6 +138,14 @@ class IzhikevichNetworkSimulator:
                 # plotting frequency distribution every 1000 epochs
                 if (t + 1) % 100 == 0:
                     plot_ping_frequencies(spiking_frequencies.ping_frequencies, round(t * dt, 2))
+
+        fig, ax = plt.subplots(ncols=2, figsize=(20, 10))
+
+        ax[0].plot(list(range(len(potentials_rid1))), potentials_rid1)
+        ax[1].plot(list(range(len(potentials_rid2))), potentials_rid2)
+
+        fig.savefig("potentials.pdf", bbox_inches='tight')
+
 
 
         simulation_outcome = IzhikevichNetworkOutcome(

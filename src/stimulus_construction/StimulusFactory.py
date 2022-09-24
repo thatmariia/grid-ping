@@ -53,6 +53,20 @@ class StimulusFactory:
             stimulus_luminance.stimulus = np.ones(stimulus_luminance.stimulus.shape) * 0.5
             stimulus_luminance.stimulus_patch = np.ones(stimulus_luminance.stimulus_patch.shape) * 0.5
 
+            # making stripes
+            line_width = 8
+            for i in range(0, stimulus_luminance.stimulus_patch.shape[0], line_width):
+                # if i == 0:
+                #     stimulus_luminance.stimulus_patch[i:i + line_width, i:i + line_width] = 0
+                # elif i == line_width:
+                #     stimulus_luminance.stimulus_patch[i:i + line_width, i:i + line_width] = 1
+                # else:
+                if np.random.uniform() > 0.5:
+                    stimulus_luminance.stimulus_patch[i:i + line_width] = 1
+                else:
+                    stimulus_luminance.stimulus_patch[i:i + line_width] = 0
+
+
         plot_full_stimulus(stimulus_luminance.stimulus)
         plot_stimulus_patch(stimulus_luminance.stimulus_patch)
 

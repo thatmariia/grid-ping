@@ -1,4 +1,5 @@
 from src.params.ParamsPING import *
+from src.params.ParamsFrequencies import *
 from src.izhikevich_simulation.GridGeometry import *
 
 import numpy as np
@@ -18,9 +19,14 @@ class IzhikevichNetworkOutcome:
 
     def __init__(
             self,
-            spikes: list[tuple[int, int]], params_ping: ParamsPING, simulation_time: int, grid_geometry: GridGeometry
+            spikes: list[tuple[int, int]],
+            params_ping: ParamsPING,
+            params_freqs: ParamsFrequencies,
+            simulation_time: int,
+            grid_geometry: GridGeometry
     ):
         self.spikes: list[tuple[int, int]] = spikes
         self.params_ping = params_ping
+        self.params_freqs = params_freqs
         self.simulation_time = simulation_time
         self.grid_geometry = grid_geometry

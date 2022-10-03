@@ -1,96 +1,95 @@
-from src.params.ParamsInitializer import *
-from src.stimulus_construction.StimulusFactory import StimulusFactory
-from src.izhikevich_simulation.ConnectivityGridPINGFactory import *
-from src.izhikevich_simulation.CurrentComponentsGridPING import *
-from src.spiking_frequencies.SpikingFrequencyFactory import *
-from src.izhikevich_simulation.IzhikevichNetworkSimulator import IzhikevichNetworkSimulator
-from src.spiking_frequencies.CrossCorrelationFactory import CrossCorrelationFactory
-from src.debug_funcs import *
+from src.params.ParamsInitializer import ParamsInitializer
+from src.izhikevich_simulation.IzhikevichNetworkOutcome import IzhikevichNetworkOutcome
+from src.izhikevich_simulation.GridGeometryFactory import GridGeometryFactory
 
 from src.plotter.directory_management import *
-from src.plotter.ping_frequencies import plot_ping_frequencies, plot_frequencies_std, plot_neuron_spikes_over_time
-from src.plotter.raw_data import save_spikes_data, save_cortical_dist_data
+from src.plotter.raw_data import fetch_spikes_data
+
+from src.Simulator import Simulator
+from src.Analyzer import Analyzer
+from src.overview.Results import Results
 
 from itertools import product
-import pandas as pd
+import numpy as np
 
-DEBUGMODE = False
 
+CREATING_DATA = True
 
 class Application:
 
-    def run(self):
-        clear_simulation_directory()
-
+    def __init__(self):
         # [1.0, 1.125, 1.25, 1.375, 1.5]
-        dist_scales = [1.0, 1.125, 1.25, 1.375, 1.5]
+        self.dist_scales = [1.0, 1.125, 1.25, 1.375, 1.5]
+        # [0.01, 0.0257, 0.505, 0.7525, 1.0]
+        self.contrast_ranges = [0.01, 0.0257, 0.505, 0.7525, 1.0]
 
-        # [0.01, 0.0257, 0.505, 0.7525, 1]
-        contrast_ranges = [0.01, 0.0257, 0.505, 0.7525, 1]
+    def run(self):
+        if CREATING_DATA:
+            clear_simulation_directory()
 
-        frequencies_std = pd.DataFrame(index=dist_scales, columns=contrast_ranges, dtype=float)
+        simulation_time = 1000
 
-        for dist_scale, contrast_range in product(dist_scales, contrast_ranges):
+        results = Results(self.dist_scales, self.contrast_ranges)
 
-            print("********************************************************")
+        for dist_scale, contrast_range in product(self.dist_scales, self.contrast_ranges):
+            print("**********************************************************")
             print(f"Starting simulation for dist_scale={dist_scale}, contrast_range={contrast_range}")
-            print("********************************************************")
+            print("**********************************************************")
 
             params_initializer = ParamsInitializer()
-            params_ping, params_gabor, params_rf, params_connectivity, params_izhi, params_synaptic, params_freqs = params_initializer.initialize(
-                dist_scale=dist_scale,
-                contrast_range=contrast_range
-            )
+            params_ping, params_gabor, params_rf, params_connectivity, params_izhi, params_synaptic, params_freqs = \
+                params_initializer.initialize(
+                    dist_scale=dist_scale,
+                    contrast_range=contrast_range
+                )
 
             cd_or_create_partic_plotting_directory(params_gabor.dist_scale, params_gabor.contrast_range)
 
-            stimulus = StimulusFactory().create(params_gabor, params_rf, params_ping, params_izhi, params_freqs)
+            """DO SIMULATOR CRAP"""
+            if CREATING_DATA:
+                print("\n ~~~~ SIMULATION ~~~~ \n")
+                simulation_outcome = Simulator().run_simulation(
+                    simulation_time=simulation_time,
+                    params_gabor=params_gabor,
+                    params_rf=params_rf,
+                    params_ping=params_ping,
+                    params_izhi=params_izhi,
+                    params_freqs=params_freqs,
+                    params_connectivity=params_connectivity,
+                    params_synaptic=params_synaptic
+                )
+            else:
+                simulation_outcome = IzhikevichNetworkOutcome(
+                    spikes=fetch_spikes_data(),
+                    params_ping=params_ping,
+                    params_freqs=params_freqs,
+                    simulation_time=simulation_time,
+                    grid_geometry=GridGeometryFactory().create(
+                        params_ping,
+                        np.zeros((params_ping.nr_neurons["total"], params_ping.nr_neurons["total"]))
+                    )
+                )
 
-            stimulus_currents = stimulus.stimulus_currents
-            cortical_distances = stimulus.extract_stimulus_location().cortical_distances
+            """DO ANALYSIS CRAP"""
+            print("\n ~~~~ ANALYSIS ~~~~ \n")
+            analyser = Analyzer(simulation_outcome=simulation_outcome, step=250)
+            analyser.make_plots()
 
-            save_cortical_dist_data(cortical_distances)
-
-            connectivity = ConnectivityGridPINGFactory().create(
-                params_ping=params_ping,
-                params_connectivity=params_connectivity,
-                cortical_distances=cortical_distances
+            results.add_results(
+                dist_scale=dist_scale,
+                contrast_range=contrast_range,
+                avg_phase_locking=analyser.analysis_data.sync_evaluation.avg_phase_locking,
+                frequency_std=analyser.analysis_data.spiking_freq.std
             )
-            neural_model = CurrentComponentsGridPING(
-                connectivity=connectivity,
-                params_synaptic=params_synaptic,
-                stimulus_currents=stimulus_currents
-            )
-            simulation_time = 1000
-            simulation_outcome = IzhikevichNetworkSimulator(
-                params_izhi=params_izhi,
-                current_components=neural_model,
-                pb_off=False
-            ).simulate(
-                simulation_time=simulation_time,
-                dt=1,
-                params_freqs=params_freqs
-            )
-
-            plot_neuron_spikes_over_time(simulation_outcome.spikes, simulation_time, [5, 500])
-
-            cc = CrossCorrelationFactory().create(simulation_outcome.spikes, params_ping, simulation_time)
-
-            spiking_frequencies = SpikingFrequencyFactory().create(
-                simulation_outcome=simulation_outcome,
-                params_freqs=params_freqs
-            )
-            plot_ping_frequencies(spiking_frequencies.ping_frequencies)
-
-            frequencies_std.loc[dist_scale, contrast_range] = spiking_frequencies.std
-
-            save_spikes_data(simulation_outcome.spikes)
 
             return_to_start_path_from_partic()
 
+            print("\n")
+
         cd_or_create_general_plotting_directory()
 
-        plot_frequencies_std(frequencies_std)
+        """DO OVERVIEW CRAP"""
+        print("\n ~~~~ CREATING OVERVIEW ~~~~ \n")
+        results.make_plots()
 
         return_to_start_path_from_general()
-

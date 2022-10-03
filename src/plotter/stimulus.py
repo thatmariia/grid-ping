@@ -7,36 +7,7 @@ import seaborn as sns
 from src.plotter.setup import PlotPaths, PLOT_FORMAT, PLOT_SIZE
 
 
-def display_stimulus_currents():
-    fig, ax = plt.subplots(figsize=(10, 10))
-
-    ax.imshow(fetch_stimulus_currents())
-    ax.axis('off')
-    plt.show()
-
-def display_patch_plots():
-    fig, ax = plt.subplots(ncols=2, figsize=(10, 5))
-
-    ax[0].imshow(fetch_stimulus_patch())
-    ax[0].axis('off')
-    ax[1].imshow(fetch_local_contrasts())
-    ax[1].axis('off')
-    plt.show()
-
-def display_full_stimulus():
-    fig, ax = plt.subplots(figsize=(10, 10))
-
-    ax.imshow(fetch_full_stimulus())
-    ax.axis('off')
-    plt.show()
-
-def display_frequency_vs_current():
-    fig, ax = plt.subplots(figsize=(7, 7))
-
-    ax.imshow(fetch_frequency_vs_current())
-    ax.axis('off')
-    plt.show()
-
+####################################################################################################
 
 def plot_stimulus_currents(stimulus_currents):
     """
@@ -73,6 +44,17 @@ def fetch_stimulus_currents():
     return mpimg.imread(PlotPaths.STIMULUS_CURRENTS.value + PLOT_FORMAT)
 
 
+def display_stimulus_currents():
+    fig, ax = plt.subplots(figsize=(10, 10))
+
+    ax.imshow(fetch_stimulus_currents())
+    ax.axis('off')
+    plt.show()
+
+
+####################################################################################################
+
+
 def plot_full_stimulus(stimulus: np.ndarray[(int, int), float]):
     """
     Plots full stimulus.
@@ -87,6 +69,17 @@ def plot_full_stimulus(stimulus: np.ndarray[(int, int), float]):
 
 def fetch_full_stimulus():
     return mpimg.imread(PlotPaths.FULL_STIMULUS.value + PLOT_FORMAT)
+
+
+def display_full_stimulus():
+    fig, ax = plt.subplots(figsize=(10, 10))
+
+    ax.imshow(fetch_full_stimulus())
+    ax.axis('off')
+    plt.show()
+
+
+####################################################################################################
 
 
 def plot_stimulus_patch(stimulus_patch: np.ndarray[(int, int), float]):
@@ -105,6 +98,19 @@ def fetch_stimulus_patch():
     return mpimg.imread(PlotPaths.STIMULUS_PATCH.value + PLOT_FORMAT)
 
 
+def display_patch_plots():
+    fig, ax = plt.subplots(ncols=2, figsize=(10, 5))
+
+    ax[0].imshow(fetch_stimulus_patch())
+    ax[0].axis('off')
+    ax[1].imshow(fetch_local_contrasts())
+    ax[1].axis('off')
+    plt.show()
+
+
+####################################################################################################
+
+
 def plot_local_contrasts(local_contrasts: np.ndarray[(int, int), float]):
     """
     Plots the binary heatmap of local contrasts.
@@ -121,6 +127,9 @@ def plot_local_contrasts(local_contrasts: np.ndarray[(int, int), float]):
 
 def fetch_local_contrasts():
     return mpimg.imread(PlotPaths.LOCAL_CONTRAST.value + PLOT_FORMAT)
+
+
+####################################################################################################
 
 
 def plot_frequency_vs_current(
@@ -170,6 +179,16 @@ def plot_frequency_vs_current(
 def fetch_frequency_vs_current():
     return mpimg.imread(PlotPaths.FREQUENCY_VS_CURRENT.value + PLOT_FORMAT)
 
+
+def display_frequency_vs_current():
+    fig, ax = plt.subplots(figsize=(7, 7))
+
+    ax.imshow(fetch_frequency_vs_current())
+    ax.axis('off')
+    plt.show()
+
+
+####################################################################################################
 
 
 def _plot_bw_square_heatmap(data: np.ndarray[(int, int), float], filename: str) -> None:

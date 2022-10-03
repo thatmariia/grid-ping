@@ -1,18 +1,20 @@
 from src.izhikevich_simulation.IzhikevichNetworkOutcome import IzhikevichNetworkOutcome
 from src.params.ParamsPING import ParamsPING
 from src.params.NeuronTypes import NeuronTypes
+from src.after_simulation_analysis.SyncEvaluation import SyncEvaluation
 
 import numpy as np
 from math import sqrt, pi
 from scipy.signal import correlate
 import sys
+from tqdm import tqdm
 
 
-class CrossCorrelationFactory:
+class SyncEvaluationFactory:
 
     def create(
             self, spikes, params_ping: ParamsPING, simulation_time: int
-    ):
+    ) -> SyncEvaluation:
         spikes_T = np.array(spikes).T
 
         # indices when neurons fired
@@ -36,20 +38,27 @@ class CrossCorrelationFactory:
             simulation_time=simulation_time
         )
 
-        return self._compute_cross_correlation(raster_in, simulation_time)
+        phase_values, phase_locking = self._compute_cross_correlation(raster_in, simulation_time)
+
+        sync_evaluation = SyncEvaluation(
+            phase_values=phase_values,
+            phase_locking=phase_locking,
+        )
+        return sync_evaluation
 
     def _compute_cross_correlation(self, spike_dat, simulation_time):
         max_lag = self.get_max_lag(spike_dat)# 12
-        print("max_lag:", max_lag)
         step_size = 10
 
-        allcoh = np.zeros((spike_dat.shape[0] // step_size, spike_dat.shape[0] // step_size))
+        phase_locking = np.zeros((spike_dat.shape[0] // step_size, spike_dat.shape[0] // step_size))
         alltim = np.zeros((spike_dat.shape[0] // step_size, spike_dat.shape[0] // step_size))
-        phase_value = np.zeros((spike_dat.shape[0] // step_size, spike_dat.shape[0] // step_size))
+        phase_values = np.zeros((spike_dat.shape[0] // step_size, spike_dat.shape[0] // step_size))
 
         nn1 = 0
         time_window = list(range(199, simulation_time - 50))
-        for id1 in range(0, spike_dat.shape[0], step_size):
+        for id1 in (pbar := tqdm(range(0, spike_dat.shape[0], step_size))):
+            pbar.set_description("Computing cross-correlation & stuff")
+
             nn2 = 0
             for id2 in range(0, spike_dat.shape[0], step_size):
                 if id1 != id2:
@@ -78,18 +87,18 @@ class CrossCorrelationFactory:
                     peak_lag = max_lag + 1
                     peak_height = 1
 
-                allcoh[nn1, nn2] = peak_height
+                phase_locking[nn1, nn2] = peak_height
                 alltim[nn1, nn2] = peak_lag
 
                 mean_spike_rate_1 = self.get_mean_spike_rate(spike_dat[id1])
                 mean_spike_rate_2 = self.get_mean_spike_rate(spike_dat[id2])
                 spike_timing_diff = abs(max_lag - abs(peak_lag))
-                phase_value[nn1, nn2] = pi * (2 * spike_timing_diff) / (0.5 * (mean_spike_rate_1 + mean_spike_rate_2))
+                phase_values[nn1, nn2] = pi * (2 * spike_timing_diff) / (0.5 * (mean_spike_rate_1 + mean_spike_rate_2))
 
                 nn2 += 1
             nn1 += 1
 
-        return phase_value, allcoh
+        return phase_values, phase_locking
 
     def _correlate_with_zero_lag(self, sig1, sig2):
 

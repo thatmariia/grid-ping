@@ -1,8 +1,8 @@
 from src.izhikevich_simulation.ConnectivitySinglePINGFactory import *
 from src.izhikevich_simulation.CurrentComponentsSinglePING import *
 from src.izhikevich_simulation.IzhikevichNetworkSimulator import *
-from src.spiking_frequencies.SpikingFrequencyFactory import *
-from src.debug_funcs import USE_CALCULATED_FC_RELATIONSHIP
+from src.after_simulation_analysis.SpikingFrequencyFactory import *
+from src.application_setup import USE_CALCULATED_FC_RELATIONSHIP
 
 from src.plotter.stimulus import plot_frequency_vs_current
 
@@ -11,6 +11,8 @@ from tqdm import tqdm
 
 from sklearn.linear_model import TheilSenRegressor
 from sklearn.model_selection import RepeatedKFold, cross_val_score
+
+CREATING_DATA = True
 
 
 class FrequencyToCurrentConverter:

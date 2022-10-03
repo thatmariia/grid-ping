@@ -1,6 +1,6 @@
 from src.izhikevich_simulation.IzhikevichNetworkOutcome import *
 from src.params.ParamsFrequencies import *
-from src.spiking_frequencies.SpikingFrequency import SpikingFrequency
+from src.after_simulation_analysis.SpikingFrequency import SpikingFrequency
 
 import numpy as np
 from scipy import fft
@@ -15,12 +15,12 @@ class SpikingFrequencyFactory:
     """
 
     def create(
-            self, simulation_outcome: IzhikevichNetworkOutcome, params_freqs: ParamsFrequencies
+            self, simulation_outcome: IzhikevichNetworkOutcome
     ) -> SpikingFrequency:
 
         frequencies = []
 
-        for ping_network in (pbar := tqdm(simulation_outcome.grid_geometry.ping_networks, disable=True)):
+        for ping_network in (pbar := tqdm(simulation_outcome.grid_geometry.ping_networks, disable=False)):
             pbar.set_description("Frequency distribution per PING")
 
             try:
@@ -42,7 +42,7 @@ class SpikingFrequencyFactory:
             frequency = self.tfr_single_ping(
                 signal=signal,
                 simulation_time=simulation_outcome.simulation_time,
-                params_freqs=params_freqs
+                params_freqs=simulation_outcome.params_freqs
             )
             frequencies.append(frequency)
 

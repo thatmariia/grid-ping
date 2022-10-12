@@ -39,6 +39,7 @@ class PlotNames(Enum):
     # overview
     FREQUENCY_STDS = "frequency-stds"
     AVG_PHASE_LOCKINGS = "avg-phase-lockings"
+    AVG_PHASE_LOCKING_SMOOTH = "avg-phase-locking-smooth"
 
 
 class DataNames(Enum):
@@ -77,6 +78,7 @@ class PlotPaths(Enum):
     # overview
     FREQUENCY_STDS = f"{PlotNames.FREQUENCY_STDS.value}"
     AVG_PHASE_LOCKINGS = f"{PlotNames.AVG_PHASE_LOCKINGS.value}"
+    AVG_PHASE_LOCKING_SMOOTH = f"{PlotNames.AVG_PHASE_LOCKING_SMOOTH.value}"
 
 
 class DataPaths(Enum):

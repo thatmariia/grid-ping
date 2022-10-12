@@ -13,10 +13,16 @@ class ParamsInitializer:
 
     def initialize(self, dist_scale=1.5, contrast_range=0.01):
         params_ping = ParamsPING(
-            nr_excitatory=8000,
-            nr_inhibitory=2000,
-            nr_ping_networks=4
+            nr_excitatory=81 * 400,
+            nr_inhibitory=81 * 100,
+            nr_ping_networks=81
         )
+        # params_ping = ParamsPING(
+        #     nr_excitatory=8000,
+        #     nr_inhibitory=2000,
+        #     nr_ping_networks=4
+        # )
+
         params_gabor = ParamsGaborStimulus(
             spatial_freq=5.7,
             vlum=0.5,
@@ -29,7 +35,7 @@ class ParamsInitializer:
             figure_width_dg=5,
             figure_height_dg=9,
             figure_ecc_dg=7,
-            patch_size_dg=4.95 #4.2 for 400
+            patch_size_dg=4.914 # for 81 #4.2 for 100 #4.89 for 25 #4.928 for 16 #4.95 for 4 #4.2 for 400
         )
         params_rf = ParamsReceptiveField(
             slope=0.172,

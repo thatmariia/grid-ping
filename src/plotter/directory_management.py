@@ -15,7 +15,6 @@ def clear_simulation_directory():
 def return_to_start_path_from_general():
     os.chdir("../../../")
 
-
 def cd_general_plotting_directory():
     os.chdir(f"{start_path}{GeneralSubdirectoryNames.OVERVIEWS.value}")
 

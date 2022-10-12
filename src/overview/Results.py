@@ -2,6 +2,7 @@ from src.plotter.results_plots import *
 
 import pandas as pd
 from copy import deepcopy
+import scipy.interpolate
 
 class Results:
 
@@ -19,6 +20,19 @@ class Results:
     def make_plots(self):
         plot_frequencies_std(self.frequency_stds_df)
         plot_avg_phase_lockings(self.avg_phase_lockings_df)
+        plot_avg_phase_lockings(self._interpolate_df(self.avg_phase_lockings_df), smooth=True)
 
     def _format_ic(self, x):
-        return f"{x:.2f}"
+        return f"{x:.3f}"
+
+    def _interpolate_df(self, df, interpolation_len=30): #991
+        columns = [float(i) for i in df.columns.tolist()]
+        indices = [float(i) for i in df.index.tolist()]
+
+        arr = df.to_numpy()
+        interpolation = scipy.interpolate.RectBivariateSpline(indices, columns, arr)
+
+        columns_interpolated = np.linspace(columns[0], columns[-1], num=interpolation_len)
+        indices_interpolated = np.linspace(indices[0], indices[-1], num=interpolation_len)
+
+        return interpolation(indices_interpolated, columns_interpolated)

@@ -43,15 +43,18 @@ def display_frequencies_std():
 
 ####################################################################################################
 
-def plot_avg_phase_lockings(avg_phase_lockings):
+def plot_avg_phase_lockings(avg_phase_lockings, smooth=False):
 
-    path = f"{PlotPaths.AVG_PHASE_LOCKINGS.value}{PLOT_FORMAT}"
+    if smooth:
+        path = f"{PlotPaths.AVG_PHASE_LOCKING_SMOOTH.value}{PLOT_FORMAT}"
+    else:
+        path = f"{PlotPaths.AVG_PHASE_LOCKINGS.value}{PLOT_FORMAT}"
     print("Plotting avg phase-lockings.....", end="")
 
     fig, ax = plt.subplots(figsize=(PLOT_SIZE, PLOT_SIZE))
     sns.heatmap(
         avg_phase_lockings,
-        annot=True,
+        annot=not smooth,
         square=True,
         ax=ax
     )

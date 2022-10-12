@@ -11,6 +11,7 @@ from src.overview.Results import Results
 
 from itertools import product
 import numpy as np
+import os
 
 
 CREATING_DATA = True
@@ -43,6 +44,7 @@ class Application:
                     contrast_range=contrast_range
                 )
 
+            print(os.getcwd())
             cd_or_create_partic_plotting_directory(params_gabor.dist_scale, params_gabor.contrast_range)
 
             """DO SIMULATOR CRAP"""
@@ -60,7 +62,7 @@ class Application:
                 )
             else:
                 simulation_outcome = IzhikevichNetworkOutcome(
-                    spikes=fetch_spikes_data(),
+                    spikes=fetch_spikes_data(dist_scale=dist_scale, contrast_range=contrast_range),
                     params_ping=params_ping,
                     params_freqs=params_freqs,
                     simulation_time=simulation_time,

@@ -2,6 +2,7 @@ from src.params.ParamsConnectivity import *
 
 from src.izhikevich_simulation.Connectivity import *
 from src.izhikevich_simulation.GridGeometryFactory import *
+from src.izhikevich_simulation.RingGeometryFactory import *
 from src.izhikevich_simulation.GridGeometry import *
 
 from itertools import product
@@ -35,6 +36,7 @@ class ConnectivityGridPINGFactory:
         """
 
         grid_geometry = GridGeometryFactory().create(params_ping, cortical_distances)
+        #grid_geometry = RingGeometryFactory().create(params_ping)
         coupling_weights = self._compute_coupling_weights(
             params_ping, params_connectivity, grid_geometry
         )

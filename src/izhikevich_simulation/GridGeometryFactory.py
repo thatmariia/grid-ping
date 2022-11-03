@@ -90,7 +90,8 @@ class GridGeometryFactory:
         """
 
         ping_networks = []
-        neuron_distances = np.zeros((params_ping.nr_neurons["total"], params_ping.nr_neurons["total"]), dtype=int)
+        neuron_distances = np.zeros((params_ping.nr_neurons["total"], params_ping.nr_neurons["total"]), dtype=float)
+        #neuron_distances = np.zeros((params_ping.nr_neurons["total"], params_ping.nr_neurons["total"]), dtype=int)
 
         ping_ids = {}
 

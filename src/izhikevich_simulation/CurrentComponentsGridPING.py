@@ -5,6 +5,7 @@ from src.izhikevich_simulation.Connectivity import *
 
 import numpy as np
 from itertools import product
+from math import pi
 
 
 class CurrentComponentsGridPING(CurrentComponents):
@@ -157,7 +158,7 @@ class CurrentComponentsGridPING(CurrentComponents):
         :rtype: numpy.ndarray[int, float]
         """
 
-        # TODO:: what is this exactly?
+        #1.5
         return np.append(
             1.5 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.EX]),
             1.5 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.IN])
@@ -173,6 +174,22 @@ class CurrentComponentsGridPING(CurrentComponents):
         :rtype: numpy.ndarray[int, float]
         """
 
+        ####
+
+        # # sinusoidal spatial modulation of input strength
+        # amplitude = 1
+        # # mean input level to RS cells
+        # mean_input_lvl_RS = 7
+        # step = 2 * pi / (self.connectivity.params_ping.nr_neurons[NeuronTypes.EX] - 1)
+        # stim_input = mean_input_lvl_RS + amplitude * np.sin(
+        #     crange(-pi, pi, step)
+        # )
+        # # additional mean input to FS cells
+        # stim_input = np.append(stim_input, 3.5 * np.ones(self.connectivity.params_ping.nr_neurons[NeuronTypes.IN]))
+        # return stim_input
+
+        ####
+
         stimulus_input = np.zeros(self.connectivity.params_ping.nr_neurons["total"])
         currents_grid = self._stimulus_currents.reshape(
             self.connectivity.params_ping.grid_size, self.connectivity.params_ping.grid_size
@@ -187,3 +204,50 @@ class CurrentComponentsGridPING(CurrentComponents):
             #stimulus_input[ping_network.ids[NeuronTypes.EX]] = np.random.normal(10, 0.5)
 
         return stimulus_input
+
+
+def cust_range(*args, rtol=1e-05, atol=1e-08, include=[True, False]):
+    """
+    Combines numpy.arange and numpy.isclose to mimic
+    open, half-open and closed intervals.
+    Avoids also floating point rounding errors as with
+    >>> numpy.arange(1, 1.3, 0.1)
+    array([1. , 1.1, 1.2, 1.3])
+    args: [start, ]stop, [step, ]
+        as in numpy.arange
+    rtol, atol: floats
+        floating point tolerance as in numpy.isclose
+    include: boolean list-like, length 2
+        if start and end point are included
+    """
+    # process arguments
+    if len(args) == 1:
+        start = 0
+        stop = args[0]
+        step = 1
+    elif len(args) == 2:
+        start, stop = args
+        step = 1
+    else:
+        assert len(args) == 3
+        start, stop, step = tuple(args)
+
+    # determine number of segments
+    n = (stop-start)/step + 1
+
+    # do rounding for n
+    if np.isclose(n, np.round(n), rtol=rtol, atol=atol):
+        n = np.round(n)
+
+    # correct for start/end is exluded
+    if not include[0]:
+        n -= 1
+        start += step
+    if not include[1]:
+        n -= 1
+        stop -= step
+
+    return np.linspace(start, stop, int(n))
+
+def crange(*args, **kwargs):
+    return cust_range(*args, **kwargs, include=[True, True])

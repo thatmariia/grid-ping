@@ -13,14 +13,14 @@ class ParamsInitializer:
 
     def initialize(self, dist_scale=1.5, contrast_range=0.01):
         params_ping = ParamsPING(
-            nr_excitatory=81 * 400,
-            nr_inhibitory=81 * 100,
-            nr_ping_networks=81
+            nr_excitatory=100 * 200,
+            nr_inhibitory=100 * 50,
+            nr_ping_networks=100
         )
         # params_ping = ParamsPING(
-        #     nr_excitatory=8000,
-        #     nr_inhibitory=2000,
-        #     nr_ping_networks=4
+        #     nr_excitatory=16 * 1000,
+        #     nr_inhibitory=16 * 250,
+        #     nr_ping_networks=16
         # )
 
         params_gabor = ParamsGaborStimulus(
@@ -35,7 +35,7 @@ class ParamsInitializer:
             figure_width_dg=5,
             figure_height_dg=9,
             figure_ecc_dg=7,
-            patch_size_dg=4.914 # for 81 #4.2 for 100 #4.89 for 25 #4.928 for 16 #4.95 for 4 #4.2 for 400
+            patch_size_dg=2.23 #4.914 for 81 #4.2 for 100 #4.89 for 25 #4.928 for 16 #4.95 for 4 #4.2 for 400
         )
         params_rf = ParamsReceptiveField(
             slope=0.172,
@@ -47,10 +47,10 @@ class ParamsInitializer:
             max_connect_strength_EI=0.07,
             max_connect_strength_IE=-0.04,
             max_connect_strength_II=-0.015,
-            spatial_const_EE=0.4,
-            spatial_const_EI=0.3,
-            spatial_const_IE=0.3,
-            spatial_const_II=0.3
+            spatial_const_EE=0.6,#0.4,
+            spatial_const_EI=0.5,#0.3,
+            spatial_const_IE=0.5,#0.3,
+            spatial_const_II=0.5#0.3
         )
         params_izhi = ParamsIzhikevich(
             peak_potential=30,

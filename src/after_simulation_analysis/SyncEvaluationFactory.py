@@ -8,6 +8,7 @@ from math import sqrt, pi
 from scipy.signal import correlate
 import sys
 from tqdm import tqdm
+from scipy.ndimage import gaussian_filter
 
 
 class SyncEvaluationFactory:
@@ -46,25 +47,28 @@ class SyncEvaluationFactory:
         )
         return sync_evaluation
 
-    def _compute_cross_correlation(self, spike_dat, simulation_time):
-        max_lag = self.get_max_lag(spike_dat)# 12
-        step_size = 10
+    def _compute_cross_correlation(self, raster, simulation_time):
+        max_lag = self.get_max_lag(raster)# 12
+        print("max_lag =", max_lag)
+        step_size = 5
 
-        phase_locking = np.zeros((spike_dat.shape[0] // step_size, spike_dat.shape[0] // step_size))
-        alltim = np.zeros((spike_dat.shape[0] // step_size, spike_dat.shape[0] // step_size))
-        phase_values = np.zeros((spike_dat.shape[0] // step_size, spike_dat.shape[0] // step_size))
+        phase_locking = np.zeros((raster.shape[0] // step_size, raster.shape[0] // step_size))
+        alltim = np.zeros((raster.shape[0] // step_size, raster.shape[0] // step_size))
+        phase_values = np.zeros((raster.shape[0] // step_size, raster.shape[0] // step_size))
+
+        raster = self._apply_filter(raster)
 
         nn1 = 0
         time_window = list(range(199, simulation_time - 50))
-        for id1 in (pbar := tqdm(range(0, spike_dat.shape[0], step_size))):
+        for id1 in (pbar := tqdm(range(0, raster.shape[0], step_size))):
             pbar.set_description("Computing cross-correlation & stuff")
 
             nn2 = 0
-            for id2 in range(0, spike_dat.shape[0], step_size):
+            for id2 in range(0, raster.shape[0], step_size):
                 if id1 != id2:
 
-                    sig1 = spike_dat[id1, time_window].T
-                    sig2 = spike_dat[id2, time_window].T
+                    sig1 = raster[id1, time_window].T
+                    sig2 = raster[id2, time_window].T
 
                     correlation = correlate(sig1, sig2)
 
@@ -90,8 +94,8 @@ class SyncEvaluationFactory:
                 phase_locking[nn1, nn2] = peak_height
                 alltim[nn1, nn2] = peak_lag
 
-                mean_spike_rate_1 = self.get_mean_spike_rate(spike_dat[id1])
-                mean_spike_rate_2 = self.get_mean_spike_rate(spike_dat[id2])
+                mean_spike_rate_1 = self.get_mean_spike_rate(raster[id1])
+                mean_spike_rate_2 = self.get_mean_spike_rate(raster[id2])
                 spike_timing_diff = abs(max_lag - abs(peak_lag))
                 phase_values[nn1, nn2] = pi * (2 * spike_timing_diff) / (0.5 * (mean_spike_rate_1 + mean_spike_rate_2))
 
@@ -111,7 +115,9 @@ class SyncEvaluationFactory:
 
     def get_mean_spike_rate(self, id_raster):
         if sum(id_raster) == 0:
-            return sys.maxsize
+            print("BOOM")
+            #return sys.maxsize
+            return 20
         return len(id_raster) / sum(id_raster)
 
     def get_max_lag(self, raster):
@@ -153,5 +159,9 @@ class SyncEvaluationFactory:
             raster[neur_id - params_ping.neur_slice[neur_type].start, spikes_type.T[0].astype(int)[spikes_indices]] = 1
 
         return raster
+
+    def _apply_filter(self, raster):
+        # apply gaussian filter to raster
+        return gaussian_filter(raster, sigma=6)
 
 

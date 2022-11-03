@@ -98,7 +98,7 @@ class Application:
 
         with Manager() as manager:
             lock = manager.Lock()
-            with Pool(5) as pool:
+            with Pool(1) as pool:
                 pool.starmap(self._single_simulation, list(zip(product(self.dist_scales, self.contrast_ranges), repeat(lock))))
         # for dist_scale, contrast_range in product(self.dist_scales, self.contrast_ranges):
         #    self._single_simulation(dist_scale=dist_scale, contrast_range=contrast_range)

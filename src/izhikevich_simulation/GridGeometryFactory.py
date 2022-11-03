@@ -90,7 +90,8 @@ class GridGeometryFactory:
         """
 
         ping_networks = []
-        neuron_distances = np.zeros((params_ping.nr_neurons["total"], params_ping.nr_neurons["total"]), dtype=float)
+        # neuron_distances = np.zeros((params_ping.nr_neurons["total"], params_ping.nr_neurons["total"]), dtype=float)
+        neuron_distances = cortical_distances
         #neuron_distances = np.zeros((params_ping.nr_neurons["total"], params_ping.nr_neurons["total"]), dtype=int)
 
         ping_ids = {}
@@ -105,6 +106,7 @@ class GridGeometryFactory:
             in_ids1 = ping_ids[ping1][NeuronTypes.IN]
 
             ping_network = PINGNetworkNeurons(
+                grid_id=ping1,
                 grid_location=loc_ping1,
                 ids_ex=ex_ids1,
                 ids_in=in_ids1
@@ -117,9 +119,9 @@ class GridGeometryFactory:
                 ex_ids2 = ping_ids[ping2][NeuronTypes.EX]
                 in_ids2 = ping_ids[ping2][NeuronTypes.IN]
 
-                all_id_pairs = cartesian_product(np.array(ex_ids1 + in_ids1), np.array(ex_ids2 + in_ids2))
-                neuron_distances.ravel()[
-                    np.ravel_multi_index(all_id_pairs.T, neuron_distances.shape)
-                ] = cortical_distances[ping1, ping2]
+                # all_id_pairs = cartesian_product(np.array(ex_ids1 + in_ids1), np.array(ex_ids2 + in_ids2))
+                # neuron_distances.ravel()[
+                #     np.ravel_multi_index(all_id_pairs.T, neuron_distances.shape)
+                # ] = cortical_distances[ping1, ping2]
 
         return ping_networks, neuron_distances

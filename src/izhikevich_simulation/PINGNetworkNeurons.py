@@ -19,9 +19,10 @@ class PINGNetworkNeurons:
     :ivar ids: A dictionary with id's of neurons of both types in this oscillator.
     """
 
-    def __init__(self, grid_location: tuple[int, int], ids_ex: list[int], ids_in: list[int]):
+    def __init__(self, grid_id: int, grid_location: tuple[int, int], ids_ex: list[int], ids_in: list[int]):
 
         self.grid_location: tuple[int, int] = grid_location
+        self.grid_id = grid_id
         self.ids: dict[NeuronTypes, list[int]] = {
             NeuronTypes.EX: ids_ex,
             NeuronTypes.IN: ids_in

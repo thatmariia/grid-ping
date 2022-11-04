@@ -83,6 +83,7 @@ class Application:
                 avg_phase_locking=analyser.analysis_data.sync_evaluation.avg_phase_locking,
                 frequency_std=analyser.analysis_data.spiking_freq.std
             )
+            print(self.results.avg_phase_lockings_df)
 
         return_to_start_path_from_partic()
 
@@ -92,13 +93,11 @@ class Application:
         if CREATING_DATA:
             clear_simulation_directory()
 
-        simulation_time = 1000
-
         # results = Results(self.dist_scales, self.contrast_ranges)
 
         with Manager() as manager:
             lock = manager.Lock()
-            with Pool(32) as pool:
+            with Pool(1) as pool:
                 pool.starmap(self._single_simulation, list(zip(product(self.dist_scales, self.contrast_ranges), repeat(lock))))
         # for dist_scale, contrast_range in product(self.dist_scales, self.contrast_ranges):
         #    self._single_simulation(dist_scale=dist_scale, contrast_range=contrast_range)

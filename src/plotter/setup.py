@@ -1,5 +1,6 @@
 from enum import Enum
 import matplotlib as mpl
+import pandas as pd
 
 DATA_FORMAT = ".txt"
 PLOT_FORMAT = ".png"
@@ -10,12 +11,16 @@ mpl.rcParams['lines.linewidth'] = PLOT_SIZE / 2
 mpl.rcParams['axes.linewidth'] = PLOT_SIZE / 10
 mpl.rcParams['axes.labelsize'] = 2 * PLOT_SIZE
 mpl.rcParams['axes.labelpad'] = 2 * PLOT_SIZE
-mpl.rcParams['axes.titlesize'] = 3 * PLOT_SIZE
+mpl.rcParams['axes.titlesize'] = 2.5 * PLOT_SIZE
 mpl.rcParams['axes.titlepad'] = 3 * PLOT_SIZE
 mpl.rcParams['legend.fontsize'] = PLOT_SIZE
 mpl.rcParams['font.family'] = 'serif'
-mpl.rcParams['font.serif'] = 'Avenir'
+# mpl.rcParams['font.serif'] = 'Avenir'
 mpl.rcParams['font.weight'] = 'ultralight'
+
+pd.set_option('display.max_rows', 500)
+pd.set_option('display.max_columns', 500)
+pd.set_option('display.width', 1000)
 
 
 class PlotNames(Enum):

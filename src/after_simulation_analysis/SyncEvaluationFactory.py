@@ -59,7 +59,7 @@ class SyncEvaluationFactory:
     def _compute_cross_correlation(self, raster, simulation_time):
         max_lag = self.get_max_lag(raster)# 12
         print("max_lag =", max_lag)
-        step_size = 5
+        step_size = 10
 
         phase_locking = np.zeros((raster.shape[0] // step_size, raster.shape[0] // step_size))
         alltim = np.zeros((raster.shape[0] // step_size, raster.shape[0] // step_size))
@@ -171,6 +171,6 @@ class SyncEvaluationFactory:
 
     def _apply_filter(self, raster):
         # apply gaussian filter to raster
-        return gaussian_filter(raster, sigma=6)
+        return gaussian_filter(raster, sigma=5)
 
 

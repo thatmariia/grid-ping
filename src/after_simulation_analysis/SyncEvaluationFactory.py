@@ -171,6 +171,6 @@ class SyncEvaluationFactory:
 
     def _apply_filter(self, raster):
         # apply gaussian filter to raster
-        return gaussian_filter(raster, sigma=5)
+        return gaussian_filter(raster, sigma=6)
 
 

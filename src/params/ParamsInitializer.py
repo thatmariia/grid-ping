@@ -37,6 +37,7 @@ class ParamsInitializer:
             figure_ecc_dg=7,
             patch_size_dg=2.23 #4.914 for 81 #4.2 for 100 #4.89 for 25 #4.928 for 16 #4.95 for 4 #4.2 for 400
         )
+
         params_rf = ParamsReceptiveField(
             slope=0.172,
             intercept=-0.25,

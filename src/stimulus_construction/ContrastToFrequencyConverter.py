@@ -33,4 +33,4 @@ class ContrastToFrequencyConverter:
         """
 
         #return 25 + 0.25 * np.array(stimulus_contrast)
-        return 24.5 + 0.75 * np.array(stimulus_contrast)
+        return 24.9 + 0.35 * np.array(stimulus_contrast)

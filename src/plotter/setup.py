@@ -4,6 +4,7 @@ import pandas as pd
 
 DATA_FORMAT = ".txt"
 PLOT_FORMAT = ".png"
+DF_FORMAT = ".csv"
 PLOT_SIZE = 10
 PLOT_COLORS = ["#FFA3AF", "#ACDDE7", "#FFD8A8", "#B5EAD7", "#C7CEEA", "#FF9AA2", "#FFB7B2", "#FFDAC1", "#E2F0CB", "#E0E1FF"]
 
@@ -50,6 +51,7 @@ class PlotNames(Enum):
 class DataNames(Enum):
     SPIKES_DATA = "spikes-data"
     CORTICAL_DISTANCES_DATA = "cortical-dist-data"
+    AVG_PHASE_LOCKINGS_DATA = "avg-phase-lockings-data"
 
 
 class ParticSubdirectoryNames(Enum):
@@ -89,3 +91,5 @@ class PlotPaths(Enum):
 class DataPaths(Enum):
     SPIKES_DATA = f"{ParticSubdirectoryNames.RAW_DATA.value}"
     CORTICAL_DISTANCES_DATA = f"{ParticSubdirectoryNames.RAW_DATA.value}"
+
+    AVG_PHASE_LOCKINGS_DATA = f"{DataNames.AVG_PHASE_LOCKINGS_DATA.value}"

@@ -1,6 +1,7 @@
-from src.plotter.setup import DataNames, DataPaths, DATA_FORMAT
+from src.plotter.setup import DataNames, DataPaths, DATA_FORMAT, DF_FORMAT
 
 import numpy as np
+import pandas as pd
 
 ####################################################################################################
 
@@ -33,3 +34,11 @@ def fetch_cortical_dist_data(dist_scale, contrast_range):
     dist_data = np.loadtxt(path)
     return dist_data
 
+
+####################################################################################################
+
+
+def save_avg_phase_lockings_data(avg_phase_lockings_df):
+    path = f"{DataPaths.AVG_PHASE_LOCKINGS_DATA.value}{DF_FORMAT}"
+
+    avg_phase_lockings_df.to_csv(path)

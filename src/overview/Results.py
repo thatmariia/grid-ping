@@ -1,4 +1,5 @@
 from src.plotter.results_plots import *
+from src.plotter.raw_data import save_avg_phase_lockings_data
 
 import pandas as pd
 from copy import deepcopy
@@ -20,7 +21,8 @@ class Results:
     def make_plots(self):
         plot_frequencies_std(self.frequency_stds_df)
         plot_avg_phase_lockings(self.avg_phase_lockings_df)
-        plot_avg_phase_lockings(self._interpolate_df(self.avg_phase_lockings_df), smooth=True)
+        save_avg_phase_lockings_data(self.avg_phase_lockings_df)
+        # plot_avg_phase_lockings(self._interpolate_df(self.avg_phase_lockings_df), smooth=True)
 
     def _format_ic(self, x):
         return f"{x:.3f}"

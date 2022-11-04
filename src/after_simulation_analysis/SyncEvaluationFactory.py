@@ -16,13 +16,6 @@ class SyncEvaluationFactory:
     def create(
             self, spikes, params_ping: ParamsPING, simulation_time: int
     ) -> SyncEvaluation:
-        if spikes == []:
-            print("No spikes")
-            # return empty SyncEvaluation
-            return SyncEvaluation(
-                phase_values=[0],
-                phase_locking=[0]
-            )
         spikes_T = np.array(spikes).T
 
         # indices when neurons fired
@@ -32,6 +25,15 @@ class SyncEvaluationFactory:
         ).flatten()
         # times when neurons fired
         spikes_in = np.array(list(zip(spikes_T[0][spikes_in_indices], spikes_T[1][spikes_in_indices])))
+
+        # if spikes_in is empty
+        if spikes_in.shape[0] == 0:
+            print("No spikes")
+            # return empty SyncEvaluation
+            return SyncEvaluation(
+                phase_values=[0],
+                phase_locking=[0]
+            )
 
         # raster_ex = self._get_type_raster(
         #     spikes_type=spikes_ex,

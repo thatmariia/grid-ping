@@ -49,70 +49,70 @@ class ConnectivityGridPINGFactory:
 
         return connectivity
 
-    def _compute_coupling_weights(
-            self,
-            params_ping: ParamsPING, params_connectivity: ParamsConnectivity, grid_geometry: GridGeometry
-    ) -> np.ndarray[(int, int), float]:
-
-        coupling_weights = {}
-
-        for nts in (pbar := tqdm(list(product([NeuronTypes.EX, NeuronTypes.IN], repeat=2)))):
-            pbar.set_description("Computing coupling weights")
-
-            types_coupling_weights = self._compute_type_coupling_weights(
-                dist=grid_geometry.neuron_distances,
-                max_connect_strength=params_connectivity.max_connect_strength[(nts[0], nts[1])],
-                spatial_const=params_connectivity.spatial_const[(nts[0], nts[1])]
-            )
-
-            coupling_weights[(nts[0], nts[1])] = types_coupling_weights
-
-        return np.nan_to_num(coupling_weights)
-
-
     # def _compute_coupling_weights_old(
     #         self,
     #         params_ping: ParamsPING, params_connectivity: ParamsConnectivity, grid_geometry: GridGeometry
     # ) -> np.ndarray[(int, int), float]:
-    #     """
-    #     Computes the coupling weights between all neurons.
     #
-    #     Essentially, this method computes the full matrix :math:`K` of coupling weights.
-    #     The approach is derived from :cite:p:`Lowet2015`.
-    #
-    #     :param params_ping: parameters describing PING networks and their composition.
-    #     :type params_ping: ParamsPING
-    #
-    #     :param params_connectivity: parameters of the network connectivity.
-    #     :type params_connectivity: ParamsConnectivity
-    #
-    #     :param grid_geometry: contains information about grid locations of PING networks and neurons located in them.
-    #     :type grid_geometry: GridGeometry
-    #
-    #     :return: matrix of all coupling weights.
-    #     :rtype: numpy.ndarray[(int, int), float]
-    #     """
-    #
-    #     coupling_weights = np.zeros((params_ping.nr_neurons["total"], params_ping.nr_neurons["total"]))
+    #     coupling_weights = {}
     #
     #     for nts in (pbar := tqdm(list(product([NeuronTypes.EX, NeuronTypes.IN], repeat=2)))):
     #         pbar.set_description("Computing coupling weights")
     #
-    #         dist = grid_geometry.neuron_distances[params_ping.neur_slice[nts[0]], params_ping.neur_slice[nts[1]]]
     #         types_coupling_weights = self._compute_type_coupling_weights(
-    #             dist=dist,
+    #             dist=grid_geometry.neuron_distances,
     #             max_connect_strength=params_connectivity.max_connect_strength[(nts[0], nts[1])],
     #             spatial_const=params_connectivity.spatial_const[(nts[0], nts[1])]
     #         )
     #
-    #         if nts[0] == nts[1]:
-    #             coupling_weights[params_ping.neur_slice[nts[0]], params_ping.neur_slice[nts[1]]] = \
-    #                 types_coupling_weights
-    #         else:
-    #             coupling_weights[params_ping.neur_slice[nts[1]], params_ping.neur_slice[nts[0]]] = \
-    #                 types_coupling_weights.T
+    #         coupling_weights[(nts[0], nts[1])] = types_coupling_weights
     #
     #     return np.nan_to_num(coupling_weights)
+
+
+    def _compute_coupling_weights(
+            self,
+            params_ping: ParamsPING, params_connectivity: ParamsConnectivity, grid_geometry: GridGeometry
+    ) -> np.ndarray[(int, int), float]:
+        """
+        Computes the coupling weights between all neurons.
+
+        Essentially, this method computes the full matrix :math:`K` of coupling weights.
+        The approach is derived from :cite:p:`Lowet2015`.
+
+        :param params_ping: parameters describing PING networks and their composition.
+        :type params_ping: ParamsPING
+
+        :param params_connectivity: parameters of the network connectivity.
+        :type params_connectivity: ParamsConnectivity
+
+        :param grid_geometry: contains information about grid locations of PING networks and neurons located in them.
+        :type grid_geometry: GridGeometry
+
+        :return: matrix of all coupling weights.
+        :rtype: numpy.ndarray[(int, int), float]
+        """
+
+        coupling_weights = np.zeros((params_ping.nr_neurons["total"], params_ping.nr_neurons["total"]))
+
+        for nts in (pbar := tqdm(list(product([NeuronTypes.EX, NeuronTypes.IN], repeat=2)))):
+            pbar.set_description("Computing coupling weights")
+
+            dist = grid_geometry.neuron_distances[params_ping.neur_slice[nts[0]], params_ping.neur_slice[nts[1]]]
+            types_coupling_weights = self._compute_type_coupling_weights(
+                dist=dist,
+                max_connect_strength=params_connectivity.max_connect_strength[(nts[0], nts[1])],
+                spatial_const=params_connectivity.spatial_const[(nts[0], nts[1])]
+            )
+
+            if nts[0] == nts[1]:
+                coupling_weights[params_ping.neur_slice[nts[0]], params_ping.neur_slice[nts[1]]] = \
+                    types_coupling_weights
+            else:
+                coupling_weights[params_ping.neur_slice[nts[1]], params_ping.neur_slice[nts[0]]] = \
+                    types_coupling_weights.T
+
+        return np.nan_to_num(coupling_weights)
 
     def _compute_type_coupling_weights(
             self,

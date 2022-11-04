@@ -105,41 +105,34 @@ class IzhikevichNetworkSimulator:
             # current
             synaptic_currents = self._current_components.get_synaptic_currents(dt, potentials)
 
-            def get_cost(i):
-                sum_costs = 0
-
-                nt_i = NeuronTypes.EX \
-                    if i in self._current_components.connectivity.params_ping.neur_indices[NeuronTypes.EX] \
-                    else NeuronTypes.IN
-                ping_id_i = self._current_components.connectivity.grid_geometry.find_neurons_ping(i, nt_i)
-
-                for nt_j in [NeuronTypes.EX, NeuronTypes.IN]:
-
-                    coupling_weights_ij = np.repeat(
-                        self._current_components.connectivity.coupling_weights[(nt_i, nt_j)][ping_id_i],
-                        self._current_components.connectivity.params_ping.nr_neurons_per_ping[nt_j]
-                    )
-                    synaptic_currents_j = synaptic_currents[self._current_components.connectivity.params_ping.neur_indices[nt_j]]
-                    costs_j = sum(coupling_weights_ij * synaptic_currents_j)
-                    sum_costs += costs_j
-
-
-                    # for j in self._current_components.connectivity.params_ping.neur_indices[nt_j]:
-                    #     ping_id_j = self._current_components.connectivity.grid_geometry.find_neurons_ping(j, nt_j)
-                    #     cost_i_j = self._current_components.connectivity.coupling_weights[(nt_i, nt_j)][
-                    #                    ping_id_i, ping_id_j] * synaptic_currents[j]
-                    #     sum_costs += cost_i_j
-
-                return sum_costs
-
-            cost = np.array([get_cost(i) for i in range(self._current_components.connectivity.params_ping.nr_neurons["total"])])
+            # def get_cost(i):
+            #     sum_costs = 0
+            #
+            #     nt_i = NeuronTypes.EX \
+            #         if i in self._current_components.connectivity.params_ping.neur_indices[NeuronTypes.EX] \
+            #         else NeuronTypes.IN
+            #     ping_id_i = self._current_components.connectivity.grid_geometry.find_neurons_ping(i, nt_i)
+            #
+            #     for nt_j in [NeuronTypes.EX, NeuronTypes.IN]:
+            #
+            #         coupling_weights_ij = np.repeat(
+            #             self._current_components.connectivity.coupling_weights[(nt_i, nt_j)][ping_id_i],
+            #             self._current_components.connectivity.params_ping.nr_neurons_per_ping[nt_j]
+            #         )
+            #         synaptic_currents_j = synaptic_currents[self._current_components.connectivity.params_ping.neur_indices[nt_j]]
+            #         costs_j = sum(coupling_weights_ij * synaptic_currents_j)
+            #         sum_costs += costs_j
+            #
+            #     return sum_costs
+            #
+            # cost = np.array([get_cost(i) for i in range(self._current_components.connectivity.params_ping.nr_neurons["total"])])
 
             current_input = self._current_components.get_current_input()
-            currents = current_input + cost
-            # currents = current_input + np.matmul(
-            #     self._current_components.connectivity.coupling_weights,
-            #     synaptic_currents
-            # )
+            # currents = current_input + cost
+            currents = current_input + np.matmul(
+                self._current_components.connectivity.coupling_weights,
+                synaptic_currents
+            )
 
             # updating potential and recovery
             potentials = potentials + 0.5 * self._get_change_in_potentials(potentials, recovery, currents)

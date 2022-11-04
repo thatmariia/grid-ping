@@ -16,6 +16,13 @@ class SyncEvaluationFactory:
     def create(
             self, spikes, params_ping: ParamsPING, simulation_time: int
     ) -> SyncEvaluation:
+        if spikes == []:
+            print("No spikes")
+            # return empty SyncEvaluation
+            return SyncEvaluation(
+                phase_values=[0],
+                phase_locking=[0]
+            )
         spikes_T = np.array(spikes).T
 
         # indices when neurons fired

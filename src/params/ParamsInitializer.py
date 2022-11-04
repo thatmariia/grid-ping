@@ -13,9 +13,9 @@ class ParamsInitializer:
 
     def initialize(self, dist_scale=1.5, contrast_range=0.01):
         params_ping = ParamsPING(
-            nr_excitatory=4 * 200,
-            nr_inhibitory=4 * 50,
-            nr_ping_networks=4
+            nr_excitatory=400 * 2000,
+            nr_inhibitory=400 * 500,
+            nr_ping_networks=400
         )
         # params_ping = ParamsPING(
         #     nr_excitatory=16 * 1000,
@@ -35,7 +35,7 @@ class ParamsInitializer:
             figure_width_dg=5,
             figure_height_dg=9,
             figure_ecc_dg=7,
-            patch_size_dg=4.95 #4.914 for 81 #4.2 for 100 #4.89 for 25 #4.928 for 16 #4.95 for 4 #4.2 for 400
+            patch_size_dg=4.2 #4.914 for 81 #4.2 for 100 #4.89 for 25 #4.928 for 16 #4.95 for 4 #4.2 for 400
         )
         params_rf = ParamsReceptiveField(
             slope=0.172,

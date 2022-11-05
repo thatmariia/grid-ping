@@ -15,6 +15,11 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(prog='grid-ping')
     parser.add_argument('--root', action=argparse.BooleanOptionalAction)
+
+    parser.add_argument('--single_simulation', action=argparse.BooleanOptionalAction)
+    parser.add_argument('--single_dist_scale', type=float, default=1.0)
+    parser.add_argument('--single_contrast_range', type=float, default=0.01)
+
     parser.add_argument('--simulation_time', type=int, default=1000)
     parser.add_argument('--nr_excitatory', type=int, default=100 * 200)
     parser.add_argument('--nr_inhibitory', type=int, default=100 * 50)
@@ -74,25 +79,26 @@ if __name__ == "__main__":
 
     simulation_time = args.simulation_time
 
-    params_ping = ParamsPING(
-        nr_excitatory=args.nr_excitatory,
-        nr_inhibitory=args.nr_inhibitory,
-        nr_ping_networks=args.nr_ping_networks
-    )
-
     params_gabor = ParamsGaborStimulus(
         spatial_freq=args.spatial_freq,
         vlum=args.vlum,
         diameter_dg=args.diameter_dg,
         diameter=args.diameter,
-        dist_scale=args.dist_scale,
+        dist_scale=args.single_dist_scale,
         full_width_dg=args.full_width_dg,
         full_height_dg=args.full_height_dg,
-        contrast_range=args.contrast_range,
+        contrast_range=args.single_contrast_range,
         figure_width_dg=args.figure_width_dg,
         figure_height_dg=args.figure_height_dg,
         figure_ecc_dg=args.figure_ecc_dg,
-        patch_size_dg=args.patch_size_dg # 4.914 for 81 #4.2 for 100 #4.89 for 25 #4.928 for 16 #4.95 for 4 #4.2 for 400
+        patch_size_dg=args.patch_size_dg
+        # 4.914 for 81 #4.2 for 100 #4.89 for 25 #4.928 for 16 #4.95 for 4 #4.2 for 400
+    )
+
+    params_ping = ParamsPING(
+        nr_excitatory=args.nr_excitatory,
+        nr_inhibitory=args.nr_inhibitory,
+        nr_ping_networks=args.nr_ping_networks
     )
 
     params_rf = ParamsReceptiveField(
@@ -138,10 +144,7 @@ if __name__ == "__main__":
         gaussian_width=args.gaussian_width
     )
 
-    dist_scales = args.dist_scales
-    contrast_ranges = args.contrast_ranges
-
-    Application(
+    application = Application(
         simulation_time=simulation_time,
         params_gabor=params_gabor,
         params_rf=params_rf,
@@ -149,9 +152,18 @@ if __name__ == "__main__":
         params_izhi=params_izhi,
         params_freqs=params_freqs,
         params_connectivity=params_connectivity,
-        params_synaptic=params_synaptic,
-        dist_scales=dist_scales,
-        contrast_ranges=contrast_ranges,
-    ).run()
+        params_synaptic=params_synaptic
+    )
+
+    if args.single_simulation:
+        dist_scale = args.single_dist_scale
+        contrast_range = args.single_contrast_range
+
+        application.run_single_simulation((dist_scale, contrast_range))
+    else:
+        dist_scales = args.dist_scales
+        contrast_ranges = args.contrast_ranges
+
+        application.run_full_simulation(dist_scales=dist_scales, contrast_ranges=contrast_ranges)
 
 

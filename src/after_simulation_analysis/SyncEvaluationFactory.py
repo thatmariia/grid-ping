@@ -2,6 +2,7 @@ from src.izhikevich_simulation.IzhikevichNetworkOutcome import IzhikevichNetwork
 from src.params.ParamsPING import ParamsPING
 from src.params.NeuronTypes import NeuronTypes
 from src.after_simulation_analysis.SyncEvaluation import SyncEvaluation
+from src.params.ParamsSync import *
 
 import numpy as np
 from math import sqrt, pi
@@ -14,7 +15,7 @@ from scipy.ndimage import gaussian_filter
 class SyncEvaluationFactory:
 
     def create(
-            self, spikes, params_ping: ParamsPING, simulation_time: int
+            self, spikes, params_ping: ParamsPING, simulation_time: int, params_sync: ParamsSync
     ) -> SyncEvaluation:
         spikes_T = np.array(spikes).T
 
@@ -48,7 +49,7 @@ class SyncEvaluationFactory:
             simulation_time=simulation_time
         )
 
-        phase_values, phase_locking = self._compute_cross_correlation(raster_in, simulation_time)
+        phase_values, phase_locking = self._compute_cross_correlation(raster_in, simulation_time, params_sync)
 
         sync_evaluation = SyncEvaluation(
             phase_values=phase_values,
@@ -56,16 +57,36 @@ class SyncEvaluationFactory:
         )
         return sync_evaluation
 
-    def _compute_cross_correlation(self, raster, simulation_time):
+    def _compute_cross_correlation(self, raster, simulation_time, params_sync: ParamsSync):
         max_lag = self.get_max_lag(raster)# 12
         print("max_lag =", max_lag)
-        step_size = 10
+        step_size = params_sync.step_size
+
+        if params_sync.sigma > 0:
+            raster = self._apply_filter(raster, sigma=params_sync.sigma)
+
+        # within a single ping
+        # ping_id = 200
+        # raster = raster[ping_id * 10: (ping_id + 2) * 10]
+        # within a row
+        # row_id = 10
+        # row_start = 20 * 10 * row_id
+        # row_end = 20 * 10 * (row_id + 1)
+        # raster = raster[row_start: row_end]
+        # within a column
+        # col_id = 10
+        # neuron_ids = []
+        # for row_id in range(20):
+        #     row_start = 20 * 10 * row_id
+        #     col_start = row_start + 10 * col_id
+        #     col_end = col_start + 10
+        #     for i in range(col_start, col_end):
+        #         neuron_ids.append(i)
+        # raster = raster[neuron_ids]
 
         phase_locking = np.zeros((raster.shape[0] // step_size, raster.shape[0] // step_size))
         alltim = np.zeros((raster.shape[0] // step_size, raster.shape[0] // step_size))
         phase_values = np.zeros((raster.shape[0] // step_size, raster.shape[0] // step_size))
-
-        raster = self._apply_filter(raster)
 
         nn1 = 0
         time_window = list(range(199, simulation_time - 50))
@@ -169,8 +190,8 @@ class SyncEvaluationFactory:
 
         return raster
 
-    def _apply_filter(self, raster):
+    def _apply_filter(self, raster, sigma):
         # apply gaussian filter to raster
-        return gaussian_filter(raster, sigma=6)
+        return gaussian_filter(raster, sigma=sigma)
 
 

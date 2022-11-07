@@ -22,12 +22,12 @@ class Results:
         plot_frequencies_std(self.frequency_stds_df)
         plot_avg_phase_lockings(self.avg_phase_lockings_df)
         save_avg_phase_lockings_data(self.avg_phase_lockings_df)
-        # plot_avg_phase_lockings(self._interpolate_df(self.avg_phase_lockings_df), smooth=True)
+        plot_avg_phase_lockings(self._interpolate_df(self.avg_phase_lockings_df), smooth=True)
 
     def _format_ic(self, x):
         return f"{x:.3f}"
 
-    def _interpolate_df(self, df, interpolation_len=30): #991
+    def _interpolate_df(self, df, interpolation_len=991): #991
         columns = [float(i) for i in df.columns.tolist()]
         indices = [float(i) for i in df.index.tolist()]
 

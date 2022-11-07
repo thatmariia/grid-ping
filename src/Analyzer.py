@@ -1,6 +1,7 @@
 from src.izhikevich_simulation.IzhikevichNetworkOutcome import IzhikevichNetworkOutcome
 from src.after_simulation_analysis.AfterSimulationAnalysisDataFactory import AfterSimulationAnalysisDataFactory
 from src.after_simulation_analysis.AfterSimulationAnalysisData import AfterSimulationAnalysisData
+from src.params.ParamsSync import *
 
 from src.plotter.after_simulation_plots import *
 
@@ -8,10 +9,11 @@ from src.plotter.after_simulation_plots import *
 
 class Analyzer:
 
-    def __init__(self, simulation_outcome: IzhikevichNetworkOutcome, step: int):
+    def __init__(self, simulation_outcome: IzhikevichNetworkOutcome, step: int, params_sync: ParamsSync):
         self.step = step
         self.analysis_data = AfterSimulationAnalysisDataFactory().create(
             simulation_outcome=simulation_outcome,
+            params_sync=params_sync,
             step=step
         )
 

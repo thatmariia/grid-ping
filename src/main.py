@@ -7,6 +7,8 @@ from src.params.ParamsConnectivity import *
 from src.params.ParamsIzhikevich import *
 from src.params.ParamsSynaptic import *
 from src.params.ParamsFrequencies import *
+from src.params.ParamsSync import *
+from src.params.ParamsContrastToFrequency import *
 
 import os
 import argparse
@@ -71,6 +73,10 @@ if __name__ == "__main__":
     parser.add_argument('--gaussian_width', type=float, default=0.5)
     parser.add_argument('--dist_scales', type=float, default=[1.0, 1.125, 1.25, 1.375, 1.5], nargs='+')
     parser.add_argument('--contrast_ranges', type=float, default=[0.01, 0.2575, 0.505, 0.7525, 1.0], nargs='+')
+    parser.add_argument('--sync_step_size', type=int, default=10)
+    parser.add_argument('--sync_sigma', type=float, default=1)
+    parser.add_argument('--c2f_slope', type=float, default=14.0)
+    parser.add_argument('--c2f_offset', type=float, default=4.0)
 
     args = parser.parse_args()
 
@@ -144,6 +150,16 @@ if __name__ == "__main__":
         gaussian_width=args.gaussian_width
     )
 
+    params_sync = ParamsSync(
+        step_size=args.sync_step_size,
+        sigma=args.sync_sigma
+    )
+
+    params_c2f = ParamsContrastToFrequency(
+        slope=args.c2f_slope,
+        offset=args.c2f_offset
+    )
+
     application = Application(
         simulation_time=simulation_time,
         params_gabor=params_gabor,
@@ -152,7 +168,9 @@ if __name__ == "__main__":
         params_izhi=params_izhi,
         params_freqs=params_freqs,
         params_connectivity=params_connectivity,
-        params_synaptic=params_synaptic
+        params_synaptic=params_synaptic,
+        params_sync=params_sync,
+        params_c2f=params_c2f
     )
 
     if args.single_simulation:

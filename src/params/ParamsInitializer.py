@@ -5,6 +5,7 @@ from src.params.ParamsConnectivity import *
 from src.params.ParamsIzhikevich import *
 from src.params.ParamsSynaptic import *
 from src.params.ParamsFrequencies import *
+from src.params.ParamsSync import *
 
 class ParamsInitializer:
     """
@@ -12,16 +13,16 @@ class ParamsInitializer:
     """
 
     def initialize(self, dist_scale=1.5, contrast_range=0.01):
-        # params_ping = ParamsPING(
-        #     nr_excitatory=400 * 2000,
-        #     nr_inhibitory=400 * 500,
-        #     nr_ping_networks=400
-        # )
         params_ping = ParamsPING(
-            nr_excitatory=100 * 250,
-            nr_inhibitory=100 * 50,
-            nr_ping_networks=100
+            nr_excitatory=400 * 40,
+            nr_inhibitory=400 * 10,
+            nr_ping_networks=400
         )
+        # params_ping = ParamsPING(
+        #     nr_excitatory=100 * 250,
+        #     nr_inhibitory=100 * 50,
+        #     nr_ping_networks=100
+        # )
 
         params_gabor = ParamsGaborStimulus(
             spatial_freq=5.7,

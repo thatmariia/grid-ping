@@ -4,6 +4,7 @@ from src.after_simulation_analysis.AfterSimulationAnalysisData import AfterSimul
 from src.after_simulation_analysis.SpikingFrequencyFactory import SpikingFrequencyFactory
 from src.after_simulation_analysis.SpikingFrequency import SpikingFrequency
 from src.after_simulation_analysis.SyncEvaluationFactory import SyncEvaluationFactory
+from src.params.ParamsSync import *
 
 import numpy as np
 import pandas as pd
@@ -12,7 +13,7 @@ from tqdm import tqdm
 
 class AfterSimulationAnalysisDataFactory:
 
-    def create(self, simulation_outcome: IzhikevichNetworkOutcome, step: int = 100) -> AfterSimulationAnalysisData:
+    def create(self, simulation_outcome: IzhikevichNetworkOutcome, params_sync: ParamsSync, step: int = 100) -> AfterSimulationAnalysisData:
         # TODO:: assert sim time divides step
 
         spikes_stats = []
@@ -152,7 +153,8 @@ class AfterSimulationAnalysisDataFactory:
         sync_evaluation = SyncEvaluationFactory().create(
             spikes=simulation_outcome.spikes,
             params_ping=simulation_outcome.params_ping,
-            simulation_time=simulation_outcome.simulation_time
+            simulation_time=simulation_outcome.simulation_time,
+            params_sync=params_sync
         )
 
         after_simulation_analysis_data = AfterSimulationAnalysisData(

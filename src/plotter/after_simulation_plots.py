@@ -227,6 +227,8 @@ def plot_phase_locking(phase_locking):
         cbar=True,
         square=True,
         cmap="Blues",
+        vmin=0,
+        vmax=1,
         xticklabels=False,
         yticklabels=False,
         ax=ax

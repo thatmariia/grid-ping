@@ -6,6 +6,8 @@ from src.stimulus_construction.FrequencyToCurrentConverter import *
 from src.stimulus_construction.Stimulus import *
 from src.application_setup import USE_GRAY_STIMULUS
 
+from src.params.ParamsContrastToFrequency import ParamsContrastToFrequency
+
 from src.plotter.stimulus import plot_full_stimulus, plot_stimulus_patch, plot_local_contrasts, plot_stimulus_currents
 
 import numpy as np
@@ -21,7 +23,8 @@ class StimulusFactory:
             params_rf: ParamsReceptiveField,
             params_ping: ParamsPING,
             params_izhi: ParamsIzhikevich,
-            params_freqs: ParamsFrequencies
+            params_freqs: ParamsFrequencies,
+            params_c2f: ParamsContrastToFrequency
     ) -> Stimulus:
         """
         Creates an external stimulus (Gabor texture) and prepares for the neural network input.
@@ -90,7 +93,7 @@ class StimulusFactory:
         plot_local_contrasts(stimulus_contrasts.reshape(params_ping.grid_size, params_ping.grid_size))
 
         stimulus_frequencies = ContrastToFrequencyConverter().convert(
-            stimulus_contrasts
+            stimulus_contrasts, params_c2f
         )
         stimulus_currents = FrequencyToCurrentConverter().convert(
             stimulus_frequencies, params_ping, params_izhi, params_freqs

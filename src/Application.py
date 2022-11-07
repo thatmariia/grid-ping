@@ -29,7 +29,9 @@ class Application:
             params_izhi,
             params_freqs,
             params_connectivity,
-            params_synaptic
+            params_synaptic,
+            params_sync,
+            params_c2f
     ):
         # # [1.0, 1.125, 1.25, 1.375, 1.5]
         # self.dist_scales = dist_scales
@@ -46,6 +48,8 @@ class Application:
         self.params_freqs = params_freqs
         self.params_connectivity = params_connectivity
         self.params_synaptic = params_synaptic
+        self.params_sync = params_sync
+        self.params_c2f = params_c2f
 
 
     def run_single_simulation(self, sim_input):
@@ -69,12 +73,13 @@ class Application:
             params_izhi=self.params_izhi,
             params_freqs=self.params_freqs,
             params_connectivity=self.params_connectivity,
-            params_synaptic=self.params_synaptic
+            params_synaptic=self.params_synaptic,
+            params_c2f=self.params_c2f
         )
 
         """DO ANALYSIS CRAP"""
         print("\n ~~~~ ANALYSIS ~~~~ \n")
-        analyser = Analyzer(simulation_outcome=simulation_outcome, step=250)
+        analyser = Analyzer(simulation_outcome=simulation_outcome, step=250, params_sync=self.params_sync)
         analyser.make_plots()
 
         return_to_start_path_from_partic()
@@ -120,7 +125,8 @@ class Application:
                 params_izhi=self.params_izhi,
                 params_freqs=self.params_freqs,
                 params_connectivity=self.params_connectivity,
-                params_synaptic=self.params_synaptic
+                params_synaptic=self.params_synaptic,
+                params_c2f=self.params_c2f
             )
         else:
             simulation_outcome = IzhikevichNetworkOutcome(
@@ -136,7 +142,7 @@ class Application:
 
         """DO ANALYSIS CRAP"""
         print("\n ~~~~ ANALYSIS ~~~~ \n")
-        analyser = Analyzer(simulation_outcome=simulation_outcome, step=250)
+        analyser = Analyzer(simulation_outcome=simulation_outcome, params_sync=self.params_sync, step=250)
         analyser.make_plots()
 
         # with lock:

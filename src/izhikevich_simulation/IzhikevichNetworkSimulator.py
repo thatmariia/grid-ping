@@ -217,10 +217,11 @@ class IzhikevichNetworkSimulator:
         :rtype: tuple[numpy.ndarray[int, float], numpy.ndarray[int, float]]
         """
 
-        potentials = np.array([
-            -65 for _ in range(self._current_components.connectivity.params_ping.nr_neurons["total"])
-        ])
-        recovery = np.multiply(izhi_beta, potentials)
+        # potentials = np.array([
+        #     -65 for _ in range(self._current_components.connectivity.params_ping.nr_neurons["total"])
+        # ])
+        potentials = np.array([np.random.uniform(-65.0, 30.0) for _ in range(self._current_components.connectivity.params_ping.nr_neurons["total"])])
+        recovery = np.multiply(izhi_beta, potentials) # TODO:: + zeta
         return potentials, recovery
 
     def _get_change_in_recovery(

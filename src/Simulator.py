@@ -19,10 +19,11 @@ class Simulator:
             params_izhi,
             params_freqs,
             params_connectivity,
-            params_synaptic
+            params_synaptic,
+            params_c2f
     ) -> IzhikevichNetworkOutcome:
 
-            stimulus = StimulusFactory().create(params_gabor, params_rf, params_ping, params_izhi, params_freqs)
+            stimulus = StimulusFactory().create(params_gabor, params_rf, params_ping, params_izhi, params_freqs, params_c2f)
 
             stimulus_currents = stimulus.stimulus_currents
             cortical_distances = stimulus.extract_stimulus_location().cortical_distances

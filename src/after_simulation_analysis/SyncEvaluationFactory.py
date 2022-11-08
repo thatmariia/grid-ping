@@ -4,13 +4,14 @@ from src.params.NeuronTypes import NeuronTypes
 from src.after_simulation_analysis.SyncEvaluation import SyncEvaluation
 from src.params.ParamsSync import *
 
+from multiprocessing import Manager, Pool, Lock
 import numpy as np
 from math import sqrt, pi
 from scipy.signal import correlate
 import sys
 from tqdm import tqdm
 from scipy.ndimage import gaussian_filter
-
+from itertools import repeat
 
 class SyncEvaluationFactory:
 
@@ -57,6 +58,44 @@ class SyncEvaluationFactory:
         )
         return sync_evaluation
 
+    def _compute_correlation_for_neuron_pair(self, id1, id2, raster, time_window, max_lag):
+        if id1 != id2:
+
+            sig1 = raster[id1, time_window].T
+            sig2 = raster[id2, time_window].T
+
+            correlation = correlate(sig1, sig2)
+
+            # cropping to account for maximum lag
+            if correlation.shape[0] > (2 * max_lag + 1):
+                mid = correlation.shape[0] // 2 + 1
+                correlation = correlation[mid - max_lag:mid + max_lag + 1]
+
+            # normalizing correlation
+            correlation = correlation / sqrt(
+                self._correlate_with_zero_lag(sig1, sig1) *
+                self._correlate_with_zero_lag(sig2, sig2)
+            )
+
+            peak_lag = np.argmax(correlation)
+            peak_height = correlation[peak_lag]
+
+        else:
+            # autocorrelation
+            peak_lag = max_lag + 1
+            peak_height = 1
+
+        #phase_locking[nn1, nn2] = peak_height
+        #alltim[nn1, nn2] = peak_lag
+
+        mean_spike_rate_1 = self.get_mean_spike_rate(raster[id1])
+        mean_spike_rate_2 = self.get_mean_spike_rate(raster[id2])
+        spike_timing_diff = abs(max_lag - abs(peak_lag))
+        phase_value = pi * (2 * spike_timing_diff) / (0.5 * (mean_spike_rate_1 + mean_spike_rate_2))
+        #phase_values[nn1, nn2] = pi * (2 * spike_timing_diff) / (0.5 * (mean_spike_rate_1 + mean_spike_rate_2))
+
+        return id2, peak_height, peak_lag, phase_value
+
     def _compute_cross_correlation(self, raster, simulation_time, params_sync: ParamsSync):
         max_lag = self.get_max_lag(raster)# 12
         print("max_lag =", max_lag)
@@ -93,43 +132,19 @@ class SyncEvaluationFactory:
         for id1 in (pbar := tqdm(range(0, raster.shape[0], step_size))):
             pbar.set_description("Computing cross-correlation & stuff")
 
-            nn2 = 0
-            for id2 in range(0, raster.shape[0], step_size):
-                if id1 != id2:
+            with Manager() as manager:
+                # lock = manager.Lock()
+                with Pool(params_sync.nr_cores) as pool:
+                    arguments = []
+                    for id2 in range(0, raster.shape[0], step_size):
+                        arguments.append((id1, id2, raster, time_window, max_lag))
 
-                    sig1 = raster[id1, time_window].T
-                    sig2 = raster[id2, time_window].T
-
-                    correlation = correlate(sig1, sig2)
-
-                    # cropping to account for maximum lag
-                    if correlation.shape[0] > (2 * max_lag + 1):
-                        mid = correlation.shape[0] // 2 + 1
-                        correlation = correlation[mid - max_lag:mid + max_lag + 1]
-
-                    # normalizing correlation
-                    correlation = correlation / sqrt(
-                        self._correlate_with_zero_lag(sig1, sig1) *
-                        self._correlate_with_zero_lag(sig2, sig2)
-                    )
-
-                    peak_lag = np.argmax(correlation)
-                    peak_height = correlation[peak_lag]
-
-                else:
-                    # autocorrelation
-                    peak_lag = max_lag + 1
-                    peak_height = 1
-
-                phase_locking[nn1, nn2] = peak_height
-                alltim[nn1, nn2] = peak_lag
-
-                mean_spike_rate_1 = self.get_mean_spike_rate(raster[id1])
-                mean_spike_rate_2 = self.get_mean_spike_rate(raster[id2])
-                spike_timing_diff = abs(max_lag - abs(peak_lag))
-                phase_values[nn1, nn2] = pi * (2 * spike_timing_diff) / (0.5 * (mean_spike_rate_1 + mean_spike_rate_2))
-
-                nn2 += 1
+                    for result in pool.starmap(self._compute_correlation_for_neuron_pair, arguments):
+                        id2, peak_height, peak_lag, phase_value = result
+                        nn2 = id2 // step_size
+                        phase_locking[nn1, nn2] = peak_height
+                        alltim[nn1, nn2] = peak_lag
+                        phase_values[nn1, nn2] = phase_value
             nn1 += 1
 
         return phase_values, phase_locking

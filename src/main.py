@@ -75,8 +75,9 @@ if __name__ == "__main__":
     parser.add_argument('--contrast_ranges', type=float, default=[0.01, 0.2575, 0.505, 0.7525, 1.0], nargs='+')
     parser.add_argument('--sync_step_size', type=int, default=10)
     parser.add_argument('--sync_sigma', type=float, default=1)
-    parser.add_argument('--c2f_slope', type=float, default=14.0)
-    parser.add_argument('--c2f_offset', type=float, default=4.0)
+    parser.add_argument('--sync_nr_cores', type=int, default=1)
+    parser.add_argument('--c2f_slope', type=float, default=4.0)
+    parser.add_argument('--c2f_offset', type=float, default=14.0)
 
     args = parser.parse_args()
 
@@ -152,7 +153,8 @@ if __name__ == "__main__":
 
     params_sync = ParamsSync(
         step_size=args.sync_step_size,
-        sigma=args.sync_sigma
+        sigma=args.sync_sigma,
+        nr_cores=args.sync_nr_cores
     )
 
     params_c2f = ParamsContrastToFrequency(

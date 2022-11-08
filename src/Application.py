@@ -102,12 +102,6 @@ class Application:
         print(f"Starting simulation for dist_scale={dist_scale}, contrast_range={contrast_range}")
         print("**********************************************************")
 
-        # params_initializer = ParamsInitializer()
-        # params_ping, params_gabor, params_rf, params_connectivity, params_izhi, params_synaptic, params_freqs = \
-        #     params_initializer.initialize(
-        #         dist_scale=dist_scale,
-        #         contrast_range=contrast_range
-        #     )
         self.params_gabor.dist_scale = dist_scale
         self.params_gabor.contrast_range = contrast_range
 
@@ -164,7 +158,6 @@ class Application:
         if CREATING_DATA:
             clear_simulation_directory()
 
-        # results = Results(self.dist_scales, self.contrast_ranges)
         results = Results(dist_scales, contrast_ranges)
 
         # with Manager() as manager:

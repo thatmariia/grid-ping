@@ -1,12 +1,16 @@
 from src.stimulus_construction.GaborLuminanceStimulusFactory import *
 from src.stimulus_construction.PatchGeometryFactory import *
 from src.stimulus_construction.LuminanceToContrastConverter import *
-from src.stimulus_construction.ContrastToFrequencyConverter import *
-from src.stimulus_construction.FrequencyToCurrentConverter import *
+from src.stimulus_construction.ContrastToCurrentConverter import *
 from src.stimulus_construction.Stimulus import *
 from src.application_setup import USE_GRAY_STIMULUS
 
-from src.params.ParamsContrastToFrequency import ParamsContrastToFrequency
+from src.params.ParamsContrastToCurrent import ParamsContrastToCurrent
+from src.params.ParamsGaborStimulus import ParamsGaborStimulus
+from src.params.ParamsPING import ParamsPING
+from src.params.ParamsIzhikevich import ParamsIzhikevich
+from src.params.ParamsFrequencies import ParamsFrequencies
+
 
 from src.plotter.stimulus import plot_full_stimulus, plot_stimulus_patch, plot_local_contrasts, plot_stimulus_currents
 
@@ -24,7 +28,7 @@ class StimulusFactory:
             params_ping: ParamsPING,
             params_izhi: ParamsIzhikevich,
             params_freqs: ParamsFrequencies,
-            params_c2f: ParamsContrastToFrequency
+            params_c2c: ParamsContrastToCurrent
     ) -> Stimulus:
         """
         Creates an external stimulus (Gabor texture) and prepares for the neural network input.
@@ -92,11 +96,8 @@ class StimulusFactory:
         )
         plot_local_contrasts(stimulus_contrasts.reshape(params_ping.grid_size, params_ping.grid_size))
 
-        stimulus_frequencies = ContrastToFrequencyConverter().convert(
-            stimulus_contrasts, params_c2f
-        )
-        stimulus_currents = FrequencyToCurrentConverter().convert(
-            stimulus_frequencies, params_ping, params_izhi, params_freqs
+        stimulus_currents = ContrastToCurrentConverter().convert(
+            stimulus_contrasts, params_c2c
         )
 
         plot_stimulus_currents(stimulus_currents)

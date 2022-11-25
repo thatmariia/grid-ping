@@ -31,7 +31,7 @@ class Application:
             params_connectivity,
             params_synaptic,
             params_sync,
-            params_c2f
+            params_c2c
     ):
         # # [1.0, 1.125, 1.25, 1.375, 1.5]
         # self.dist_scales = dist_scales
@@ -49,7 +49,7 @@ class Application:
         self.params_connectivity = params_connectivity
         self.params_synaptic = params_synaptic
         self.params_sync = params_sync
-        self.params_c2f = params_c2f
+        self.params_c2c = params_c2c
 
 
     def run_single_simulation(self, sim_input):
@@ -74,7 +74,7 @@ class Application:
             params_freqs=self.params_freqs,
             params_connectivity=self.params_connectivity,
             params_synaptic=self.params_synaptic,
-            params_c2f=self.params_c2f
+            params_c2c=self.params_c2c
         )
 
         """DO ANALYSIS CRAP"""
@@ -120,7 +120,7 @@ class Application:
                 params_freqs=self.params_freqs,
                 params_connectivity=self.params_connectivity,
                 params_synaptic=self.params_synaptic,
-                params_c2f=self.params_c2f
+                params_c2c=self.params_c2c
             )
         else:
             simulation_outcome = IzhikevichNetworkOutcome(

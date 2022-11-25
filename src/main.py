@@ -8,10 +8,11 @@ from src.params.ParamsIzhikevich import *
 from src.params.ParamsSynaptic import *
 from src.params.ParamsFrequencies import *
 from src.params.ParamsSync import *
-from src.params.ParamsContrastToFrequency import *
+from src.params.ParamsContrastToCurrent import *
 
 import os
 import argparse
+from math import exp
 
 if __name__ == "__main__":
 
@@ -76,8 +77,8 @@ if __name__ == "__main__":
     parser.add_argument('--sync_step_size', type=int, default=10)
     parser.add_argument('--sync_sigma', type=float, default=1)
     parser.add_argument('--sync_nr_cores', type=int, default=1)
-    parser.add_argument('--c2f_slope', type=float, default=4.0)
-    parser.add_argument('--c2f_offset', type=float, default=14.0)
+    parser.add_argument('--c2c_min_current', type=float, default=exp(0.5))
+    parser.add_argument('--c2c_max_current', type=float, default=exp(2.3))
 
     args = parser.parse_args()
 
@@ -157,9 +158,9 @@ if __name__ == "__main__":
         nr_cores=args.sync_nr_cores
     )
 
-    params_c2f = ParamsContrastToFrequency(
-        slope=args.c2f_slope,
-        offset=args.c2f_offset
+    params_c2c = ParamsContrastToCurrent(
+        min_current=args.c2c_min_current,
+        max_current=args.c2c_max_current
     )
 
     application = Application(
@@ -172,7 +173,7 @@ if __name__ == "__main__":
         params_connectivity=params_connectivity,
         params_synaptic=params_synaptic,
         params_sync=params_sync,
-        params_c2f=params_c2f
+        params_c2c=params_c2c
     )
 
     if args.single_simulation:

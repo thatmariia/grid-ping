@@ -1,4 +1,4 @@
-from src.params.ParamsContrastToFrequency import ParamsContrastToFrequency
+from src.params.ParamsContrastToCurrent import ParamsContrastToCurrent
 
 import numpy as np
 
@@ -8,7 +8,7 @@ class ContrastToFrequencyConverter:
     This class converts the local contrasts stimulus into the frequencies stimulus.
     """
 
-    def convert(self, stimulus_contrast: np.ndarray[int, float], params_c2f: ParamsContrastToFrequency) -> np.ndarray[int, float]:
+    def convert(self, stimulus_contrast: np.ndarray[int, float], params_c2f: ParamsContrastToCurrent) -> np.ndarray[int, float]:
         """
         Converts the local contrasts stimulus into the frequencies stimulus.
 
@@ -23,7 +23,7 @@ class ContrastToFrequencyConverter:
 
         return self._compute_frequencies(stimulus_contrast, params_c2f)
 
-    def _compute_frequencies(self, stimulus_contrast: np.ndarray[int, float], params_c2f: ParamsContrastToFrequency) -> np.ndarray[int, float]:
+    def _compute_frequencies(self, stimulus_contrast: np.ndarray[int, float], params_c2f: ParamsContrastToCurrent) -> np.ndarray[int, float]:
         """
         Computes oscillation frequencies of the circuit through local contrasts.
 

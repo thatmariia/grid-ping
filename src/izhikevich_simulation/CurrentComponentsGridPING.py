@@ -160,8 +160,8 @@ class CurrentComponentsGridPING(CurrentComponents):
 
         #1.5
         return np.append(
-            1.0 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.EX]),
-            1.0 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.IN])
+            0.5 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.EX]),
+            0.5 * np.random.randn(self.connectivity.params_ping.nr_neurons[NeuronTypes.IN])
         )
 
     def _get_stimulus_input(self) -> np.ndarray[int, float]:

@@ -40,7 +40,54 @@ class LuminanceToContrastConverter:
 
         return self._compute_local_contrasts(params_rf, patch_geometry, stimulus_luminance)
 
+
     def _compute_local_contrasts(
+            self,
+            params_rf: ParamsReceptiveField, patch_geometry: PatchGeometry, stimulus_luminance: GaborLuminanceStimulus
+    ) -> np.ndarray[int, float]:
+        # compute weights for every pixel for every network
+
+        # compute eccentricity of centers
+        eccentricities = np.array([patch_geometry.eccentricity_in_patch(point=ping_pix.center_dg) for ping_pix in patch_geometry.ping_networks_pixels])
+        # compute rf diameters of centers
+        diam_rf = np.maximum(params_rf.slope * eccentricities + params_rf.intercept, params_rf.min_diam_rf)
+        # compute std of centers
+        std = diam_rf / 4.0
+
+        # compute weights for every pixel for every network
+        weights = np.zeros((len(patch_geometry.ping_networks_pixels), len(patch_geometry.all_pixels_x)))
+        for ping_id in range(len(patch_geometry.ping_networks_pixels)):
+            weights[ping_id] = np.exp(
+                -(
+                    (patch_geometry.all_pixels_x - patch_geometry.ping_networks_pixels[ping_id].center_dg[0]) ** 2 +
+                    (patch_geometry.all_pixels_y - patch_geometry.ping_networks_pixels[ping_id].center_dg[1]) ** 2
+                ) / (2 * std[ping_id] ** 2)
+            )
+
+        # diagonal normalization weights by summing columns
+        weights_normalizer = np.diag(1.0 / np.sum(weights, axis=0))
+        # normalize weights with the normalizer
+        weights = np.matmul(weights, weights_normalizer).T
+
+        # compute mean luminance
+        mean_luminance = np.mean(stimulus_luminance.stimulus)
+        # compute luminance differences in the patch
+        luminance_diffs = stimulus_luminance.stimulus_patch - mean_luminance
+        # compute normalized luminance squared
+        luminance_squared = (luminance_diffs / mean_luminance) ** 2
+
+        # compute local contrasts
+        local_contrasts = np.sqrt(np.matmul(weights, luminance_squared))
+        print(local_contrasts.shape)
+
+        return local_contrasts
+
+
+
+
+
+
+    def _compute_local_contrasts_OLD(
             self,
             params_rf: ParamsReceptiveField, patch_geometry: PatchGeometry, stimulus_luminance: GaborLuminanceStimulus
     ) -> np.ndarray[int, float]:

@@ -28,10 +28,10 @@ class PINGNetworkPixels:
             self,
             center: tuple[float, float], pixels: list[tuple[int, int]], atopix: float, grid_location: tuple[int, int]
     ):
-        self.center: tuple[int, int] = center
+        self.center: tuple[float, float] = center
         self.pixels: list[tuple[int, int]] = pixels
 
-        self.center_dg: tuple[int, int] = multiply_point(center, 1 / atopix)
-        self.pixels_dg: list[tuple[int, int]] = [multiply_point(p, 1 / atopix) for p in pixels]
+        self.center_dg: tuple[float, float] = multiply_point(center, 1.0 / atopix)
+        self.pixels_dg: list[tuple[float, float]] = [multiply_point(p, 1.0 / atopix) for p in pixels]
 
         self.grid_location: tuple[int, int] = grid_location

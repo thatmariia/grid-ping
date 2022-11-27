@@ -41,10 +41,13 @@ class PatchGeometryFactory:
         :rtype: PatchGeometry
         """
 
-        ping_networks_pixels = self._assign_circuits(nr_ping_networks, stimulus_patch, atopix)
+        ping_networks_pixels, all_pixels_x, all_pixels_y = \
+            self._assign_circuits(nr_ping_networks, stimulus_patch, atopix)
 
         patch_geometry = PatchGeometry(
             ping_networks_pixels=ping_networks_pixels,
+            all_pixels_x=all_pixels_x,
+            all_pixels_y=all_pixels_y,
             atopix=atopix,
             patch_start=patch_start,
             stimulus_center=stimulus_center
@@ -54,7 +57,7 @@ class PatchGeometryFactory:
 
     def _assign_circuits(
             self, nr_ping_networks: int, stimulus_patch: np.ndarray[(int, int), float], atopix: float
-    ) -> list[PINGNetworkPixels]:
+    ) -> tuple[list[PINGNetworkPixels], np.ndarray[int, float], np.ndarray[int, float]]:
         """
         Creates circuits and assigns centers and pixels of the stimulus patch to them.
 
@@ -81,6 +84,9 @@ class PatchGeometryFactory:
 
         ping_networks_pixels = []
 
+        all_pixels_x = []
+        all_pixels_y = []
+
         for i in range(len(lattice_edges) - 1):
             for j in range(len(lattice_edges) - 1):
 
@@ -88,9 +94,16 @@ class PatchGeometryFactory:
                     (lattice_edges[i], lattice_edges[j]),
                     ((lattice_edges[i + 1] - lattice_edges[i]) / 2, (lattice_edges[j + 1] - lattice_edges[j]) / 2)
                 ])
+
+                ping_pixels_x = np.arange(lattice_edges[i], lattice_edges[i + 1])
+                ping_pixels_y = np.arange(lattice_edges[j], lattice_edges[j + 1])
+
+                all_pixels_x += [i for i in ping_pixels_x]
+                all_pixels_y += [i for i in ping_pixels_y]
+
                 pixels = list(product(
-                    np.arange(lattice_edges[i], lattice_edges[i + 1]),
-                    np.arange(lattice_edges[j], lattice_edges[j + 1])
+                    ping_pixels_x,
+                    ping_pixels_y
                 ))
 
                 circuit = PINGNetworkPixels(
@@ -101,4 +114,4 @@ class PatchGeometryFactory:
                 )
                 ping_networks_pixels.append(circuit)
 
-        return ping_networks_pixels
+        return ping_networks_pixels, np.array(all_pixels_x), np.array(all_pixels_y)

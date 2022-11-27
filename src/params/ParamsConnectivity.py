@@ -39,10 +39,10 @@ class ParamsConnectivity:
             max_connect_strength_EI: float,
             max_connect_strength_IE: float,
             max_connect_strength_II: float,
-            spatial_const_EE: float=0.4,
-            spatial_const_EI: float=0.3,
-            spatial_const_IE: float=0.3,
-            spatial_const_II: float=0.3
+            spatial_const_EE: float=0.5,
+            spatial_const_EI: float=0.5,
+            spatial_const_IE: float=0.5,
+            spatial_const_II: float=0.5
     ):
         self.max_connect_strength: dict[tuple[NeuronTypes, NeuronTypes], float] = {
             (NeuronTypes.EX, NeuronTypes.EX): max_connect_strength_EE,

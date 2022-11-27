@@ -41,77 +41,37 @@ class PatchGeometryFactory:
         :rtype: PatchGeometry
         """
 
-        ping_networks_pixels, all_pixels_x, all_pixels_y = \
-            self._assign_circuits(nr_ping_networks, stimulus_patch, atopix)
+        r = np.linspace(
+            0.0,
+            stimulus_patch.shape[0] / atopix,
+            num=stimulus_patch.shape[0],
+            endpoint=True,
+            dtype=float
+        )
+        all_pixels_x_dg, all_pixels_y_dg = np.meshgrid(r, r)
+        all_pixels_x_dg = all_pixels_x_dg.flatten()
+        all_pixels_y_dg = all_pixels_y_dg.flatten()
+
+        r = np.linspace(
+            0.0,
+            stimulus_patch.shape[0] / atopix,
+            num=int(sqrt(nr_ping_networks)),
+            endpoint=True,
+            dtype=float
+        )
+        centers_x_dg, centers_y_dg = np.meshgrid(r, r)
+        centers_x_dg = centers_x_dg.flatten()
+        centers_y_dg = centers_y_dg.flatten()
 
         patch_geometry = PatchGeometry(
-            ping_networks_pixels=ping_networks_pixels,
-            all_pixels_x=all_pixels_x,
-            all_pixels_y=all_pixels_y,
+            nr_ping_networks=nr_ping_networks,
+            all_pixels_x_dg=all_pixels_x_dg,
+            all_pixels_y_dg=all_pixels_y_dg,
+            centers_x_dg=centers_x_dg,
+            centers_y_dg=centers_y_dg,
             atopix=atopix,
             patch_start=patch_start,
             stimulus_center=stimulus_center
         )
 
         return patch_geometry
-
-    def _assign_circuits(
-            self, nr_ping_networks: int, stimulus_patch: np.ndarray[(int, int), float], atopix: float
-    ) -> tuple[list[PINGNetworkPixels], np.ndarray[int, float], np.ndarray[int, float]]:
-        """
-        Creates circuits and assigns centers and pixels of the stimulus patch to them.
-
-        :param nr_ping_networks: number of PING networks.
-        :type nr_ping_networks: int
-
-        :param stimulus_patch: the luminance matrix of a patch of the stimulus.
-        :type stimulus_patch: numpy.ndarray[(int, int), float]
-
-        :param atopix: conversion coefficient between pixels and visual degrees.
-        :type atopix: float
-
-        :return: list of all PING networks of the stimulus patch created by applying a lattice.
-        :rtype: list[PINGNetworkPixels]
-        """
-
-        lattice_edges = np.linspace(
-            0,
-            np.shape(stimulus_patch)[0],
-            num=int(sqrt(nr_ping_networks)) + 1,
-            endpoint=True,
-            dtype=int
-        )
-
-        ping_networks_pixels = []
-
-        all_pixels_x = []
-        all_pixels_y = []
-
-        for i in range(len(lattice_edges) - 1):
-            for j in range(len(lattice_edges) - 1):
-
-                center = add_points([
-                    (lattice_edges[i], lattice_edges[j]),
-                    ((lattice_edges[i + 1] - lattice_edges[i]) / 2, (lattice_edges[j + 1] - lattice_edges[j]) / 2)
-                ])
-
-                ping_pixels_x = np.arange(lattice_edges[i], lattice_edges[i + 1])
-                ping_pixels_y = np.arange(lattice_edges[j], lattice_edges[j + 1])
-
-                all_pixels_x += [i for i in ping_pixels_x]
-                all_pixels_y += [i for i in ping_pixels_y]
-
-                pixels = list(product(
-                    ping_pixels_x,
-                    ping_pixels_y
-                ))
-
-                circuit = PINGNetworkPixels(
-                    center=center,
-                    pixels=pixels,
-                    atopix=atopix,
-                    grid_location=(i, j)
-                )
-                ping_networks_pixels.append(circuit)
-
-        return ping_networks_pixels, np.array(all_pixels_x), np.array(all_pixels_y)

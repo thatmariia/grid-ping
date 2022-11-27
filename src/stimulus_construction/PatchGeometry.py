@@ -29,17 +29,23 @@ class PatchGeometry:
 
     def __init__(
             self,
-            ping_networks_pixels: list[PINGNetworkPixels],
-            all_pixels_x: np.ndarray[int, float],
-            all_pixels_y: np.ndarray[int, float],
+            nr_ping_networks: int,
+            all_pixels_x_dg: np.ndarray[int, float],
+            all_pixels_y_dg: np.ndarray[int, float],
+            centers_x_dg: np.ndarray[int, float],
+            centers_y_dg: np.ndarray[int, float],
             atopix: float,
             patch_start: tuple[int, int],
             stimulus_center: tuple[float, float]
     ):
-        self.ping_networks_pixels: list[PINGNetworkPixels] = ping_networks_pixels
 
-        self.all_pixels_x_dg = [x / atopix for x in all_pixels_x]
-        self.all_pixels_y_dg = [y / atopix for y in all_pixels_y]
+        self.nr_ping_networks = nr_ping_networks
+
+        self.all_pixels_x_dg = all_pixels_x_dg
+        self.all_pixels_y_dg = all_pixels_y_dg
+
+        self.centers_x_dg = centers_x_dg
+        self.centers_y_dg = centers_y_dg
 
         self._atopix: float = atopix
         self._patch_start: tuple[int, int] = patch_start

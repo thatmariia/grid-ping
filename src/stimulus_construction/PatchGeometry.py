@@ -38,8 +38,8 @@ class PatchGeometry:
     ):
         self.ping_networks_pixels: list[PINGNetworkPixels] = ping_networks_pixels
 
-        self.all_pixels_x = all_pixels_x
-        self.all_pixels_y = all_pixels_y
+        self.all_pixels_x_dg = [x / atopix for x in all_pixels_x]
+        self.all_pixels_y_dg = [y / atopix for y in all_pixels_y]
 
         self._atopix: float = atopix
         self._patch_start: tuple[int, int] = patch_start

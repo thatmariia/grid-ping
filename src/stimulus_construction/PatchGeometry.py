@@ -29,6 +29,7 @@ class PatchGeometry:
 
     def __init__(
             self,
+            ping_networks_pixels: list[PINGNetworkPixels],
             nr_ping_networks: int,
             all_pixels_x_dg: np.ndarray[int, float],
             all_pixels_y_dg: np.ndarray[int, float],
@@ -38,6 +39,8 @@ class PatchGeometry:
             patch_start: tuple[int, int],
             stimulus_center: tuple[float, float]
     ):
+
+        self.ping_networks_pixels: list[PINGNetworkPixels] = ping_networks_pixels
 
         self.nr_ping_networks = nr_ping_networks
 

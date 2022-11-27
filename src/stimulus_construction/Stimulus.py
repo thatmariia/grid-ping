@@ -33,7 +33,7 @@ class Stimulus:
         :rtype: StimulusLocations
         """
 
-        grid_side = int(sqrt(len(self._patch_geometry.ping_networks_pixels)))
+        grid_side = int(sqrt(self._patch_geometry.nr_ping_networks))
         eccentricities = np.zeros((grid_side, grid_side))
         angles = np.zeros((grid_side, grid_side))
 

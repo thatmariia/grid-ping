@@ -26,12 +26,9 @@ class PINGNetworkPixels:
 
     def __init__(
             self,
-            center: tuple[float, float], pixels: list[tuple[int, int]], atopix: float, grid_location: tuple[int, int]
+            center: tuple[float, float], atopix: float, grid_location: tuple[int, int]
     ):
         self.center: tuple[float, float] = center
-        self.pixels: list[tuple[int, int]] = pixels
-
         self.center_dg: tuple[float, float] = multiply_point(center, 1.0 / atopix)
-        self.pixels_dg: list[tuple[float, float]] = [multiply_point(p, 1.0 / atopix) for p in pixels]
 
         self.grid_location: tuple[int, int] = grid_location

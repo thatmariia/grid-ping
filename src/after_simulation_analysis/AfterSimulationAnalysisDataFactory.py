@@ -149,7 +149,7 @@ class AfterSimulationAnalysisDataFactory:
         #     index=windows
         # )
 
-        spiking_freq = SpikingFrequencyFactory().create(simulation_outcome)
+        # spiking_freq = SpikingFrequencyFactory().create(simulation_outcome)
         sync_evaluation = SyncEvaluationFactory().create(
             spikes=simulation_outcome.spikes,
             params_ping=simulation_outcome.params_ping,
@@ -168,7 +168,7 @@ class AfterSimulationAnalysisDataFactory:
             # ping_spikes_ex=ping_spikes_ex,
             # ping_spikes_in=ping_spikes_in,
             # spikes_df=spikes_df,
-            spiking_freq=spiking_freq,
+            # spiking_freq=spiking_freq,
             sync_evaluation=sync_evaluation
         )
         return after_simulation_analysis_data

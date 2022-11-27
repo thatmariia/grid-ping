@@ -144,7 +144,7 @@ class Application:
             dist_scale=dist_scale,
             contrast_range=contrast_range,
             avg_phase_locking=analyser.analysis_data.sync_evaluation.avg_phase_locking,
-            frequency_std=analyser.analysis_data.spiking_freq.std
+            # frequency_std=analyser.analysis_data.spiking_freq.std
         )
         print(results.avg_phase_lockings_df)
 

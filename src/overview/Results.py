@@ -12,14 +12,17 @@ class Results:
         contrast_ranges_columns = [self._format_ic(contrast_range) for contrast_range in contrast_ranges]
         empty_df = pd.DataFrame(index=dist_scales_indices, columns=contrast_ranges_columns, dtype=float)
         self.avg_phase_lockings_df = deepcopy(empty_df)
-        self.frequency_stds_df = deepcopy(empty_df)
+        # self.frequency_stds_df = deepcopy(empty_df)
 
-    def add_results(self, dist_scale, contrast_range, avg_phase_locking, frequency_std):
+    def add_results(
+        self, dist_scale, contrast_range, avg_phase_locking
+                #, frequency_std
+    ):
         self.avg_phase_lockings_df.at[self._format_ic(dist_scale), self._format_ic(contrast_range)] = avg_phase_locking
-        self.frequency_stds_df.at[self._format_ic(dist_scale), self._format_ic(contrast_range)] = frequency_std
+        # self.frequency_stds_df.at[self._format_ic(dist_scale), self._format_ic(contrast_range)] = frequency_std
 
     def make_plots(self):
-        plot_frequencies_std(self.frequency_stds_df)
+        # plot_frequencies_std(self.frequency_stds_df)
         plot_avg_phase_lockings(self.avg_phase_lockings_df)
         save_avg_phase_lockings_data(self.avg_phase_lockings_df)
         plot_avg_phase_lockings(self._interpolate_df(self.avg_phase_lockings_df), smooth=True)

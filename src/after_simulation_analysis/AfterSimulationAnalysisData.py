@@ -20,7 +20,7 @@ class AfterSimulationAnalysisData:
             # ping_spikes_ex: dict[tuple[int, int], np.ndarray],
             # ping_spikes_in: dict[tuple[int, int], np.ndarray],
             # spikes_df: pd.DataFrame,
-            spiking_freq: SpikingFrequency,
+            # spiking_freq: SpikingFrequency,
             sync_evaluation: SyncEvaluation
     ):
         self.step = step
@@ -34,5 +34,5 @@ class AfterSimulationAnalysisData:
         # self.ping_spikes_in = ping_spikes_in
         # self.spikes_df = spikes_df
         #
-        self.spiking_freq = spiking_freq
+        # self.spiking_freq = spiking_freq
         self.sync_evaluation = sync_evaluation

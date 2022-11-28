@@ -67,11 +67,10 @@ class PatchGeometryFactory:
 
         for i in range(int(sqrt(nr_ping_networks))):
             for j in range(int(sqrt(nr_ping_networks))):
-                center = (centers_x_dg[i * int(sqrt(nr_ping_networks)) + j], centers_y_dg[i * int(sqrt(nr_ping_networks)) + j])
+                center_dg = (centers_x_dg[i * int(sqrt(nr_ping_networks)) + j], centers_y_dg[i * int(sqrt(nr_ping_networks)) + j])
 
                 circuit = PINGNetworkPixels(
-                    center=center,
-                    atopix=atopix,
+                    center_dg=center_dg,
                     grid_location=(i, j)
                 )
                 ping_networks_pixels.append(circuit)
